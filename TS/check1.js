@@ -1,82 +1,206 @@
-<div id="basicsAccordion">
-  <!-- Card -->
-  <div class="card mb-3">
-    <div class="card-header card-collapse" id="basicsHeadingOne">
-      <h5 class="mb-0">
-        <button type="button" class="btn btn-link btn-block d-flex justify-content-between card-btn p-3 collapsed" data-toggle="collapse" data-target="#basicsCollapseOne" aria-expanded="false" aria-controls="basicsCollapseOne">
-          Which Shopify plan should I choose?
-          <span class="card-btn-arrow">
-            <span class="fas fa-arrow-down small"></span>
-          </span>
-        </button>
-      </h5>
+<div class="container mt-10 mb-10">
+        <div class="w-lg-100 mx-lg-auto position-relative">
+            <div class="row position-relative z-index-2 mx-n2 mb-5">
+                <div class="col-sm-6 col-md-4 px-2 mb-3">
+                    <!-- Pricing -->
+                    <div class="card h-100">
+                        <!-- Header -->
+                        <div class="card-header text-center">
+                            <span class="d-block h3">Free</span>
+                            <span class="d-block mb-2">
+                            <span class="text-dark align-top">$</span>
+                            <span class="font-size-4 text-dark font-weight-bold mr-n2">
+                              <span id="pricingCount1Example2">0</span>
+                            </span>
+                            <span class="font-size-1">/ mon</span>
+                          </span>
+                        </div>
+                        <!-- End Header -->
+                        <!-- Body -->
+                        <div class="card-body">
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Lifetime usage
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Image optimization for 50 products/month
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Unlimited Alt optimization
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Free SEO checklist
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    HTML sitemap
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    24/7 Support
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Body -->
+                        <div class="card-footer border-0">
+                            <a href="https://app.avada.io/" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</a>
+                        </div>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+                <div class="col-sm-6 col-md-4 px-2 offset-m2" style="margin-bottom: -1rem !important; margin-top: -2rem !important;">
+                    <!-- Pricing -->
+                    <div class="card bg-primary text-white h-100 shadow-primary-lg">
+                        <!-- Header -->
+                        <div class="card-header border-0 bg-primary text-white text-center">
+                            <span class="d-block h3 text-white">Pro</span>
+                            <span class="d-block mb-2" id="pricing-advanced-plan-section">
+                               <span class="font-size-1 from">From</span>
+                                <span class="text-white align-top">$</span>
+                                <span class="font-size-4 text-white font-weight-bold mr-n2">
+                                  <span id="pricingCount3Example2">34.95</span>
+                                </span>
+                                <span class="font-size-1">/ mon</span>
+                            </span>
+                            <span class="d-block" style="font-size: 12px; font-weight: 500;">or $348/year and save 17%</span>
+                        </div>
+                        <!-- End Header -->
+                        <div class="border-top opacity-xs"></div>
+                        <!-- Body -->
+                        <div class="card-body">
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Page Speed Up
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Auto fixed SEO issues
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Unlimited Images & Alt optimization
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Meta tags
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Lazy loading
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Google Structure Data
+                                </div>
+                            </div>
+                            <div class="media font-size-1 mb-3">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Advanced SEO Setting
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Body -->
+                        <div class="card-footer border-0 bg-primary text-white" id="advanced-plan-button">
+                            <a href="https://app.avada.io/" style="font-size: 30px" class="btn btn-light text-primary btn-block transition-3d-hover">Start Free Trial</a>
+                        </div>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+                <div class="col-sm-6 col-md-4 px-2 mb-3">
+                    <!-- Pricing -->
+                    <div class="card h-100">
+                        <!-- Header -->
+                        <div class="card-header text-center">
+                            <span class="d-block h3">Advanced</span>
+                            <span class="d-block mb-2" id="pricing-pro-plan-section">
+                             <span class="font-size-1 from">From</span>
+                            <span class="text-dark align-top">$</span>
+                            <span class="font-size-4 text-dark font-weight-bold mr-n2">
+                              <span id="pricingCount2Example2">99</span>
+                            </span>
+                            <span class="font-size-1">/ mon</span>
+                            <span class="d-block" style="color: #157F3C; font-size: 12px; font-weight: 500;">or $990/year and save 17%</span>
+                          </span>
+                        </div>
+                        <!-- End Header -->
+                        <!-- Body -->
+                        <div class="card-body">
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Script manager
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    One-on-one consulting
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Advanced speed up
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    SEO Academy
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    Expert support 24/7
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    No advertisment
+                                </div>
+                            </div>
+                            <div class="media font-size-1 text-body mb-3">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                                <div class="media-body">
+                                    30-day refund
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Body -->
+                        <div class="card-footer border-0" id="pro-plan-button">
+                            <a href="https://app.avada.io/" class="btn btn-soft-primary btn-block transition-3d-hover">Start Free Trial</a>
+                        </div>
+                    </div>
+                    <!-- End Pricing -->
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="basicsCollapseOne" class="collapse" aria-labelledby="basicsHeadingOne" data-parent="#basicsAccordion" style="">
-      <div class="card-body">
-        Choosing the right Shopify plan depends on your goals, budget, and features. Shopify Starter is suitable for new entrepreneurs who want to promote their products on their  existing websites. At the same time, the Basic plan is a good fit if you are an established business owner with a substantial inventory. High-volume online stores will benefit from the Shopify and Advanced Shopify plans, offering robust reporting and scalability.
-      </div>
-    </div>
-  </div>
-  <!-- End Card -->
-  <!-- Card -->
-  <div class="card mb-3">
-    <div class="card-header card-collapse" id="basicsHeadingTwo">
-      <h5 class="mb-0">
-        <button type="button" class="btn btn-link btn-block d-flex justify-content-between card-btn p-3 collapsed" data-toggle="collapse" data-target="#basicsCollapseTwo" aria-expanded="false" aria-controls="basicsCollapseTwo">
-          Can I try Shopify before committing?
-          <span class="card-btn-arrow">
-            <span class="fas fa-arrow-down small"></span>
-          </span>
-        </button>
-      </h5>
-    </div>
-    <div id="basicsCollapseTwo" class="collapse" aria-labelledby="basicsHeadingTwo" data-parent="#basicsAccordion" style="">
-      <div class="card-body">
-        Yes, you can try Shopify before committing to a pricing plan.
-      </div>
-    </div>
-  </div>
-  <!-- End Card -->
-  <!-- Card -->
-  <div class="card mb-3">
-    <div class="card-header card-collapse" id="basicsHeadingThree">
-      <h5 class="mb-0">
-        <button type="button" class="btn btn-link btn-block d-flex justify-content-between card-btn p-3 collapsed" data-toggle="collapse" data-target="#basicsCollapseThree" aria-expanded="false" aria-controls="basicsCollapseThree">
-          Will I lose my data for upgrading/downgrading my Shopify pricing plans?
-          <span class="card-btn-arrow">
-            <span class="fas fa-arrow-down small"></span>
-          </span>
-        </button>
-      </h5>
-    </div>
-    <div id="basicsCollapseThree" class="collapse" aria-labelledby="basicsHeadingThree" data-parent="#basicsAccordion" style="">
-      <div class="card-body">
-        No, you won't lose your data if you decide to upgrade or downgrade your Shopify plan.<br>   
-Regardless of your Shopify Pricing Plan, your data will always be accessible on Shopify servers.
-
-      </div>
-    </div>
-  </div>
-  <!-- End Card -->
-  <!-- Card -->
-  <div class="card mb-3">
-    <div class="card-header card-collapse" id="basicsHeadingFour">
-      <h5 class="mb-0">
-        <button type="button" class="btn btn-link btn-block d-flex justify-content-between card-btn p-3" data-toggle="collapse" data-target="#basicsCollapseFour" aria-expanded="true" aria-controls="basicsCollapseFour">
-          Can I use my own domain name with the Shopify Basic Plan?
-          <span class="card-btn-arrow">
-            <span class="fas fa-arrow-down small"></span>
-          </span>
-        </button>
-      </h5>
-    </div>
-    <div id="basicsCollapseFour" class="collapse" aria-labelledby="basicsHeadingFour" data-parent="#basicsAccordion">
-      <div class="card-body">
-        Yes, you can use your own domain name with the Shopify Basic Plan. You can purchase a domain name directly through Shopify or use your existing domain.<br>
-When you sign up with Shopify, they provide a free domain name, "myshopify.com." This domain will be permanently yours, and you can continue to use it if you prefer.
-
-      </div>
-    </div>
-  </div>
-  <!-- End Card -->
-  </div>
