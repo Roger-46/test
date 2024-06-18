@@ -1,7 +1,5 @@
 https://kb.avada.net/
 Please go to your Magento backend > Stores > Configuration > Extension > Mageplaza > SMTP to check the extension version.
-			add tên và email vào git.
-// sh sam-push.sh "Hai test push"
 
 			chạy local
 
