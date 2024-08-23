@@ -1,0 +1,268 @@
+<section x-data="{ toggle: false }" class="pt-24 pb-32 overflow-hidden">
+  <div class="container mx-auto px-4">
+    <div class="max-w-xl mx-auto">
+      <h2 class="mb-9 font-heading font-bold text-center text-6xl sm:text-7xl text-gray-900">Everything you need to launch a website</h2>
+      <div class="flex flex-wrap justify-center -m-5 mb-20">
+        <div class="w-auto p-5">
+          <div class="flex items-center font-heading font-medium text-gray-600 text-base">
+            <input x-on:click="toggle = false" class="w-5 h-5 mr-2" id="radio1" type="radio" name="radio" value="radio" checked="">
+            <label x-on:click="toggle = false" for="radio1">
+              <span>Annually</span>
+              <span class="text-blue-600">(Save up to 25%)</span>
+            </label>
+          </div>
+        </div>
+        <div class="w-auto p-5">
+          <div class="flex items-center font-heading font-medium text-gray-600 text-base">
+            <input x-on:click="toggle = true" class="w-5 h-5 mr-2" id="radio2" type="radio" name="radio" value="radio">
+            <label x-on:click="toggle = true" for="radio2">Monthly</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap -m-3">
+      <div class="uk-width-1-2@s uk-width-1-4@m p-3">
+        <div class="p-5 bg-white border border-gray-200 rounded-10">
+          <h3 class="mb-9 font-heading font-medium text-base text-black">Free Plan</h3>
+          <div class="mb-9 pb-9 flex border-b border-gray-200">
+            <span class="font-heading font-bold text-6xl sm:text-7xl text-gray-900">$0</span>
+            <span class="text-sm text-gray-700 self-end">/ Per Month</span>
+          </div>
+          <ul class="mb-10">
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>10 GB Disk Space</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>1 Year Support</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>500 Queries</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Video Collections</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Learning Path</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Download Images</p>
+            </li>
+            <li class="flex items-center font-heading font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Free Custom Domain</p>
+            </li>
+          </ul>
+          <button class="mb-3 w-full font-heading font-bold text-base text-black overflow-hidden rounded-md">
+            <div class="px-4 py-4 border border-gray-200 hover:border-gray-300 overflow-hidden rounded-md">
+              <a href="https://shopify.pxf.io/QyomZa" target="_blank" rel="nofollow"><p>Get Started</p></a>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m p-3">
+        <div class="p-5 bg-white border border-gray-200 rounded-10">
+          <h3 class="mb-9 font-heading font-medium text-base text-black">Basic Plan</h3>
+          <div class="mb-9 pb-9 flex border-b border-gray-200">
+            <span :class="{ 'hidden': toggle }" class="font-heading font-bold text-6xl sm:text-7xl text-gray-900">$60</span>
+            <span :class="{ 'hidden': !toggle }" class="hidden font-heading font-bold text-6xl sm:text-7xl text-gray-900">$5</span>
+            <span :class="{ 'hidden': toggle }" class="text-sm text-gray-700 self-end">/ Per Annually</span>
+            <span :class="{ 'hidden': !toggle }" class="hidden text-sm text-gray-700 self-end">/ Per Month</span>
+          </div>
+          <ul class="mb-10">
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>10 GB Disk Space</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>1 Year Support</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>600 Queries</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Video Collections</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Learning Path</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Download Images</p>
+            </li>
+            <li class="flex items-center font-heading font-medium text-base text-gray-400">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="#A1A1AA"></path>
+              </svg>
+              <p>Free Custom Domain</p>
+            </li>
+          </ul>
+          <button class="mb-3 w-full font-heading font-bold text-base text-black overflow-hidden rounded-md">
+            <div class="px-4 py-4 border border-gray-200 hover:border-gray-300 overflow-hidden rounded-md">
+              <a href="https://shopify.pxf.io/DKg1kb" target="_blank" rel="nofollow"><p>Start Free Trial</p></a>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m p-3">
+        <div class="p-5 bg-black border border-gray-200 rounded-10">
+          <h3 class="mb-9 font-heading font-medium text-base text-white">Popular Plan</h3>
+          <div class="mb-9 pb-9 flex border-b border-gray-700">
+            <span :class="{ 'hidden': toggle }" class="font-heading font-bold text-6xl sm:text-7xl text-white">$45</span>
+            <span :class="{ 'hidden': !toggle }" class="hidden font-heading font-bold text-6xl sm:text-7xl text-white">$54</span>
+            <span :class="{ 'hidden': toggle }" class="text-sm text-white self-end">/ Per Annually</span>
+            <span :class="{ 'hidden': !toggle }" class="hidden text-sm text-white self-end">/ Per Month</span>
+          </div>
+          <ul class="mb-10">
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-white">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>10 GB Disk Space</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-white">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>1 Year Support</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-white">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>800 Queries</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-white">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Video Collections</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-white">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Learning Path</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-500">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="white"></path>
+              </svg>
+              <p>Download Images</p>
+            </li>
+            <li class="flex items-center font-heading font-medium text-base text-gray-500">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 4.29289C4.68342 3.90237 5.31658 3.90237 5.70711 4.29289L10 8.58579L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L11.4142 10L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L10 11.4142L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L8.58579 10L4.29289 5.70711C3.90237 5.31658 3.90237 4.68342 4.29289 4.29289Z" fill="white"></path>
+              </svg>
+              <p>Free Custom Domain</p>
+            </li>
+          </ul>
+          <div class="group relative mb-3">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-cyan2 opacity-0 group-hover:opacity-50 rounded-lg transition ease-out duration-300"></div>
+            <button class="p-1 w-full">
+              <div class="relative px-4 py-4 bg-gradient-cyan2 hover:border-gray-300 overflow-hidden rounded-md">
+                <div class="absolute top-0 left-0 transform -translate-y-full group-hover:-translate-y-0 h-full w-full bg-white transition ease-in-out duration-500"></div>
+                <a href="https://shopify.pxf.io/rQ6XGB" target="_blank" rel="nofollow"><p class="relative z-10 font-heading font-bold text-base text-black">Start Free Trial</p></a>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m p-3">
+        <div class="p-5 bg-white border border-gray-200 rounded-10">
+          <h3 class="mb-9 font-heading font-medium text-base text-black">Premium</h3>
+          <div class="mb-9 pb-9 flex border-b border-gray-200">
+            <span :class="{ 'hidden': toggle }" class="font-heading font-bold text-6xl sm:text-7xl text-gray-900">$99</span>
+            <span :class="{ 'hidden': !toggle }" class="visibility-item font-heading font-bold text-6xl sm:text-7xl text-gray-900 hidden">$118</span>
+            <span :class="{ 'hidden': toggle }" class="text-sm text-gray-700 self-end">/ Per Annual</span>
+            <span :class="{ 'hidden': !toggle }" class="visibility-item text-sm text-gray-700 self-end hidden">/ Per Month</span>
+          </div>
+          <ul class="mb-10">
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>10 GB Disk Space</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>1 Year Support</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>1000 Queries</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Video Collections</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Learning Path</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Download Images</p>
+            </li>
+            <li class="flex items-center font-heading mb-4 font-medium text-base text-gray-900">
+              <svg class="mr-2.5" width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#14B082"></path>
+              </svg>
+              <p>Free Custom Domain</p>
+            </li>
+          </ul>
+          <button class="mb-3 w-full font-heading font-bold text-base text-black overflow-hidden rounded-md">
+            <div class="px-4 py-4 border border-gray-200 hover:border-gray-300 overflow-hidden rounded-md">
+              <a href="https://shopify.pxf.io/vNLmDA" target="_blank" rel="nofollow"><p>Start Free Trial</p></a>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
