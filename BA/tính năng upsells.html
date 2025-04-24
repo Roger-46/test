@@ -1,73 +1,72 @@
-Logic hiện tại cần mua sản phẩm trigger thì mới được discount
-đang ko phù hợp với insight cart drawer
+## PRD tính nắng Trust badge
+
+### 1. Giới thiệu về tính năng
+
+### 1.1 giới thiệu
+
+Trust badges là tính năng trong app cart drawer, có nhiệm vụ tạo cảm giác yên tâm cho khách mua sắm và giảm tỉ lệ abandonment. Cho khách hàng biết những phương thức thanh toán mà cửa hàng đang hỗ trợ 
+
+---
+
+### 2. User Stories
+
+- **As a merchant**, tôi muốn thêm và tùy chỉnh huy hiệu tin cậy trong trang quản trị của mình để có thể trấn an khách hàng và giảm tình trạng bỏ giỏ hàng.
+- **As a customer**, when I open the cart drawer, I want to see badges like “Secure Checkout” so I feel confident to proceed.
+
+---
+
+### 3. Scope & Requirements
+
+**3.1 Admin Interface (Merchant Side)**
+
+- **Display Settings**
+    - Chọn số cột hiển thị (1–4) trong Cart Drawer.
+    - Chọn kiểu hiển thị: inline bar dưới line‑items hoặc popup nhỏ.
+- **Preview**
+    - Live preview badge với cart sample (merchant nhập trước tổng giá trị & tags ví dụ).
+
+---
+3.2 Storefront Logic
 
 
+4. User Flow Diagram
+
+Merchant vào Cart Drawer App > Trust Badges, bật tính năng
+
+Merchant chọn các icon muốn hiển thị trong trust badge
+
+Merchant thiết lập kích thước icon
+
+Admin Preview hiển thị trust badge theo setting của MC
+
+Customer mở cart drawer và nhìn thấy trust badge
 
 
+5. Tiêu chí chấp nhận (Acceptance Criteria)
+AC1 – Tạo badge thành công:
 
-basic
-- chọn sản phẩm mặc Định
-    - specific product
-- discount
-    - phần trăm
-    - giảm cố định
-- cho chọn vị trí
-    - trên product cart
-    - dưới product cart
-- text
-    - toàn bộ text hiển thị
-- design
-    - toàn bộ màu có thể thay đổi
+Merchant chọn được icon, nhập title & description.
 
+Có thể lưu và badge xuất hiện trong danh sách với trạng thái “Disabled.”
 
-Advanced
-- banner install
-    - summary
-        - offer name
-        - trigger
-        - suggest
-        - discount
-        - Advanced settings
-        - Schedule
-    - bố cục
-        - dọc
-        - ngang
-    - cho chọn vị trí
-        - trên product cart
-        - dưới product cart
-    - text
-        - toàn bộ text hiển thị
-    - design
-        - toàn bộ màu có thể thay đổi
-    
-Cần suy nghĩ thêm case có cho phép chọn nhiều offer trong cart drawer ko
+AC2 – Cấu hình rule & bật badge:
 
-chọn 1 offer trong cart drawer
-Ưu điểm
-- hiển thị tốt hơn, ko cần thêm phần chọn offer trong cart drawer
-- tích hợp ok hơn bundle chỉ cần thiết lập riêng offer cho cart drawer
-- không bị confict case MC chọn nhiều sản phẩm trigger thì sẽ hiển thị FBT nào
-Nhược điểm
-- ko đáp ứng được case MC muốn chọn sản phẩm mặc định khác nhau cho các sản phẩm trigger khác nhau
-VD add to cart sp A, hiển thị ra FBT khác, add to cart sp B, hiển thị ra FBT khác
+Merchant thêm được rule (ví dụ cart value ≥ 50, tag = “premium”).
 
-Còn thiếu bước thuyết phục khách hàng sử dụng app bundle để tối ưu FBT
-bởi tính năng FBT cũng ko thực sự hấp dẫn đối với cart drawer
+Badge “Enabled” và hiển thị đúng vị trí trong Preview.
 
+AC3 – Hiển thị đúng điều kiện:
 
+Khi cart value ≥ 50 và chứa tag “premium,” badge xuất hiện trong Cart Drawer.
 
-import data từ app 
+Khi không thỏa điều kiện, badge ẩn hoàn toàn.
 
-cho setup 
+AC4 – Tooltip hiển thị mô tả:
 
-refer Fbt cho AOV cart drawer
-đối tượng KH là đang sử dụng FBT của bundle và không sử dụng cart draqwer của bất kì bên nào
-intergrate
+Hover/tap lên badge, tooltip hiện chính xác nội dung description đã cấu hình.
 
-anouncement bar
-- slide
-- 
-trust badge
+AC5 – Responsive & performance:
 
+Badge hiển thị đúng trên desktop & mobile.
 
-reward shipping goal
+Tổng thời gian gọi API và render badge < 200 ms.
