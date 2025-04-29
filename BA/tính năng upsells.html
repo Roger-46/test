@@ -1,72 +1,31 @@
-## PRD tính nắng Trust badge
 
-### 1. Giới thiệu về tính năng
+idea
+số lượng sản phẩm đã bán trong 1 tháng tới
+    tự động lấy thông tin
+    cho phép nhập thông tin
+hiển thị số lượng review của sản phẩm và chất lượng review
 
-### 1.1 giới thiệu
-
-Trust badges là tính năng trong app cart drawer, có nhiệm vụ tạo cảm giác yên tâm cho khách mua sắm và giảm tỉ lệ abandonment. Cho khách hàng biết những phương thức thanh toán mà cửa hàng đang hỗ trợ 
-
----
-
-### 2. User Stories
-
-- **As a merchant**, tôi muốn thêm và tùy chỉnh huy hiệu tin cậy trong trang quản trị của mình để có thể trấn an khách hàng và giảm tình trạng bỏ giỏ hàng.
-- **As a customer**, when I open the cart drawer, I want to see badges like “Secure Checkout” so I feel confident to proceed.
-
----
-
-### 3. Scope & Requirements
-
-**3.1 Admin Interface (Merchant Side)**
-
-- **Display Settings**
-    - Chọn số cột hiển thị (1–4) trong Cart Drawer.
-    - Chọn kiểu hiển thị: inline bar dưới line‑items hoặc popup nhỏ.
-- **Preview**
-    - Live preview badge với cart sample (merchant nhập trước tổng giá trị & tags ví dụ).
-
----
-3.2 Storefront Logic
+có áp dụng được discount hay ko
+    vì là sản phẩm riêng lẻ 
+        nên việc áp dụng discount ko thể áp dụng chung cho toàn bộ sản phẩm được
+        mà nếu áp dụng riêng từng sản phẩm thì việc setup khá phức tạp
+        -> ko sử dụng discount
 
 
-4. User Flow Diagram
-
-Merchant vào Cart Drawer App > Trust Badges, bật tính năng
-
-Merchant chọn các icon muốn hiển thị trong trust badge
-
-Merchant thiết lập kích thước icon
-
-Admin Preview hiển thị trust badge theo setting của MC
-
-Customer mở cart drawer và nhìn thấy trust badge
+admin
 
 
-5. Tiêu chí chấp nhận (Acceptance Criteria)
-AC1 – Tạo badge thành công:
 
-Merchant chọn được icon, nhập title & description.
+chọn điều kiện hiển thị
+trigger
+all product
+collection
+specific product
 
-Có thể lưu và badge xuất hiện trong danh sách với trạng thái “Disabled.”
 
-AC2 – Cấu hình rule & bật badge:
 
-Merchant thêm được rule (ví dụ cart value ≥ 50, tag = “premium”).
+advanced setting
+    Show upsell offer if item already in cart
+    Limit the number of upsells in the cart
+    Show product reviews on upsells
 
-Badge “Enabled” và hiển thị đúng vị trí trong Preview.
-
-AC3 – Hiển thị đúng điều kiện:
-
-Khi cart value ≥ 50 và chứa tag “premium,” badge xuất hiện trong Cart Drawer.
-
-Khi không thỏa điều kiện, badge ẩn hoàn toàn.
-
-AC4 – Tooltip hiển thị mô tả:
-
-Hover/tap lên badge, tooltip hiện chính xác nội dung description đã cấu hình.
-
-AC5 – Responsive & performance:
-
-Badge hiển thị đúng trên desktop & mobile.
-
-Tổng thời gian gọi API và render badge < 200 ms.
