@@ -1,0 +1,9 @@
+- Nhập toàn bộ data, dữ liệu vào
+    - Git app hiện tại
+    - storelead
+    - crisp chat
+- research, review
+    - lấy PRD của tính năng
+    - Giao diện UI
+    - User story
+    - 
