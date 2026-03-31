@@ -1,0 +1,13 @@
+# Secrets & credentials
+**/.claude/token.md
+**/.claude/*-credentials.json
+**/.claude/*-config.json
+**/.claude/notion-config.json
+**/.claude/jira-config.json
+**/.claude/jira-credentials.json
+**/.claude/memory/reference_slack_solar_bot.md
+**/.claude/.agent/skills/slack-bot/SKILL.md
+**/.claude/.agent/skills/notion/create-task.md
+
+# Large files
+*.pptx
