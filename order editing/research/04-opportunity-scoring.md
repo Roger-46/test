@@ -1,255 +1,255 @@
-# 04 - Opportunity Scoring: Shopify Order Editing
+# 04 - Chấm Điểm Cơ Hội: Chỉnh Sửa Đơn Hàng Shopify
 
-## 1. Feature Opportunity Scoring
+## 1. Chấm Điểm Cơ Hội Tính Năng
 
-### Scoring Scale: 1-5 (1 = Low, 5 = High)
+### Thang Điểm: 1-5 (1 = Thấp, 5 = Cao)
 
-| Feature | Market Demand | Competition Gap | Tech Feasibility | Revenue Potential | Time to Market | **Total (25)** | **Priority** |
+| Tính năng | Nhu cầu thị trường | Khoảng trống cạnh tranh | Khả thi kỹ thuật | Tiềm năng doanh thu | Thời gian ra mắt | **Tổng (25)** | **Ưu tiên** |
 |---------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Customer self-service address editing | 5 | 2 | 4 | 3 | 5 | **19** | P0 |
-| Customer self-service variant/item swap | 5 | 2 | 4 | 3 | 4 | **18** | P0 |
-| Self-service order cancellation | 4 | 2 | 4 | 2 | 5 | **17** | P0 |
-| Self-service quantity adjustment | 4 | 2 | 5 | 2 | 5 | **18** | P0 |
-| Time-window edit controls | 4 | 2 | 5 | 2 | 5 | **18** | P0 |
-| Automatic refund/charge handling | 5 | 2 | 3 | 3 | 4 | **17** | P0 |
-| Thank-you page + order status widgets | 4 | 2 | 4 | 3 | 4 | **17** | P0 |
-| **Post-edit upsell/cross-sell** | 4 | 3 | 3 | **5** | 3 | **18** | P1 |
-| Google address validation | 4 | 3 | 4 | 2 | 4 | **17** | P1 |
-| Store credit refund option | 3 | 3 | 4 | 4 | 4 | **18** | P1 |
-| Shopify Flow integration | 4 | 3 | 3 | 3 | 3 | **16** | P1 |
-| Analytics/ROI dashboard | 3 | 4 | 4 | 3 | 3 | **17** | P1 |
-| Cancellation retention flow | 3 | **5** | 3 | **5** | 3 | **19** | P1 |
-| Multi-language support | 3 | 2 | 4 | 2 | 4 | **15** | P1 |
-| **Local delivery order editing** | 4 | **5** | 2 | 3 | 2 | **16** | P2 |
-| **Bulk staff-side editing** | 3 | **5** | 2 | 3 | 2 | **15** | P2 |
-| Subscription order editing | 3 | 4 | 2 | 3 | 2 | **14** | P2 |
-| B2B/wholesale editing | 3 | 4 | 2 | 4 | 2 | **15** | P2 |
-| **AI product recommendations** | 2 | **5** | 2 | 4 | 2 | **15** | P2 |
-| PDF invoice post-edit | 2 | 3 | 4 | 1 | 4 | **14** | P2 |
-| Multi-currency editing | 3 | 4 | 2 | 2 | 2 | **13** | P2 |
-| POS integration | 2 | 4 | 2 | 2 | 2 | **12** | P2 |
-| Custom webhooks/API | 2 | 3 | 3 | 2 | 3 | **13** | P2 |
+| Khách hàng tự chỉnh sửa địa chỉ | 5 | 2 | 4 | 3 | 5 | **19** | P0 |
+| Khách hàng tự đổi biến thể/sản phẩm | 5 | 2 | 4 | 3 | 4 | **18** | P0 |
+| Tự hủy đơn hàng | 4 | 2 | 4 | 2 | 5 | **17** | P0 |
+| Tự điều chỉnh số lượng | 4 | 2 | 5 | 2 | 5 | **18** | P0 |
+| Kiểm soát khung thời gian chỉnh sửa | 4 | 2 | 5 | 2 | 5 | **18** | P0 |
+| Xử lý hoàn tiền/tính phí tự động | 5 | 2 | 3 | 3 | 4 | **17** | P0 |
+| Widget trang cảm ơn + trạng thái đơn hàng | 4 | 2 | 4 | 3 | 4 | **17** | P0 |
+| **Bán thêm/bán chéo sau chỉnh sửa** | 4 | 3 | 3 | **5** | 3 | **18** | P1 |
+| Xác thực địa chỉ Google | 4 | 3 | 4 | 2 | 4 | **17** | P1 |
+| Tùy chọn hoàn tiền bằng tín dụng cửa hàng | 3 | 3 | 4 | 4 | 4 | **18** | P1 |
+| Tích hợp Shopify Flow | 4 | 3 | 3 | 3 | 3 | **16** | P1 |
+| Bảng phân tích/ROI | 3 | 4 | 4 | 3 | 3 | **17** | P1 |
+| Luồng giữ chân khi hủy đơn | 3 | **5** | 3 | **5** | 3 | **19** | P1 |
+| Hỗ trợ đa ngôn ngữ | 3 | 2 | 4 | 2 | 4 | **15** | P1 |
+| **Chỉnh sửa đơn giao hàng nội địa** | 4 | **5** | 2 | 3 | 2 | **16** | P2 |
+| **Chỉnh sửa hàng loạt phía nhân viên** | 3 | **5** | 2 | 3 | 2 | **15** | P2 |
+| Chỉnh sửa đơn đăng ký định kỳ | 3 | 4 | 2 | 3 | 2 | **14** | P2 |
+| Chỉnh sửa đơn B2B/bán sỉ | 3 | 4 | 2 | 4 | 2 | **15** | P2 |
+| **Gợi ý sản phẩm bằng AI** | 2 | **5** | 2 | 4 | 2 | **15** | P2 |
+| Hóa đơn PDF sau chỉnh sửa | 2 | 3 | 4 | 1 | 4 | **14** | P2 |
+| Chỉnh sửa đa tiền tệ | 3 | 4 | 2 | 2 | 2 | **13** | P2 |
+| Tích hợp POS | 2 | 4 | 2 | 2 | 2 | **12** | P2 |
+| Webhook/API tùy chỉnh | 2 | 3 | 3 | 2 | 3 | **13** | P2 |
 
-### Top Opportunities by Score
+### Cơ Hội Hàng Đầu Theo Điểm Số
 
-1. **Cancellation retention flow** (19) -- High competition gap + high revenue potential. No competitor does this well.
-2. **Customer self-service address editing** (19) -- #1 demand driver. Must-have.
-3. **Post-edit upsell/cross-sell** (18) -- Direct revenue generation. Key differentiator.
-4. **Store credit refund option** (18) -- Revenue retention. Keeps money in the ecosystem.
-5. **Self-service variant/item swap** (18) -- Core use case. Table stakes.
-6. **Time-window edit controls** (18) -- Operational control for merchants.
+1. **Luồng giữ chân khi hủy đơn** (19) -- Khoảng trống cạnh tranh cao + tiềm năng doanh thu cao. Không đối thủ nào làm tốt điều này.
+2. **Khách hàng tự chỉnh sửa địa chỉ** (19) -- Động lực nhu cầu #1. Tính năng bắt buộc.
+3. **Bán thêm/bán chéo sau chỉnh sửa** (18) -- Tạo doanh thu trực tiếp. Yếu tố khác biệt chính.
+4. **Tùy chọn hoàn tiền bằng tín dụng cửa hàng** (18) -- Giữ chân doanh thu. Giữ tiền trong hệ sinh thái.
+5. **Tự đổi biến thể/sản phẩm** (18) -- Trường hợp sử dụng cốt lõi. Tính năng cơ bản.
+6. **Kiểm soát khung thời gian chỉnh sửa** (18) -- Kiểm soát vận hành cho người bán.
 
 ---
 
-## 2. Go / No-Go Assessment
+## 2. Đánh Giá Tiến Hành / Không Tiến Hành
 
-### VERDICT: STRONG GO
+### KẾT LUẬN: TIẾN HÀNH MẠNH MẼ
 
-**Confidence Level: 85%**
+**Mức Độ Tin Cậy: 85%**
 
-### Go Factors
+### Yếu Tố Tiến Hành
 
-| Factor | Assessment | Weight |
+| Yếu tố | Đánh giá | Trọng số |
 |--------|-----------|--------|
-| Market demand | Very high -- 60% of support tickets are order edits | 9/10 |
-| Pricing gap | Clear gap between $5 (basic) and $39+ (full-featured) | 9/10 |
-| Competition quality | Incumbents have bugs, poor support, high prices | 7/10 |
-| Technical feasibility | Shopify Order Editing API is mature (since 2024-07) | 8/10 |
-| Avada brand advantage | Existing Shopify merchant base, cross-sell opportunity | 8/10 |
-| Revenue model clarity | SaaS subscription with upsell potential | 9/10 |
-| Time to market (MVP) | 2-3 months for core features | 7/10 |
+| Nhu cầu thị trường | Rất cao -- 60% yêu cầu hỗ trợ là chỉnh sửa đơn hàng | 9/10 |
+| Khoảng trống giá | Khoảng trống rõ ràng giữa $5 (cơ bản) và $39+ (đầy đủ tính năng) | 9/10 |
+| Chất lượng cạnh tranh | Đối thủ hiện tại có lỗi, hỗ trợ kém, giá cao | 7/10 |
+| Khả thi kỹ thuật | API Chỉnh Sửa Đơn Hàng Shopify đã hoàn thiện (từ 2024-07) | 8/10 |
+| Lợi thế thương hiệu Avada | Cơ sở người bán Shopify hiện có, cơ hội bán chéo | 8/10 |
+| Mô hình doanh thu rõ ràng | Đăng ký SaaS với tiềm năng bán thêm | 9/10 |
+| Thời gian ra mắt (MVP) | 2-3 tháng cho tính năng cốt lõi | 7/10 |
 
-**Go Score: 8.1/10**
+**Điểm Tiến Hành: 8.1/10**
 
-### Risk Factors
+### Yếu Tố Rủi Ro
 
-| Risk | Probability | Impact | Mitigation |
+| Rủi ro | Xác suất | Tác động | Giảm thiểu |
 |------|-----------|--------|------------|
-| Shopify builds better native editing | 30% | High | Focus on features Shopify won't build (upsells, retention flows, analytics). Shopify hasn't meaningfully improved native editing in years. |
-| Price war from competitors | 40% | Medium | Differentiate on features + free tier + brand. Price is one factor among many. |
-| API rate limiting at scale | 20% | Medium | Queue-based architecture, efficient API usage patterns. |
-| Competitor with VC funding launches | 25% | Medium | Speed to market + Avada ecosystem advantage. |
-| Low conversion from free to paid | 35% | Medium | Optimize free tier limits, in-app upgrade prompts, value demonstration. |
-| Review manipulation by competitors | 15% | Low | Focus on genuine value, encourage organic reviews, responsive support. |
+| Shopify xây dựng tính năng chỉnh sửa gốc tốt hơn | 30% | Cao | Tập trung vào tính năng Shopify sẽ không xây dựng (bán thêm, luồng giữ chân, phân tích). Shopify đã không cải thiện đáng kể tính năng chỉnh sửa gốc trong nhiều năm. |
+| Chiến tranh giá từ đối thủ | 40% | Trung bình | Tạo khác biệt bằng tính năng + gói miễn phí + thương hiệu. Giá chỉ là một yếu tố trong nhiều yếu tố. |
+| Giới hạn tốc độ API ở quy mô lớn | 20% | Trung bình | Kiến trúc dựa trên hàng đợi, mô hình sử dụng API hiệu quả. |
+| Đối thủ có vốn đầu tư mạo hiểm ra mắt | 25% | Trung bình | Tốc độ ra mắt + lợi thế hệ sinh thái Avada. |
+| Tỷ lệ chuyển đổi thấp từ miễn phí sang trả phí | 35% | Trung bình | Tối ưu hóa giới hạn gói miễn phí, thông báo nâng cấp trong ứng dụng, chứng minh giá trị. |
+| Đối thủ thao túng đánh giá | 15% | Thấp | Tập trung vào giá trị thực, khuyến khích đánh giá tự nhiên, hỗ trợ phản hồi nhanh. |
 
-### No-Go Scenarios (What Would Make Us Walk Away)
+### Kịch Bản Không Tiến Hành (Điều Gì Khiến Chúng Ta Từ Bỏ)
 
-1. Shopify announces native customer self-service editing (unlikely -- they haven't in 10+ years)
-2. API access for order editing gets restricted or deprecated (opposite trend -- expanding)
-3. Market saturated with 5+ apps all under $15/month with full features (not the case today)
-
----
-
-## 3. Key Risks & Mitigations
-
-### Risk 1: Shopify Platform Risk
-**Risk:** Shopify improves native order editing, reducing need for third-party apps.
-**Probability:** 30% over 3 years
-**Mitigation:**
-- Build features Shopify will NEVER build: upsells, retention flows, AI recommendations, advanced analytics
-- Create deep integrations that make switching costly
-- Revenue features (upsells) are independent of Shopify's native editing
-
-### Risk 2: Incumbent Response
-**Risk:** OrderEditing.com or AE lower prices to compete.
-**Probability:** 40%
-**Mitigation:**
-- Incumbents have established pricing that their existing customers accept. Lowering prices hurts their revenue.
-- Differentiate on features, not just price
-- Build network effects through Shopify Flow marketplace presence
-
-### Risk 3: Technical Complexity
-**Risk:** Order editing edge cases (partial fulfillment, subscriptions, multi-currency) are harder than expected.
-**Probability:** 50%
-**Mitigation:**
-- Phase features. Launch with core editing first, add complex scenarios later.
-- Extensive testing with real orders on dev stores
-- Graceful degradation -- show "contact support" for unsupported edge cases
-
-### Risk 4: Free Tier Abuse
-**Risk:** Stores gaming the free tier, never converting to paid.
-**Probability:** 60%
-**Mitigation:**
-- Free tier has clear limits (50 edits/month, no upsells, no analytics)
-- In-app value demonstration: "You saved X support tickets this month. Upgrade for unlimited."
-- Free tier still provides value: app store reviews, word-of-mouth, ranking
+1. Shopify thông báo tính năng tự chỉnh sửa gốc cho khách hàng (khó xảy ra -- họ chưa làm trong hơn 10 năm)
+2. Quyền truy cập API cho chỉnh sửa đơn hàng bị hạn chế hoặc ngừng hỗ trợ (xu hướng ngược lại -- đang mở rộng)
+3. Thị trường bão hòa với 5+ ứng dụng đều dưới $15/tháng với đầy đủ tính năng (không phải tình hình hiện tại)
 
 ---
 
-## 4. Financial Projections
+## 3. Rủi Ro Chính & Biện Pháp Giảm Thiểu
 
-### Assumptions
+### Rủi Ro 1: Rủi Ro Nền Tảng Shopify
+**Rủi ro:** Shopify cải thiện tính năng chỉnh sửa đơn hàng gốc, giảm nhu cầu ứng dụng bên thứ ba.
+**Xác suất:** 30% trong 3 năm
+**Giảm thiểu:**
+- Xây dựng tính năng Shopify sẽ KHÔNG BAO GIỜ xây dựng: bán thêm, luồng giữ chân, gợi ý AI, phân tích nâng cao
+- Tạo tích hợp sâu khiến việc chuyển đổi tốn kém
+- Tính năng doanh thu (bán thêm) độc lập với tính năng chỉnh sửa gốc của Shopify
 
-| Assumption | Value | Basis |
+### Rủi Ro 2: Phản Ứng Của Đối Thủ
+**Rủi ro:** OrderEditing.com hoặc AE giảm giá để cạnh tranh.
+**Xác suất:** 40%
+**Giảm thiểu:**
+- Đối thủ đã có mức giá cố định mà khách hàng hiện tại chấp nhận. Giảm giá sẽ ảnh hưởng doanh thu của họ.
+- Tạo khác biệt bằng tính năng, không chỉ giá
+- Xây dựng hiệu ứng mạng lưới thông qua sự hiện diện trên Shopify Flow marketplace
+
+### Rủi Ro 3: Độ Phức Tạp Kỹ Thuật
+**Rủi ro:** Các trường hợp biên của chỉnh sửa đơn hàng (hoàn thành một phần, đăng ký định kỳ, đa tiền tệ) khó hơn dự kiến.
+**Xác suất:** 50%
+**Giảm thiểu:**
+- Phân chia tính năng theo giai đoạn. Ra mắt với chỉnh sửa cốt lõi trước, thêm kịch bản phức tạp sau.
+- Kiểm thử kỹ lưỡng với đơn hàng thực trên cửa hàng phát triển
+- Xử lý linh hoạt -- hiển thị "liên hệ hỗ trợ" cho các trường hợp biên chưa được hỗ trợ
+
+### Rủi Ro 4: Lạm Dụng Gói Miễn Phí
+**Rủi ro:** Cửa hàng lợi dụng gói miễn phí, không bao giờ chuyển sang trả phí.
+**Xác suất:** 60%
+**Giảm thiểu:**
+- Gói miễn phí có giới hạn rõ ràng (50 lần chỉnh sửa/tháng, không có bán thêm, không có phân tích)
+- Chứng minh giá trị trong ứng dụng: "Bạn đã tiết kiệm X yêu cầu hỗ trợ tháng này. Nâng cấp để không giới hạn."
+- Gói miễn phí vẫn mang lại giá trị: đánh giá app store, truyền miệng, xếp hạng
+
+---
+
+## 4. Dự Báo Tài Chính
+
+### Giả Định
+
+| Giả định | Giá trị | Cơ sở |
 |-----------|-------|-------|
-| Total addressable installs | 100K+ stores could install order editing apps | 100 apps in category, top apps have 200-1,100 reviews |
-| Free-to-paid conversion | 8-12% | Industry avg for freemium Shopify apps |
-| Monthly churn (paid) | 5-7% | Shopify app average |
-| Average paid ARPU | $22/month (Year 1), $28 (Year 2), $35 (Year 3) | Weighted across tiers |
-| App store ranking boost | Top 10 in category by Month 6 | Requires 50+ 5-star reviews |
+| Tổng lượt cài đặt tiềm năng | 100K+ cửa hàng có thể cài đặt ứng dụng chỉnh sửa đơn hàng | 100 ứng dụng trong danh mục, ứng dụng hàng đầu có 200-1.100 đánh giá |
+| Tỷ lệ chuyển đổi miễn phí sang trả phí | 8-12% | Trung bình ngành cho ứng dụng Shopify freemium |
+| Tỷ lệ rời bỏ hàng tháng (trả phí) | 5-7% | Trung bình ứng dụng Shopify |
+| ARPU trả phí trung bình | $22/tháng (Năm 1), $28 (Năm 2), $35 (Năm 3) | Trung bình có trọng số qua các gói |
+| Tăng xếp hạng app store | Top 10 trong danh mục vào Tháng 6 | Cần 50+ đánh giá 5 sao |
 
-### Year 1 Projections
+### Dự Báo Năm 1
 
-| Quarter | New Installs | Total Installs | Paying Customers | MRR | ARR |
+| Quý | Lượt cài mới | Tổng lượt cài | Khách trả phí | MRR | ARR |
 |---------|-------------|---------------|-----------------|-----|-----|
 | Q1 | 500 | 500 | 40 | $880 | $10.6K |
-| Q2 | 1,200 | 1,500 | 140 | $3,080 | $37K |
-| Q3 | 2,000 | 3,000 | 300 | $6,600 | $79K |
-| Q4 | 3,000 | 5,000 | 500 | $11,000 | $132K |
+| Q2 | 1.200 | 1.500 | 140 | $3.080 | $37K |
+| Q3 | 2.000 | 3.000 | 300 | $6.600 | $79K |
+| Q4 | 3.000 | 5.000 | 500 | $11.000 | $132K |
 
-**Year 1 Total:** ~5,000 installs, ~500 paying customers, ~$132K ARR
+**Tổng Năm 1:** ~5.000 lượt cài, ~500 khách trả phí, ~$132K ARR
 
-### Year 2 Projections
+### Dự Báo Năm 2
 
-| Quarter | New Installs | Total Installs | Paying Customers | MRR | ARR |
+| Quý | Lượt cài mới | Tổng lượt cài | Khách trả phí | MRR | ARR |
 |---------|-------------|---------------|-----------------|-----|-----|
-| Q1 | 4,000 | 8,000 | 850 | $23,800 | $286K |
-| Q2 | 5,000 | 12,000 | 1,300 | $36,400 | $437K |
-| Q3 | 6,000 | 16,000 | 1,800 | $50,400 | $605K |
-| Q4 | 7,000 | 20,000 | 2,400 | $67,200 | $806K |
+| Q1 | 4.000 | 8.000 | 850 | $23.800 | $286K |
+| Q2 | 5.000 | 12.000 | 1.300 | $36.400 | $437K |
+| Q3 | 6.000 | 16.000 | 1.800 | $50.400 | $605K |
+| Q4 | 7.000 | 20.000 | 2.400 | $67.200 | $806K |
 
-**Year 2 Total:** ~20,000 installs, ~2,400 paying customers, ~$806K ARR
+**Tổng Năm 2:** ~20.000 lượt cài, ~2.400 khách trả phí, ~$806K ARR
 
-### Year 3 Projections
+### Dự Báo Năm 3
 
-| Quarter | New Installs | Total Installs | Paying Customers | MRR | ARR |
+| Quý | Lượt cài mới | Tổng lượt cài | Khách trả phí | MRR | ARR |
 |---------|-------------|---------------|-----------------|-----|-----|
-| Q1 | 8,000 | 25,000 | 3,200 | $112,000 | $1.34M |
-| Q2 | 9,000 | 30,000 | 4,000 | $140,000 | $1.68M |
-| Q3 | 10,000 | 36,000 | 5,000 | $175,000 | $2.1M |
-| Q4 | 10,000 | 42,000 | 6,000 | $210,000 | $2.52M |
+| Q1 | 8.000 | 25.000 | 3.200 | $112.000 | $1.34M |
+| Q2 | 9.000 | 30.000 | 4.000 | $140.000 | $1.68M |
+| Q3 | 10.000 | 36.000 | 5.000 | $175.000 | $2.1M |
+| Q4 | 10.000 | 42.000 | 6.000 | $210.000 | $2.52M |
 
-**Year 3 Total:** ~42,000 installs, ~6,000 paying customers, ~$2.52M ARR
+**Tổng Năm 3:** ~42.000 lượt cài, ~6.000 khách trả phí, ~$2.52M ARR
 
-### Revenue Breakdown by Tier (Year 3 Steady State)
+### Phân Bổ Doanh Thu Theo Gói (Trạng Thái Ổn Định Năm 3)
 
-| Tier | Price | % of Paying | Customers | MRR |
+| Gói | Giá | % Khách trả phí | Khách hàng | MRR |
 |------|-------|------------|-----------|-----|
-| Starter ($9.99) | $9.99 | 40% | 2,400 | $23,976 |
-| Growth ($19.99) | $19.99 | 30% | 1,800 | $35,982 |
-| Pro ($29.99) | $29.99 | 20% | 1,200 | $35,988 |
-| Business ($49.99) | $49.99 | 7% | 420 | $20,996 |
-| Enterprise ($99.99) | $99.99 | 3% | 180 | $17,998 |
-| **Total** | | 100% | 6,000 | **$134,940** |
+| Starter ($9.99) | $9.99 | 40% | 2.400 | $23.976 |
+| Growth ($19.99) | $19.99 | 30% | 1.800 | $35.982 |
+| Pro ($29.99) | $29.99 | 20% | 1.200 | $35.988 |
+| Business ($49.99) | $49.99 | 7% | 420 | $20.996 |
+| Enterprise ($99.99) | $99.99 | 3% | 180 | $17.998 |
+| **Tổng** | | 100% | 6.000 | **$134.940** |
 
-*Note: Year 3 Q4 MRR of $210K includes growth acceleration from Shopify Plus features and B2B launch.*
+*Ghi chú: MRR Q4 Năm 3 đạt $210K bao gồm tăng trưởng tăng tốc từ tính năng Shopify Plus và ra mắt B2B.*
 
-### Upside Scenarios
+### Kịch Bản Tăng Trưởng Tích Cực
 
-| Scenario | Impact | Probability |
+| Kịch bản | Tác động | Xác suất |
 |----------|--------|-------------|
-| Avada cross-sell from existing app base | +50% installs in Year 1 | 60% |
-| "Built for Shopify" badge earned in Month 3 | +30% organic installs | 70% |
-| Upsell revenue sharing (% of upsell GMV) | +$2-5 ARPU | 40% |
-| Enterprise deal with 10+ Plus merchants | +$50K ARR per deal | 30% |
-| Shopify features OrderEditing apps in changelog | One-time spike of 2,000+ installs | 20% |
+| Bán chéo Avada từ cơ sở ứng dụng hiện có | +50% lượt cài trong Năm 1 | 60% |
+| Đạt huy hiệu "Built for Shopify" trong Tháng 3 | +30% lượt cài tự nhiên | 70% |
+| Chia sẻ doanh thu bán thêm (% GMV bán thêm) | +$2-5 ARPU | 40% |
+| Hợp đồng doanh nghiệp với 10+ merchant Plus | +$50K ARR mỗi hợp đồng | 30% |
+| Shopify giới thiệu ứng dụng OrderEditing trong changelog | Đợt tăng đột biến 2.000+ lượt cài | 20% |
 
 ---
 
-## 5. Recommended Pricing Structure
+## 5. Cơ Cấu Giá Đề Xuất
 
-| Tier | Price | Limits | Target |
+| Gói | Giá | Giới hạn | Đối tượng |
 |------|-------|--------|--------|
-| **Free** | $0 | 50 edits/month, basic features, Avada branding | Free/Dev + SMB trial |
-| **Starter** | $9.99/mo | 200 edits, address validation, basic analytics | Small SMB |
-| **Growth** | $19.99/mo | Unlimited edits, upsells, store credits, full analytics | Growing SMB |
-| **Pro** | $29.99/mo | Everything + Shopify Flow, priority support, no branding | Established SMB |
-| **Business** | $49.99/mo | Everything + 3PL integrations, advanced automation | Mid-Market |
-| **Enterprise** | $99.99/mo | Everything + B2B editing, subscriptions, Slack support, SOC 2 | Shopify Plus |
+| **Miễn phí** | $0 | 50 lần chỉnh sửa/tháng, tính năng cơ bản, thương hiệu Avada | Miễn phí/Dev + dùng thử SMB |
+| **Starter** | $9.99/tháng | 200 lần chỉnh sửa, xác thực địa chỉ, phân tích cơ bản | SMB nhỏ |
+| **Growth** | $19.99/tháng | Không giới hạn chỉnh sửa, bán thêm, tín dụng cửa hàng, phân tích đầy đủ | SMB đang tăng trưởng |
+| **Pro** | $29.99/tháng | Tất cả + Shopify Flow, hỗ trợ ưu tiên, không thương hiệu | SMB ổn định |
+| **Business** | $49.99/tháng | Tất cả + tích hợp 3PL, tự động hóa nâng cao | Thị trường trung bình |
+| **Enterprise** | $99.99/tháng | Tất cả + chỉnh sửa B2B, đăng ký định kỳ, hỗ trợ Slack, SOC 2 | Shopify Plus |
 
-**Annual discount:** 20% off (common in category, customers expect it)
+**Giảm giá thanh toán năm:** 20% (phổ biến trong danh mục, khách hàng mong đợi)
 
-**Key pricing principles:**
-1. Free tier is generous enough to be useful (50 edits covers stores with ~150-200 orders/month where ~25% need edits)
-2. Starter at $9.99 undercuts EVERY competitor with meaningful features
-3. Growth at $19.99 is the "sweet spot" -- most conversions happen here
-4. Enterprise at $99.99 is still cheaper than competitors' mid-tier ($99-$199/mo for similar features)
+**Nguyên tắc định giá chính:**
+1. Gói miễn phí đủ hào phóng để hữu ích (50 lần chỉnh sửa đủ cho cửa hàng có ~150-200 đơn/tháng với ~25% cần chỉnh sửa)
+2. Starter ở $9.99 rẻ hơn MỌI đối thủ với tính năng đáng kể
+3. Growth ở $19.99 là "điểm ngọt" -- hầu hết chuyển đổi xảy ra ở đây
+4. Enterprise ở $99.99 vẫn rẻ hơn gói trung cấp của đối thủ ($99-$199/tháng cho tính năng tương tự)
 
 ---
 
-## 6. Success Metrics
+## 6. Chỉ Số Thành Công
 
-### Launch Metrics (First 90 Days)
+### Chỉ Số Ra Mắt (90 Ngày Đầu)
 
-| Metric | Target | Stretch |
+| Chỉ số | Mục tiêu | Vượt mục tiêu |
 |--------|--------|---------|
-| Total installs | 500 | 1,000 |
-| Paying customers | 40 | 80 |
-| App store rating | 4.8+ | 5.0 |
-| Number of reviews | 20+ | 50+ |
-| Free-to-paid conversion | 8% | 12% |
-| MRR | $880 | $1,760 |
+| Tổng lượt cài | 500 | 1.000 |
+| Khách trả phí | 40 | 80 |
+| Đánh giá app store | 4.8+ | 5.0 |
+| Số lượng đánh giá | 20+ | 50+ |
+| Tỷ lệ chuyển đổi miễn phí sang trả phí | 8% | 12% |
+| MRR | $880 | $1.760 |
 
-### Growth Metrics (Monthly, Ongoing)
+### Chỉ Số Tăng Trưởng (Hàng Tháng, Liên Tục)
 
-| Metric | Target |
+| Chỉ số | Mục tiêu |
 |--------|--------|
-| Install growth rate | 15-25% MoM |
-| Paid conversion rate | 10%+ |
-| Monthly churn (paid) | <6% |
-| Net Revenue Retention | >105% |
-| Support response time | <2 hours |
-| App store rating | 4.9+ |
+| Tốc độ tăng trưởng lượt cài | 15-25% MoM |
+| Tỷ lệ chuyển đổi trả phí | 10%+ |
+| Tỷ lệ rời bỏ hàng tháng (trả phí) | <6% |
+| Giữ chân doanh thu ròng | >105% |
+| Thời gian phản hồi hỗ trợ | <2 giờ |
+| Đánh giá app store | 4.9+ |
 | NPS | >50 |
 
 ---
 
-## 7. Competitive Moat Strategy
+## 7. Chiến Lược Lợi Thế Cạnh Tranh Bền Vững
 
-### Short-term (Year 1): Price + Quality
-- Best free tier in the market
-- Best value at $9.99-$19.99 price point
-- Superior reliability (no duplicate orders, no tax bugs)
-- Fast, responsive support
+### Ngắn hạn (Năm 1): Giá + Chất Lượng
+- Gói miễn phí tốt nhất thị trường
+- Giá trị tốt nhất ở mức giá $9.99-$19.99
+- Độ tin cậy vượt trội (không trùng đơn, không lỗi thuế)
+- Hỗ trợ nhanh, phản hồi kịp thời
 
-### Medium-term (Year 2): Features + Integrations
-- Blue ocean features (local delivery editing, bulk editing)
-- Deep 3PL integrations
-- Shopify Flow marketplace presence
-- AI-powered recommendations
+### Trung hạn (Năm 2): Tính Năng + Tích Hợp
+- Tính năng đại dương xanh (chỉnh sửa đơn giao hàng nội địa, chỉnh sửa hàng loạt)
+- Tích hợp sâu 3PL
+- Hiện diện trên Shopify Flow marketplace
+- Gợi ý bằng AI
 
-### Long-term (Year 3): Ecosystem + Data
-- Cross-sell with Avada product suite
-- Merchant data insights (anonymous, aggregated)
-- Industry benchmarks ("stores like yours reduce tickets by X%")
-- Enterprise relationships and case studies
+### Dài hạn (Năm 3): Hệ Sinh Thái + Dữ Liệu
+- Bán chéo với bộ sản phẩm Avada
+- Thông tin chi tiết dữ liệu người bán (ẩn danh, tổng hợp)
+- Tiêu chuẩn ngành ("các cửa hàng tương tự giảm X% yêu cầu hỗ trợ")
+- Mối quan hệ doanh nghiệp và nghiên cứu điển hình

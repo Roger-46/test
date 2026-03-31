@@ -1,912 +1,918 @@
-# Screen Descriptions & Wireframes
+# Mô Tả Màn Hình & Wireframe
 # Avada Order Editing
 
-This document describes all key screens in the application, covering both the customer-facing storefront experience and the merchant admin interface. Each screen includes layout descriptions, Polaris components used, key interactions, and mobile adaptation notes.
+Tài liệu này mô tả tất cả các màn hình chính trong ứng dụng, bao gồm cả trải nghiệm giao diện cửa hàng dành cho khách hàng và giao diện quản trị dành cho người bán. Mỗi màn hình bao gồm mô tả bố cục, các thành phần Polaris được sử dụng, các tương tác chính và ghi chú về thích ứng trên thiết bị di động.
 
 ---
 
-## Part 1: Customer-Facing Screens (Storefront)
+## Phần 1: Màn Hình Dành Cho Khách Hàng (Giao Diện Cửa Hàng)
 
 ---
 
-### Screen 1: Order Status Page -- Edit Order Widget
+### Màn Hình 1: Trang Trạng Thái Đơn Hàng -- Widget Chỉnh Sửa Đơn Hàng
 
-**Purpose**: Allow customers to initiate order editing directly from Shopify's Order Status Page (post-purchase tracking page). This is the primary entry point for customer self-service editing.
+**Mục đích**: Cho phép khách hàng bắt đầu chỉnh sửa đơn hàng trực tiếp từ Trang Trạng Thái Đơn Hàng của Shopify (trang theo dõi sau mua hàng). Đây là điểm truy cập chính cho khách hàng tự chỉnh sửa.
 
-**Implementation**: Theme App Extension (Liquid App Block)
+**Triển khai**: Theme App Extension (Liquid App Block)
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  Shopify Order Status Page (native)                       |
+|  Trang Trạng Thái Đơn Hàng Shopify (gốc)                 |
 |                                                           |
-|  Order #1234 confirmed                                    |
-|  [Shopify native order details...]                        |
+|  Đơn hàng #1234 đã xác nhận                              |
+|  [Chi tiết đơn hàng gốc Shopify...]                      |
 |                                                           |
 |  +-------------------------------------------------------+|
-|  |  EDIT ORDER WIDGET (App Block)                        ||
+|  |  WIDGET CHỈNH SỬA ĐƠN HÀNG (App Block)              ||
 |  |                                                       ||
-|  |  [Edit icon] Need to make changes to your order?      ||
+|  |  [Biểu tượng chỉnh sửa] Bạn cần thay đổi đơn hàng?  ||
 |  |                                                       ||
-|  |  You can edit your order within the next 2h 45m       ||
+|  |  Bạn có thể chỉnh sửa đơn hàng trong 2g 45p tới     ||
 |  |                                                       ||
-|  |  [============================------] 2h 45m left     ||
-|  |  (progress bar showing time remaining)                ||
+|  |  [============================------] Còn 2g 45p      ||
+|  |  (thanh tiến trình hiển thị thời gian còn lại)        ||
 |  |                                                       ||
 |  |  +-------------------+  +-------------------------+  ||
-|  |  | Edit Order        |  | Cancel Order             |  ||
-|  |  | (Primary Button)  |  | (Destructive Plain Link) |  ||
+|  |  | Chỉnh Sửa Đơn    |  | Hủy Đơn Hàng            |  ||
+|  |  | (Nút Chính)       |  | (Liên Kết Hủy)          |  ||
 |  |  +-------------------+  +-------------------------+  ||
 |  |                                                       ||
-|  |  Changes allowed: Address, Items, Quantities          ||
-|  |  (small text showing what can be edited)              ||
+|  |  Thay đổi cho phép: Địa chỉ, Sản phẩm, Số lượng     ||
+|  |  (văn bản nhỏ hiển thị những gì có thể chỉnh sửa)    ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  [Shopify native map/tracking...]                         |
+|  [Bản đồ/theo dõi gốc Shopify...]                        |
 +-----------------------------------------------------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Countdown timer**: Visual progress bar + text showing remaining edit window
-- **Edit Order button**: Primary action, opens the Edit Order Page
-- **Cancel Order link**: Destructive plain link, opens cancellation flow
-- **Allowed changes text**: Shows what the merchant has enabled
-- **Expired state**: When time window closes, widget shows "Edit window has closed" with dimmed styling
+- **Bộ đếm ngược**: Thanh tiến trình trực quan + văn bản hiển thị thời gian chỉnh sửa còn lại
+- **Nút Chỉnh Sửa Đơn Hàng**: Hành động chính, mở Trang Chỉnh Sửa Đơn Hàng
+- **Liên kết Hủy Đơn Hàng**: Liên kết hủy, mở quy trình hủy đơn
+- **Văn bản thay đổi cho phép**: Hiển thị những gì người bán đã bật
+- **Trạng thái hết hạn**: Khi cửa sổ thời gian đóng, widget hiển thị "Cửa sổ chỉnh sửa đã đóng" với kiểu mờ
 
-#### Interactions
+#### Tương Tác
 
-1. Customer clicks "Edit Order" -> redirects to Edit Order Page (Screen 3)
-2. Customer clicks "Cancel Order" -> redirects to Cancellation Flow (Screen 5)
-3. Timer counts down in real-time; at expiry, buttons become disabled
-4. If order is already fulfilled, widget shows "This order has been shipped and can no longer be edited"
+1. Khách hàng nhấn "Chỉnh Sửa Đơn Hàng" -> chuyển hướng đến Trang Chỉnh Sửa Đơn Hàng (Màn Hình 3)
+2. Khách hàng nhấn "Hủy Đơn Hàng" -> chuyển hướng đến Quy Trình Hủy Đơn (Màn Hình 5)
+3. Bộ đếm ngược chạy theo thời gian thực; khi hết hạn, các nút bị vô hiệu hóa
+4. Nếu đơn hàng đã được thực hiện, widget hiển thị "Đơn hàng này đã được vận chuyển và không thể chỉnh sửa nữa"
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Widget is full-width on mobile
-- Buttons stack vertically on screens < 400px
-- Progress bar remains horizontal, text wraps below
+- Widget chiếm toàn bộ chiều rộng trên di động
+- Các nút xếp chồng dọc trên màn hình < 400px
+- Thanh tiến trình giữ ngang, văn bản xuống dòng bên dưới
 
 ---
 
-### Screen 2: Thank-You Page -- Edit Order Banner
+### Màn Hình 2: Trang Cảm Ơn -- Banner Chỉnh Sửa Đơn Hàng
 
-**Purpose**: Catch customers immediately after checkout when they are most likely to notice mistakes. This is a high-conversion entry point since customers are still engaged.
+**Mục đích**: Tiếp cận khách hàng ngay sau khi thanh toán khi họ có khả năng nhận ra lỗi sai cao nhất. Đây là điểm truy cập có tỷ lệ chuyển đổi cao vì khách hàng vẫn đang tương tác.
 
-**Implementation**: Theme App Extension (Liquid App Block) or Checkout UI Extension
+**Triển khai**: Theme App Extension (Liquid App Block) hoặc Checkout UI Extension
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  Shopify Thank You Page                                   |
+|  Trang Cảm Ơn Shopify                                    |
 |                                                           |
-|  Thank you, John! Your order is confirmed.                |
-|  Order #1234                                              |
+|  Cảm ơn bạn, John! Đơn hàng của bạn đã được xác nhận.   |
+|  Đơn hàng #1234                                          |
 |                                                           |
 |  +-------------------------------------------------------+|
-|  |  EDIT ORDER BANNER (App Block)                        ||
+|  |  BANNER CHỈNH SỬA ĐƠN HÀNG (App Block)              ||
 |  |                                                       ||
-|  |  [Checkmark icon]  Order placed successfully!         ||
+|  |  [Biểu tượng dấu tick]  Đặt hàng thành công!         ||
 |  |                                                       ||
-|  |  Made a mistake? You can still edit your order.       ||
-|  |  Change your address, swap items, or adjust           ||
-|  |  quantities within the next 3 hours.                  ||
+|  |  Nhầm lẫn? Bạn vẫn có thể chỉnh sửa đơn hàng.       ||
+|  |  Thay đổi địa chỉ, đổi sản phẩm, hoặc điều chỉnh    ||
+|  |  số lượng trong 3 giờ tới.                            ||
 |  |                                                       ||
 |  |  +----------------------------------------------+    ||
-|  |  |          Edit My Order (Primary Button)       |    ||
+|  |  |     Chỉnh Sửa Đơn Hàng (Nút Chính)          |    ||
 |  |  +----------------------------------------------+    ||
 |  |                                                       ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  [Shopify native order summary...]                        |
+|  [Tóm tắt đơn hàng gốc Shopify...]                       |
 +-----------------------------------------------------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Success-toned banner**: Light green/blue background, reassuring tone
-- **Clear CTA**: Single prominent "Edit My Order" button
-- **Time window mention**: "within the next 3 hours" (dynamic based on merchant settings)
-- **Non-intrusive**: Sits below the order confirmation, does not distract from the positive checkout experience
+- **Banner tông tích cực**: Nền xanh lá/xanh dương nhạt, giọng điệu an tâm
+- **CTA rõ ràng**: Một nút "Chỉnh Sửa Đơn Hàng" nổi bật duy nhất
+- **Đề cập cửa sổ thời gian**: "trong 3 giờ tới" (động theo cài đặt người bán)
+- **Không gây phiền**: Nằm bên dưới xác nhận đơn hàng, không làm phân tâm trải nghiệm thanh toán tích cực
 
-#### Interactions
+#### Tương Tác
 
-1. Customer clicks "Edit My Order" -> redirects to Edit Order Page (Screen 3)
-2. Banner auto-hides if the edit window has already expired (edge case: slow page load)
-3. If merchant has disabled self-service editing, this block is not rendered
+1. Khách hàng nhấn "Chỉnh Sửa Đơn Hàng" -> chuyển hướng đến Trang Chỉnh Sửa Đơn Hàng (Màn Hình 3)
+2. Banner tự ẩn nếu cửa sổ chỉnh sửa đã hết hạn (trường hợp ngoại lệ: tải trang chậm)
+3. Nếu người bán đã tắt chỉnh sửa tự phục vụ, block này không được hiển thị
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Full-width banner
-- Button stretches to full width on mobile
-- Text is concise to avoid excessive scrolling
+- Banner toàn chiều rộng
+- Nút kéo dài toàn chiều rộng trên di động
+- Văn bản ngắn gọn để tránh cuộn quá nhiều
 
 ---
 
-### Screen 3: Edit Order Page -- Main Editing Interface
+### Màn Hình 3: Trang Chỉnh Sửa Đơn Hàng -- Giao Diện Chỉnh Sửa Chính
 
-**Purpose**: The core customer-facing editing interface where customers make changes to their order. This is a standalone page (not embedded in Shopify admin) that loads via a unique URL.
+**Mục đích**: Giao diện chỉnh sửa chính dành cho khách hàng, nơi khách hàng thực hiện thay đổi đơn hàng. Đây là trang độc lập (không nhúng trong Shopify admin) tải qua URL duy nhất.
 
-**Implementation**: Preact storefront widget (Scripttag) or dedicated page via app proxy
+**Triển khai**: Widget cửa hàng Preact (Scripttag) hoặc trang riêng qua app proxy
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  [Store Logo]              Edit Order #1234     [X Close]  |
+|  [Logo Cửa Hàng]     Chỉnh Sửa Đơn Hàng #1234  [X Đóng] |
 |-----------------------------------------------------------+
 |                                                           |
-|  SECTION 1: SHIPPING ADDRESS                              |
+|  PHẦN 1: ĐỊA CHỈ GIAO HÀNG                               |
 |  +-------------------------------------------------------+|
-|  |  Shipping Address                    [Edit] (link)    ||
+|  |  Địa Chỉ Giao Hàng                  [Sửa] (liên kết) ||
 |  |                                                       ||
 |  |  John Smith                                           ||
 |  |  123 Main Street, Apt 4B                              ||
 |  |  New York, NY 10001                                   ||
-|  |  United States                                        ||
+|  |  Hoa Kỳ                                               ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  (When "Edit" is clicked, inline form expands:)           |
+|  (Khi nhấn "Sửa", biểu mẫu nội tuyến mở rộng:)          |
 |  +-------------------------------------------------------+|
-|  |  Shipping Address                                     ||
+|  |  Địa Chỉ Giao Hàng                                   ||
 |  |                                                       ||
-|  |  First Name: [John        ] Last Name: [Smith       ] ||
-|  |  Address 1:  [123 Main Street                       ] ||
-|  |  Address 2:  [Apt 4B                                ] ||
-|  |  City:       [New York    ] State:     [NY          ] ||
-|  |  Zip:        [10001      ] Country:    [US v       ]  ||
-|  |  Phone:      [+1 555-0123                           ] ||
+|  |  Tên:      [John        ] Họ:       [Smith       ]    ||
+|  |  Địa chỉ 1: [123 Main Street                       ]  ||
+|  |  Địa chỉ 2: [Apt 4B                                ]  ||
+|  |  Thành phố: [New York    ] Bang:     [NY          ]    ||
+|  |  Mã bưu điện: [10001   ] Quốc gia:  [US v       ]    ||
+|  |  Điện thoại: [+1 555-0123                           ] ||
 |  |                                                       ||
-|  |  [Save Address]  [Cancel]                             ||
+|  |  [Lưu Địa Chỉ]  [Hủy]                               ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 2: ORDER ITEMS                                   |
+|  PHẦN 2: SẢN PHẨM ĐƠN HÀNG                               |
 |  +-------------------------------------------------------+|
-|  |  [Product    ] T-Shirt - Blue / Large                 ||
-|  |  [Image      ] $29.99                                 ||
-|  |  [50x50      ]                                        ||
-|  |  [           ] Qty: [ - ] [2] [ + ]                   ||
+|  |  [Hình sản  ] Áo Thun - Xanh / Lớn                   ||
+|  |  [phẩm      ] $29.99                                  ||
+|  |  [50x50     ]                                         ||
+|  |  [           ] SL: [ - ] [2] [ + ]                    ||
 |  |  [           ]                                        ||
-|  |  [           ] [Swap Variant] [Remove Item]           ||
+|  |  [           ] [Đổi Phiên Bản] [Xóa Sản Phẩm]       ||
 |  +-------------------------------------------------------+|
-|  |  [Product    ] Hoodie - Black / Medium                ||
-|  |  [Image      ] $59.99                                 ||
-|  |  [50x50      ]                                        ||
-|  |  [           ] Qty: [ - ] [1] [ + ]                   ||
+|  |  [Hình sản  ] Hoodie - Đen / Trung Bình               ||
+|  |  [phẩm      ] $59.99                                  ||
+|  |  [50x50     ]                                         ||
+|  |  [           ] SL: [ - ] [1] [ + ]                    ||
 |  |  [           ]                                        ||
-|  |  [           ] [Swap Variant] [Remove Item]           ||
+|  |  [           ] [Đổi Phiên Bản] [Xóa Sản Phẩm]       ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  (When "Swap Variant" is clicked, modal/drawer opens:)    |
+|  (Khi nhấn "Đổi Phiên Bản", modal/drawer mở ra:)         |
 |  +-------------------------------------------------------+|
-|  |  Swap: T-Shirt - Blue / Large                         ||
+|  |  Đổi: Áo Thun - Xanh / Lớn                           ||
 |  |                                                       ||
-|  |  Color:  [Blue v]  ->  [Red] [Green] [Black]          ||
-|  |  Size:   [Large v] ->  [S] [M] [L] [XL]              ||
+|  |  Màu:     [Xanh v]  ->  [Đỏ] [Xanh lá] [Đen]        ||
+|  |  Kích cỡ: [Lớn v]   ->  [S] [M] [L] [XL]            ||
 |  |                                                       ||
-|  |  Original: $29.99                                     ||
-|  |  New:      $29.99  (No price change)                  ||
+|  |  Giá gốc:  $29.99                                    ||
+|  |  Giá mới:  $29.99  (Không thay đổi giá)              ||
 |  |                                                       ||
-|  |  [Confirm Swap]  [Cancel]                             ||
+|  |  [Xác Nhận Đổi]  [Hủy]                               ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 3: PRICE SUMMARY (sticky footer on mobile)      |
+|  PHẦN 3: TÓM TẮT GIÁ (thanh cố định dưới cùng trên     |
+|  di động)                                                 |
 |  +-------------------------------------------------------+|
-|  |  Original Total:     $119.97                          ||
-|  |  New Total:          $109.98                          ||
-|  |  Difference:         -$9.99 (Refund)                  ||
+|  |  Tổng gốc:          $119.97                           ||
+|  |  Tổng mới:          $109.98                           ||
+|  |  Chênh lệch:        -$9.99 (Hoàn tiền)               ||
+|  |                                                       ||
 |  |                                                       ||
 |  |  +----------------------------------------------+    ||
-|  |  |     Review Changes (Primary Button)           |    ||
+|  |  |     Xem Lại Thay Đổi (Nút Chính)             |    ||
 |  |  +----------------------------------------------+    ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  Time remaining: 2h 30m                                   |
+|  Thời gian còn lại: 2g 30p                                |
 +-----------------------------------------------------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Store branding**: Merchant's logo, colors applied via settings
-- **Address section**: Collapsible inline edit form
-- **Item cards**: Product image, title, variant, price, quantity stepper, swap/remove actions
-- **Variant swap**: Modal or drawer showing available variants with price comparison
-- **Price summary**: Running total showing original, new, and difference (refund or charge)
-- **Time remaining**: Persistent reminder of edit window
+- **Thương hiệu cửa hàng**: Logo, màu sắc của người bán áp dụng qua cài đặt
+- **Phần địa chỉ**: Biểu mẫu chỉnh sửa nội tuyến có thể thu gọn
+- **Thẻ sản phẩm**: Hình ảnh sản phẩm, tiêu đề, phiên bản, giá, bộ điều chỉnh số lượng, hành động đổi/xóa
+- **Đổi phiên bản**: Modal hoặc drawer hiển thị các phiên bản có sẵn với so sánh giá
+- **Tóm tắt giá**: Tổng cộng liên tục hiển thị giá gốc, giá mới và chênh lệch (hoàn tiền hoặc tính thêm)
+- **Thời gian còn lại**: Nhắc nhở liên tục về cửa sổ chỉnh sửa
 
-#### Interactions
+#### Tương Tác
 
-1. Edit address -> inline form with validation -> Save updates the address
-2. Quantity +/- -> updates price summary in real-time
-3. Swap Variant -> opens variant selector -> shows price difference -> confirm swap
-4. Remove Item -> confirmation dialog ("Remove T-Shirt from your order?") -> updates summary
-5. Review Changes -> navigates to Edit Confirmation (Screen 4)
-6. If item is out of stock, variant option is disabled with "Out of stock" label
-7. Cannot remove all items (last item removal blocked -- suggest cancellation instead)
+1. Sửa địa chỉ -> biểu mẫu nội tuyến với xác thực -> Lưu cập nhật địa chỉ
+2. Số lượng +/- -> cập nhật tóm tắt giá theo thời gian thực
+3. Đổi Phiên Bản -> mở bộ chọn phiên bản -> hiển thị chênh lệch giá -> xác nhận đổi
+4. Xóa Sản Phẩm -> hộp thoại xác nhận ("Xóa Áo Thun khỏi đơn hàng của bạn?") -> cập nhật tóm tắt
+5. Xem Lại Thay Đổi -> chuyển đến Xác Nhận Chỉnh Sửa (Màn Hình 4)
+6. Nếu sản phẩm hết hàng, tùy chọn phiên bản bị vô hiệu hóa với nhãn "Hết hàng"
+7. Không thể xóa tất cả sản phẩm (xóa sản phẩm cuối cùng bị chặn -- gợi ý hủy đơn thay thế)
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Single-column layout
-- Address form fields stack vertically
-- Product cards are full-width with image on the left (compact)
-- Price summary becomes a sticky footer bar with "Review Changes" button
-- Variant swap opens as a bottom sheet instead of modal
-- Quantity stepper uses larger touch targets (44px minimum)
+- Bố cục một cột
+- Các trường biểu mẫu địa chỉ xếp chồng dọc
+- Thẻ sản phẩm toàn chiều rộng với hình ảnh bên trái (thu gọn)
+- Tóm tắt giá trở thành thanh cố định dưới cùng với nút "Xem Lại Thay Đổi"
+- Đổi phiên bản mở dưới dạng bottom sheet thay vì modal
+- Bộ điều chỉnh số lượng sử dụng vùng chạm lớn hơn (tối thiểu 44px)
 
 ---
 
-### Screen 4: Edit Confirmation -- Summary of Changes
+### Màn Hình 4: Xác Nhận Chỉnh Sửa -- Tóm Tắt Các Thay Đổi
 
-**Purpose**: Show the customer a clear summary of all changes before they confirm. This screen is critical for preventing accidental edits and building trust through transparency.
+**Mục đích**: Hiển thị cho khách hàng bản tóm tắt rõ ràng về tất cả thay đổi trước khi xác nhận. Màn hình này rất quan trọng để ngăn chỉnh sửa nhầm và xây dựng niềm tin thông qua sự minh bạch.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  [Store Logo]         Confirm Your Changes      [< Back]   |
+|  [Logo Cửa Hàng]    Xác Nhận Thay Đổi          [< Quay lại]|
 |-----------------------------------------------------------+
 |                                                           |
-|  CHANGES SUMMARY                                          |
+|  TÓM TẮT THAY ĐỔI                                       |
 |  +-------------------------------------------------------+|
-|  |  [Check icon] Address Updated                         ||
-|  |  Old: 123 Main Street, New York, NY 10001             ||
-|  |  New: 456 Oak Avenue, Brooklyn, NY 11201              ||
+|  |  [Biểu tượng tick] Đã Cập Nhật Địa Chỉ               ||
+|  |  Cũ: 123 Main Street, New York, NY 10001              ||
+|  |  Mới: 456 Oak Avenue, Brooklyn, NY 11201              ||
 |  +-------------------------------------------------------+|
-|  |  [Swap icon] Item Swapped                             ||
-|  |  T-Shirt Blue/Large -> T-Shirt Red/Medium             ||
-|  |  Price: $29.99 -> $29.99 (no change)                  ||
+|  |  [Biểu tượng đổi] Đã Đổi Sản Phẩm                    ||
+|  |  Áo Thun Xanh/Lớn -> Áo Thun Đỏ/Trung Bình          ||
+|  |  Giá: $29.99 -> $29.99 (không thay đổi)               ||
 |  +-------------------------------------------------------+|
-|  |  [Minus icon] Quantity Changed                        ||
-|  |  T-Shirt: 2 -> 1 (removed 1)                         ||
-|  |  Refund: -$29.99                                      ||
+|  |  [Biểu tượng trừ] Đã Thay Đổi Số Lượng               ||
+|  |  Áo Thun: 2 -> 1 (đã xóa 1)                          ||
+|  |  Hoàn tiền: -$29.99                                    ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  PRICE BREAKDOWN                                          |
+|  CHI TIẾT GIÁ                                             |
 |  +-------------------------------------------------------+|
-|  |  Original Subtotal:        $119.97                    ||
-|  |  Changes:                  -$29.99                    ||
-|  |  Tax Adjustment:           -$2.40                     ||
-|  |  Shipping:                 $0.00 (no change)          ||
+|  |  Tạm tính gốc:             $119.97                    ||
+|  |  Thay đổi:                 -$29.99                    ||
+|  |  Điều chỉnh thuế:          -$2.40                     ||
+|  |  Vận chuyển:               $0.00 (không thay đổi)     ||
 |  |  --------------------------------------------------- ||
-|  |  New Total:                $87.58                     ||
-|  |  You will be refunded:     $32.39                     ||
+|  |  Tổng mới:                 $87.58                     ||
+|  |  Bạn sẽ được hoàn:         $32.39                     ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  (or if additional charge:)                               |
+|  (hoặc nếu tính thêm phí:)                                |
 |  +-------------------------------------------------------+|
-|  |  Additional charge:        $15.00                     ||
-|  |  Payment method: Visa ending in 4242                  ||
+|  |  Phí bổ sung:              $15.00                     ||
+|  |  Phương thức thanh toán: Visa kết thúc 4242           ||
 |  +-------------------------------------------------------+|
 |                                                           |
 |  +-------------------------------------------------------+|
-|  |  [Checkbox] I confirm these changes to my order       ||
+|  |  [Ô đánh dấu] Tôi xác nhận các thay đổi cho đơn hàng||
 |  +-------------------------------------------------------+|
 |                                                           |
 |  +------------------------------------------------------+|
-|  |          Confirm Changes (Primary Button)             ||
+|  |          Xác Nhận Thay Đổi (Nút Chính)               ||
 |  +------------------------------------------------------+|
-|  |          Go Back and Edit (Plain Link)                ||
+|  |          Quay Lại Chỉnh Sửa (Liên Kết)               ||
 |  +------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Change cards**: Each change shown with icon, old vs. new values, and price impact
-- **Price breakdown**: Clear line-by-line with tax and shipping adjustments
-- **Refund/charge callout**: Prominent display of what happens financially
-- **Confirmation checkbox**: Required before submitting (prevents accidental confirms)
-- **Payment method**: Shown when additional charge is required
+- **Thẻ thay đổi**: Mỗi thay đổi hiển thị với biểu tượng, giá trị cũ so với mới, và tác động giá
+- **Chi tiết giá**: Hiển thị rõ ràng từng dòng với điều chỉnh thuế và vận chuyển
+- **Thông báo hoàn tiền/tính phí**: Hiển thị nổi bật về những gì xảy ra về tài chính
+- **Ô đánh dấu xác nhận**: Bắt buộc trước khi gửi (ngăn xác nhận nhầm)
+- **Phương thức thanh toán**: Hiển thị khi cần tính thêm phí
 
-#### Interactions
+#### Tương Tác
 
-1. Customer reviews all changes
-2. Checks confirmation checkbox
-3. Clicks "Confirm Changes" -> loading state -> success screen
-4. Success screen: "Your order has been updated! You'll receive a confirmation email shortly." with link back to Order Status Page
-5. If payment fails (additional charge), show error: "Payment could not be processed. Please contact support."
-6. "Go Back and Edit" returns to Edit Order Page with changes preserved
+1. Khách hàng xem lại tất cả thay đổi
+2. Đánh dấu ô xác nhận
+3. Nhấn "Xác Nhận Thay Đổi" -> trạng thái đang tải -> màn hình thành công
+4. Màn hình thành công: "Đơn hàng của bạn đã được cập nhật! Bạn sẽ nhận được email xác nhận trong thời gian ngắn." với liên kết quay lại Trang Trạng Thái Đơn Hàng
+5. Nếu thanh toán thất bại (tính thêm phí), hiển thị lỗi: "Không thể xử lý thanh toán. Vui lòng liên hệ hỗ trợ."
+6. "Quay Lại Chỉnh Sửa" quay về Trang Chỉnh Sửa Đơn Hàng với các thay đổi được giữ nguyên
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Change cards stack vertically, full-width
-- Price breakdown uses a compact layout
-- Confirm button is sticky at bottom
-- Checkbox uses large touch target
+- Thẻ thay đổi xếp chồng dọc, toàn chiều rộng
+- Chi tiết giá sử dụng bố cục thu gọn
+- Nút xác nhận cố định ở dưới cùng
+- Ô đánh dấu sử dụng vùng chạm lớn
 
 ---
 
-### Screen 5: Cancellation Flow -- Reason Selection + Retention Offer
+### Màn Hình 5: Quy Trình Hủy Đơn -- Chọn Lý Do + Đề Nghị Giữ Chân
 
-**Purpose**: When a customer wants to cancel, capture the reason and present a retention offer to reduce cancellation rate. This is a P1 feature but the basic flow (reason + confirm) is P0.
+**Mục đích**: Khi khách hàng muốn hủy, thu thập lý do và đưa ra đề nghị giữ chân để giảm tỷ lệ hủy đơn. Đây là tính năng P1 nhưng quy trình cơ bản (lý do + xác nhận) là P0.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  [Store Logo]         Cancel Order #1234        [< Back]   |
+|  [Logo Cửa Hàng]    Hủy Đơn Hàng #1234         [< Quay lại]|
 |-----------------------------------------------------------+
 |                                                           |
-|  STEP 1: REASON (shown first)                             |
+|  BƯỚC 1: LÝ DO (hiển thị đầu tiên)                       |
 |  +-------------------------------------------------------+|
-|  |  Why do you want to cancel?                           ||
+|  |  Tại sao bạn muốn hủy?                               ||
 |  |                                                       ||
-|  |  ( ) I ordered the wrong item                         ||
-|  |  ( ) I found a better price elsewhere                 ||
-|  |  ( ) I no longer need this                            ||
-|  |  ( ) Shipping takes too long                          ||
-|  |  ( ) I want to change my order (*)                    ||
-|  |  ( ) Other: [________________]                        ||
+|  |  ( ) Tôi đặt nhầm sản phẩm                           ||
+|  |  ( ) Tôi tìm được giá tốt hơn ở nơi khác            ||
+|  |  ( ) Tôi không còn cần nữa                           ||
+|  |  ( ) Vận chuyển quá lâu                               ||
+|  |  ( ) Tôi muốn thay đổi đơn hàng (*)                  ||
+|  |  ( ) Khác: [________________]                         ||
 |  |                                                       ||
-|  |  (*) "Would you like to edit your order instead?"     ||
-|  |      [Edit Order Instead] (link to Screen 3)          ||
+|  |  (*) "Bạn có muốn chỉnh sửa đơn hàng thay vì hủy?"  ||
+|  |      [Chỉnh Sửa Đơn Hàng] (liên kết đến Màn Hình 3) ||
 |  |                                                       ||
-|  |  [Continue] (button)                                  ||
+|  |  [Tiếp Tục] (nút)                                    ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  STEP 2: RETENTION OFFER (P1 -- shown after reason)      |
+|  BƯỚC 2: ĐỀ NGHỊ GIỮ CHÂN (P1 -- hiển thị sau lý do)   |
 |  +-------------------------------------------------------+|
-|  |  Before you go...                                     ||
+|  |  Trước khi bạn rời đi...                              ||
 |  |                                                       ||
 |  |  +--------------------------------------------------+ ||
-|  |  | [Gift icon]                                      | ||
+|  |  | [Biểu tượng quà]                                 | ||
 |  |  |                                                  | ||
-|  |  | We'd like to offer you 15% OFF your order       | ||
-|  |  | if you decide to keep it.                        | ||
+|  |  | Chúng tôi muốn tặng bạn GIẢM 15% cho đơn hàng  | ||
+|  |  | nếu bạn quyết định giữ lại.                      | ||
 |  |  |                                                  | ||
-|  |  | New total: $119.97 -> $101.97                    | ||
-|  |  | You save: $18.00                                 | ||
+|  |  | Tổng mới: $119.97 -> $101.97                     | ||
+|  |  | Bạn tiết kiệm: $18.00                           | ||
 |  |  |                                                  | ||
-|  |  | [Keep My Order with 15% Off] (Primary)           | ||
-|  |  | [No thanks, cancel my order] (Plain link)        | ||
+|  |  | [Giữ Đơn Hàng Với Giảm 15%] (Nút Chính)         | ||
+|  |  | [Không, cảm ơn, hủy đơn hàng] (Liên kết)        | ||
 |  |  +--------------------------------------------------+ ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  STEP 3: CONFIRMATION                                     |
+|  BƯỚC 3: XÁC NHẬN                                        |
 |  +-------------------------------------------------------+|
-|  |  Are you sure you want to cancel Order #1234?         ||
+|  |  Bạn có chắc muốn hủy Đơn hàng #1234?                ||
 |  |                                                       ||
-|  |  - All items will be refunded to your original        ||
-|  |    payment method (Visa ending in 4242)               ||
-|  |  - Refund amount: $119.97                             ||
-|  |  - Refund processing time: 5-10 business days         ||
+|  |  - Tất cả sản phẩm sẽ được hoàn tiền về phương       ||
+|  |    thức thanh toán gốc (Visa kết thúc 4242)           ||
+|  |  - Số tiền hoàn: $119.97                              ||
+|  |  - Thời gian xử lý hoàn tiền: 5-10 ngày làm việc     ||
 |  |                                                       ||
-|  |  [Cancel My Order] (Destructive button)               ||
-|  |  [Keep My Order] (Primary button)                     ||
+|  |  [Hủy Đơn Hàng] (Nút hủy)                            ||
+|  |  [Giữ Đơn Hàng] (Nút chính)                          ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  STEP 4: SUCCESS                                          |
+|  BƯỚC 4: THÀNH CÔNG                                      |
 |  +-------------------------------------------------------+|
-|  |  [Checkmark]                                          ||
-|  |  Your order has been cancelled.                       ||
-|  |  A refund of $119.97 will be processed within         ||
-|  |  5-10 business days.                                  ||
+|  |  [Dấu tick]                                           ||
+|  |  Đơn hàng của bạn đã được hủy.                        ||
+|  |  Hoàn tiền $119.97 sẽ được xử lý trong                ||
+|  |  5-10 ngày làm việc.                                   ||
 |  |                                                       ||
-|  |  [Continue Shopping] (link to store)                  ||
+|  |  [Tiếp Tục Mua Sắm] (liên kết đến cửa hàng)         ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Reason selection**: Radio buttons with common reasons; "change my order" redirects to editing
-- **Retention offer** (P1): Merchant-configurable discount or store credit
-- **Final confirmation**: Clear refund details and payment method
-- **Smart redirect**: If reason is "ordered wrong item", suggest editing instead
+- **Chọn lý do**: Nút radio với các lý do phổ biến; "thay đổi đơn hàng" chuyển hướng đến chỉnh sửa
+- **Đề nghị giữ chân** (P1): Giảm giá hoặc tín dụng cửa hàng do người bán cấu hình
+- **Xác nhận cuối cùng**: Chi tiết hoàn tiền rõ ràng và phương thức thanh toán
+- **Chuyển hướng thông minh**: Nếu lý do là "đặt nhầm sản phẩm", gợi ý chỉnh sửa thay vì hủy
 
-#### Interactions
+#### Tương Tác
 
-1. Select reason -> Continue
-2. If "want to change my order" selected, show "Edit Order Instead" link (redirect to Screen 3)
-3. (P1) Retention offer displayed -> "Keep My Order with 15% Off" applies discount and returns to order status
-4. "No thanks, cancel" -> final confirmation step
-5. "Cancel My Order" (destructive) -> processes cancellation -> shows success
-6. Merchant receives notification with cancellation reason for analytics
+1. Chọn lý do -> Tiếp Tục
+2. Nếu chọn "muốn thay đổi đơn hàng", hiển thị liên kết "Chỉnh Sửa Đơn Hàng" (chuyển hướng đến Màn Hình 3)
+3. (P1) Đề nghị giữ chân hiển thị -> "Giữ Đơn Hàng Với Giảm 15%" áp dụng giảm giá và quay lại trạng thái đơn hàng
+4. "Không, cảm ơn, hủy" -> bước xác nhận cuối cùng
+5. "Hủy Đơn Hàng" (nút hủy) -> xử lý hủy đơn -> hiển thị thành công
+6. Người bán nhận thông báo với lý do hủy cho phân tích
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Single-column, steps shown one at a time (wizard flow)
-- Radio buttons have large touch targets
-- Retention offer card is prominent with large CTA
-- Destructive button uses red styling for clarity
+- Một cột, các bước hiển thị từng bước một (quy trình wizard)
+- Nút radio có vùng chạm lớn
+- Thẻ đề nghị giữ chân nổi bật với CTA lớn
+- Nút hủy sử dụng kiểu đỏ để rõ ràng
 
 ---
 
-### Screen 6: Upsell During Edit (P1)
+### Màn Hình 6: Bán Thêm Trong Chỉnh Sửa (P1)
 
-**Purpose**: Show product recommendations while the customer is editing their order, generating additional revenue. This is a sidebar on desktop and a bottom section on mobile.
+**Mục đích**: Hiển thị gợi ý sản phẩm khi khách hàng đang chỉnh sửa đơn hàng, tạo thêm doanh thu. Đây là thanh bên trên máy tính và phần dưới cùng trên di động.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-------------------------------------------+---------------+
-|  Edit Order Page (Screen 3)               | UPSELL SIDEBAR|
-|                                           |               |
-|  [Main editing interface                  | You might     |
-|   as described in Screen 3]               | also like:    |
+|  Trang Chỉnh Sửa Đơn Hàng (Màn Hình 3)  | THANH BÊN     |
+|                                           | BÁN THÊM      |
+|  [Giao diện chỉnh sửa chính              |               |
+|   như mô tả trong Màn Hình 3]            | Bạn cũng có   |
+|                                           | thể thích:    |
 |                                           |               |
 |                                           | +----------+  |
-|                                           | |[Product  |  |
-|                                           | | Image    |  |
+|                                           | |[Hình sản |  |
+|                                           | | phẩm     |  |
 |                                           | | 80x80]   |  |
 |                                           | |           |  |
-|                                           | | Matching  |  |
-|                                           | | Belt      |  |
+|                                           | | Thắt Lưng |  |
+|                                           | | Phối Hợp  |  |
 |                                           | | $19.99    |  |
 |                                           | |           |  |
-|                                           | | [Add to   |  |
-|                                           | |  Order]   |  |
+|                                           | | [Thêm vào |  |
+|                                           | |  Đơn Hàng]|  |
 |                                           | +----------+  |
 |                                           |               |
 |                                           | +----------+  |
-|                                           | |[Product  |  |
-|                                           | | Image]   |  |
-|                                           | | Socks     |  |
+|                                           | |[Hình sản |  |
+|                                           | | phẩm]    |  |
+|                                           | | Tất       |  |
 |                                           | | $9.99     |  |
-|                                           | | [Add]     |  |
+|                                           | | [Thêm]    |  |
 |                                           | +----------+  |
 |                                           |               |
 |                                           | +----------+  |
-|                                           | |[Product  |  |
-|                                           | | Image]   |  |
-|                                           | | Hat       |  |
+|                                           | |[Hình sản |  |
+|                                           | | phẩm]    |  |
+|                                           | | Mũ        |  |
 |                                           | | $24.99    |  |
-|                                           | | [Add]     |  |
+|                                           | | [Thêm]    |  |
 |                                           | +----------+  |
 +-------------------------------------------+---------------+
 ```
 
-#### Key Elements
+#### Các Thành Phần Chính
 
-- **Product cards**: Image, title, price, "Add to Order" button
-- **Recommendations**: Based on items in the order (complementary products, same collection, frequently bought together)
-- **Revenue attribution**: Track upsell revenue generated through edits
-- **Maximum 3-4 recommendations**: Avoid overwhelming the customer
+- **Thẻ sản phẩm**: Hình ảnh, tiêu đề, giá, nút "Thêm vào Đơn Hàng"
+- **Gợi ý**: Dựa trên sản phẩm trong đơn hàng (sản phẩm bổ sung, cùng bộ sưu tập, thường mua cùng nhau)
+- **Phân bổ doanh thu**: Theo dõi doanh thu bán thêm tạo ra từ chỉnh sửa
+- **Tối đa 3-4 gợi ý**: Tránh làm khách hàng choáng ngợp
 
-#### Interactions
+#### Tương Tác
 
-1. Customer clicks "Add to Order" -> item is added to the order with quantity 1
-2. Price summary updates immediately
-3. Added upsell items appear in the order items section with a "Just Added" badge
-4. Customer can remove upsell items like any other item
-5. Upsell revenue is tracked and attributed to the app for analytics
+1. Khách hàng nhấn "Thêm vào Đơn Hàng" -> sản phẩm được thêm vào đơn hàng với số lượng 1
+2. Tóm tắt giá cập nhật ngay lập tức
+3. Sản phẩm bán thêm đã thêm xuất hiện trong phần sản phẩm đơn hàng với huy hiệu "Vừa Thêm"
+4. Khách hàng có thể xóa sản phẩm bán thêm như bất kỳ sản phẩm nào khác
+5. Doanh thu bán thêm được theo dõi và phân bổ cho ứng dụng để phân tích
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Sidebar becomes a horizontal scrollable section below the order items
-- Product cards are displayed in a horizontal carousel (2-3 visible)
-- "Add to Order" buttons use compact styling
-- Section is collapsible: "Recommended for you (3)" with expand/collapse
-
----
-
-## Part 2: Merchant Admin Screens (Polaris)
-
-All merchant admin screens are embedded in the Shopify Admin using React + Polaris v12+ and App Bridge.
+- Thanh bên trở thành phần cuộn ngang bên dưới sản phẩm đơn hàng
+- Thẻ sản phẩm hiển thị dạng băng chuyền ngang (2-3 hiển thị)
+- Nút "Thêm vào Đơn Hàng" sử dụng kiểu thu gọn
+- Phần có thể thu gọn: "Gợi ý cho bạn (3)" với mở rộng/thu gọn
 
 ---
 
-### Screen 7: Dashboard -- Overview
+## Phần 2: Màn Hình Quản Trị Người Bán (Polaris)
 
-**Purpose**: Give merchants an at-a-glance view of how order editing is performing in their store. This is the landing page when the app is opened.
+Tất cả màn hình quản trị người bán được nhúng trong Shopify Admin sử dụng React + Polaris v12+ và App Bridge.
 
-#### Layout Description
+---
+
+### Màn Hình 7: Bảng Điều Khiển -- Tổng Quan
+
+**Mục đích**: Cung cấp cho người bán cái nhìn tổng quan về hiệu suất chỉnh sửa đơn hàng trong cửa hàng. Đây là trang đích khi mở ứng dụng.
+
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
-|  Shopify Admin Header                                     |
+|  Header Quản Trị Shopify                                  |
 |-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [Dashboard] [Orders] [Edit Rules] [Analytics] [Settings] |
+|  [Bảng Điều Khiển] [Đơn Hàng] [Quy Tắc] [Phân Tích] [Cài Đặt]|
 |-----------------------------------------------------------+
 |                                                           |
-|  WELCOME BANNER (first-time only)                         |
+|  BANNER CHÀO MỪNG (chỉ lần đầu)                          |
 |  +-------------------------------------------------------+|
-|  |  Welcome to Avada Order Editing!                      ||
-|  |  Complete setup to let your customers edit orders.     ||
-|  |  [Complete Setup] (Primary)         [Dismiss] (Plain) ||
+|  |  Chào mừng đến với Avada Order Editing!               ||
+|  |  Hoàn tất thiết lập để khách hàng chỉnh sửa đơn hàng.||
+|  |  [Hoàn Tất Thiết Lập] (Chính)     [Bỏ Qua] (Liên kết)||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  DATE RANGE SELECTOR                                      |
-|  [Last 7 days v]  [Today] [7d] [30d] [90d] [Custom]      |
+|  BỘ CHỌN KHOẢNG THỜI GIAN                                |
+|  [7 ngày qua v]  [Hôm nay] [7n] [30n] [90n] [Tùy chỉnh] |
 |                                                           |
-|  METRIC CARDS (4-column grid)                             |
+|  THẺ CHỈ SỐ (lưới 4 cột)                                 |
 |  +-------------+ +-------------+ +-------------+ +-------+|
-|  | Total Edits  | | Support $   | | Upsell Rev  | | Cxl  ||
-|  |              | | Saved       | |             | | Rate ||
+|  | Tổng Chỉnh   | | $ Hỗ Trợ   | | Doanh Thu   | | Tỷ Lệ||
+|  | Sửa          | | Tiết Kiệm   | | Bán Thêm    | | Hủy  ||
 |  |    247       | |   $2,470    | |   $890      | | 3.2%||
-|  |  +12% vs     | |  +15% vs    | |  +8% vs     | | -1% ||
-|  |  last period | |  last period| |  last period| | vs  ||
+|  |  +12% so     | |  +15% so    | |  +8% so     | | -1% ||
+|  |  với kỳ trước| |  với kỳ trước| |  với kỳ trước| | so  ||
 |  +-------------+ +-------------+ +-------------+ +-------+|
 |                                                           |
-|  EDIT TYPES BREAKDOWN           RECENT ACTIVITY           |
+|  PHÂN LOẠI CHỈNH SỬA         HOẠT ĐỘNG GẦN ĐÂY          |
 |  +---------------------------+ +-------------------------+|
-|  | [Donut Chart]             | | 10:32 AM - Order #1234 ||
-|  |                           | | Address changed by      ||
-|  | Address: 45%              | | customer                ||
-|  | Item Swap: 25%            | |                         ||
-|  | Quantity: 20%             | | 10:15 AM - Order #1230 ||
-|  | Cancellation: 10%        | | Item swapped by         ||
-|  |                           | | customer                ||
+|  | [Biểu đồ tròn]           | | 10:32 SA - Đơn hàng    ||
+|  |                           | | #1234 Địa chỉ đã thay  ||
+|  | Địa chỉ: 45%             | | đổi bởi khách hàng     ||
+|  | Đổi sản phẩm: 25%        | |                         ||
+|  | Số lượng: 20%             | | 10:15 SA - Đơn hàng    ||
+|  | Hủy đơn: 10%             | | #1230 Sản phẩm đã đổi  ||
+|  |                           | | bởi khách hàng         ||
 |  |                           | |                         ||
-|  |                           | | 9:48 AM - Order #1228  ||
-|  |                           | | Cancelled by customer   ||
-|  |                           | | Reason: Wrong item      ||
+|  |                           | | 9:48 SA - Đơn hàng     ||
+|  |                           | | #1228 Đã hủy bởi khách ||
+|  |                           | | hàng. Lý do: Sai sản   ||
+|  |                           | | phẩm                   ||
 |  |                           | |                         ||
-|  |                           | | [View All Activity]     ||
+|  |                           | | [Xem Tất Cả Hoạt Động] ||
 |  +---------------------------+ +-------------------------+|
 |                                                           |
-|  PLAN USAGE                                               |
+|  SỬ DỤNG GÓI                                             |
 |  +-------------------------------------------------------+|
-|  |  Starter Plan: 142 / 200 edits used this month       ||
+|  |  Gói Starter: 142 / 200 lượt chỉnh sửa tháng này     ||
 |  |  [=============================-------] 71%           ||
-|  |  [Upgrade Plan]                                       ||
+|  |  [Nâng Cấp Gói]                                       ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with title and navigation tabs
-- `Layout` with `Layout.Section` for grid
-- `Card` for metric cards, chart card, activity feed
-- `Badge` for percentage changes (positive = green, negative = red)
-- `ProgressBar` for plan usage
-- `Button` for CTAs
-- `DatePicker` or custom date range selector
-- `Banner` for welcome/onboarding (dismissible)
-- `ResourceList` for recent activity
+- `Page` với tiêu đề và tab điều hướng
+- `Layout` với `Layout.Section` cho lưới
+- `Card` cho thẻ chỉ số, thẻ biểu đồ, nguồn cấp hoạt động
+- `Badge` cho thay đổi phần trăm (tích cực = xanh lá, tiêu cực = đỏ)
+- `ProgressBar` cho sử dụng gói
+- `Button` cho CTA
+- `DatePicker` hoặc bộ chọn khoảng thời gian tùy chỉnh
+- `Banner` cho chào mừng/hướng dẫn (có thể bỏ qua)
+- `ResourceList` cho hoạt động gần đây
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. Date range selector updates all metrics and charts
-2. Clicking a metric card navigates to detailed analytics (Screen 11)
-3. Clicking an activity item navigates to the order detail (Screen 12)
-4. "Upgrade Plan" opens billing upgrade flow
-5. "Complete Setup" navigates to Settings with guided setup
+1. Bộ chọn khoảng thời gian cập nhật tất cả chỉ số và biểu đồ
+2. Nhấn vào thẻ chỉ số chuyển đến phân tích chi tiết (Màn Hình 11)
+3. Nhấn vào mục hoạt động chuyển đến chi tiết đơn hàng (Màn Hình 12)
+4. "Nâng Cấp Gói" mở quy trình nâng cấp thanh toán
+5. "Hoàn Tất Thiết Lập" chuyển đến Cài Đặt với hướng dẫn thiết lập
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Metric cards stack in 2x2 grid on tablet, single column on mobile
-- Donut chart and activity feed stack vertically
-- Date selector uses compact dropdown
+- Thẻ chỉ số xếp lưới 2x2 trên máy tính bảng, một cột trên di động
+- Biểu đồ tròn và nguồn cấp hoạt động xếp chồng dọc
+- Bộ chọn ngày sử dụng dropdown thu gọn
 
 ---
 
-### Screen 8: Orders List -- Orders with Edit History
+### Màn Hình 8: Danh Sách Đơn Hàng -- Đơn Hàng Có Lịch Sử Chỉnh Sửa
 
-**Purpose**: Show merchants all orders that have been edited or are eligible for editing, with filtering and search capabilities.
+**Mục đích**: Hiển thị cho người bán tất cả đơn hàng đã được chỉnh sửa hoặc đủ điều kiện chỉnh sửa, với khả năng lọc và tìm kiếm.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [Dashboard] [Orders] [Edit Rules] [Analytics] [Settings] |
+|  [Bảng Điều Khiển] [Đơn Hàng] [Quy Tắc] [Phân Tích] [Cài Đặt]|
 |-----------------------------------------------------------+
 |                                                           |
-|  Orders                                       [Export CSV]|
+|  Đơn Hàng                                    [Xuất CSV]   |
 |                                                           |
-|  FILTERS                                                  |
-|  [Search orders...        ]                               |
-|  [Status: All v] [Edit type: All v] [Date range v]        |
+|  BỘ LỌC                                                  |
+|  [Tìm kiếm đơn hàng...     ]                             |
+|  [Trạng thái: Tất cả v] [Loại chỉnh sửa: Tất cả v] [Khoảng thời gian v]|
 |                                                           |
-|  TABS                                                     |
-|  [All] [Edited (142)] [Cancelled (18)] [Pending Edit (3)] |
+|  TAB                                                      |
+|  [Tất cả] [Đã sửa (142)] [Đã hủy (18)] [Đang chờ (3)]   |
 |                                                           |
-|  ORDER TABLE                                              |
+|  BẢNG ĐƠN HÀNG                                           |
 |  +-------------------------------------------------------+|
-|  | Order    | Customer    | Date     | Edit    | Status  ||
-|  |          |             |          | Type    |         ||
+|  | Đơn hàng | Khách hàng  | Ngày     | Loại    | Trạng   ||
+|  |          |             |          | Sửa     | thái    ||
 |  |----------+-------------+----------+---------+---------||
-|  | #1234    | John Smith  | Mar 30   | Address | Edited  ||
-|  |          |             | 10:32 AM | Swap    | [Badge] ||
+|  | #1234    | John Smith  | 30 Th3   | Địa chỉ | Đã sửa ||
+|  |          |             | 10:32 SA | Đổi SP  | [Huy hiệu]||
 |  |----------+-------------+----------+---------+---------||
-|  | #1230    | Jane Doe    | Mar 30   | Item    | Edited  ||
-|  |          |             | 10:15 AM | Swap    | [Badge] ||
+|  | #1230    | Jane Doe    | 30 Th3   | Đổi     | Đã sửa ||
+|  |          |             | 10:15 SA | SP      | [Huy hiệu]||
 |  |----------+-------------+----------+---------+---------||
-|  | #1228    | Bob Wilson  | Mar 30   | Cancel  | Cxl     ||
-|  |          |             | 9:48 AM  |         | [Badge] ||
+|  | #1228    | Bob Wilson  | 30 Th3   | Hủy     | Đã hủy ||
+|  |          |             | 9:48 SA  |         | [Huy hiệu]||
 |  |----------+-------------+----------+---------+---------||
-|  | #1225    | Alice Brown | Mar 29   | Qty     | Edited  ||
-|  |          |             | 4:22 PM  | Change  | [Badge] ||
+|  | #1225    | Alice Brown | 29 Th3   | Thay đổi| Đã sửa ||
+|  |          |             | 4:22 CH  | SL      | [Huy hiệu]||
 |  |----------+-------------+----------+---------+---------||
-|  | #1220    | Tom Lee     | Mar 29   | --      | Pending ||
-|  |          |             | 2:10 PM  |         | [Badge] ||
+|  | #1220    | Tom Lee     | 29 Th3   | --      | Đang    ||
+|  |          |             | 2:10 CH  |         | chờ     ||
+|  |          |             |          |         | [Huy hiệu]||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  Showing 1-20 of 163 orders          [< Prev] [Next >]   |
+|  Hiển thị 1-20 của 163 đơn hàng      [< Trước] [Sau >]   |
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with title
-- `IndexTable` for the order list (sortable columns)
-- `IndexFilters` for search, status, edit type, date range filters
-- `Tabs` for quick filtering (All, Edited, Cancelled, Pending)
-- `Badge` with status colors (Edited = info, Cancelled = critical, Pending = attention)
-- `Pagination` for navigating pages
-- `Button` for Export CSV
+- `Page` với tiêu đề
+- `IndexTable` cho danh sách đơn hàng (cột có thể sắp xếp)
+- `IndexFilters` cho tìm kiếm, trạng thái, loại chỉnh sửa, bộ lọc khoảng thời gian
+- `Tabs` cho lọc nhanh (Tất cả, Đã sửa, Đã hủy, Đang chờ)
+- `Badge` với màu trạng thái (Đã sửa = thông tin, Đã hủy = nghiêm trọng, Đang chờ = chú ý)
+- `Pagination` cho chuyển trang
+- `Button` cho Xuất CSV
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. Click order row -> navigates to Order Detail (Screen 12)
-2. Search by order number, customer name, or email
-3. Filter by status (Edited, Cancelled, Pending), edit type, date range
-4. Sort by date, order number, customer
-5. Export filtered results as CSV
-6. "Pending" status means the order is within the edit window and eligible for editing
+1. Nhấn dòng đơn hàng -> chuyển đến Chi Tiết Đơn Hàng (Màn Hình 12)
+2. Tìm kiếm theo số đơn hàng, tên khách hàng, hoặc email
+3. Lọc theo trạng thái (Đã sửa, Đã hủy, Đang chờ), loại chỉnh sửa, khoảng thời gian
+4. Sắp xếp theo ngày, số đơn hàng, khách hàng
+5. Xuất kết quả đã lọc dưới dạng CSV
+6. Trạng thái "Đang chờ" nghĩa là đơn hàng đang trong cửa sổ chỉnh sửa và đủ điều kiện để sửa
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Table becomes a card-based list on mobile
-- Each card shows: Order #, Customer, Date, Status badge
-- Filters collapse into a "Filter" button that opens a sheet
-- Search bar remains visible at top
+- Bảng trở thành danh sách thẻ trên di động
+- Mỗi thẻ hiển thị: Đơn hàng #, Khách hàng, Ngày, Huy hiệu trạng thái
+- Bộ lọc thu gọn thành nút "Lọc" mở ra sheet
+- Thanh tìm kiếm vẫn hiển thị ở trên cùng
 
 ---
 
-### Screen 9: Edit Rules -- Configure Time Windows & Allowed Changes
+### Màn Hình 9: Quy Tắc Chỉnh Sửa -- Cấu Hình Cửa Sổ Thời Gian & Thay Đổi Cho Phép
 
-**Purpose**: Let merchants configure what customers can edit, when they can edit, and any product-specific restrictions.
+**Mục đích**: Cho phép người bán cấu hình những gì khách hàng có thể chỉnh sửa, khi nào có thể chỉnh sửa, và các hạn chế theo sản phẩm cụ thể.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [Dashboard] [Orders] [Edit Rules] [Analytics] [Settings] |
+|  [Bảng Điều Khiển] [Đơn Hàng] [Quy Tắc] [Phân Tích] [Cài Đặt]|
 |-----------------------------------------------------------+
 |                                                           |
-|  Edit Rules                                    [Save]     |
+|  Quy Tắc Chỉnh Sửa                               [Lưu]  |
 |                                                           |
-|  SECTION 1: GLOBAL SETTINGS                               |
+|  PHẦN 1: CÀI ĐẶT CHUNG                                   |
 |  +-------------------------------------------------------+|
-|  |  Customer Self-Service                                ||
+|  |  Tự Phục Vụ Khách Hàng                                ||
 |  |                                                       ||
-|  |  Enable customer self-service editing  [Toggle ON]    ||
+|  |  Bật chỉnh sửa tự phục vụ cho khách hàng [Bật/Tắt BẬT]||
 |  |                                                       ||
-|  |  Edit Time Window                                     ||
-|  |  How long after order placement can customers edit?   ||
-|  |  [3 hours v]  (dropdown: 30min, 1h, 2h, 3h, 6h,     ||
-|  |               12h, 24h, 48h, Until fulfillment)       ||
+|  |  Cửa Sổ Thời Gian Chỉnh Sửa                          ||
+|  |  Khách hàng có thể chỉnh sửa bao lâu sau khi đặt?    ||
+|  |  [3 giờ v]  (dropdown: 30 phút, 1g, 2g, 3g, 6g,     ||
+|  |             12g, 24g, 48g, Cho đến khi thực hiện)     ||
 |  |                                                       ||
-|  |  Allowed Changes                                      ||
-|  |  [x] Shipping address                                 ||
-|  |  [x] Swap product variants (size, color, etc.)        ||
-|  |  [x] Change quantities                                ||
-|  |  [x] Remove items                                     ||
-|  |  [x] Cancel order                                     ||
-|  |  [ ] Add new items (P1)                               ||
-|  |  [ ] Edit billing address (coming soon)               ||
-|  +-------------------------------------------------------+|
-|                                                           |
-|  SECTION 2: PRODUCT/COLLECTION RULES                      |
-|  +-------------------------------------------------------+|
-|  |  Product-Specific Rules                               ||
-|  |  Override global settings for specific products       ||
-|  |  or collections.                                      ||
-|  |                                                       ||
-|  |  +--------------------------------------------------+ ||
-|  |  | Collection: "Final Sale"                          | ||
-|  |  | Rule: No editing allowed                [Edit]    | ||
-|  |  | [Remove]                                          | ||
-|  |  +--------------------------------------------------+ ||
-|  |  | Product: "Custom Engraved Ring"                   | ||
-|  |  | Rule: Address only (no item changes)    [Edit]    | ||
-|  |  | [Remove]                                          | ||
-|  |  +--------------------------------------------------+ ||
-|  |                                                       ||
-|  |  [+ Add Rule]                                         ||
+|  |  Thay Đổi Cho Phép                                    ||
+|  |  [x] Địa chỉ giao hàng                                ||
+|  |  [x] Đổi phiên bản sản phẩm (kích cỡ, màu sắc, v.v.)||
+|  |  [x] Thay đổi số lượng                                ||
+|  |  [x] Xóa sản phẩm                                     ||
+|  |  [x] Hủy đơn hàng                                     ||
+|  |  [ ] Thêm sản phẩm mới (P1)                           ||
+|  |  [ ] Sửa địa chỉ thanh toán (sắp ra mắt)             ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 3: CANCELLATION SETTINGS                         |
+|  PHẦN 2: QUY TẮC SẢN PHẨM/BỘ SƯU TẬP                    |
 |  +-------------------------------------------------------+|
-|  |  Cancellation Policy                                  ||
+|  |  Quy Tắc Theo Sản Phẩm                                ||
+|  |  Ghi đè cài đặt chung cho sản phẩm hoặc              ||
+|  |  bộ sưu tập cụ thể.                                   ||
 |  |                                                       ||
-|  |  Allow customer cancellations    [Toggle ON]          ||
-|  |                                                       ||
-|  |  Cancellation time window                             ||
-|  |  [Same as edit window v]                              ||
-|  |                                                       ||
-|  |  Require cancellation reason     [Toggle ON]          ||
-|  |                                                       ||
-|  |  Cancellation reasons (one per line):                 ||
 |  |  +--------------------------------------------------+ ||
-|  |  | I ordered the wrong item                          | ||
-|  |  | I found a better price elsewhere                  | ||
-|  |  | I no longer need this                             | ||
-|  |  | Shipping takes too long                           | ||
-|  |  | Other                                             | ||
+|  |  | Bộ sưu tập: "Giảm Giá Cuối Cùng"                 | ||
+|  |  | Quy tắc: Không cho phép chỉnh sửa      [Sửa]    | ||
+|  |  | [Xóa]                                             | ||
+|  |  +--------------------------------------------------+ ||
+|  |  | Sản phẩm: "Nhẫn Khắc Tùy Chỉnh"                 | ||
+|  |  | Quy tắc: Chỉ địa chỉ (không đổi SP)   [Sửa]    | ||
+|  |  | [Xóa]                                             | ||
 |  |  +--------------------------------------------------+ ||
 |  |                                                       ||
-|  |  Retention offer (P1)           [Toggle OFF]          ||
-|  |  Offer discount before cancelling                     ||
+|  |  [+ Thêm Quy Tắc]                                    ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 4: REFUND SETTINGS                               |
+|  PHẦN 3: CÀI ĐẶT HỦY ĐƠN                                |
 |  +-------------------------------------------------------+|
-|  |  Auto-Refund                                          ||
+|  |  Chính Sách Hủy Đơn                                   ||
 |  |                                                       ||
-|  |  Automatically process refunds   [Toggle ON]          ||
-|  |  for price reductions                                 ||
+|  |  Cho phép khách hàng hủy đơn        [Bật/Tắt BẬT]   ||
 |  |                                                       ||
-|  |  Refund method                                        ||
-|  |  (o) Original payment method                          ||
-|  |  ( ) Store credit (P1)                                ||
-|  |  ( ) Let customer choose (P1)                         ||
+|  |  Cửa sổ thời gian hủy đơn                             ||
+|  |  [Giống cửa sổ chỉnh sửa v]                          ||
 |  |                                                       ||
-|  |  Auto-charge for price increases [Toggle ON]          ||
+|  |  Yêu cầu lý do hủy đơn             [Bật/Tắt BẬT]    ||
+|  |                                                       ||
+|  |  Lý do hủy đơn (mỗi dòng một lý do):                 ||
+|  |  +--------------------------------------------------+ ||
+|  |  | Tôi đặt nhầm sản phẩm                            | ||
+|  |  | Tôi tìm được giá tốt hơn ở nơi khác             | ||
+|  |  | Tôi không còn cần nữa                            | ||
+|  |  | Vận chuyển quá lâu                                | ||
+|  |  | Khác                                              | ||
+|  |  +--------------------------------------------------+ ||
+|  |                                                       ||
+|  |  Đề nghị giữ chân (P1)             [Bật/Tắt TẮT]    ||
+|  |  Đề nghị giảm giá trước khi hủy                       ||
+|  +-------------------------------------------------------+|
+|                                                           |
+|  PHẦN 4: CÀI ĐẶT HOÀN TIỀN                               |
+|  +-------------------------------------------------------+|
+|  |  Hoàn Tiền Tự Động                                    ||
+|  |                                                       ||
+|  |  Tự động xử lý hoàn tiền            [Bật/Tắt BẬT]   ||
+|  |  cho giảm giá                                         ||
+|  |                                                       ||
+|  |  Phương thức hoàn tiền                                ||
+|  |  (o) Phương thức thanh toán gốc                       ||
+|  |  ( ) Tín dụng cửa hàng (P1)                          ||
+|  |  ( ) Để khách hàng chọn (P1)                          ||
+|  |                                                       ||
+|  |  Tự động tính phí cho tăng giá     [Bật/Tắt BẬT]    ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with title and primary action (Save)
-- `Layout` with `Layout.AnnotatedSection` for each section
-- `Card` for each settings group
-- `SettingToggle` or `Toggle` for on/off settings
-- `Select` for dropdowns (time window, refund method)
-- `ChoiceList` for checkboxes (allowed changes)
-- `ResourceList` for product/collection rules
-- `TextField` (multiline) for cancellation reasons
-- `RadioButton` for refund method
-- `Button` for Add Rule
+- `Page` với tiêu đề và hành động chính (Lưu)
+- `Layout` với `Layout.AnnotatedSection` cho mỗi phần
+- `Card` cho mỗi nhóm cài đặt
+- `SettingToggle` hoặc `Toggle` cho cài đặt bật/tắt
+- `Select` cho dropdown (cửa sổ thời gian, phương thức hoàn tiền)
+- `ChoiceList` cho ô đánh dấu (thay đổi cho phép)
+- `ResourceList` cho quy tắc sản phẩm/bộ sưu tập
+- `TextField` (nhiều dòng) cho lý do hủy đơn
+- `RadioButton` cho phương thức hoàn tiền
+- `Button` cho Thêm Quy Tắc
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. Toggle self-service on/off -> immediately enables/disables customer editing
-2. Change time window -> applies to all new orders (existing orders keep their original window)
-3. Add product/collection rule -> opens a modal with product/collection picker + rule configuration
-4. Save -> validates and persists all settings -> shows toast "Settings saved"
-5. "Coming soon" features are visible but disabled with a tooltip explaining the future availability
+1. Bật/tắt tự phục vụ -> ngay lập tức bật/tắt chỉnh sửa của khách hàng
+2. Thay đổi cửa sổ thời gian -> áp dụng cho tất cả đơn hàng mới (đơn hàng hiện tại giữ cửa sổ gốc)
+3. Thêm quy tắc sản phẩm/bộ sưu tập -> mở modal với bộ chọn sản phẩm/bộ sưu tập + cấu hình quy tắc
+4. Lưu -> xác thực và lưu tất cả cài đặt -> hiển thị toast "Đã lưu cài đặt"
+5. Tính năng "Sắp ra mắt" hiển thị nhưng bị vô hiệu hóa với tooltip giải thích khả dụng trong tương lai
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Sections stack vertically
-- Annotated sections show title above content (not side-by-side)
-- Product picker modal becomes full-screen on mobile
-- Save button is sticky at the bottom
+- Các phần xếp chồng dọc
+- Phần có chú thích hiển thị tiêu đề phía trên nội dung (không phải cạnh nhau)
+- Modal chọn sản phẩm trở thành toàn màn hình trên di động
+- Nút Lưu cố định ở dưới cùng
 
 ---
 
-### Screen 10: Settings -- General Settings, Notifications, Branding
+### Màn Hình 10: Cài Đặt -- Cài Đặt Chung, Thông Báo, Thương Hiệu
 
-**Purpose**: Configure general app settings including notifications, branding, and integrations.
+**Mục đích**: Cấu hình cài đặt ứng dụng chung bao gồm thông báo, thương hiệu và tích hợp.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [Dashboard] [Orders] [Edit Rules] [Analytics] [Settings] |
+|  [Bảng Điều Khiển] [Đơn Hàng] [Quy Tắc] [Phân Tích] [Cài Đặt]|
 |-----------------------------------------------------------+
 |                                                           |
-|  Settings                                      [Save]     |
+|  Cài Đặt                                      [Lưu]      |
 |                                                           |
-|  SECTION 1: NOTIFICATIONS                                 |
+|  PHẦN 1: THÔNG BÁO                                        |
 |  +-------------------------------------------------------+|
-|  |  Email Notifications                                  ||
+|  |  Thông Báo Email                                      ||
 |  |                                                       ||
-|  |  Send email to customer when:                         ||
-|  |  [x] Order is edited                                  ||
-|  |  [x] Order is cancelled                               ||
-|  |  [x] Refund is processed                              ||
+|  |  Gửi email cho khách hàng khi:                        ||
+|  |  [x] Đơn hàng được chỉnh sửa                         ||
+|  |  [x] Đơn hàng bị hủy                                 ||
+|  |  [x] Hoàn tiền được xử lý                            ||
 |  |                                                       ||
-|  |  Send email to merchant when:                         ||
-|  |  [x] Customer edits an order                          ||
-|  |  [x] Customer cancels an order                        ||
-|  |  [ ] Edit window expires                              ||
+|  |  Gửi email cho người bán khi:                         ||
+|  |  [x] Khách hàng chỉnh sửa đơn hàng                   ||
+|  |  [x] Khách hàng hủy đơn hàng                         ||
+|  |  [ ] Cửa sổ chỉnh sửa hết hạn                        ||
 |  |                                                       ||
-|  |  Notification email: [store@example.com         ]     ||
+|  |  Email thông báo: [store@example.com         ]        ||
 |  |                                                       ||
-|  |  [Preview Email Templates]                            ||
-|  +-------------------------------------------------------+|
-|                                                           |
-|  SECTION 2: BRANDING                                      |
-|  +-------------------------------------------------------+|
-|  |  Customer-Facing Branding                             ||
-|  |                                                       ||
-|  |  Primary color:   [#2563EB] [Color picker]            ||
-|  |  Button style:    [Rounded v]                         ||
-|  |  Show store logo: [Toggle ON]                         ||
-|  |                                                       ||
-|  |  Edit page heading:                                   ||
-|  |  [Edit Your Order                               ]     ||
-|  |                                                       ||
-|  |  Edit page description:                               ||
-|  |  [Make changes to your order below.             ]     ||
-|  |                                                       ||
-|  |  [Preview] (opens preview of customer-facing page)    ||
+|  |  [Xem Trước Mẫu Email]                               ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 3: PLAN & BILLING                                |
+|  PHẦN 2: THƯƠNG HIỆU                                      |
 |  +-------------------------------------------------------+|
-|  |  Current Plan: Starter ($9.99/mo)                     ||
-|  |  Edits used: 142 / 200 this month                    ||
+|  |  Thương Hiệu Giao Diện Khách Hàng                    ||
+|  |                                                       ||
+|  |  Màu chính:      [#2563EB] [Bộ chọn màu]             ||
+|  |  Kiểu nút:       [Bo tròn v]                         ||
+|  |  Hiển thị logo:   [Bật/Tắt BẬT]                      ||
+|  |                                                       ||
+|  |  Tiêu đề trang chỉnh sửa:                            ||
+|  |  [Chỉnh Sửa Đơn Hàng Của Bạn                   ]     ||
+|  |                                                       ||
+|  |  Mô tả trang chỉnh sửa:                              ||
+|  |  [Thực hiện thay đổi cho đơn hàng bên dưới.    ]     ||
+|  |                                                       ||
+|  |  [Xem Trước] (mở xem trước trang khách hàng)         ||
+|  +-------------------------------------------------------+|
+|                                                           |
+|  PHẦN 3: GÓI & THANH TOÁN                                 |
+|  +-------------------------------------------------------+|
+|  |  Gói Hiện Tại: Starter ($9.99/tháng)                  ||
+|  |  Lượt chỉnh sửa đã dùng: 142 / 200 tháng này        ||
 |  |  [=============================-------] 71%           ||
-|  |  Next billing date: April 15, 2026                    ||
+|  |  Ngày thanh toán tiếp theo: 15 tháng 4, 2026          ||
 |  |                                                       ||
-|  |  [Upgrade Plan] [View Billing History]                ||
+|  |  [Nâng Cấp Gói] [Xem Lịch Sử Thanh Toán]            ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 4: INTEGRATIONS (P1)                             |
+|  PHẦN 4: TÍCH HỢP (P1)                                    |
 |  +-------------------------------------------------------+|
-|  |  Shopify Flow         [Connected] [Badge: Active]     ||
-|  |  Google Address API   [Not Connected] [Connect]       ||
-|  |  Slack Notifications  [Not Connected] [Connect] (P2)  ||
+|  |  Shopify Flow         [Đã kết nối] [Huy hiệu: Hoạt động]||
+|  |  Google Address API   [Chưa kết nối] [Kết Nối]       ||
+|  |  Thông báo Slack     [Chưa kết nối] [Kết Nối] (P2)  ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  SECTION 5: DATA & PRIVACY                                |
+|  PHẦN 5: DỮ LIỆU & QUYỀN RIÊNG TƯ                        |
 |  +-------------------------------------------------------+|
-|  |  Data retention: [12 months v]                        ||
-|  |  [Export All Data]  [Delete All Data]                  ||
+|  |  Lưu trữ dữ liệu: [12 tháng v]                      ||
+|  |  [Xuất Tất Cả Dữ Liệu]  [Xóa Tất Cả Dữ Liệu]      ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with title and primary action (Save)
-- `Layout` with `Layout.AnnotatedSection`
-- `Card` for each settings group
-- `ChoiceList` for notification checkboxes
-- `TextField` for email, heading, description
-- `ColorPicker` or `TextField` with color swatch for primary color
-- `Select` for button style, data retention
-- `ProgressBar` for plan usage
-- `Badge` for integration status
-- `Button` for Preview, Upgrade, Connect
+- `Page` với tiêu đề và hành động chính (Lưu)
+- `Layout` với `Layout.AnnotatedSection`
+- `Card` cho mỗi nhóm cài đặt
+- `ChoiceList` cho ô đánh dấu thông báo
+- `TextField` cho email, tiêu đề, mô tả
+- `ColorPicker` hoặc `TextField` với mẫu màu cho màu chính
+- `Select` cho kiểu nút, lưu trữ dữ liệu
+- `ProgressBar` cho sử dụng gói
+- `Badge` cho trạng thái tích hợp
+- `Button` cho Xem Trước, Nâng Cấp, Kết Nối
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. Toggle notifications on/off
-2. Preview Email Templates -> opens modal showing email preview with sample data
-3. Change branding -> Preview button shows live preview in modal
-4. Upgrade Plan -> opens Shopify billing confirmation
-5. Connect integrations -> OAuth flow or API key input
-6. Export All Data -> generates CSV download of all edit history
-7. Delete All Data -> confirmation dialog with "type DELETE to confirm"
+1. Bật/tắt thông báo
+2. Xem Trước Mẫu Email -> mở modal hiển thị xem trước email với dữ liệu mẫu
+3. Thay đổi thương hiệu -> nút Xem Trước hiển thị xem trước trực tiếp trong modal
+4. Nâng Cấp Gói -> mở xác nhận thanh toán Shopify
+5. Kết nối tích hợp -> quy trình OAuth hoặc nhập API key
+6. Xuất Tất Cả Dữ Liệu -> tạo tải xuống CSV của tất cả lịch sử chỉnh sửa
+7. Xóa Tất Cả Dữ Liệu -> hộp thoại xác nhận với "gõ DELETE để xác nhận"
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Annotated sections stack vertically
-- Color picker uses native mobile color input
-- Plan usage section is prominent at the top on mobile
+- Phần có chú thích xếp chồng dọc
+- Bộ chọn màu sử dụng đầu vào màu gốc di động
+- Phần sử dụng gói nổi bật ở trên cùng trên di động
 
 ---
 
-### Screen 11: Analytics -- Charts and Insights
+### Màn Hình 11: Phân Tích -- Biểu Đồ và Thông Tin Chi Tiết
 
-**Purpose**: Provide merchants with visual analytics on editing patterns, revenue impact, and operational savings. This is a P1 feature but the page structure is designed from Day 1.
+**Mục đích**: Cung cấp cho người bán phân tích trực quan về xu hướng chỉnh sửa, tác động doanh thu và tiết kiệm vận hành. Đây là tính năng P1 nhưng cấu trúc trang được thiết kế từ Ngày 1.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [Dashboard] [Orders] [Edit Rules] [Analytics] [Settings] |
+|  [Bảng Điều Khiển] [Đơn Hàng] [Quy Tắc] [Phân Tích] [Cài Đặt]|
 |-----------------------------------------------------------+
 |                                                           |
-|  Analytics                                                |
-|  [Last 30 days v]  [Today] [7d] [30d] [90d] [Custom]     |
+|  Phân Tích                                                |
+|  [30 ngày qua v]  [Hôm nay] [7n] [30n] [90n] [Tùy chỉnh]|
 |                                                           |
-|  SUMMARY METRICS (4 cards)                                |
+|  CHỈ SỐ TÓM TẮT (4 thẻ)                                 |
 |  +-------------+ +-------------+ +-------------+ +-------+|
-|  | Total Edits  | | Support $   | | Upsell Rev  | | Avg  ||
-|  | 1,247        | | Saved       | | $4,320      | | Time ||
-|  |              | | $12,470     | |             | | to   ||
-|  | +18% vs prev | | +22%        | | +35%        | | Edit ||
-|  |              | |             | |             | | 8min ||
+|  | Tổng Chỉnh   | | $ Hỗ Trợ   | | Doanh Thu   | | Thời ||
+|  | Sửa          | | Tiết Kiệm   | | Bán Thêm    | | Gian ||
+|  | 1,247        | | $12,470     | | $4,320      | | Chỉnh||
+|  |              | |             | |             | | Sửa  ||
+|  | +18% so với  | | +22%        | | +35%        | | TB   ||
+|  | kỳ trước     | |             | |             | | 8 phút||
 |  +-------------+ +-------------+ +-------------+ +-------+|
 |                                                           |
-|  CHART 1: EDITS OVER TIME                                 |
+|  BIỂU ĐỒ 1: CHỈNH SỬA THEO THỜI GIAN                    |
 |  +-------------------------------------------------------+|
-|  |  [Line/Bar Chart]                                     ||
+|  |  [Biểu đồ đường/cột]                                 ||
 |  |                                                       ||
 |  |  ^                                                    ||
 |  |  |    ___                                             ||
@@ -915,232 +921,231 @@ All merchant admin screens are embedded in the Shopify Admin using React + Polar
 |  |  | /       \  /     \  /   \                          ||
 |  |  |/         \/       \/     \                         ||
 |  |  +-------------------------------------------->       ||
-|  |  Mar 1   Mar 8   Mar 15   Mar 22   Mar 29            ||
+|  |  1 Th3   8 Th3   15 Th3   22 Th3   29 Th3            ||
 |  |                                                       ||
-|  |  Legend: [--] Edits  [--] Cancellations               ||
+|  |  Chú thích: [--] Chỉnh sửa  [--] Hủy đơn            ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  CHART 2: TOP EDITED         CHART 3: EDIT TYPES         |
-|  PRODUCTS                                                 |
+|  BIỂU ĐỒ 2: SẢN PHẨM       BIỂU ĐỒ 3: LOẠI CHỈNH SỬA  |
+|  ĐƯỢC SỬA NHIỀU NHẤT                                      |
 |  +---------------------------+ +-------------------------+|
-|  | [Bar Chart - Horizontal]  | | [Donut Chart]           ||
+|  | [Biểu đồ cột - Ngang]    | | [Biểu đồ tròn]         ||
 |  |                           | |                         ||
-|  | T-Shirt Basic   ████ 89  | | Address: 42%            ||
-|  | Hoodie Classic  ███  67  | | Item Swap: 28%          ||
-|  | Sneakers Pro    ██   45  | | Quantity: 18%           ||
-|  | Dress Elegant   ██   38  | | Cancellation: 12%      ||
-|  | Hat Summer      █    22  | |                         ||
+|  | Áo Thun Basic    ████ 89 | | Địa chỉ: 42%           ||
+|  | Hoodie Classic   ███  67 | | Đổi SP: 28%            ||
+|  | Giày Sneakers Pro ██  45 | | Số lượng: 18%          ||
+|  | Váy Elegant      ██   38 | | Hủy đơn: 12%          ||
+|  | Mũ Summer        █    22 | |                         ||
 |  +---------------------------+ +-------------------------+|
 |                                                           |
-|  CHART 4: CANCELLATION REASONS                            |
+|  BIỂU ĐỒ 4: LÝ DO HỦY ĐƠN                               |
 |  +-------------------------------------------------------+|
-|  | [Horizontal Bar Chart]                                ||
+|  | [Biểu đồ cột ngang]                                  ||
 |  |                                                       ||
-|  | Wrong item        ██████████████  38%                 ||
-|  | Better price      ████████       22%                  ||
-|  | No longer needed  ██████         18%                  ||
-|  | Shipping slow     ████           12%                  ||
-|  | Other             ███            10%                  ||
+|  | Sai sản phẩm     ██████████████  38%                  ||
+|  | Giá tốt hơn      ████████       22%                   ||
+|  | Không cần nữa    ██████         18%                   ||
+|  | Vận chuyển chậm  ████           12%                   ||
+|  | Khác             ███            10%                   ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  TABLE: REVENUE IMPACT                                    |
+|  BẢNG: TÁC ĐỘNG DOANH THU                                 |
 |  +-------------------------------------------------------+|
-|  | Metric                  | This Period | Change        ||
+|  | Chỉ số                   | Kỳ này      | Thay đổi    ||
 |  |-------------------------+-------------+---------------||
-|  | Support tickets avoided | 1,247       | -62%          ||
-|  | Support cost saved      | $12,470     | +22%          ||
-|  | Upsell revenue          | $4,320      | +35%          ||
-|  | Retained cancellations  | 47          | +12%          ||
-|  | Revenue retained        | $8,900      | +28%          ||
-|  | Net app ROI             | 42x         | +15%          ||
+|  | Yêu cầu hỗ trợ tránh được | 1,247     | -62%          ||
+|  | Chi phí hỗ trợ tiết kiệm  | $12,470   | +22%          ||
+|  | Doanh thu bán thêm        | $4,320    | +35%          ||
+|  | Đơn hủy được giữ lại      | 47        | +12%          ||
+|  | Doanh thu giữ lại         | $8,900    | +28%          ||
+|  | ROI ứng dụng ròng         | 42x       | +15%          ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with title
-- `Card` for each chart section
-- `Layout` with sections for chart grid
-- Custom chart components (use a charting library like Recharts or Chart.js)
-- `DataTable` for revenue impact table
-- `Badge` for percentage changes
-- Date range selector (custom component or `DatePicker`)
+- `Page` với tiêu đề
+- `Card` cho mỗi phần biểu đồ
+- `Layout` với các phần cho lưới biểu đồ
+- Thành phần biểu đồ tùy chỉnh (sử dụng thư viện biểu đồ như Recharts hoặc Chart.js)
+- `DataTable` cho bảng tác động doanh thu
+- `Badge` cho thay đổi phần trăm
+- Bộ chọn khoảng thời gian (thành phần tùy chỉnh hoặc `DatePicker`)
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. Date range selector updates all charts and metrics
-2. Hover over chart data points shows tooltip with exact values
-3. Click on a product in "Top Edited Products" navigates to filtered Orders list
-4. Export charts as PNG or data as CSV
-5. Revenue impact table auto-calculates based on merchant-configured support cost per ticket ($8-$15 default)
+1. Bộ chọn khoảng thời gian cập nhật tất cả biểu đồ và chỉ số
+2. Di chuột qua điểm dữ liệu biểu đồ hiển thị tooltip với giá trị chính xác
+3. Nhấn vào sản phẩm trong "Sản Phẩm Được Sửa Nhiều Nhất" chuyển đến danh sách Đơn Hàng đã lọc
+4. Xuất biểu đồ dưới dạng PNG hoặc dữ liệu dưới dạng CSV
+5. Bảng tác động doanh thu tự động tính toán dựa trên chi phí hỗ trợ mỗi yêu cầu do người bán cấu hình ($8-$15 mặc định)
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Charts stack vertically in single column
-- Charts are horizontally scrollable if needed
-- Summary metrics use 2x2 grid
-- Data table is horizontally scrollable
+- Biểu đồ xếp chồng dọc trong một cột
+- Biểu đồ có thể cuộn ngang nếu cần
+- Chỉ số tóm tắt sử dụng lưới 2x2
+- Bảng dữ liệu có thể cuộn ngang
 
 ---
 
-### Screen 12: Order Detail -- Single Order Edit History & Timeline
+### Màn Hình 12: Chi Tiết Đơn Hàng -- Lịch Sử Chỉnh Sửa & Dòng Thời Gian Đơn Hàng
 
-**Purpose**: Show the complete edit history and timeline for a single order, allowing merchants to see every change made and by whom.
+**Mục đích**: Hiển thị lịch sử chỉnh sửa và dòng thời gian đầy đủ cho một đơn hàng, cho phép người bán xem mọi thay đổi đã thực hiện và bởi ai.
 
-#### Layout Description
+#### Mô Tả Bố Cục
 
 ```
 +-----------------------------------------------------------+
 |  Avada Order Editing                                      |
-|  [< Back to Orders]                                       |
+|  [< Quay Lại Đơn Hàng]                                   |
 |-----------------------------------------------------------+
 |                                                           |
-|  Order #1234                                              |
-|  John Smith | john@example.com | Mar 30, 2026 10:32 AM   |
-|                                              [View in     |
+|  Đơn Hàng #1234                                          |
+|  John Smith | john@example.com | 30 Th3, 2026 10:32 SA   |
+|                                              [Xem trong   |
 |                                               Shopify]    |
 |                                                           |
-|  STATUS BAR                                               |
+|  THANH TRẠNG THÁI                                         |
 |  +-------------------------------------------------------+|
-|  | Status: [Edited] (Badge)                              ||
-|  | Edit window: Closed (expired Mar 30, 1:32 PM)         ||
-|  | Total edits: 2                                        ||
-|  | Price change: -$29.99 (refunded)                      ||
+|  | Trạng thái: [Đã Sửa] (Huy hiệu)                     ||
+|  | Cửa sổ chỉnh sửa: Đã đóng (hết hạn 30 Th3, 1:32 CH) ||
+|  | Tổng lượt chỉnh sửa: 2                               ||
+|  | Thay đổi giá: -$29.99 (đã hoàn tiền)                 ||
 |  +-------------------------------------------------------+|
 |                                                           |
-|  CURRENT ORDER STATE              EDIT ACTIONS            |
-|  (Left Column - 2/3)             (Right Column - 1/3)    |
+|  TRẠNG THÁI ĐƠN HÀNG HIỆN TẠI    HÀNH ĐỘNG CHỈNH SỬA   |
+|  (Cột trái - 2/3)                 (Cột phải - 1/3)       |
 |  +---------------------------+   +----------------------+ |
-|  | Items:                    |   | Staff Actions:       | |
+|  | Sản phẩm:                 |   | Hành Động Nhân Viên: | |
 |  |                           |   |                      | |
-|  | [Img] T-Shirt Red/Medium  |   | [Edit Order]         | |
-|  |       $29.99 x 1          |   | (opens admin editor) | |
+|  | [Ảnh] Áo Thun Đỏ/TB      |   | [Chỉnh Sửa Đơn]     | |
+|  |       $29.99 x 1          |   | (mở trình sửa admin) | |
 |  |                           |   |                      | |
-|  | [Img] Hoodie Black/Medium |   | [Cancel Order]       | |
+|  | [Ảnh] Hoodie Đen/TB       |   | [Hủy Đơn Hàng]      | |
 |  |       $59.99 x 1          |   |                      | |
-|  |                           |   | [Resend Edit Link]   | |
-|  | Subtotal: $89.98          |   | (sends email to      | |
-|  | Tax: $7.20                |   |  customer with edit   | |
-|  | Shipping: $5.99           |   |  page link)          | |
-|  | Total: $103.17            |   |                      | |
+|  |                           |   | [Gửi Lại Link Sửa]  | |
+|  | Tạm tính: $89.98          |   | (gửi email cho khách | |
+|  | Thuế: $7.20               |   |  hàng với link trang  | |
+|  | Vận chuyển: $5.99         |   |  chỉnh sửa)          | |
+|  | Tổng: $103.17             |   |                      | |
 |  |                           |   +----------------------+ |
-|  | Shipping Address:         |                            |
+|  | Địa Chỉ Giao Hàng:       |                            |
 |  | 456 Oak Ave               |                            |
 |  | Brooklyn, NY 11201        |                            |
 |  +---------------------------+                            |
 |                                                           |
-|  EDIT TIMELINE                                            |
+|  DÒNG THỜI GIAN CHỈNH SỬA                                |
 |  +-------------------------------------------------------+|
-|  |  [Timeline - vertical]                                ||
+|  |  [Dòng thời gian - dọc]                               ||
 |  |                                                       ||
-|  |  O  Mar 30, 10:32 AM - Customer edited order         ||
-|  |  |  Changes:                                          ||
-|  |  |  - Address: 123 Main St -> 456 Oak Ave             ||
-|  |  |  - T-Shirt: Blue/Large -> Red/Medium               ||
-|  |  |  Price change: $0.00                               ||
-|  |  |  Edited by: Customer (self-service)                ||
+|  |  O  30 Th3, 10:32 SA - Khách hàng đã sửa đơn hàng   ||
+|  |  |  Thay đổi:                                          ||
+|  |  |  - Địa chỉ: 123 Main St -> 456 Oak Ave             ||
+|  |  |  - Áo Thun: Xanh/Lớn -> Đỏ/Trung Bình             ||
+|  |  |  Thay đổi giá: $0.00                               ||
+|  |  |  Sửa bởi: Khách hàng (tự phục vụ)                  ||
 |  |  |                                                    ||
-|  |  O  Mar 30, 10:45 AM - Customer edited order         ||
-|  |  |  Changes:                                          ||
-|  |  |  - T-Shirt: Qty 2 -> 1 (removed 1)                ||
-|  |  |  Price change: -$29.99                             ||
-|  |  |  Refund: $29.99 to Visa ending 4242                ||
-|  |  |  Edited by: Customer (self-service)                ||
+|  |  O  30 Th3, 10:45 SA - Khách hàng đã sửa đơn hàng   ||
+|  |  |  Thay đổi:                                          ||
+|  |  |  - Áo Thun: SL 2 -> 1 (đã xóa 1)                  ||
+|  |  |  Thay đổi giá: -$29.99                             ||
+|  |  |  Hoàn tiền: $29.99 về Visa kết thúc 4242            ||
+|  |  |  Sửa bởi: Khách hàng (tự phục vụ)                  ||
 |  |  |                                                    ||
-|  |  O  Mar 30, 10:00 AM - Order placed                  ||
-|  |  |  Original total: $149.96                           ||
-|  |  |  Items: T-Shirt Blue/Large x2, Hoodie Black/M x1  ||
+|  |  O  30 Th3, 10:00 SA - Đơn hàng được đặt             ||
+|  |  |  Tổng gốc: $149.96                                 ||
+|  |  |  Sản phẩm: Áo Thun Xanh/Lớn x2, Hoodie Đen/TB x1 ||
 |  |  |                                                    ||
 |  +-------------------------------------------------------+|
 +-----------------------------------------------------------+
 ```
 
-#### Polaris Components
+#### Thành Phần Polaris
 
-- `Page` with breadcrumb ("Back to Orders") and title
-- `Layout` with two-column layout (2/3 + 1/3)
-- `Card` for current order state, edit actions, timeline
-- `Badge` for order status
-- `ResourceList` or custom list for order items
-- `Timeline` (custom component) for edit history
-- `Button` for staff actions (Edit Order, Cancel, Resend Link)
-- `Link` for "View in Shopify" (opens order in Shopify Admin)
+- `Page` với breadcrumb ("Quay Lại Đơn Hàng") và tiêu đề
+- `Layout` với bố cục hai cột (2/3 + 1/3)
+- `Card` cho trạng thái đơn hàng hiện tại, hành động chỉnh sửa, dòng thời gian
+- `Badge` cho trạng thái đơn hàng
+- `ResourceList` hoặc danh sách tùy chỉnh cho sản phẩm đơn hàng
+- `Timeline` (thành phần tùy chỉnh) cho lịch sử chỉnh sửa
+- `Button` cho hành động nhân viên (Chỉnh Sửa Đơn, Hủy, Gửi Lại Link)
+- `Link` cho "Xem trong Shopify" (mở trang đơn hàng trong Shopify Admin)
 
-#### Key Interactions
+#### Tương Tác Chính
 
-1. "View in Shopify" -> opens the Shopify admin order page in a new tab (via App Bridge)
-2. "Edit Order" -> opens an inline editor (same capabilities as Screen 3 but within admin)
-3. "Cancel Order" -> confirmation dialog -> processes cancellation with refund
-4. "Resend Edit Link" -> sends the customer an email with the edit page URL
-5. Timeline entries are expandable to show full detail of each change
-6. Each timeline entry shows who made the edit (customer vs. staff member name)
+1. "Xem trong Shopify" -> mở trang đơn hàng Shopify admin trong tab mới (qua App Bridge)
+2. "Chỉnh Sửa Đơn" -> mở trình sửa nội tuyến (cùng khả năng như Màn Hình 3 nhưng trong admin)
+3. "Hủy Đơn Hàng" -> hộp thoại xác nhận -> xử lý hủy đơn với hoàn tiền
+4. "Gửi Lại Link Sửa" -> gửi email cho khách hàng với URL trang chỉnh sửa
+5. Các mục dòng thời gian có thể mở rộng để hiển thị chi tiết đầy đủ của mỗi thay đổi
+6. Mỗi mục dòng thời gian hiển thị ai đã thực hiện chỉnh sửa (khách hàng so với tên nhân viên)
 
-#### Mobile Adaptation
+#### Thích Ứng Di Động
 
-- Two-column layout stacks to single column (actions below order state)
-- Timeline entries are collapsible (show summary, tap to expand)
-- "View in Shopify" button uses App Bridge navigation on mobile admin
-- Staff action buttons are grouped in a "More actions" dropdown
+- Bố cục hai cột xếp thành một cột (hành động bên dưới trạng thái đơn hàng)
+- Các mục dòng thời gian có thể thu gọn (hiển thị tóm tắt, chạm để mở rộng)
+- Nút "Xem trong Shopify" sử dụng điều hướng App Bridge trên admin di động
+- Các nút hành động nhân viên được gom vào dropdown "Thêm hành động"
 
 ---
 
-## Screen Flow Diagram
+## Sơ Đồ Luồng Màn Hình
 
 ```
-CUSTOMER JOURNEY:
+HÀNH TRÌNH KHÁCH HÀNG:
                                     
-  Thank-You Page ─────┐            
-  (Screen 2)          │            
+  Trang Cảm Ơn ──────┐            
+  (Màn Hình 2)        │            
                       ▼            
-  Order Status  ──> Edit Order ──> Edit Confirmation ──> Success
-  Page               Page              (Screen 4)          
-  (Screen 1)         (Screen 3)                            
+  Trang Trạng   ──> Trang Chỉnh ──> Xác Nhận Chỉnh ──> Thành Công
+  Thái Đơn Hàng     Sửa Đơn Hàng    Sửa (Màn Hình 4)          
+  (Màn Hình 1)      (Màn Hình 3)                            
        │                 │                                  
-       │                 ├──> Upsell Sidebar (Screen 6)    
-       │                 │    (P1, shown alongside Screen 3)
+       │                 ├──> Thanh Bên Bán Thêm (Màn Hình 6)    
+       │                 │    (P1, hiển thị cùng Màn Hình 3)
        ▼                 │                                  
-  Cancel Flow ◄──────────┘                                  
-  (Screen 5)                                               
+  Quy Trình Hủy ◄───────┘                                  
+  (Màn Hình 5)                                               
        │                                                    
-       ├──> Retention Offer (P1)                           
+       ├──> Đề Nghị Giữ Chân (P1)                           
        │         │                                          
-       │         ├──> Keep Order (discount applied)         
-       │         └──> Proceed to Cancel                    
-       └──> Cancel Confirmed                               
+       │         ├──> Giữ Đơn Hàng (áp dụng giảm giá)         
+       │         └──> Tiếp Tục Hủy                    
+       └──> Đã Xác Nhận Hủy                               
 
+HÀNH TRÌNH NGƯỜI BÁN:
 
-MERCHANT JOURNEY:
-
-  Dashboard ──> Orders List ──> Order Detail               
-  (Screen 7)    (Screen 8)      (Screen 12)                
-       │                            │                       
-       │                            ├──> Inline Edit        
-       │                            └──> Cancel / Resend    
+  Bảng Điều Khiển ──> Danh Sách ──> Chi Tiết Đơn Hàng               
+  (Màn Hình 7)        Đơn Hàng      (Màn Hình 12)                
+                      (Màn Hình 8)       │                       
+       │                            ├──> Sửa Nội Tuyến        
+       │                            └──> Hủy / Gửi Lại    
        │                                                    
-       ├──> Edit Rules (Screen 9)                          
-       ├──> Analytics (Screen 11)                          
-       └──> Settings (Screen 10)                           
+       ├──> Quy Tắc Chỉnh Sửa (Màn Hình 9)                          
+       ├──> Phân Tích (Màn Hình 11)                          
+       └──> Cài Đặt (Màn Hình 10)                           
 ```
 
 ---
 
-## Design Principles
+## Nguyên Tắc Thiết Kế
 
-1. **Clarity over cleverness**: Every screen should be immediately understandable. No jargon, no ambiguity about what will happen when a button is clicked.
+1. **Rõ ràng hơn là phức tạp**: Mọi màn hình phải dễ hiểu ngay lập tức. Không dùng thuật ngữ chuyên môn, không mơ hồ về những gì sẽ xảy ra khi nhấn nút.
 
-2. **Trust through transparency**: Always show the customer exactly what will change, what it will cost, and how refunds work. No surprises.
+2. **Xây dựng niềm tin qua minh bạch**: Luôn hiển thị cho khách hàng chính xác những gì sẽ thay đổi, chi phí bao nhiêu và cách hoàn tiền hoạt động. Không bất ngờ.
 
-3. **Mobile-first for customers**: 60%+ of shoppers are on mobile. Every customer-facing screen must work flawlessly on small screens.
+3. **Ưu tiên di động cho khách hàng**: Hơn 60% người mua sắm sử dụng di động. Mọi màn hình dành cho khách hàng phải hoạt động hoàn hảo trên màn hình nhỏ.
 
-4. **Admin efficiency**: Merchants should be able to understand their edit activity in under 10 seconds from the dashboard. Common actions should be 1-2 clicks away.
+4. **Hiệu quả quản trị**: Người bán phải có thể hiểu hoạt động chỉnh sửa trong vòng dưới 10 giây từ bảng điều khiển. Các hành động phổ biến nên cách 1-2 lần nhấn.
 
-5. **Progressive disclosure**: Show essential information first, details on demand. Use collapsible sections, modals, and drill-down navigation.
+5. **Tiết lộ dần dần**: Hiển thị thông tin cần thiết trước, chi tiết khi có yêu cầu. Sử dụng phần thu gọn, modal và điều hướng chi tiết.
 
-6. **Consistent with Shopify**: Admin screens follow Polaris v12+ patterns exactly. Customer-facing screens match the merchant's store branding.
+6. **Nhất quán với Shopify**: Màn hình admin tuân theo các mẫu Polaris v12+ chính xác. Màn hình dành cho khách hàng phù hợp với thương hiệu cửa hàng của người bán.
 
-7. **Error prevention over error handling**: Use confirmation steps, disabled states for unavailable options, and clear validation messages to prevent mistakes.
+7. **Ngăn ngừa lỗi hơn xử lý lỗi**: Sử dụng bước xác nhận, trạng thái vô hiệu hóa cho tùy chọn không khả dụng, và thông báo xác thực rõ ràng để ngăn ngừa sai sót.
 
 ---
 
-*End of Screen Descriptions & Wireframes -- Avada Order Editing v1.0*
+*Kết thúc Mô Tả Màn Hình & Wireframe -- Avada Order Editing v1.0*

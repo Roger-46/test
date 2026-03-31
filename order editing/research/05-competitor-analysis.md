@@ -1,523 +1,523 @@
-# 05 - Competitor Analysis: Shopify Order Editing Apps
+# 05 - Phân Tích Đối Thủ Cạnh Tranh: Ứng Dụng Chỉnh Sửa Đơn Hàng Shopify
 
-> Research Date: March 2026 | Category: ~100 apps in "Order Editing" on Shopify App Store
-
----
-
-## Executive Summary
-
-The Shopify order editing market has ~100 apps, but only 10-15 are serious contenders with meaningful review counts. The market is dominated by **OrderEditing.com** (premium leader), **AE: Order Editing & Upsell** (mid-market), and **Cleverific** (legacy incumbent). A significant pricing gap exists: most apps charge $39-$599/mo, leaving SMB stores ($10-$50/mo budget) underserved. Free/low-cost options exist but are either feature-limited, poorly supported, or from unestablished developers.
-
-**Key Takeaway:** No competitor successfully combines affordable pricing + comprehensive features + reliable support. This is Avada's opportunity.
+> Ngày nghiên cứu: Tháng 3 năm 2026 | Danh mục: ~100 ứng dụng trong "Chỉnh Sửa Đơn Hàng" trên Shopify App Store
 
 ---
 
-## Detailed Competitor Profiles
+## Tóm Tắt Tổng Quan
+
+Thị trường chỉnh sửa đơn hàng Shopify có ~100 ứng dụng, nhưng chỉ 10-15 ứng dụng là đối thủ thực sự với số lượng đánh giá đáng kể. Thị trường bị chi phối bởi **OrderEditing.com** (dẫn đầu phân khúc cao cấp), **AE: Order Editing & Upsell** (phân khúc trung), và **Cleverific** (đối thủ lâu đời). Tồn tại khoảng cách giá đáng kể: hầu hết ứng dụng tính phí $39-$599/tháng, khiến các cửa hàng SMB (ngân sách $10-$50/tháng) bị bỏ ngỏ. Các lựa chọn miễn phí/giá rẻ tồn tại nhưng hoặc là hạn chế tính năng, hỗ trợ kém, hoặc từ các nhà phát triển chưa có uy tín.
+
+**Kết luận chính:** Không có đối thủ nào kết hợp thành công giá cả phải chăng + tính năng toàn diện + hỗ trợ đáng tin cậy. Đây là cơ hội của Avada.
+
+---
+
+## Hồ Sơ Chi Tiết Đối Thủ Cạnh Tranh
 
 ### 1. OrderEditing.com
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Order Editing (Dover, DE, US) |
-| **Rating** | 5.0/5 (279 reviews) |
-| **Launch** | May 2023 |
-| **Installs** | Est. 2,000-5,000 active |
-| **Pricing** | $99-$599/mo (by order volume) |
-| **Free plan** | No |
-| **Trial** | 7-14 days |
-| **Built for Shopify** | Yes |
-| **Threat Level** | **HIGH** |
+| **Nhà phát triển** | Order Editing (Dover, DE, Mỹ) |
+| **Đánh giá** | 5.0/5 (279 đánh giá) |
+| **Ra mắt** | Tháng 5 năm 2023 |
+| **Lượt cài đặt** | Ước tính 2,000-5,000 đang hoạt động |
+| **Giá** | $99-$599/tháng (theo số lượng đơn hàng) |
+| **Gói miễn phí** | Không |
+| **Dùng thử** | 7-14 ngày |
+| **Built for Shopify** | Có |
+| **Mức độ đe dọa** | **CAO** |
 
-**Key Features:**
-- Self-service order editing (address, products, shipping, discounts)
-- Address validation (US $0.01/order, intl up to $0.04/order add-on)
-- Post-purchase upsells & cross-sells
-- One-click add-ons on checkout/thank-you
-- 100+ fulfillment/shipping integrations
-- Multi-currency & multi-language
-- Analytics & optimization
+**Tính năng chính:**
+- Tự chỉnh sửa đơn hàng (địa chỉ, sản phẩm, vận chuyển, giảm giá)
+- Xác thực địa chỉ (Mỹ $0.01/đơn, quốc tế lên đến $0.04/đơn phí bổ sung)
+- Upsell & cross-sell sau mua hàng
+- Thêm sản phẩm một chạm tại thanh toán/trang cảm ơn
+- 100+ tích hợp fulfillment/vận chuyển
+- Đa tiền tệ & đa ngôn ngữ
+- Phân tích & tối ưu hóa
 
-**Strengths:**
-- Highest review count with near-perfect rating (99% 5-star)
-- Processes $5B+ in Shopify GMV (strong social proof)
-- Used by recognizable brands (Aviator Nation, Oh Polly)
-- Comprehensive feature set including upsells
-- Robust integrations ecosystem
+**Điểm mạnh:**
+- Số lượng đánh giá cao nhất với điểm gần như hoàn hảo (99% 5 sao)
+- Xử lý $5 tỷ+ GMV trên Shopify (bằng chứng xã hội mạnh)
+- Được sử dụng bởi các thương hiệu nổi tiếng (Aviator Nation, Oh Polly)
+- Bộ tính năng toàn diện bao gồm upsell
+- Hệ sinh thái tích hợp mạnh mẽ
 
-**Weaknesses:**
-- Very expensive ($99/mo minimum; no free tier)
-- Volume-based pricing punishes growing stores
-- Address validation is an add-on cost
-- Limited review volume for negative feedback makes it hard to assess real issues
-- 2 negative reviews exist but content not publicly visible
+**Điểm yếu:**
+- Rất đắt (tối thiểu $99/tháng; không có gói miễn phí)
+- Giá theo số lượng phạt các cửa hàng đang tăng trưởng
+- Xác thực địa chỉ là chi phí bổ sung
+- Số lượng đánh giá tiêu cực ít khiến khó đánh giá vấn đề thực tế
+- Có 2 đánh giá tiêu cực nhưng nội dung không công khai
 
-**How We Win:**
-- Price 80-90% lower ($9.99-$29.99 vs $99-$399)
-- Offer a generous free tier (50 edits) vs no free plan
-- Include address validation in base plan (no add-on fees)
-- Target the SMB stores they price out
+**Cách chúng ta thắng:**
+- Giá thấp hơn 80-90% ($9.99-$29.99 so với $99-$399)
+- Cung cấp gói miễn phí hào phóng (50 lần chỉnh sửa) so với không có gói miễn phí
+- Bao gồm xác thực địa chỉ trong gói cơ bản (không phí bổ sung)
+- Nhắm vào các cửa hàng SMB mà họ loại bỏ vì giá
 
 ---
 
 ### 2. AE: Order Editing & Upsell (Account Editor)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Account Editor |
-| **Rating** | 5.0/5 (219 reviews) |
-| **Launch** | January 2025 |
-| **Installs** | Est. 1,500-3,000 active |
-| **Pricing** | $39-$259/mo |
-| **Free plan** | No |
-| **Trial** | 14 days |
-| **Built for Shopify** | Yes |
-| **Threat Level** | **HIGH** |
+| **Nhà phát triển** | Account Editor |
+| **Đánh giá** | 5.0/5 (219 đánh giá) |
+| **Ra mắt** | Tháng 1 năm 2025 |
+| **Lượt cài đặt** | Ước tính 1,500-3,000 đang hoạt động |
+| **Giá** | $39-$259/tháng |
+| **Gói miễn phí** | Không |
+| **Dùng thử** | 14 ngày |
+| **Built for Shopify** | Có |
+| **Mức độ đe dọa** | **CAO** |
 
-**Key Features:**
-- Self-serve editing on order status page & customer accounts
-- Google-powered address validation
-- Smart cancellation retention rules
-- Auto discount/shipping/tax recalculation
-- Post-purchase upsell during editing
-- Shopify Flow automation
-- 3PL support, 8-language coverage
-- Order edit analytics & email notifications
+**Tính năng chính:**
+- Tự chỉnh sửa trên trang trạng thái đơn hàng & tài khoản khách hàng
+- Xác thực địa chỉ bằng Google
+- Quy tắc giữ chân hủy đơn thông minh
+- Tự động tính lại giảm giá/vận chuyển/thuế
+- Upsell sau mua hàng trong khi chỉnh sửa
+- Tự động hóa Shopify Flow
+- Hỗ trợ 3PL, hỗ trợ 8 ngôn ngữ
+- Phân tích chỉnh sửa đơn hàng & thông báo email
 
-**Strengths:**
-- Perfect 5.0 rating across 219 reviews (100% 5-star)
-- 20% annual billing discount (good retention tactic)
-- Newer app (Jan 2025) with modern architecture
-- Strong Flow integration
+**Điểm mạnh:**
+- Đánh giá hoàn hảo 5.0 trên 219 đánh giá (100% 5 sao)
+- Giảm 20% thanh toán theo năm (chiến thuật giữ chân tốt)
+- Ứng dụng mới (Tháng 1/2025) với kiến trúc hiện đại
+- Tích hợp Flow mạnh mẽ
 
-**Weaknesses:**
-- No free tier (starts at $39/mo)
-- Relatively new - less battle-tested
-- Suspiciously perfect reviews (100% 5-star across 219 reviews)
-- Order volume limits per tier
+**Điểm yếu:**
+- Không có gói miễn phí (bắt đầu từ $39/tháng)
+- Tương đối mới - chưa được thử nghiệm nhiều
+- Đánh giá hoàn hảo đáng ngờ (100% 5 sao trên 219 đánh giá)
+- Giới hạn số lượng đơn hàng theo gói
 
-**How We Win:**
-- Free tier with 50 edits captures their non-customers
-- Lower entry price ($9.99 vs $39)
-- Avada brand trust and ecosystem advantages
-- Match feature parity at lower price
+**Cách chúng ta thắng:**
+- Gói miễn phí với 50 lần chỉnh sửa thu hút khách hàng họ chưa có
+- Giá khởi điểm thấp hơn ($9.99 so với $39)
+- Uy tín thương hiệu Avada và lợi thế hệ sinh thái
+- Ngang bằng tính năng với giá thấp hơn
 
 ---
 
 ### 3. Cleverific Order Editing
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Cleverific, Inc (Santa Barbara, CA) |
-| **Rating** | 4.6/5 (234 reviews) |
-| **Launch** | Legacy (pre-2020) |
-| **Installs** | Est. 3,000-6,000 active |
-| **Pricing** | $49-$299/mo (+ overage fees) |
-| **Free plan** | No (dev stores only) |
-| **Trial** | 21 days |
-| **Built for Shopify** | Yes |
-| **Threat Level** | **HIGH** |
+| **Nhà phát triển** | Cleverific, Inc (Santa Barbara, CA) |
+| **Đánh giá** | 4.6/5 (234 đánh giá) |
+| **Ra mắt** | Lâu đời (trước 2020) |
+| **Lượt cài đặt** | Ước tính 3,000-6,000 đang hoạt động |
+| **Giá** | $49-$299/tháng (+ phí vượt mức) |
+| **Gói miễn phí** | Không (chỉ cửa hàng phát triển) |
+| **Dùng thử** | 21 ngày |
+| **Built for Shopify** | Có |
+| **Mức độ đe dọa** | **CAO** |
 
-**Key Features:**
-- Customer self-serve & staff backend editing
-- Address, product, billing, tax adjustments
-- Shopify Flow automation
-- Draft order enhancement
-- Abandoned cart recovery
-- SOC 2 Type II attestation (Premium Plus)
-- Integrations: Klaviyo, NetSuite, Recharge, ShipStation
+**Tính năng chính:**
+- Khách hàng tự chỉnh sửa & nhân viên chỉnh sửa backend
+- Điều chỉnh địa chỉ, sản phẩm, thanh toán, thuế
+- Tự động hóa Shopify Flow
+- Cải thiện đơn nháp
+- Khôi phục giỏ hàng bị bỏ rơi
+- Chứng nhận SOC 2 Type II (Premium Plus)
+- Tích hợp: Klaviyo, NetSuite, Recharge, ShipStation
 
-**Strengths:**
-- Longest-established player in the market
-- Strong enterprise features (SOC 2, custom plans)
-- Deep Shopify Flow integration
-- 21-day trial (longest in market)
-- Rich integration ecosystem (Klaviyo, NetSuite, Recharge)
+**Điểm mạnh:**
+- Đối thủ lâu đời nhất trên thị trường
+- Tính năng doanh nghiệp mạnh (SOC 2, gói tùy chỉnh)
+- Tích hợp Shopify Flow sâu
+- Dùng thử 21 ngày (dài nhất trên thị trường)
+- Hệ sinh thái tích hợp phong phú (Klaviyo, NetSuite, Recharge)
 
-**Weaknesses:**
-- Lower rating (4.6 vs competitors' 5.0) - 16 one-star, 8 two-star reviews
-- Overage charges ($0.49-$0.79 per edit over limit)
-- Automation charges ($5.90-$7.90 per 100 automations)
-- Low edit limits per tier (100-800) relative to price
-- "Too expensive for small businesses" complaint pattern
-- Community reports of billing/charging issues
-- No free plan
+**Điểm yếu:**
+- Đánh giá thấp hơn (4.6 so với 5.0 của đối thủ) - 16 đánh giá 1 sao, 8 đánh giá 2 sao
+- Phí vượt mức ($0.49-$0.79 mỗi lần chỉnh sửa vượt giới hạn)
+- Phí tự động hóa ($5.90-$7.90 mỗi 100 lần tự động hóa)
+- Giới hạn chỉnh sửa thấp theo gói (100-800) so với giá
+- Phàn nàn phổ biến "quá đắt cho doanh nghiệp nhỏ"
+- Cộng đồng báo cáo vấn đề tính phí/thanh toán
+- Không có gói miễn phí
 
-**Negative Review Patterns (26 negative reviews):**
-- Pricing too expensive for value delivered
-- Complex setup for smaller stores
-- Occasional billing discrepancies
-- Some merchants report instability
+**Mẫu đánh giá tiêu cực (26 đánh giá tiêu cực):**
+- Giá quá đắt so với giá trị mang lại
+- Thiết lập phức tạp cho cửa hàng nhỏ
+- Đôi khi có sai lệch thanh toán
+- Một số người bán báo cáo không ổn định
 
-**How We Win:**
-- No overage charges - flat pricing per tier
-- No hidden automation fees
-- Free tier immediately captures dissatisfied Cleverific users
-- Simpler setup and onboarding
-- Lower price at every tier
+**Cách chúng ta thắng:**
+- Không phí vượt mức - giá cố định theo gói
+- Không phí tự động hóa ẩn
+- Gói miễn phí ngay lập tức thu hút người dùng Cleverific không hài lòng
+- Thiết lập và hướng dẫn đơn giản hơn
+- Giá thấp hơn ở mọi gói
 
 ---
 
 ### 4. Revize: Order Editing & Upsell
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Untechnickle (Pune, India) |
-| **Rating** | 5.0/5 (97 reviews) |
-| **Launch** | ~2024 |
-| **Installs** | Est. 800-2,000 active |
-| **Pricing** | Free (20 edits) → $49 → $149/mo |
-| **Free plan** | Yes (20 edits/mo) |
-| **Trial** | 7-14 days |
-| **Built for Shopify** | Yes |
-| **Threat Level** | **MEDIUM-HIGH** |
+| **Nhà phát triển** | Untechnickle (Pune, Ấn Độ) |
+| **Đánh giá** | 5.0/5 (97 đánh giá) |
+| **Ra mắt** | ~2024 |
+| **Lượt cài đặt** | Ước tính 800-2,000 đang hoạt động |
+| **Giá** | Miễn phí (20 lần chỉnh sửa) → $49 → $149/tháng |
+| **Gói miễn phí** | Có (20 lần chỉnh sửa/tháng) |
+| **Dùng thử** | 7-14 ngày |
+| **Built for Shopify** | Có |
+| **Mức độ đe dọa** | **TRUNG BÌNH-CAO** |
 
-**Key Features:**
-- Self-service editing (address, variants, quantity, shipping)
-- Product additions and swaps
-- Subscription order support
-- AI upsells (Pro plan)
-- Tax invoice generation
-- Store credit refunds
-- Shopify Markets localization
-- 100+ integrations
+**Tính năng chính:**
+- Tự chỉnh sửa (địa chỉ, biến thể, số lượng, vận chuyển)
+- Thêm và hoán đổi sản phẩm
+- Hỗ trợ đơn hàng đăng ký
+- Upsell AI (gói Pro)
+- Tạo hóa đơn thuế
+- Hoàn tiền tín dụng cửa hàng
+- Bản địa hóa Shopify Markets
+- 100+ tích hợp
 
-**Strengths:**
-- Free tier (captures budget-conscious merchants)
-- Subscription order editing (unique differentiator)
-- Perfect 5.0 rating
-- AI-powered upsells
-- Localization support
+**Điểm mạnh:**
+- Gói miễn phí (thu hút người bán tiết kiệm)
+- Chỉnh sửa đơn hàng đăng ký (điểm khác biệt độc đáo)
+- Đánh giá hoàn hảo 5.0
+- Upsell được hỗ trợ bởi AI
+- Hỗ trợ bản địa hóa
 
-**Weaknesses:**
-- Free tier limited to only 20 edits/month
-- Big price jump: Free → $49/mo (no mid-tier)
-- Key features (upsells, invoices, store credit) locked to $149/mo Pro
-- India-based development may concern some enterprise merchants
-- Some reviews mention pricing as "a bitter taste"
+**Điểm yếu:**
+- Gói miễn phí chỉ giới hạn 20 lần chỉnh sửa/tháng
+- Nhảy giá lớn: Miễn phí → $49/tháng (không có gói trung gian)
+- Tính năng quan trọng (upsell, hóa đơn, tín dụng cửa hàng) chỉ có ở gói Pro $149/tháng
+- Phát triển tại Ấn Độ có thể khiến một số người bán doanh nghiệp lo ngại
+- Một số đánh giá đề cập giá cả "để lại dư vị đắng"
 
-**How We Win:**
-- More generous free tier (50 vs 20 edits)
-- Fill the pricing gap ($9.99-$29.99 between free and $49)
-- Include more features at lower tiers
-- Avada brand recognition and trust
+**Cách chúng ta thắng:**
+- Gói miễn phí hào phóng hơn (50 so với 20 lần chỉnh sửa)
+- Lấp khoảng cách giá ($9.99-$29.99 giữa miễn phí và $49)
+- Bao gồm nhiều tính năng hơn ở các gói thấp hơn
+- Nhận diện thương hiệu và uy tín Avada
 
 ---
 
 ### 5. Recheck Order Editing + Upsell
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Recheck (Bengaluru, India) |
-| **Rating** | 5.0/5 (70 reviews) |
-| **Launch** | ~2024 |
-| **Installs** | Est. 500-1,500 active |
-| **Pricing** | Free (20 edits) → $19 → $49 → $299/mo |
-| **Free plan** | Yes (20 edits/mo) |
-| **Trial** | 7 days |
-| **Threat Level** | **MEDIUM** |
+| **Nhà phát triển** | Recheck (Bengaluru, Ấn Độ) |
+| **Đánh giá** | 5.0/5 (70 đánh giá) |
+| **Ra mắt** | ~2024 |
+| **Lượt cài đặt** | Ước tính 500-1,500 đang hoạt động |
+| **Giá** | Miễn phí (20 lần chỉnh sửa) → $19 → $49 → $299/tháng |
+| **Gói miễn phí** | Có (20 lần chỉnh sửa/tháng) |
+| **Dùng thử** | 7 ngày |
+| **Mức độ đe dọa** | **TRUNG BÌNH** |
 
-**Key Features:**
-- Customer self-service editing
-- Post-purchase upsell offers
-- Google Maps address validation
-- Customizable edit windows/rules
-- Cancellation queue with approval workflows
-- Shopify Flow integration
-- 23 language support
-- Gorgias, Klaviyo, Zendesk integrations
+**Tính năng chính:**
+- Khách hàng tự chỉnh sửa
+- Ưu đãi upsell sau mua hàng
+- Xác thực địa chỉ Google Maps
+- Cửa sổ/quy tắc chỉnh sửa tùy chỉnh
+- Hàng đợi hủy đơn với quy trình phê duyệt
+- Tích hợp Shopify Flow
+- Hỗ trợ 23 ngôn ngữ
+- Tích hợp Gorgias, Klaviyo, Zendesk
 
-**Strengths:**
-- Affordable entry ($19/mo Growth plan)
-- Perfect rating with growing review count
-- Good helpdesk integrations (Gorgias, Zendesk)
-- 23 languages
+**Điểm mạnh:**
+- Giá khởi điểm phải chăng ($19/tháng gói Growth)
+- Đánh giá hoàn hảo với số lượng đánh giá đang tăng
+- Tích hợp helpdesk tốt (Gorgias, Zendesk)
+- 23 ngôn ngữ
 
-**Weaknesses:**
-- Low edit limits per tier (20/50/200/1000)
-- Big jump to Enterprise ($49 → $299)
-- Relatively new, still building trust
-- Limited review volume
+**Điểm yếu:**
+- Giới hạn chỉnh sửa thấp theo gói (20/50/200/1000)
+- Nhảy giá lớn lên Enterprise ($49 → $299)
+- Tương đối mới, vẫn đang xây dựng uy tín
+- Số lượng đánh giá hạn chế
 
-**How We Win:**
-- Higher edit limits per tier
-- Smoother pricing progression
-- Avada ecosystem integration
-- Stronger brand credibility
+**Cách chúng ta thắng:**
+- Giới hạn chỉnh sửa cao hơn theo gói
+- Tiến triển giá mượt mà hơn
+- Tích hợp hệ sinh thái Avada
+- Uy tín thương hiệu mạnh hơn
 
 ---
 
 ### 6. Editify Order Editing & Upsell
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Forty Seven Jane LLC |
-| **Rating** | 4.1/5 (27 reviews) |
-| **Installs** | Est. 200-500 active |
-| **Pricing** | $19 → $39 (+1% upsell rev) → $199/mo |
-| **Free plan** | No |
-| **Trial** | 3 days |
-| **Threat Level** | **LOW** |
+| **Nhà phát triển** | Forty Seven Jane LLC |
+| **Đánh giá** | 4.1/5 (27 đánh giá) |
+| **Lượt cài đặt** | Ước tính 200-500 đang hoạt động |
+| **Giá** | $19 → $39 (+1% doanh thu upsell) → $199/tháng |
+| **Gói miễn phí** | Không |
+| **Dùng thử** | 3 ngày |
+| **Mức độ đe dọa** | **THẤP** |
 
-**Key Features:**
-- Backdate orders beyond Shopify limits
-- Edit shipping costs, billing address
-- Send invoices
-- Customer portal (Pro plan)
-- ERP integrations (Enterprise)
-- Flow actions
+**Tính năng chính:**
+- Chỉnh sửa ngày đơn hàng vượt giới hạn Shopify
+- Chỉnh sửa phí vận chuyển, địa chỉ thanh toán
+- Gửi hóa đơn
+- Cổng khách hàng (gói Pro)
+- Tích hợp ERP (Enterprise)
+- Hành động Flow
 
-**Strengths:**
-- Lowest-cost entry for admin editing ($19/mo)
-- Unique backdating feature
-- Financial reporting features
+**Điểm mạnh:**
+- Chi phí khởi điểm thấp nhất cho chỉnh sửa quản trị ($19/tháng)
+- Tính năng chỉnh sửa ngày độc đáo
+- Tính năng báo cáo tài chính
 
-**Weaknesses:**
-- **Critical bugs reported**: Duplicate orders & double-charging customers
-- **Duplicate refund bug**: Refunding 2x-4x the correct amount during audits
-- Backdating creates duplicate orders instead of modifying
-- 1% upsell revenue charge on Pro plan
-- Only 3-day trial (shortest in market)
-- 15% one-star reviews (4/27)
-- Poor support responsiveness reported
+**Điểm yếu:**
+- **Lỗi nghiêm trọng được báo cáo**: Đơn hàng trùng lặp & tính phí khách hàng hai lần
+- **Lỗi hoàn tiền trùng lặp**: Hoàn tiền 2x-4x số tiền chính xác trong quá trình kiểm toán
+- Chỉnh sửa ngày tạo đơn hàng trùng thay vì sửa đổi
+- Phí 1% doanh thu upsell trên gói Pro
+- Chỉ 3 ngày dùng thử (ngắn nhất trên thị trường)
+- 15% đánh giá 1 sao (4/27)
+- Phản hồi hỗ trợ kém được báo cáo
 
-**How We Win:**
-- Reliable, bug-free editing (their biggest weakness)
-- No revenue-share charges
-- Longer trial period
-- Better support
+**Cách chúng ta thắng:**
+- Chỉnh sửa đáng tin cậy, không lỗi (điểm yếu lớn nhất của họ)
+- Không phí chia sẻ doanh thu
+- Thời gian dùng thử dài hơn
+- Hỗ trợ tốt hơn
 
 ---
 
 ### 7. Orderify - Order Edit Cancel
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Customer First Focus (San Francisco, CA) |
-| **Rating** | 4.8/5 (71 reviews) |
-| **Launch** | May 2016 |
-| **Installs** | Est. 500-1,500 active |
-| **Pricing** | $4.99-$99.99/mo (by Shopify plan) |
-| **Free plan** | No |
-| **Trial** | 30 days |
-| **Threat Level** | **LOW-MEDIUM** |
+| **Nhà phát triển** | Customer First Focus (San Francisco, CA) |
+| **Đánh giá** | 4.8/5 (71 đánh giá) |
+| **Ra mắt** | Tháng 5 năm 2016 |
+| **Lượt cài đặt** | Ước tính 500-1,500 đang hoạt động |
+| **Giá** | $4.99-$99.99/tháng (theo gói Shopify) |
+| **Gói miễn phí** | Không |
+| **Dùng thử** | 30 ngày |
+| **Mức độ đe dọa** | **THẤP-TRUNG BÌNH** |
 
-**Key Features:**
-- Edit, cancel, reorder (self-service)
-- Portal on order status, emails, account page
-- Auto-refund across all gateways
-- Auto-restock
-- Custom rules with duration limits
-- 5-minute setup
+**Tính năng chính:**
+- Chỉnh sửa, hủy, đặt lại (tự phục vụ)
+- Cổng trên trang trạng thái đơn hàng, email, trang tài khoản
+- Tự động hoàn tiền trên tất cả cổng thanh toán
+- Tự động bổ sung kho
+- Quy tắc tùy chỉnh với giới hạn thời gian
+- Thiết lập trong 5 phút
 
-**Strengths:**
-- Very affordable for Basic plan merchants ($4.99/mo)
-- Longest-running app (since 2016)
-- Generous 30-day trial
-- Simple, focused feature set
-- Unlimited edits on all plans
+**Điểm mạnh:**
+- Rất phải chăng cho người bán gói Basic ($4.99/tháng)
+- Ứng dụng hoạt động lâu nhất (từ 2016)
+- Dùng thử 30 ngày hào phóng
+- Bộ tính năng đơn giản, tập trung
+- Chỉnh sửa không giới hạn trên tất cả các gói
 
-**Weaknesses:**
-- **Non-responsive customer support** (critical complaint)
-- App "stopped working" with no response to 5+ emails
-- Shopify unable to reach the company
-- Outdated UI ("early 2000s vibes")
-- Pricing scales with Shopify plan (not usage-based)
-- Limited advanced features
+**Điểm yếu:**
+- **Hỗ trợ khách hàng không phản hồi** (phàn nàn nghiêm trọng)
+- Ứng dụng "ngừng hoạt động" mà không phản hồi 5+ email
+- Shopify không thể liên lạc được với công ty
+- Giao diện lỗi thời ("phong cách đầu những năm 2000")
+- Giá thay đổi theo gói Shopify (không theo mức sử dụng)
+- Tính năng nâng cao hạn chế
 
-**How We Win:**
-- Responsive, reliable support (Avada's core strength)
-- Modern, polished UI
-- More advanced features at competitive pricing
-- Active development and updates
+**Cách chúng ta thắng:**
+- Hỗ trợ phản hồi nhanh, đáng tin cậy (thế mạnh cốt lõi của Avada)
+- Giao diện hiện đại, tinh tế
+- Nhiều tính năng nâng cao hơn với giá cạnh tranh
+- Phát triển và cập nhật tích cực
 
 ---
 
 ### 8. EOE - Easy Order Editing
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Penida |
-| **Rating** | 5.0/5 (14 reviews) |
-| **Pricing** | Free (5 orders) → $9.99 → $89.99 → $299.99/mo |
-| **Free plan** | Yes (5 orders/mo) |
-| **Trial** | 10 days |
-| **Threat Level** | **LOW** |
+| **Nhà phát triển** | Penida |
+| **Đánh giá** | 5.0/5 (14 đánh giá) |
+| **Giá** | Miễn phí (5 đơn hàng) → $9.99 → $89.99 → $299.99/tháng |
+| **Gói miễn phí** | Có (5 đơn hàng/tháng) |
+| **Dùng thử** | 10 ngày |
+| **Mức độ đe dọa** | **THẤP** |
 
-**Key Features:**
-- Post-purchase editing (address, variants, quantities)
-- Instant invoice generation with custom branding
-- Order cancellation controls
-- Mobile-optimized
-- 6 languages
+**Tính năng chính:**
+- Chỉnh sửa sau mua hàng (địa chỉ, biến thể, số lượng)
+- Tạo hóa đơn tức thì với thương hiệu tùy chỉnh
+- Kiểm soát hủy đơn hàng
+- Tối ưu cho di động
+- 6 ngôn ngữ
 
-**Strengths:**
-- Free tier available
-- Affordable $9.99 entry
-- Perfect 5.0 rating
+**Điểm mạnh:**
+- Có gói miễn phí
+- Giá khởi điểm phải chăng $9.99
+- Đánh giá hoàn hảo 5.0
 
-**Weaknesses:**
-- Free tier extremely limited (5 orders)
-- Huge price jump ($9.99 → $89.99)
-- Low review count (14)
-- Limited feature depth
-- No upsell capabilities
+**Điểm yếu:**
+- Gói miễn phí cực kỳ hạn chế (5 đơn hàng)
+- Nhảy giá lớn ($9.99 → $89.99)
+- Số lượng đánh giá thấp (14)
+- Chiều sâu tính năng hạn chế
+- Không có khả năng upsell
 
-**How We Win:**
-- More generous free tier (50 vs 5 edits)
-- Smoother pricing tiers
-- More comprehensive feature set
-- Better brand trust
+**Cách chúng ta thắng:**
+- Gói miễn phí hào phóng hơn (50 so với 5 lần chỉnh sửa)
+- Các gói giá mượt mà hơn
+- Bộ tính năng toàn diện hơn
+- Uy tín thương hiệu tốt hơn
 
 ---
 
 ### 9. EditMyOrder.ai
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Retail Force (Mississauga, Canada) |
-| **Rating** | 5.0/5 (15 reviews) |
-| **Launch** | September 2025 |
-| **Pricing** | **Free** (completely free) |
-| **Threat Level** | **MEDIUM** (disruptive pricing) |
+| **Nhà phát triển** | Retail Force (Mississauga, Canada) |
+| **Đánh giá** | 5.0/5 (15 đánh giá) |
+| **Ra mắt** | Tháng 9 năm 2025 |
+| **Giá** | **Miễn phí** (hoàn toàn miễn phí) |
+| **Mức độ đe dọa** | **TRUNG BÌNH** (giá phá vỡ thị trường) |
 
-**Key Features:**
-- All editing features free
-- Address validation
-- Smart refunds (store credit or original payment)
-- Instant PDF invoices
-- Product swaps, quantity adjustments
-- Variant changes, shipping modifications
-- Discount application
+**Tính năng chính:**
+- Tất cả tính năng chỉnh sửa miễn phí
+- Xác thực địa chỉ
+- Hoàn tiền thông minh (tín dụng cửa hàng hoặc thanh toán gốc)
+- Hóa đơn PDF tức thì
+- Hoán đổi sản phẩm, điều chỉnh số lượng
+- Thay đổi biến thể, sửa đổi vận chuyển
+- Áp dụng giảm giá
 
-**Strengths:**
-- Completely free - disruptive pricing
-- Full feature set at no cost
-- Modern, recent launch
+**Điểm mạnh:**
+- Hoàn toàn miễn phí - giá phá vỡ thị trường
+- Bộ tính năng đầy đủ không mất phí
+- Hiện đại, mới ra mắt
 
-**Weaknesses:**
-- Unclear business model (how do they make money?)
-- Very low review count
-- May not be sustainable long-term
-- Unknown support quality at scale
-- No enterprise features
+**Điểm yếu:**
+- Mô hình kinh doanh không rõ ràng (họ kiếm tiền bằng cách nào?)
+- Số lượng đánh giá rất thấp
+- Có thể không bền vững lâu dài
+- Chất lượng hỗ trợ chưa rõ khi mở rộng
+- Không có tính năng doanh nghiệp
 
-**How We Win:**
-- Sustainable business model with clear roadmap
-- Better support infrastructure (Avada team)
-- Enterprise features for scaling stores
-- Avada ecosystem integration
+**Cách chúng ta thắng:**
+- Mô hình kinh doanh bền vững với lộ trình rõ ràng
+- Cơ sở hạ tầng hỗ trợ tốt hơn (đội ngũ Avada)
+- Tính năng doanh nghiệp cho cửa hàng mở rộng
+- Tích hợp hệ sinh thái Avada
 
 ---
 
 ### 10. CP: Order Editing & Upsell (ClickPost)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | ClickPost (Jersey City, NJ) |
-| **Rating** | 5.0/5 (36 reviews) |
-| **Pricing** | Free (25 edits) → $49 → $129/mo |
-| **Free plan** | Yes (25 edits, $1/extra) |
-| **Trial** | 14 days |
-| **Threat Level** | **MEDIUM** |
+| **Nhà phát triển** | ClickPost (Jersey City, NJ) |
+| **Đánh giá** | 5.0/5 (36 đánh giá) |
+| **Giá** | Miễn phí (25 lần chỉnh sửa) → $49 → $129/tháng |
+| **Gói miễn phí** | Có (25 lần chỉnh sửa, $1/lần thêm) |
+| **Dùng thử** | 14 ngày |
+| **Mức độ đe dọa** | **TRUNG BÌNH** |
 
-**Key Features:**
-- Self-service editing
-- Google Maps address validation
-- Post-purchase upsells & AI recommendations
-- Instant cancellations with auto-refunds
-- 3PL/WMS integrations
-- Customizable editing windows
+**Tính năng chính:**
+- Tự chỉnh sửa
+- Xác thực địa chỉ Google Maps
+- Upsell sau mua hàng & gợi ý AI
+- Hủy đơn tức thì với tự động hoàn tiền
+- Tích hợp 3PL/WMS
+- Cửa sổ chỉnh sửa tùy chỉnh
 
-**Strengths:**
-- Part of larger ClickPost platform (returns, tracking)
-- Free tier available
-- AI recommendations
-- 3PL/WMS integrations
+**Điểm mạnh:**
+- Thuộc nền tảng ClickPost lớn hơn (đổi trả, theo dõi)
+- Có gói miễn phí
+- Gợi ý AI
+- Tích hợp 3PL/WMS
 
-**Weaknesses:**
-- $1 per extra edit on free plan (expensive overage)
-- Jump from free to $49 (no mid-tier)
-- Primarily a logistics company, order editing is secondary
-- Limited review volume
+**Điểm yếu:**
+- $1 mỗi lần chỉnh sửa thêm trên gói miễn phí (phí vượt mức đắt)
+- Nhảy từ miễn phí lên $49 (không có gói trung gian)
+- Chủ yếu là công ty logistics, chỉnh sửa đơn hàng là phụ
+- Số lượng đánh giá hạn chế
 
-**How We Win:**
-- No overage charges
-- Fill the pricing gap ($9.99-$29.99)
-- Order editing is our core focus, not a side feature
+**Cách chúng ta thắng:**
+- Không phí vượt mức
+- Lấp khoảng cách giá ($9.99-$29.99)
+- Chỉnh sửa đơn hàng là trọng tâm chính, không phải tính năng phụ
 
 ---
 
 ### 11. SelfServe Order Edits Upsells
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Grumspot Ltd |
-| **Rating** | 5.0/5 (16 reviews) |
-| **Pricing** | Free (5 edits) → $79 → $159 → $299/mo |
-| **Free plan** | Yes (5 edits/mo) |
-| **Threat Level** | **LOW** |
+| **Nhà phát triển** | Grumspot Ltd |
+| **Đánh giá** | 5.0/5 (16 đánh giá) |
+| **Giá** | Miễn phí (5 lần chỉnh sửa) → $79 → $159 → $299/tháng |
+| **Gói miễn phí** | Có (5 lần chỉnh sửa/tháng) |
+| **Mức độ đe dọa** | **THẤP** |
 
-**Weaknesses:** Extremely limited free tier (5 edits), very expensive paid tiers ($79+), low review count.
+**Điểm yếu:** Gói miễn phí cực kỳ hạn chế (5 lần chỉnh sửa), các gói trả phí rất đắt ($79+), số lượng đánh giá thấp.
 
 ### 12. Postsell: Order Editing Upsell
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | OE Apps |
-| **Rating** | 4.2/5 (22 reviews) |
-| **Pricing** | $15/mo (single plan) |
-| **Threat Level** | **LOW** |
+| **Nhà phát triển** | OE Apps |
+| **Đánh giá** | 4.2/5 (22 đánh giá) |
+| **Giá** | $15/tháng (gói duy nhất) |
+| **Mức độ đe dọa** | **THẤP** |
 
-**Unique angle:** Embeds upsell offers in confirmation emails (70% open rate). Single $15/mo plan is simple but limiting.
+**Góc độ độc đáo:** Nhúng ưu đãi upsell vào email xác nhận (tỷ lệ mở 70%). Gói duy nhất $15/tháng đơn giản nhưng hạn chế.
 
 ### 13. LEO - Order Editing & Upsell
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Leoapps |
-| **Rating** | 5.0/5 (7 reviews) |
-| **Launch** | December 2025 |
-| **Pricing** | **Free** |
-| **Threat Level** | **LOW** (new, unproven) |
+| **Nhà phát triển** | Leoapps |
+| **Đánh giá** | 5.0/5 (7 đánh giá) |
+| **Ra mắt** | Tháng 12 năm 2025 |
+| **Giá** | **Miễn phí** |
+| **Mức độ đe dọa** | **THẤP** (mới, chưa được chứng minh) |
 
-Free app with 18+ languages but very new with minimal reviews.
+Ứng dụng miễn phí với 18+ ngôn ngữ nhưng rất mới với số đánh giá tối thiểu.
 
 ### 14. Vista Order Editing
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Developer** | Growthpolis |
-| **Rating** | 5.0/5 (1 review) |
-| **Pricing** | Free (50 edits) → $15 → $25/mo |
-| **Threat Level** | **LOW** (but watch pricing model) |
+| **Nhà phát triển** | Growthpolis |
+| **Đánh giá** | 5.0/5 (1 đánh giá) |
+| **Giá** | Miễn phí (50 lần chỉnh sửa) → $15 → $25/tháng |
+| **Mức độ đe dọa** | **THẤP** (nhưng cần theo dõi mô hình giá) |
 
-Interesting competitor to watch - similar pricing philosophy to Avada with free tier of 50 edits and very affordable paid tiers. Extremely new with only 1 review.
+Đối thủ đáng theo dõi - triết lý giá tương tự Avada với gói miễn phí 50 lần chỉnh sửa và các gói trả phí rất phải chăng. Cực kỳ mới với chỉ 1 đánh giá.
 
 ---
 
-## Cross-Competitor Complaint Patterns
+## Mẫu Phàn Nàn Chung Giữa Các Đối Thủ
 
-Analyzing negative reviews across all competitors reveals recurring themes:
+Phân tích đánh giá tiêu cực trên tất cả đối thủ cho thấy các chủ đề lặp lại:
 
-| Complaint Pattern | Frequency | Competitors Affected |
+| Mẫu phàn nàn | Tần suất | Đối thủ bị ảnh hưởng |
 |-------------------|-----------|---------------------|
-| **Too expensive for SMBs** | Very High | OrderEditing, Cleverific, AE, SelfServe |
-| **Non-responsive support** | High | Orderify, Editify, Cleverific (some) |
-| **Duplicate orders/charges** | Medium | Editify (critical bug) |
-| **Duplicate refunds** | Medium | Editify (4x refund bug) |
-| **Outdated UI/UX** | Medium | Orderify, Cleverific |
-| **Hidden fees (overage, automation)** | Medium | Cleverific, ClickPost |
-| **Feature gating (upsells locked)** | High | Revize, Recheck, EOE |
-| **Limited free tiers** | High | SelfServe (5), EOE (5), Revize (20) |
-| **App stopped working** | Medium | Orderify |
-| **Complex pricing structure** | Medium | Cleverific, OrderEditing |
+| **Quá đắt cho SMB** | Rất cao | OrderEditing, Cleverific, AE, SelfServe |
+| **Hỗ trợ không phản hồi** | Cao | Orderify, Editify, Cleverific (một số) |
+| **Đơn hàng/tính phí trùng lặp** | Trung bình | Editify (lỗi nghiêm trọng) |
+| **Hoàn tiền trùng lặp** | Trung bình | Editify (lỗi hoàn tiền 4x) |
+| **Giao diện/UX lỗi thời** | Trung bình | Orderify, Cleverific |
+| **Phí ẩn (vượt mức, tự động hóa)** | Trung bình | Cleverific, ClickPost |
+| **Khóa tính năng (upsell bị khóa)** | Cao | Revize, Recheck, EOE |
+| **Gói miễn phí hạn chế** | Cao | SelfServe (5), EOE (5), Revize (20) |
+| **Ứng dụng ngừng hoạt động** | Trung bình | Orderify |
+| **Cấu trúc giá phức tạp** | Trung bình | Cleverific, OrderEditing |
 
 ---
 
-## Competitive Positioning Map
+## Bản Đồ Vị Thế Cạnh Tranh
 
 ```
-                    HIGH PRICE
+                    GIÁ CAO
                         |
     OrderEditing.com    |    Cleverific
     ($99-599)           |    ($49-299)
@@ -525,67 +525,67 @@ Analyzing negative reviews across all competitors reveals recurring themes:
     AE ($39-259)        |    SelfServe ($79-299)
                         |
   ──────────────────────+──────────────────────
-  BASIC FEATURES        |         ADVANCED FEATURES
+  TÍNH NĂNG CƠ BẢN     |         TÍNH NĂNG NÂNG CAO
                         |
-    Orderify ($5-100)   |    Revize (Free-$149)
-    Orderly ($4-100)    |    Recheck (Free-$299)
-                        |    ClickPost (Free-$129)
-    EOE (Free-$300)     |
-    EditMyOrder (Free)  |    ★ AVADA TARGET ZONE ★
-    LEO (Free)          |    (Free-$99, Full Features)
+    Orderify ($5-100)   |    Revize (Miễn phí-$149)
+    Orderly ($4-100)    |    Recheck (Miễn phí-$299)
+                        |    ClickPost (Miễn phí-$129)
+    EOE (Miễn phí-$300) |
+    EditMyOrder (Miễn phí)|    ★ VÙNG MỤC TIÊU AVADA ★
+    LEO (Miễn phí)      |    (Miễn phí-$99, Đầy đủ tính năng)
                         |
-                    LOW PRICE
+                    GIÁ THẤP
 ```
 
-**Avada's target zone:** Advanced features at low prices - the underserved quadrant.
+**Vùng mục tiêu của Avada:** Tính năng nâng cao với giá thấp - phần tư thị trường chưa được phục vụ.
 
 ---
 
-## Threat Assessment Summary
+## Tóm Tắt Đánh Giá Mức Độ Đe Dọa
 
-| Competitor | Threat | Reason |
+| Đối thủ | Mức đe dọa | Lý do |
 |-----------|--------|--------|
-| OrderEditing.com | **HIGH** | Market leader, strong brand, may lower prices |
-| AE: Order Editing | **HIGH** | Fast-growing, perfect reviews, modern tech |
-| Cleverific | **HIGH** | Established, enterprise features, deep integrations |
-| Revize | **MEDIUM-HIGH** | Free tier, growing fast, but pricing gap |
-| Recheck | **MEDIUM** | Affordable, growing, good integrations |
-| ClickPost | **MEDIUM** | Platform play, AI features |
-| EditMyOrder.ai | **MEDIUM** | Free disruptor, but sustainability unclear |
-| Vista | **LOW** | Similar pricing philosophy but brand-new |
-| Editify | **LOW** | Critical bugs, poor reviews |
-| Orderify | **LOW-MEDIUM** | Legacy, declining support quality |
-| EOE | **LOW** | Limited features, price jumps |
-| SelfServe | **LOW** | Expensive, limited free tier |
-| Postsell | **LOW** | Niche (email upsells), mediocre rating |
-| LEO | **LOW** | New, free, unproven |
+| OrderEditing.com | **CAO** | Dẫn đầu thị trường, thương hiệu mạnh, có thể giảm giá |
+| AE: Order Editing | **CAO** | Tăng trưởng nhanh, đánh giá hoàn hảo, công nghệ hiện đại |
+| Cleverific | **CAO** | Lâu đời, tính năng doanh nghiệp, tích hợp sâu |
+| Revize | **TRUNG BÌNH-CAO** | Gói miễn phí, tăng trưởng nhanh, nhưng khoảng cách giá |
+| Recheck | **TRUNG BÌNH** | Giá phải chăng, đang tăng trưởng, tích hợp tốt |
+| ClickPost | **TRUNG BÌNH** | Chiến lược nền tảng, tính năng AI |
+| EditMyOrder.ai | **TRUNG BÌNH** | Phá giá miễn phí, nhưng tính bền vững chưa rõ |
+| Vista | **THẤP** | Triết lý giá tương tự nhưng hoàn toàn mới |
+| Editify | **THẤP** | Lỗi nghiêm trọng, đánh giá kém |
+| Orderify | **THẤP-TRUNG BÌNH** | Lâu đời, chất lượng hỗ trợ suy giảm |
+| EOE | **THẤP** | Tính năng hạn chế, nhảy giá |
+| SelfServe | **THẤP** | Đắt, gói miễn phí hạn chế |
+| Postsell | **THẤP** | Niche (upsell email), đánh giá trung bình |
+| LEO | **THẤP** | Mới, miễn phí, chưa được chứng minh |
 
 ---
 
-## "How We Win" Summary Strategy
+## Tóm Tắt Chiến Lược "Cách Chúng Ta Thắng"
 
-### Against Premium Players (OrderEditing, AE, Cleverific)
-- **Price disruption**: 70-90% lower pricing at comparable features
-- **Free tier**: Generous 50 edits/mo captures merchants they price out
-- **No hidden fees**: No overage charges, no automation fees, no add-on costs
-- **SMB focus**: Purpose-built for stores doing 50-2,000 orders/mo
+### Chống lại đối thủ cao cấp (OrderEditing, AE, Cleverific)
+- **Phá giá**: Giá thấp hơn 70-90% với tính năng tương đương
+- **Gói miễn phí**: 50 lần chỉnh sửa/tháng hào phóng thu hút người bán bị loại bỏ vì giá
+- **Không phí ẩn**: Không phí vượt mức, không phí tự động hóa, không chi phí bổ sung
+- **Tập trung SMB**: Xây dựng riêng cho cửa hàng 50-2,000 đơn hàng/tháng
 
-### Against Mid-Market Players (Revize, Recheck, ClickPost)
-- **Better free tier**: 50 edits vs 20-25 edits
-- **Smoother pricing**: No gap between free and $49+
-- **Avada brand**: Established trust from existing Avada apps
-- **Ecosystem**: Cross-sell from Avada's existing 100k+ merchant base
+### Chống lại đối thủ phân khúc trung (Revize, Recheck, ClickPost)
+- **Gói miễn phí tốt hơn**: 50 lần chỉnh sửa so với 20-25 lần
+- **Giá mượt mà hơn**: Không có khoảng cách giữa miễn phí và $49+
+- **Thương hiệu Avada**: Uy tín đã được thiết lập từ các ứng dụng Avada hiện có
+- **Hệ sinh thái**: Bán chéo từ cơ sở 100k+ người bán hiện tại của Avada
 
-### Against Budget Players (Orderify, EOE, EditMyOrder, Orderly)
-- **Reliable support**: Avada's proven support infrastructure
-- **Modern UI**: Polaris v12+ design system
-- **Feature depth**: Upsells, analytics, Flow integration
-- **Active development**: Regular updates and new features
-- **Sustainable business**: Clear pricing model vs free apps with unclear futures
+### Chống lại đối thủ giá rẻ (Orderify, EOE, EditMyOrder, Orderly)
+- **Hỗ trợ đáng tin cậy**: Cơ sở hạ tầng hỗ trợ đã được chứng minh của Avada
+- **Giao diện hiện đại**: Hệ thống thiết kế Polaris v12+
+- **Chiều sâu tính năng**: Upsell, phân tích, tích hợp Flow
+- **Phát triển tích cực**: Cập nhật thường xuyên và tính năng mới
+- **Kinh doanh bền vững**: Mô hình giá rõ ràng so với ứng dụng miễn phí với tương lai không chắc chắn
 
-### Overall Competitive Moat
-1. **Avada ecosystem** - Cross-sell to existing merchant base
-2. **Price-to-value ratio** - Best features at lowest price
-3. **Support quality** - 24/7 support from proven team
-4. **Modern tech stack** - Fast, reliable, bug-free
-5. **SMB focus** - Purpose-built for the underserved majority
+### Lợi Thế Cạnh Tranh Tổng Thể
+1. **Hệ sinh thái Avada** - Bán chéo đến cơ sở người bán hiện có
+2. **Tỷ lệ giá trị/giá cả** - Tính năng tốt nhất với giá thấp nhất
+3. **Chất lượng hỗ trợ** - Hỗ trợ 24/7 từ đội ngũ đã được chứng minh
+4. **Công nghệ hiện đại** - Nhanh, đáng tin cậy, không lỗi
+5. **Tập trung SMB** - Xây dựng riêng cho phần đông chưa được phục vụ

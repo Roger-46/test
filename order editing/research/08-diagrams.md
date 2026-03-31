@@ -1,27 +1,27 @@
-# Technical Diagrams - Avada Order Editing
+# Sơ Đồ Kỹ Thuật - Avada Order Editing
 
-## 1. System Architecture Diagram
+## 1. Sơ Đồ Kiến Trúc Hệ Thống
 
 ```mermaid
 graph TB
-    subgraph "Shopify Platform"
-        SA[Shopify Admin]
-        SF[Storefront]
-        OSP[Order Status Page]
-        TYP[Thank You Page]
+    subgraph "Nền Tảng Shopify"
+        SA[Trang Quản Trị Shopify]
+        SF[Cửa Hàng Trực Tuyến]
+        OSP[Trang Trạng Thái Đơn Hàng]
+        TYP[Trang Cảm Ơn]
         SAPI[Shopify GraphQL Admin API]
         SREST[Shopify REST API]
         SWH[Shopify Webhooks]
     end
 
-    subgraph "Embedded Admin App"
-        PA[React / Polaris v12+ App]
+    subgraph "Ứng Dụng Quản Trị Nhúng"
+        PA[Ứng dụng React / Polaris v12+]
         AB[Shopify App Bridge]
         PA --> AB
         AB --> SAPI
     end
 
-    subgraph "Storefront Layer"
+    subgraph "Tầng Cửa Hàng Trực Tuyến"
         TE[Theme App Extension<br/>Liquid Blocks]
         SW[Scripttag Widget<br/>Preact]
         TE --> OSP
@@ -31,30 +31,30 @@ graph TB
 
     subgraph "GCP / Firebase Backend"
         subgraph "Firebase Hosting"
-            FH[Static Frontend Assets]
+            FH[Tài Nguyên Frontend Tĩnh]
         end
 
         subgraph "Firebase Functions"
-            API[REST API Handlers]
-            WHH[Webhook Handlers]
-            BGW[Background Workers]
-            CRON[Scheduled Functions]
+            API[Bộ Xử Lý REST API]
+            WHH[Bộ Xử Lý Webhook]
+            BGW[Worker Chạy Nền]
+            CRON[Hàm Theo Lịch]
         end
 
-        subgraph "Data Layer"
+        subgraph "Tầng Dữ Liệu"
             FS[(Firestore)]
             BQ[(BigQuery)]
         end
 
-        subgraph "Async Processing"
+        subgraph "Xử Lý Bất Đồng Bộ"
             PS[Cloud Pub/Sub]
             CT[Cloud Tasks]
         end
     end
 
-    subgraph "External Services"
+    subgraph "Dịch Vụ Bên Ngoài"
         GADDR[Google Address Validation API]
-        EMAIL[Email Service<br/>SendGrid / Mailgun]
+        EMAIL[Dịch Vụ Email<br/>SendGrid / Mailgun]
     end
 
     SA --> PA
@@ -62,7 +62,7 @@ graph TB
     SW --> API
     TE --> API
 
-    SWH -->|HMAC Verified| WHH
+    SWH -->|Đã Xác Minh HMAC| WHH
     WHH --> PS
     PS --> BGW
     BGW --> FS
@@ -77,10 +77,10 @@ graph TB
     CRON --> CT
     CT --> BGW
 
-    FS -->|Change Streams| BQ
+    FS -->|Luồng Thay Đổi| BQ
     BGW --> BQ
 
-    PA -->|Dashboard & Analytics| BQ
+    PA -->|Bảng Điều Khiển & Phân Tích| BQ
 
     style SA fill:#5c6ac4,color:#fff
     style SF fill:#5c6ac4,color:#fff
@@ -89,114 +89,114 @@ graph TB
     style PS fill:#34a853,color:#fff
 ```
 
-## 2. Order Edit Lifecycle State Machine
+## 2. Máy Trạng Thái Vòng Đời Chỉnh Sửa Đơn Hàng
 
 ```mermaid
 stateDiagram-v2
-    [*] --> OrderPlaced: Order created via Shopify
+    [*] --> DonHangDuocDat: Đơn hàng được tạo qua Shopify
 
-    OrderPlaced --> EditWindowOpen: Webhook received &<br/>edit rules evaluated
+    DonHangDuocDat --> CuaSoChinhSuaMo: Webhook nhận được &<br/>đánh giá quy tắc chỉnh sửa
 
-    EditWindowOpen --> EditRequested_Customer: Customer initiates edit<br/>(order status page / widget)
-    EditWindowOpen --> EditRequested_Merchant: Merchant initiates edit<br/>(admin dashboard)
-    EditWindowOpen --> CancelRequested: Customer initiates cancel
-    EditWindowOpen --> EditWindowClosed: Time window expires<br/>(scheduled function)
+    CuaSoChinhSuaMo --> YeuCauChinhSua_KhachHang: Khách hàng yêu cầu chỉnh sửa<br/>(trang trạng thái đơn hàng / widget)
+    CuaSoChinhSuaMo --> YeuCauChinhSua_NguoiBan: Người bán yêu cầu chỉnh sửa<br/>(bảng quản trị)
+    CuaSoChinhSuaMo --> YeuCauHuy: Khách hàng yêu cầu hủy
+    CuaSoChinhSuaMo --> CuaSoChinhSuaDong: Hết thời gian cho phép<br/>(hàm theo lịch)
 
-    EditRequested_Customer --> EditValidating: Validate edit rules &<br/>inventory availability
-    EditRequested_Merchant --> EditValidating: Validate against<br/>Shopify constraints
+    YeuCauChinhSua_KhachHang --> DangXacThuc: Xác thực quy tắc chỉnh sửa &<br/>tồn kho khả dụng
+    YeuCauChinhSua_NguoiBan --> DangXacThuc: Xác thực theo<br/>ràng buộc Shopify
 
-    EditValidating --> EditRejected: Validation fails<br/>(out of stock, rule violation,<br/>already fulfilled)
-    EditValidating --> PriceDiffCalculated: Validation passes
+    DangXacThuc --> ChinhSuaBiTuChoi: Xác thực thất bại<br/>(hết hàng, vi phạm quy tắc,<br/>đã thực hiện giao hàng)
+    DangXacThuc --> TinhChenhLechGia: Xác thực thành công
 
-    PriceDiffCalculated --> PaymentRequired: Price increased<br/>(charge customer)
-    PriceDiffCalculated --> RefundRequired: Price decreased<br/>(refund customer)
-    PriceDiffCalculated --> EditProcessing: No price change
+    TinhChenhLechGia --> YeuCauThanhToan: Giá tăng<br/>(thu phí khách hàng)
+    TinhChenhLechGia --> YeuCauHoanTien: Giá giảm<br/>(hoàn tiền khách hàng)
+    TinhChenhLechGia --> DangXuLyChinhSua: Không thay đổi giá
 
-    PaymentRequired --> EditProcessing: Payment captured
-    PaymentRequired --> EditRejected: Payment failed
-    RefundRequired --> EditProcessing: Refund issued
+    YeuCauThanhToan --> DangXuLyChinhSua: Thanh toán thành công
+    YeuCauThanhToan --> ChinhSuaBiTuChoi: Thanh toán thất bại
+    YeuCauHoanTien --> DangXuLyChinhSua: Đã hoàn tiền
 
-    EditProcessing --> EditApplied: Shopify API<br/>orderEditCommit success
-    EditProcessing --> EditRejected: Shopify API error
+    DangXuLyChinhSua --> ChinhSuaDuocApDung: Shopify API<br/>orderEditCommit thành công
+    DangXuLyChinhSua --> ChinhSuaBiTuChoi: Lỗi Shopify API
 
-    EditApplied --> NotificationSent: Email / SMS sent
-    NotificationSent --> EditWindowOpen: Window still open<br/>(allow further edits)
-    NotificationSent --> EditWindowClosed: Window expired
+    ChinhSuaDuocApDung --> ThongBaoDaGui: Email / SMS đã gửi
+    ThongBaoDaGui --> CuaSoChinhSuaMo: Cửa sổ vẫn mở<br/>(cho phép chỉnh sửa tiếp)
+    ThongBaoDaGui --> CuaSoChinhSuaDong: Cửa sổ hết hạn
 
-    CancelRequested --> RetentionFlow: Show retention offers
-    RetentionFlow --> EditWindowOpen: Customer retained<br/>(accepted offer)
-    RetentionFlow --> CancelProcessing: Customer confirms cancel
-    CancelProcessing --> OrderCancelled: Cancel via Shopify API<br/>+ restock inventory
+    YeuCauHuy --> LuongGiuChan: Hiển thị ưu đãi giữ chân
+    LuongGiuChan --> CuaSoChinhSuaMo: Khách hàng được giữ lại<br/>(chấp nhận ưu đãi)
+    LuongGiuChan --> DangXuLyHuy: Khách hàng xác nhận hủy
+    DangXuLyHuy --> DonHangDaHuy: Hủy qua Shopify API<br/>+ nhập lại tồn kho
 
-    EditRejected --> EditWindowOpen: Customer can retry
-    EditWindowClosed --> [*]
-    OrderCancelled --> [*]
+    ChinhSuaBiTuChoi --> CuaSoChinhSuaMo: Khách hàng có thể thử lại
+    CuaSoChinhSuaDong --> [*]
+    DonHangDaHuy --> [*]
 
-    note right of EditWindowOpen
-        Time-based window controlled by
-        merchant settings (e.g., 2 hours,
-        before fulfillment, etc.)
+    note right of CuaSoChinhSuaMo
+        Cửa sổ thời gian được kiểm soát bởi
+        cài đặt người bán (ví dụ: 2 giờ,
+        trước khi giao hàng, v.v.)
     end note
 
-    note right of PriceDiffCalculated
-        Compares original order total
-        with new line items total
+    note right of TinhChenhLechGia
+        So sánh tổng đơn hàng ban đầu
+        với tổng mục hàng mới
     end note
 ```
 
-## 3. Customer Self-Service Edit Flow (Sequence Diagram)
+## 3. Luồng Khách Hàng Tự Chỉnh Sửa (Sơ Đồ Tuần Tự)
 
 ```mermaid
 sequenceDiagram
-    actor C as Customer
-    participant OSP as Order Status Page<br/>(Theme Extension)
-    participant SW as Storefront Widget<br/>(Preact)
-    participant API as Firebase Functions<br/>(API Handler)
-    participant SVC as Edit Service
+    actor C as Khách Hàng
+    participant OSP as Trang Trạng Thái Đơn Hàng<br/>(Theme Extension)
+    participant SW as Widget Cửa Hàng<br/>(Preact)
+    participant API as Firebase Functions<br/>(Bộ Xử Lý API)
+    participant SVC as Dịch Vụ Chỉnh Sửa
     participant FS as Firestore
     participant SHOP as Shopify GraphQL API
-    participant EMAIL as Email Service
+    participant EMAIL as Dịch Vụ Email
 
-    C->>OSP: Views order status page
+    C->>OSP: Xem trang trạng thái đơn hàng
     OSP->>API: GET /api/orders/{orderId}/edit-eligibility
-    API->>FS: Fetch editSettings for shop
-    API->>FS: Fetch order record
+    API->>FS: Lấy editSettings của cửa hàng
+    API->>FS: Lấy bản ghi đơn hàng
     API->>SVC: checkEditEligibility(order, settings)
     SVC-->>API: {eligible: true, allowedActions, timeRemaining}
-    API-->>OSP: Edit eligibility response
+    API-->>OSP: Phản hồi đủ điều kiện chỉnh sửa
 
-    OSP->>SW: Render "Edit Order" button
+    OSP->>SW: Hiển thị nút "Chỉnh Sửa Đơn Hàng"
 
-    C->>SW: Clicks "Edit Order"
+    C->>SW: Nhấn "Chỉnh Sửa Đơn Hàng"
     SW->>API: GET /api/orders/{orderId}/edit-options
     API->>SHOP: query order(id) { lineItems, variants }
-    SHOP-->>API: Order details + available variants
-    API->>FS: Fetch editRules for shop
+    SHOP-->>API: Chi tiết đơn hàng + biến thể khả dụng
+    API->>FS: Lấy editRules của cửa hàng
     API-->>SW: {lineItems, swapOptions, quantityLimits}
 
-    SW->>SW: Display edit form<br/>(item swap, qty change, address edit)
+    SW->>SW: Hiển thị form chỉnh sửa<br/>(đổi sản phẩm, thay đổi số lượng, sửa địa chỉ)
 
-    C->>SW: Selects changes<br/>(e.g., swap variant, change qty)
+    C->>SW: Chọn thay đổi<br/>(ví dụ: đổi biến thể, thay đổi số lượng)
     SW->>API: POST /api/orders/{orderId}/edits
-    Note over API: Request body: {changes: [{type, lineItemId, newVariantId, newQty}]}
+    Note over API: Nội dung yêu cầu: {changes: [{type, lineItemId, newVariantId, newQty}]}
 
     API->>SVC: validateEdit(order, changes, rules)
     SVC->>SHOP: query inventoryLevel(variantId)
-    SHOP-->>SVC: Stock availability
-    SVC->>SVC: Check edit rules<br/>(time window, max edits, allowed types)
-    SVC-->>API: Validation result
+    SHOP-->>SVC: Tồn kho khả dụng
+    SVC->>SVC: Kiểm tra quy tắc chỉnh sửa<br/>(cửa sổ thời gian, số lần chỉnh sửa tối đa, loại cho phép)
+    SVC-->>API: Kết quả xác thực
 
-    alt Validation fails
-        API-->>SW: 422 {error: "Item out of stock"}
-        SW->>C: Show error message
-    else Validation passes
+    alt Xác thực thất bại
+        API-->>SW: 422 {error: "Sản phẩm hết hàng"}
+        SW->>C: Hiển thị thông báo lỗi
+    else Xác thực thành công
         API->>SVC: calculatePriceDiff(originalOrder, changes)
         SVC-->>API: {priceDiff: +$5.00, newTotal: $55.00}
         API-->>SW: {valid: true, priceDiff, requiresPayment: true}
 
-        SW->>C: Show price difference & confirm
+        SW->>C: Hiển thị chênh lệch giá & xác nhận
 
-        C->>SW: Confirms changes
+        C->>SW: Xác nhận thay đổi
         SW->>API: POST /api/orders/{orderId}/edits/confirm
 
         API->>SVC: processEdit(order, changes)
@@ -204,275 +204,275 @@ sequenceDiagram
         SHOP-->>SVC: calculatedOrder
 
         SVC->>SHOP: mutation orderEditAddVariant / removeVariant / setQuantity
-        SHOP-->>SVC: Updated calculated order
+        SHOP-->>SVC: Đơn hàng tính toán đã cập nhật
 
-        alt Price increased
-            SVC->>SHOP: mutation orderEditCommit(id)<br/>with notifyCustomer: false
-            SHOP-->>SVC: Order updated
+        alt Giá tăng
+            SVC->>SHOP: mutation orderEditCommit(id)<br/>với notifyCustomer: false
+            SHOP-->>SVC: Đơn hàng đã cập nhật
             SVC->>SHOP: mutation orderInvoiceSend(id)
-            Note over SVC: Customer pays via invoice link
-        else Price decreased
+            Note over SVC: Khách hàng thanh toán qua liên kết hóa đơn
+        else Giá giảm
             SVC->>SHOP: mutation orderEditCommit(id)
-            SHOP-->>SVC: Order updated + refund issued
-        else No price change
+            SHOP-->>SVC: Đơn hàng đã cập nhật + đã hoàn tiền
+        else Không thay đổi giá
             SVC->>SHOP: mutation orderEditCommit(id)
-            SHOP-->>SVC: Order updated
+            SHOP-->>SVC: Đơn hàng đã cập nhật
         end
 
-        SVC->>FS: Save orderEdit record
-        SVC->>FS: Increment shop edit count (usage tracking)
+        SVC->>FS: Lưu bản ghi orderEdit
+        SVC->>FS: Tăng số lần chỉnh sửa của cửa hàng (theo dõi sử dụng)
 
         API-->>SW: {success: true, updatedOrder}
-        SW->>C: Show success confirmation
+        SW->>C: Hiển thị xác nhận thành công
 
-        API->>EMAIL: Send edit confirmation email
-        EMAIL-->>C: "Your order has been updated"
+        API->>EMAIL: Gửi email xác nhận chỉnh sửa
+        EMAIL-->>C: "Đơn hàng của bạn đã được cập nhật"
     end
 ```
 
-## 4. Merchant Admin Edit Flow (Sequence Diagram)
+## 4. Luồng Chỉnh Sửa Từ Trang Quản Trị Người Bán (Sơ Đồ Tuần Tự)
 
 ```mermaid
 sequenceDiagram
-    actor M as Merchant
-    participant APP as Admin App<br/>(React/Polaris)
+    actor M as Người Bán
+    participant APP as Ứng Dụng Quản Trị<br/>(React/Polaris)
     participant AB as App Bridge
     participant API as Firebase Functions
-    participant SVC as Edit Service
+    participant SVC as Dịch Vụ Chỉnh Sửa
     participant FS as Firestore
     participant SHOP as Shopify GraphQL API
     participant PS as Cloud Pub/Sub
-    participant EMAIL as Email Service
+    participant EMAIL as Dịch Vụ Email
 
-    M->>APP: Opens Order Editing dashboard
+    M->>APP: Mở bảng điều khiển Chỉnh Sửa Đơn Hàng
     APP->>API: GET /api/orders?status=open&page=1
-    API->>FS: Query orders (shopId, status, pagination)
-    FS-->>API: Order list
-    API-->>APP: Paginated order list
+    API->>FS: Truy vấn đơn hàng (shopId, status, phân trang)
+    FS-->>API: Danh sách đơn hàng
+    API-->>APP: Danh sách đơn hàng phân trang
 
-    M->>APP: Clicks on specific order
-    APP->>AB: Direct API: query order(id) { full details }
-    AB->>SHOP: GraphQL query
-    SHOP-->>AB: Order details
-    AB-->>APP: Order data (no backend round-trip)
+    M->>APP: Nhấn vào đơn hàng cụ thể
+    APP->>AB: API trực tiếp: query order(id) { chi tiết đầy đủ }
+    AB->>SHOP: Truy vấn GraphQL
+    SHOP-->>AB: Chi tiết đơn hàng
+    AB-->>APP: Dữ liệu đơn hàng (không qua backend)
 
-    M->>APP: Clicks "Edit Order"
+    M->>APP: Nhấn "Chỉnh Sửa Đơn Hàng"
     APP->>API: POST /api/orders/{orderId}/merchant-edit/begin
     API->>SVC: beginMerchantEdit(order)
     SVC->>SHOP: mutation orderEditBegin(id)
-    SHOP-->>SVC: calculatedOrder with editableFields
-    SVC-->>API: Edit session with editable fields
+    SHOP-->>SVC: calculatedOrder với các trường có thể chỉnh sửa
+    SVC-->>API: Phiên chỉnh sửa với các trường có thể chỉnh sửa
     API-->>APP: {editSession, lineItems, availableProducts}
 
-    APP->>APP: Render edit form with current values
+    APP->>APP: Hiển thị form chỉnh sửa với giá trị hiện tại
 
-    M->>APP: Makes changes<br/>(add product, change qty, update address)
-    M->>APP: Clicks "Save Changes"
+    M->>APP: Thực hiện thay đổi<br/>(thêm sản phẩm, thay đổi số lượng, cập nhật địa chỉ)
+    M->>APP: Nhấn "Lưu Thay Đổi"
     APP->>API: POST /api/orders/{orderId}/merchant-edit/commit
-    Note over API: {changes: [...], notifyCustomer: true, reason: "Customer request"}
+    Note over API: {changes: [...], notifyCustomer: true, reason: "Yêu cầu của khách hàng"}
 
     API->>SVC: processMerchantEdit(order, changes)
     SVC->>SHOP: mutation orderEditAddVariant / setQuantity
-    SHOP-->>SVC: Updated calculated order
+    SHOP-->>SVC: Đơn hàng tính toán đã cập nhật
     SVC->>SHOP: mutation orderEditCommit(id, staffNote)
-    SHOP-->>SVC: Committed order
+    SHOP-->>SVC: Đơn hàng đã xác nhận
 
-    SVC->>FS: Save orderEdit record (editedBy: "merchant")
-    SVC->>FS: Log to analytics collection
+    SVC->>FS: Lưu bản ghi orderEdit (editedBy: "merchant")
+    SVC->>FS: Ghi vào bộ sưu tập phân tích
 
     API-->>APP: {success: true, updatedOrder}
-    APP->>M: Show success toast (Polaris Banner)
+    APP->>M: Hiển thị thông báo thành công (Polaris Banner)
 
-    API->>PS: Publish "order.edited" event
-    PS->>EMAIL: Send customer notification
-    EMAIL-->>EMAIL: "The merchant updated your order"
+    API->>PS: Phát sự kiện "order.edited"
+    PS->>EMAIL: Gửi thông báo cho khách hàng
+    EMAIL-->>EMAIL: "Người bán đã cập nhật đơn hàng của bạn"
 ```
 
-## 5. Cancellation Retention Flow
+## 5. Luồng Giữ Chân Khi Hủy Đơn
 
 ```mermaid
 sequenceDiagram
-    actor C as Customer
-    participant SW as Storefront Widget
+    actor C as Khách Hàng
+    participant SW as Widget Cửa Hàng
     participant API as Firebase Functions
-    participant SVC as Cancel Service
-    participant RS as Retention Service
+    participant SVC as Dịch Vụ Hủy Đơn
+    participant RS as Dịch Vụ Giữ Chân
     participant FS as Firestore
     participant SHOP as Shopify GraphQL API
-    participant EMAIL as Email Service
+    participant EMAIL as Dịch Vụ Email
 
-    C->>SW: Clicks "Cancel Order"
+    C->>SW: Nhấn "Hủy Đơn Hàng"
     SW->>API: POST /api/orders/{orderId}/cancel/init
-    API->>FS: Fetch editSettings.cancellation for shop
+    API->>FS: Lấy editSettings.cancellation của cửa hàng
     API->>SVC: initCancellation(order, settings)
-    SVC->>SVC: Check cancellation eligibility<br/>(not fulfilled, within window)
+    SVC->>SVC: Kiểm tra đủ điều kiện hủy<br/>(chưa giao hàng, trong thời gian cho phép)
 
-    alt Not eligible
-        API-->>SW: {eligible: false, reason: "Order already shipped"}
-        SW->>C: Show "Cannot cancel" message
-    else Eligible
+    alt Không đủ điều kiện
+        API-->>SW: {eligible: false, reason: "Đơn hàng đã được giao"}
+        SW->>C: Hiển thị thông báo "Không thể hủy"
+    else Đủ điều kiện
         SVC->>RS: getRetentionOffers(order, shopSettings)
-        RS->>FS: Fetch retention strategies for shop
-        RS-->>SVC: Available retention offers
+        RS->>FS: Lấy chiến lược giữ chân của cửa hàng
+        RS-->>SVC: Các ưu đãi giữ chân khả dụng
 
         API-->>SW: {eligible: true, retentionOffers: [...]}
 
-        SW->>SW: Show cancellation reason picker
-        C->>SW: Selects reason: "Found cheaper elsewhere"
+        SW->>SW: Hiển thị lựa chọn lý do hủy
+        C->>SW: Chọn lý do: "Tìm được nơi rẻ hơn"
 
-        SW->>SW: Display targeted retention offers based on reason
-        Note over SW: Reason-specific offers:<br/>"Found cheaper" → discount<br/>"Don't need anymore" → delay delivery<br/>"Wrong item" → swap product
+        SW->>SW: Hiển thị ưu đãi giữ chân theo lý do
+        Note over SW: Ưu đãi theo lý do:<br/>"Tìm được rẻ hơn" → giảm giá<br/>"Không cần nữa" → hoãn giao hàng<br/>"Sai sản phẩm" → đổi sản phẩm
 
         rect rgb(255, 248, 220)
-            Note over SW: Retention Offer Display
-            SW->>C: Offer 1: "Get 15% off this order"
-            SW->>C: Offer 2: "Swap to a different product"
-            SW->>C: Offer 3: "Delay delivery instead"
-            SW->>C: Option: "No thanks, cancel order"
+            Note over SW: Hiển Thị Ưu Đãi Giữ Chân
+            SW->>C: Ưu đãi 1: "Giảm 15% cho đơn hàng này"
+            SW->>C: Ưu đãi 2: "Đổi sang sản phẩm khác"
+            SW->>C: Ưu đãi 3: "Hoãn giao hàng thay vì hủy"
+            SW->>C: Tùy chọn: "Không, cảm ơn, hủy đơn hàng"
         end
 
-        alt Customer accepts discount offer
-            C->>SW: Accepts "15% off" offer
+        alt Khách hàng chấp nhận ưu đãi giảm giá
+            C->>SW: Chấp nhận ưu đãi "Giảm 15%"
             SW->>API: POST /api/orders/{orderId}/cancel/retain
             Note over API: {retentionType: "discount", offerId: "..."}
             API->>RS: applyRetentionOffer(order, offer)
-            RS->>SHOP: mutation discountCodeBasicCreate or orderEditBegin + adjust prices
-            SHOP-->>RS: Discount applied
-            RS->>FS: Log retention success
-            RS->>FS: Update analytics (retention_saved)
+            RS->>SHOP: mutation discountCodeBasicCreate hoặc orderEditBegin + điều chỉnh giá
+            SHOP-->>RS: Đã áp dụng giảm giá
+            RS->>FS: Ghi nhận giữ chân thành công
+            RS->>FS: Cập nhật phân tích (retention_saved)
             API-->>SW: {retained: true, discount: "15%", newTotal}
-            SW->>C: "Great! 15% discount applied to your order"
-            API->>EMAIL: Send retention confirmation
+            SW->>C: "Tuyệt vời! Đã áp dụng giảm 15% cho đơn hàng của bạn"
+            API->>EMAIL: Gửi email xác nhận giữ chân
 
-        else Customer accepts swap offer
-            C->>SW: Accepts product swap
+        else Khách hàng chấp nhận đổi sản phẩm
+            C->>SW: Chấp nhận đổi sản phẩm
             SW->>API: POST /api/orders/{orderId}/cancel/retain
             Note over API: {retentionType: "swap", newVariantId: "..."}
             API->>RS: applyRetentionOffer(order, offer)
             RS->>SHOP: orderEditBegin → removeVariant → addVariant → commit
-            SHOP-->>RS: Order updated with swapped product
-            RS->>FS: Log retention success
+            SHOP-->>RS: Đơn hàng đã cập nhật với sản phẩm mới
+            RS->>FS: Ghi nhận giữ chân thành công
             API-->>SW: {retained: true, swappedProduct}
-            SW->>C: "Order updated with your new selection"
+            SW->>C: "Đơn hàng đã được cập nhật với lựa chọn mới của bạn"
 
-        else Customer rejects all offers
-            C->>SW: Clicks "No thanks, cancel order"
+        else Khách hàng từ chối tất cả ưu đãi
+            C->>SW: Nhấn "Không, cảm ơn, hủy đơn hàng"
             SW->>API: POST /api/orders/{orderId}/cancel/confirm
-            Note over API: {reason: "Found cheaper elsewhere"}
+            Note over API: {reason: "Tìm được nơi rẻ hơn"}
             API->>SVC: processCancellation(order, reason)
             SVC->>SHOP: mutation orderCancel(orderId, reason, refund, restock)
-            SHOP-->>SVC: Order cancelled
-            SVC->>FS: Save cancellation record
-            SVC->>FS: Log analytics (retention_failed, reason)
+            SHOP-->>SVC: Đơn hàng đã hủy
+            SVC->>FS: Lưu bản ghi hủy đơn
+            SVC->>FS: Ghi phân tích (retention_failed, reason)
             API-->>SW: {cancelled: true, refundAmount}
-            SW->>C: "Order cancelled. Refund of $X issued."
-            API->>EMAIL: Send cancellation confirmation
+            SW->>C: "Đơn hàng đã hủy. Hoàn tiền $X đã được thực hiện."
+            API->>EMAIL: Gửi email xác nhận hủy đơn
         end
     end
 ```
 
-## 6. Post-Purchase Upsell Flow (Sequence Diagram)
+## 6. Luồng Bán Thêm Sau Mua Hàng (Sơ Đồ Tuần Tự)
 
 ```mermaid
 sequenceDiagram
-    actor C as Customer
-    participant SW as Storefront Widget
+    actor C as Khách Hàng
+    participant SW as Widget Cửa Hàng
     participant API as Firebase Functions
-    participant ES as Edit Service
-    participant US as Upsell Service
+    participant ES as Dịch Vụ Chỉnh Sửa
+    participant US as Dịch Vụ Bán Thêm
     participant FS as Firestore
     participant SHOP as Shopify GraphQL API
 
-    Note over C,SHOP: Customer is in the middle of an order edit flow
+    Note over C,SHOP: Khách hàng đang trong luồng chỉnh sửa đơn hàng
 
-    C->>SW: Editing order (changing item/qty)
+    C->>SW: Đang chỉnh sửa đơn hàng (thay đổi sản phẩm/số lượng)
     SW->>API: POST /api/orders/{orderId}/edits
     API->>ES: validateEdit(order, changes)
-    ES-->>API: Validation passes
+    ES-->>API: Xác thực thành công
 
     API->>US: getUpsellRecommendations(order, changes)
-    US->>FS: Fetch upsellOffers for shop
-    US->>FS: Fetch product recommendation rules
-    US->>US: Match rules to current cart<br/>(complementary items, frequently bought together,<br/>volume discounts)
+    US->>FS: Lấy upsellOffers của cửa hàng
+    US->>FS: Lấy quy tắc gợi ý sản phẩm
+    US->>US: Khớp quy tắc với giỏ hàng hiện tại<br/>(sản phẩm bổ sung, thường mua cùng,<br/>giảm giá theo số lượng)
 
-    alt Recommendations available
+    alt Có gợi ý
         US-->>API: {recommendations: [{productId, title, price, reason, discount}]}
         API-->>SW: {editValid: true, priceDiff, upsellOffers: [...]}
 
         rect rgb(232, 245, 233)
-            Note over SW: Upsell Display (before edit confirmation)
-            SW->>C: "Customers who bought X also bought Y"
-            SW->>C: "Add matching accessory - $14.99 (10% off)"
-            SW->>C: "Upgrade to bundle and save $8"
+            Note over SW: Hiển Thị Bán Thêm (trước khi xác nhận chỉnh sửa)
+            SW->>C: "Khách hàng mua X cũng thường mua Y"
+            SW->>C: "Thêm phụ kiện phù hợp - $14.99 (giảm 10%)"
+            SW->>C: "Nâng cấp lên combo và tiết kiệm $8"
         end
 
-        alt Customer adds upsell product
-            C->>SW: Clicks "Add to order" on recommendation
+        alt Khách hàng thêm sản phẩm gợi ý
+            C->>SW: Nhấn "Thêm vào đơn hàng" cho sản phẩm gợi ý
             SW->>API: POST /api/orders/{orderId}/edits/confirm
-            Note over API: {changes: [...originalChanges], upsellItems: [{variantId, qty}]}
+            Note over API: {changes: [...thayDoiBanDau], upsellItems: [{variantId, qty}]}
 
             API->>ES: processEditWithUpsell(order, changes, upsellItems)
             ES->>SHOP: mutation orderEditBegin(id)
             SHOP-->>ES: calculatedOrder
 
-            loop For each change + upsell item
+            loop Cho mỗi thay đổi + sản phẩm bán thêm
                 ES->>SHOP: mutation orderEditAddVariant / setQuantity
-                SHOP-->>ES: Updated calculated order
+                SHOP-->>ES: Đơn hàng tính toán đã cập nhật
             end
 
-            ES->>ES: Calculate final price diff<br/>(original changes + upsell items)
+            ES->>ES: Tính chênh lệch giá cuối cùng<br/>(thay đổi ban đầu + sản phẩm bán thêm)
 
-            alt Additional payment needed
+            alt Cần thanh toán thêm
                 ES->>SHOP: mutation orderEditCommit(id)
-                SHOP-->>ES: Order committed
+                SHOP-->>ES: Đơn hàng đã xác nhận
                 ES->>SHOP: mutation orderInvoiceSend(id)
-                Note over SHOP: Customer receives invoice for additional amount
-            else Price neutral or refund
+                Note over SHOP: Khách hàng nhận hóa đơn cho số tiền bổ sung
+            else Giá không đổi hoặc hoàn tiền
                 ES->>SHOP: mutation orderEditCommit(id)
-                SHOP-->>ES: Order committed
+                SHOP-->>ES: Đơn hàng đã xác nhận
             end
 
-            ES->>FS: Save orderEdit with upsell data
-            ES->>FS: Log upsell conversion analytics
+            ES->>FS: Lưu orderEdit với dữ liệu bán thêm
+            ES->>FS: Ghi phân tích chuyển đổi bán thêm
             Note over FS: {editId, upsellOfferId, revenue, accepted: true}
 
             API-->>SW: {success: true, updatedOrder, upsellApplied: true}
-            SW->>C: "Order updated with added items!"
+            SW->>C: "Đơn hàng đã cập nhật với sản phẩm bổ sung!"
 
-        else Customer declines upsell
-            C->>SW: Clicks "No thanks, just save changes"
+        else Khách hàng từ chối bán thêm
+            C->>SW: Nhấn "Không, cảm ơn, chỉ lưu thay đổi"
             SW->>API: POST /api/orders/{orderId}/edits/confirm
-            Note over API: {changes: [...originalChanges], upsellItems: []}
+            Note over API: {changes: [...thayDoiBanDau], upsellItems: []}
             API->>ES: processEdit(order, changes)
-            ES->>FS: Log upsell impression (declined)
+            ES->>FS: Ghi lượt hiển thị bán thêm (từ chối)
             API-->>SW: {success: true, updatedOrder}
         end
 
-    else No recommendations
+    else Không có gợi ý
         US-->>API: {recommendations: []}
         API-->>SW: {editValid: true, priceDiff, upsellOffers: []}
-        Note over SW: Proceed with normal edit flow (no upsell shown)
+        Note over SW: Tiếp tục luồng chỉnh sửa bình thường (không hiển thị bán thêm)
     end
 ```
 
-## 7. Data Flow Diagram
+## 7. Sơ Đồ Luồng Dữ Liệu
 
 ```mermaid
 graph TB
-    subgraph "Data Sources"
+    subgraph "Nguồn Dữ Liệu"
         SWH[Shopify Webhooks<br/>orders/create, orders/updated,<br/>orders/cancelled, app/uninstalled]
-        CUST[Customer Actions<br/>edit, cancel, upsell accept]
-        MERCH[Merchant Actions<br/>edit, settings change, rule update]
+        CUST[Hành Động Khách Hàng<br/>chỉnh sửa, hủy, chấp nhận bán thêm]
+        MERCH[Hành Động Người Bán<br/>chỉnh sửa, thay đổi cài đặt, cập nhật quy tắc]
     end
 
-    subgraph "Ingestion Layer (Firebase Functions)"
-        WHR[Webhook Receiver<br/>HMAC validation + idempotency]
-        APIR[API Router<br/>Auth + rate limiting]
+    subgraph "Tầng Tiếp Nhận (Firebase Functions)"
+        WHR[Bộ Nhận Webhook<br/>Xác thực HMAC + kiểm tra trùng lặp]
+        APIR[Bộ Định Tuyến API<br/>Xác thực + giới hạn tần suất]
     end
 
-    subgraph "Processing Layer"
+    subgraph "Tầng Xử Lý"
         PS[Cloud Pub/Sub Topics]
-        CT[Cloud Tasks<br/>Delayed / Scheduled]
+        CT[Cloud Tasks<br/>Trì Hoãn / Theo Lịch]
 
         PS --- T1[order.created]
         PS --- T2[order.edited]
@@ -480,7 +480,7 @@ graph TB
         PS --- T4[edit.requested]
         PS --- T5[notification.send]
 
-        BGW[Background Workers]
+        BGW[Worker Chạy Nền]
         T1 --> BGW
         T2 --> BGW
         T3 --> BGW
@@ -488,7 +488,7 @@ graph TB
         T5 --> BGW
     end
 
-    subgraph "Data Storage (Firestore)"
+    subgraph "Lưu Trữ Dữ Liệu (Firestore)"
         FS_SHOPS[(shops<br/>shopId, domain, settings,<br/>plan, accessToken)]
         FS_ORDERS[(orders<br/>shopId, orderId, status,<br/>editWindow, lineItems)]
         FS_EDITS[(orderEdits<br/>shopId, orderId, editType,<br/>changes, status, priceDiff)]
@@ -497,12 +497,12 @@ graph TB
         FS_NOTIF[(notifications<br/>shopId, type, recipient,<br/>sentAt, TTL)]
     end
 
-    subgraph "Analytics Pipeline"
+    subgraph "Đường Ống Phân Tích"
         BQ[(BigQuery)]
-        BQ_EDITS[edits table<br/>partitioned by date<br/>clustered by shopId]
-        BQ_CANCEL[cancellations table<br/>partitioned by date]
-        BQ_UPSELL[upsell_conversions table<br/>partitioned by date]
-        BQ_USAGE[usage_metrics table<br/>partitioned by date<br/>clustered by shopId, plan]
+        BQ_EDITS[Bảng chỉnh sửa<br/>phân vùng theo ngày<br/>phân cụm theo shopId]
+        BQ_CANCEL[Bảng hủy đơn<br/>phân vùng theo ngày]
+        BQ_UPSELL[Bảng chuyển đổi bán thêm<br/>phân vùng theo ngày]
+        BQ_USAGE[Bảng chỉ số sử dụng<br/>phân vùng theo ngày<br/>phân cụm theo shopId, plan]
 
         BQ --- BQ_EDITS
         BQ --- BQ_CANCEL
@@ -510,10 +510,10 @@ graph TB
         BQ --- BQ_USAGE
     end
 
-    subgraph "Output Layer"
-        DASH[Admin Dashboard<br/>React/Polaris]
-        EMAILS[Email Notifications]
-        SAPI_OUT[Shopify API Updates]
+    subgraph "Tầng Đầu Ra"
+        DASH[Bảng Quản Trị<br/>React/Polaris]
+        EMAILS[Thông Báo Email]
+        SAPI_OUT[Cập Nhật Shopify API]
     end
 
     SWH --> WHR
@@ -531,11 +531,11 @@ graph TB
     APIR --> FS_SETTINGS
     APIR --> FS_SUBS
 
-    BGW -->|Streaming insert| BQ
-    CT -->|Daily aggregation| BQ
+    BGW -->|Chèn trực tuyến| BQ
+    CT -->|Tổng hợp hàng ngày| BQ
 
-    FS_EDITS -.->|Change stream<br/>Cloud Function trigger| BQ_EDITS
-    FS_NOTIF -.->|TTL auto-delete<br/>after 30 days| FS_NOTIF
+    FS_EDITS -.->|Luồng thay đổi<br/>Cloud Function trigger| BQ_EDITS
+    FS_NOTIF -.->|Tự động xóa TTL<br/>sau 30 ngày| FS_NOTIF
 
     BQ --> DASH
     BGW --> EMAILS
@@ -548,25 +548,25 @@ graph TB
     style FS_EDITS fill:#f4b400,color:#000
 ```
 
-## 8. Entity Relationship Diagram (ERD)
+## 8. Sơ Đồ Quan Hệ Thực Thể (ERD)
 
 ```mermaid
 erDiagram
     SHOPS {
-        string shopId PK "Shopify shop domain"
+        string shopId PK "Tên miền cửa hàng Shopify"
         string domain "mystore.myshopify.com"
-        string accessToken "Shopify API token (encrypted)"
+        string accessToken "Token API Shopify (đã mã hóa)"
         string plan "free | starter | growth | pro | business | enterprise"
         string status "active | inactive | uninstalled"
         timestamp installedAt
         timestamp uninstalledAt
-        object appSettings "Global app preferences"
+        object appSettings "Tùy chọn ứng dụng toàn cục"
     }
 
     EDIT_SETTINGS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        number timeWindowMinutes "Edit window duration (e.g., 120)"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
+        number timeWindowMinutes "Thời lượng cửa sổ chỉnh sửa (ví dụ: 120)"
         string timeWindowType "minutes | hours | before_fulfillment"
         boolean allowAddressEdit
         boolean allowItemSwap
@@ -574,193 +574,193 @@ erDiagram
         boolean allowAddItem
         boolean allowRemoveItem
         boolean allowCancellation
-        number maxEditsPerOrder "Max edits allowed per order"
-        object retentionSettings "Cancellation retention config"
-        object upsellSettings "Post-purchase upsell config"
-        object notificationSettings "Email template config"
+        number maxEditsPerOrder "Số lần chỉnh sửa tối đa mỗi đơn hàng"
+        object retentionSettings "Cấu hình giữ chân khi hủy"
+        object upsellSettings "Cấu hình bán thêm sau mua hàng"
+        object notificationSettings "Cấu hình mẫu email"
     }
 
     ORDERS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string shopifyOrderId "Shopify order GID"
-        string orderNumber "Human-readable #1001"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
+        string shopifyOrderId "GID đơn hàng Shopify"
+        string orderNumber "Mã đọc được #1001"
         string customerEmail
         string customerName
         string financialStatus "paid | partially_refunded | refunded"
         string fulfillmentStatus "unfulfilled | partial | fulfilled"
         string editWindowStatus "open | closed | expired"
         timestamp editWindowExpiresAt
-        number editCount "Number of edits made"
-        number originalTotal "Original order total"
-        number currentTotal "Current total after edits"
-        string currency "USD, EUR, etc."
+        number editCount "Số lần chỉnh sửa đã thực hiện"
+        number originalTotal "Tổng đơn hàng ban đầu"
+        number currentTotal "Tổng hiện tại sau chỉnh sửa"
+        string currency "USD, EUR, v.v."
         timestamp orderCreatedAt
         timestamp lastEditedAt
         timestamp syncedAt
     }
 
     ORDER_EDITS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string orderId FK "References orders"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
+        string orderId FK "Tham chiếu đến orders"
         string shopifyOrderId
         string editType "item_swap | quantity_change | address_edit | add_item | remove_item | cancel"
         string initiatedBy "customer | merchant"
         string status "pending | processing | applied | rejected | failed"
-        array changes "Array of change objects"
-        number priceDiff "Positive = charge, negative = refund"
-        string refundId "Shopify refund ID if applicable"
-        string reason "Customer-provided reason"
-        string staffNote "Merchant-provided note"
-        object previousState "Snapshot before edit"
-        object newState "Snapshot after edit"
+        array changes "Mảng các đối tượng thay đổi"
+        number priceDiff "Dương = thu phí, âm = hoàn tiền"
+        string refundId "ID hoàn tiền Shopify nếu có"
+        string reason "Lý do từ khách hàng"
+        string staffNote "Ghi chú từ người bán"
+        object previousState "Ảnh chụp trước khi chỉnh sửa"
+        object newState "Ảnh chụp sau khi chỉnh sửa"
         timestamp requestedAt
         timestamp processedAt
     }
 
     EDIT_RULES {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
         string ruleType "product | collection | tag | all"
-        string targetId "Product/Collection ID or * for all"
+        string targetId "ID Sản phẩm/Bộ sưu tập hoặc * cho tất cả"
         boolean allowSwap
         boolean allowQuantityChange
         boolean allowRemove
-        array swapTargets "Allowed swap product/variant IDs"
+        array swapTargets "ID sản phẩm/biến thể được phép đổi"
         number minQuantity
         number maxQuantity
         boolean active
     }
 
     SUBSCRIPTIONS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
         string plan "free | starter | growth | pro | business | enterprise"
-        string shopifyChargeId "Recurring charge ID"
+        string shopifyChargeId "ID phí định kỳ"
         string status "active | frozen | cancelled | pending"
         number monthlyEditLimit "50 | 200 | unlimited"
-        number currentMonthUsage "Edits used this cycle"
+        number currentMonthUsage "Số lần chỉnh sửa đã dùng trong chu kỳ"
         timestamp billingCycleStart
         timestamp billingCycleEnd
         timestamp createdAt
     }
 
     UPSELL_OFFERS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
         string offerType "complementary | upgrade | bundle | discount"
         string triggerType "product | collection | cart_value | edit_type"
-        string triggerValue "Product ID, collection ID, or threshold"
-        array recommendedProducts "Product/variant IDs to recommend"
-        number discountPercent "Optional discount on upsell"
+        string triggerValue "ID sản phẩm, ID bộ sưu tập, hoặc ngưỡng"
+        array recommendedProducts "ID sản phẩm/biến thể được gợi ý"
+        number discountPercent "Giảm giá tùy chọn cho bán thêm"
         string discountType "percentage | fixed_amount"
-        number priority "Display order"
+        number priority "Thứ tự hiển thị"
         boolean active
         timestamp createdAt
     }
 
     NOTIFICATIONS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string orderId FK "References orders"
-        string editId FK "References orderEdits"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
+        string orderId FK "Tham chiếu đến orders"
+        string editId FK "Tham chiếu đến orderEdits"
         string type "edit_confirmation | cancel_confirmation | retention_offer | upsell_accepted | invoice"
         string channel "email | sms"
-        string recipient "Customer email or phone"
+        string recipient "Email hoặc số điện thoại khách hàng"
         string status "queued | sent | failed | bounced"
-        string templateId "Email template reference"
-        object templateData "Dynamic template variables"
+        string templateId "Tham chiếu mẫu email"
+        object templateData "Biến động của mẫu"
         timestamp sentAt
-        timestamp expiresAt "TTL for auto-deletion"
+        timestamp expiresAt "TTL cho tự động xóa"
     }
 
     ANALYTICS_EVENTS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
+        string id PK "tự động tạo"
+        string shopId FK "Tham chiếu đến shops"
         string eventType "edit | cancel | retention | upsell | widget_view"
         string orderId
         string editId
-        object eventData "Event-specific payload"
+        object eventData "Dữ liệu sự kiện cụ thể"
         timestamp createdAt
-        timestamp expiresAt "TTL 90 days"
+        timestamp expiresAt "TTL 90 ngày"
     }
 
-    SHOPS ||--o{ ORDERS : "has many"
-    SHOPS ||--|| EDIT_SETTINGS : "has one"
-    SHOPS ||--o{ EDIT_RULES : "has many"
-    SHOPS ||--|| SUBSCRIPTIONS : "has one active"
-    SHOPS ||--o{ UPSELL_OFFERS : "has many"
-    ORDERS ||--o{ ORDER_EDITS : "has many"
-    ORDERS ||--o{ NOTIFICATIONS : "has many"
-    ORDER_EDITS ||--o{ NOTIFICATIONS : "triggers"
-    SHOPS ||--o{ ANALYTICS_EVENTS : "has many"
+    SHOPS ||--o{ ORDERS : "có nhiều"
+    SHOPS ||--|| EDIT_SETTINGS : "có một"
+    SHOPS ||--o{ EDIT_RULES : "có nhiều"
+    SHOPS ||--|| SUBSCRIPTIONS : "có một đang hoạt động"
+    SHOPS ||--o{ UPSELL_OFFERS : "có nhiều"
+    ORDERS ||--o{ ORDER_EDITS : "có nhiều"
+    ORDERS ||--o{ NOTIFICATIONS : "có nhiều"
+    ORDER_EDITS ||--o{ NOTIFICATIONS : "kích hoạt"
+    SHOPS ||--o{ ANALYTICS_EVENTS : "có nhiều"
 ```
 
-## 9. Deployment Architecture
+## 9. Kiến Trúc Triển Khai
 
 ```mermaid
 graph TB
-    subgraph "Client Layer"
-        BROWSER[Merchant Browser<br/>Shopify Admin iFrame]
-        CUST_BROWSER[Customer Browser<br/>Storefront / Order Status]
+    subgraph "Tầng Khách Hàng"
+        BROWSER[Trình Duyệt Người Bán<br/>iFrame Quản Trị Shopify]
+        CUST_BROWSER[Trình Duyệt Khách Hàng<br/>Cửa Hàng / Trạng Thái Đơn Hàng]
     end
 
-    subgraph "CDN / Edge"
-        CF[Firebase Hosting CDN<br/>Global Edge Network]
+    subgraph "CDN / Biên"
+        CF[Firebase Hosting CDN<br/>Mạng Biên Toàn Cầu]
     end
 
-    subgraph "GCP Project: avada-order-editing"
-        subgraph "Compute"
-            FF_API[Firebase Functions<br/>API Handlers<br/>Node.js 18 | 256MB-1GB RAM<br/>us-central1]
-            FF_WH[Firebase Functions<br/>Webhook Handlers<br/>Node.js 18 | 256MB RAM<br/>us-central1]
-            FF_BG[Firebase Functions<br/>Background Workers<br/>Pub/Sub triggered<br/>Node.js 18 | 512MB RAM]
-            FF_CRON[Firebase Functions<br/>Scheduled Functions<br/>Cloud Scheduler triggered<br/>Edit window expiry, usage reset]
+    subgraph "Dự Án GCP: avada-order-editing"
+        subgraph "Tính Toán"
+            FF_API[Firebase Functions<br/>Bộ Xử Lý API<br/>Node.js 18 | 256MB-1GB RAM<br/>us-central1]
+            FF_WH[Firebase Functions<br/>Bộ Xử Lý Webhook<br/>Node.js 18 | 256MB RAM<br/>us-central1]
+            FF_BG[Firebase Functions<br/>Worker Chạy Nền<br/>Kích hoạt bởi Pub/Sub<br/>Node.js 18 | 512MB RAM]
+            FF_CRON[Firebase Functions<br/>Hàm Theo Lịch<br/>Kích hoạt bởi Cloud Scheduler<br/>Hết hạn cửa sổ chỉnh sửa, đặt lại sử dụng]
         end
 
-        subgraph "Messaging & Scheduling"
+        subgraph "Tin Nhắn & Lập Lịch"
             PUBSUB[Cloud Pub/Sub]
             PUBSUB_T1[Topic: order-events]
             PUBSUB_T2[Topic: edit-events]
             PUBSUB_T3[Topic: notification-events]
-            PUBSUB_DLQ[Dead Letter Topic<br/>Failed message retry]
+            PUBSUB_DLQ[Topic Thư Chết<br/>Thử lại tin nhắn thất bại]
 
             TASKS[Cloud Tasks]
-            TASKS_Q1[Queue: delayed-edits]
-            TASKS_Q2[Queue: bulk-operations]
+            TASKS_Q1[Hàng đợi: delayed-edits]
+            TASKS_Q2[Hàng đợi: bulk-operations]
 
             SCHEDULER[Cloud Scheduler]
-            SCHED_1[Every 5 min: expire edit windows]
-            SCHED_2[Monthly: reset usage counters]
-            SCHED_3[Daily: sync analytics to BigQuery]
+            SCHED_1[Mỗi 5 phút: hết hạn cửa sổ chỉnh sửa]
+            SCHED_2[Hàng tháng: đặt lại bộ đếm sử dụng]
+            SCHED_3[Hàng ngày: đồng bộ phân tích sang BigQuery]
         end
 
-        subgraph "Database"
-            FIRESTORE[(Cloud Firestore<br/>Native Mode<br/>nam5 multi-region)]
-            FIRESTORE_IDX[Compound Indexes<br/>shopId + status<br/>shopId + orderCreatedAt<br/>shopId + editWindowStatus]
+        subgraph "Cơ Sở Dữ Liệu"
+            FIRESTORE[(Cloud Firestore<br/>Chế Độ Native<br/>nam5 đa vùng)]
+            FIRESTORE_IDX[Chỉ Mục Kết Hợp<br/>shopId + status<br/>shopId + orderCreatedAt<br/>shopId + editWindowStatus]
         end
 
-        subgraph "Analytics"
+        subgraph "Phân Tích"
             BIGQUERY[(BigQuery<br/>Dataset: order_editing)]
-            BQ_P[Partitioned Tables<br/>by _PARTITIONDATE]
-            BQ_C[Clustered by<br/>shopId, plan, eventType]
+            BQ_P[Bảng Phân Vùng<br/>theo _PARTITIONDATE]
+            BQ_C[Phân Cụm theo<br/>shopId, plan, eventType]
         end
 
-        subgraph "Security"
-            SA[Service Accounts<br/>Least privilege per function]
-            SM[Secret Manager<br/>API keys, tokens]
+        subgraph "Bảo Mật"
+            SA[Tài Khoản Dịch Vụ<br/>Quyền tối thiểu cho mỗi hàm]
+            SM[Secret Manager<br/>Khóa API, token]
         end
 
-        subgraph "Monitoring"
-            LOG[Cloud Logging<br/>Structured logs]
-            MON[Cloud Monitoring<br/>Alerts & dashboards]
-            TRACE[Cloud Trace<br/>Request tracing]
+        subgraph "Giám Sát"
+            LOG[Cloud Logging<br/>Log có cấu trúc]
+            MON[Cloud Monitoring<br/>Cảnh báo & bảng điều khiển]
+            TRACE[Cloud Trace<br/>Theo dõi yêu cầu]
         end
     end
 
-    subgraph "External"
-        SHOPIFY[Shopify Platform<br/>GraphQL Admin API<br/>REST Admin API<br/>Webhooks]
-        SENDGRID[Email Provider<br/>SendGrid]
+    subgraph "Bên Ngoài"
+        SHOPIFY[Nền Tảng Shopify<br/>GraphQL Admin API<br/>REST Admin API<br/>Webhooks]
+        SENDGRID[Nhà Cung Cấp Email<br/>SendGrid]
         GADDR_API[Google Maps<br/>Address Validation API]
     end
 
@@ -776,7 +776,7 @@ graph TB
     PUBSUB_T1 --> FF_BG
     PUBSUB_T2 --> FF_BG
     PUBSUB_T3 --> FF_BG
-    PUBSUB_T1 -.->|On failure| PUBSUB_DLQ
+    PUBSUB_T1 -.->|Khi thất bại| PUBSUB_DLQ
 
     SCHEDULER --> SCHED_1
     SCHEDULER --> SCHED_2
@@ -818,110 +818,110 @@ graph TB
     style CF fill:#ff9800,color:#fff
 ```
 
-## 10. Webhook Processing Flow
+## 10. Luồng Xử Lý Webhook
 
 ```mermaid
 sequenceDiagram
-    participant SHOP as Shopify Platform
-    participant FF as Firebase Function<br/>(Webhook Handler)
-    participant HMAC as HMAC Validator
-    participant IDEM as Idempotency Check
+    participant SHOP as Nền Tảng Shopify
+    participant FF as Firebase Function<br/>(Bộ Xử Lý Webhook)
+    participant HMAC as Bộ Xác Thực HMAC
+    participant IDEM as Kiểm Tra Trùng Lặp
     participant FS as Firestore
     participant PS as Cloud Pub/Sub
-    participant BG as Background Worker<br/>(Pub/Sub triggered)
-    participant SVC as Service Layer
+    participant BG as Worker Chạy Nền<br/>(Kích hoạt bởi Pub/Sub)
+    participant SVC as Tầng Dịch Vụ
     participant SAPI as Shopify GraphQL API
-    participant EMAIL as Email Service
+    participant EMAIL as Dịch Vụ Email
     participant BQ as BigQuery
-    participant DLQ as Dead Letter Queue
+    participant DLQ as Hàng Đợi Thư Chết
 
     SHOP->>FF: POST /webhooks/{topic}<br/>Headers: X-Shopify-Hmac-Sha256,<br/>X-Shopify-Topic, X-Shopify-Shop-Domain
 
-    FF->>HMAC: Verify HMAC-SHA256 signature
-    Note over HMAC: Compare computed HMAC<br/>using app secret vs header value
+    FF->>HMAC: Xác minh chữ ký HMAC-SHA256
+    Note over HMAC: So sánh HMAC đã tính<br/>sử dụng app secret với giá trị header
 
-    alt HMAC invalid
-        HMAC-->>FF: Invalid signature
-        FF-->>SHOP: 401 Unauthorized
-    else HMAC valid
-        HMAC-->>FF: Signature verified
+    alt HMAC không hợp lệ
+        HMAC-->>FF: Chữ ký không hợp lệ
+        FF-->>SHOP: 401 Không được phép
+    else HMAC hợp lệ
+        HMAC-->>FF: Chữ ký đã xác minh
 
-        FF->>IDEM: Check webhook ID in Firestore
+        FF->>IDEM: Kiểm tra webhook ID trong Firestore
         FF->>FS: GET webhookLogs/{webhookId}
 
-        alt Already processed
-            FS-->>FF: Document exists (duplicate)
-            FF-->>SHOP: 200 OK (idempotent, skip)
-        else New webhook
-            FS-->>FF: Document not found
+        alt Đã xử lý rồi
+            FS-->>FF: Tài liệu tồn tại (trùng lặp)
+            FF-->>SHOP: 200 OK (idempotent, bỏ qua)
+        else Webhook mới
+            FS-->>FF: Không tìm thấy tài liệu
 
-            FF->>FS: SET webhookLogs/{webhookId}<br/>{topic, shopDomain, receivedAt, TTL: 7d}
+            FF->>FS: SET webhookLogs/{webhookId}<br/>{topic, shopDomain, receivedAt, TTL: 7 ngày}
 
-            FF->>PS: Publish message to topic
-            Note over FF,PS: Topic selected by webhook type:<br/>orders/create → order-events<br/>orders/updated → order-events<br/>orders/cancelled → order-events<br/>app/uninstalled → app-events
+            FF->>PS: Phát tin nhắn đến topic
+            Note over FF,PS: Topic được chọn theo loại webhook:<br/>orders/create → order-events<br/>orders/updated → order-events<br/>orders/cancelled → order-events<br/>app/uninstalled → app-events
 
             FF-->>SHOP: 200 OK
-            Note over FF,SHOP: Response within 5 seconds<br/>(Shopify requirement)
+            Note over FF,SHOP: Phản hồi trong vòng 5 giây<br/>(yêu cầu của Shopify)
         end
     end
 
-    Note over PS,BG: Async processing begins
+    Note over PS,BG: Bắt đầu xử lý bất đồng bộ
 
-    PS->>BG: Deliver message (auto-retry on failure)
+    PS->>BG: Gửi tin nhắn (tự động thử lại khi thất bại)
 
     alt orders/create
         BG->>SVC: handleOrderCreated(orderData)
-        SVC->>FS: Fetch editSettings for shop
-        SVC->>SVC: Calculate edit window expiry<br/>(now + timeWindowMinutes)
-        SVC->>FS: CREATE orders/{id}<br/>{shopifyOrderId, editWindowStatus: "open",<br/>editWindowExpiresAt, lineItems, customer}
-        SVC->>BQ: Insert order_created event
+        SVC->>FS: Lấy editSettings của cửa hàng
+        SVC->>SVC: Tính thời điểm hết hạn cửa sổ chỉnh sửa<br/>(hiện tại + timeWindowMinutes)
+        SVC->>FS: TẠO orders/{id}<br/>{shopifyOrderId, editWindowStatus: "open",<br/>editWindowExpiresAt, lineItems, customer}
+        SVC->>BQ: Chèn sự kiện order_created
 
     else orders/updated
         BG->>SVC: handleOrderUpdated(orderData)
-        SVC->>FS: GET orders by shopifyOrderId
-        SVC->>SVC: Detect changes<br/>(fulfillment status, payment status)
+        SVC->>FS: LẤY orders theo shopifyOrderId
+        SVC->>SVC: Phát hiện thay đổi<br/>(trạng thái giao hàng, trạng thái thanh toán)
 
-        alt Fulfillment started
-            SVC->>FS: UPDATE orders/{id}<br/>{editWindowStatus: "closed",<br/>fulfillmentStatus: "partial"}
-            SVC->>BQ: Insert edit_window_closed event
-        else Other update
-            SVC->>FS: UPDATE orders/{id} with new data
+        alt Bắt đầu giao hàng
+            SVC->>FS: CẬP NHẬT orders/{id}<br/>{editWindowStatus: "closed",<br/>fulfillmentStatus: "partial"}
+            SVC->>BQ: Chèn sự kiện edit_window_closed
+        else Cập nhật khác
+            SVC->>FS: CẬP NHẬT orders/{id} với dữ liệu mới
         end
 
     else orders/cancelled
         BG->>SVC: handleOrderCancelled(orderData)
-        SVC->>FS: UPDATE orders/{id}<br/>{editWindowStatus: "closed", status: "cancelled"}
-        SVC->>FS: Query related orderEdits<br/>UPDATE status to "void"
-        SVC->>BQ: Insert order_cancelled event
+        SVC->>FS: CẬP NHẬT orders/{id}<br/>{editWindowStatus: "closed", status: "cancelled"}
+        SVC->>FS: Truy vấn orderEdits liên quan<br/>CẬP NHẬT status thành "void"
+        SVC->>BQ: Chèn sự kiện order_cancelled
 
     else app/uninstalled
         BG->>SVC: handleAppUninstalled(shopDomain)
-        SVC->>FS: UPDATE shops/{shopId}<br/>{status: "uninstalled", uninstalledAt}
-        SVC->>FS: Clear sensitive data (accessToken)
-        SVC->>BQ: Insert app_uninstalled event
+        SVC->>FS: CẬP NHẬT shops/{shopId}<br/>{status: "uninstalled", uninstalledAt}
+        SVC->>FS: Xóa dữ liệu nhạy cảm (accessToken)
+        SVC->>BQ: Chèn sự kiện app_uninstalled
     end
 
-    alt Processing fails (3 retries exhausted)
-        BG-->>PS: NACK (not acknowledged)
-        PS->>DLQ: Move to dead letter topic
-        DLQ->>FS: Log failed webhook for manual review
-        Note over DLQ: Alert via Cloud Monitoring
+    alt Xử lý thất bại (đã thử lại 3 lần)
+        BG-->>PS: NACK (không xác nhận)
+        PS->>DLQ: Chuyển đến topic thư chết
+        DLQ->>FS: Ghi webhook thất bại để xem xét thủ công
+        Note over DLQ: Cảnh báo qua Cloud Monitoring
     end
 ```
 
 ---
 
-## Diagram Index
+## Mục Lục Sơ Đồ
 
-| # | Diagram | Type | Purpose |
-|---|---------|------|---------|
-| 1 | System Architecture | Component | Full system overview with all services and connections |
-| 2 | Order Edit Lifecycle | State Machine | All possible states an order edit can be in |
-| 3 | Customer Self-Service Edit | Sequence | End-to-end customer edit flow with payment handling |
-| 4 | Merchant Admin Edit | Sequence | Merchant-initiated edit via admin dashboard |
-| 5 | Cancellation Retention | Sequence | Cancel flow with retention offers to reduce churn |
-| 6 | Post-Purchase Upsell | Sequence | Upsell recommendations during edit flow |
-| 7 | Data Flow | Data Flow | How data moves through the system |
-| 8 | Entity Relationships | ERD | Firestore collections and their relationships |
-| 9 | Deployment Architecture | Infrastructure | GCP/Firebase resource topology |
-| 10 | Webhook Processing | Sequence | Webhook receipt, validation, and async processing |
+| # | Sơ Đồ | Loại | Mục Đích |
+|---|-------|------|----------|
+| 1 | Kiến Trúc Hệ Thống | Thành phần | Tổng quan toàn bộ hệ thống với tất cả dịch vụ và kết nối |
+| 2 | Vòng Đời Chỉnh Sửa Đơn Hàng | Máy trạng thái | Tất cả trạng thái có thể của một lần chỉnh sửa đơn hàng |
+| 3 | Khách Hàng Tự Chỉnh Sửa | Tuần tự | Luồng chỉnh sửa khách hàng từ đầu đến cuối với xử lý thanh toán |
+| 4 | Chỉnh Sửa Từ Quản Trị Người Bán | Tuần tự | Chỉnh sửa do người bán thực hiện qua bảng quản trị |
+| 5 | Giữ Chân Khi Hủy Đơn | Tuần tự | Luồng hủy đơn với ưu đãi giữ chân để giảm tỷ lệ rời bỏ |
+| 6 | Bán Thêm Sau Mua Hàng | Tuần tự | Gợi ý bán thêm trong luồng chỉnh sửa |
+| 7 | Luồng Dữ Liệu | Luồng dữ liệu | Cách dữ liệu di chuyển qua hệ thống |
+| 8 | Quan Hệ Thực Thể | ERD | Các bộ sưu tập Firestore và quan hệ giữa chúng |
+| 9 | Kiến Trúc Triển Khai | Hạ tầng | Cấu trúc tài nguyên GCP/Firebase |
+| 10 | Xử Lý Webhook | Tuần tự | Nhận webhook, xác thực và xử lý bất đồng bộ |

@@ -1,105 +1,105 @@
-# 07 - ASO Keywords & App Store Optimization Strategy
+# 07 - Từ khóa ASO & Chiến lược Tối ưu hóa App Store
 
-> Research Date: March 2026 | Platform: Shopify App Store
-
----
-
-## Executive Summary
-
-The Shopify App Store has ~100 apps in the "Order editing" category. Over 70% of app installs come directly from search, making keyword optimization critical. This document maps the competitive keyword landscape, analyzes competitor listing strategies, and provides a comprehensive ASO plan for Avada Order Editing's launch.
+> Ngày nghiên cứu: Tháng 3 năm 2026 | Nền tảng: Shopify App Store
 
 ---
 
-## 1. Keyword Research
+## Tóm tắt điều hành
 
-### Primary Keywords (High Intent, Direct Match)
+Shopify App Store có khoảng 100 ứng dụng trong danh mục "Chỉnh sửa đơn hàng". Hơn 70% lượt cài đặt ứng dụng đến trực tiếp từ tìm kiếm, khiến việc tối ưu từ khóa trở nên cực kỳ quan trọng. Tài liệu này phân tích bối cảnh từ khóa cạnh tranh, phân tích chiến lược listing của đối thủ, và cung cấp kế hoạch ASO toàn diện cho việc ra mắt Avada Order Editing.
 
-| Keyword | Competition | Search Signal | Priority |
+---
+
+## 1. Nghiên cứu từ khóa
+
+### Từ khóa chính (Ý định cao, Khớp trực tiếp)
+
+| Từ khóa | Cạnh tranh | Tín hiệu tìm kiếm | Ưu tiên |
 |---------|-------------|---------------|----------|
-| order editing | Very High | Category name, 100 apps | Must-have |
-| edit order | Very High | Top Shopify help article term | Must-have |
-| order editor | High | Used in 5+ app names | Must-have |
-| edit orders | High | Shopify API documentation term | Must-have |
-| order edit | High | Common search variation | Must-have |
+| order editing | Rất cao | Tên danh mục, 100 ứng dụng | Bắt buộc |
+| edit order | Rất cao | Thuật ngữ hàng đầu trên bài viết trợ giúp Shopify | Bắt buộc |
+| order editor | Cao | Được sử dụng trong hơn 5 tên ứng dụng | Bắt buộc |
+| edit orders | Cao | Thuật ngữ trong tài liệu API Shopify | Bắt buộc |
+| order edit | Cao | Biến thể tìm kiếm phổ biến | Bắt buộc |
 
-### Secondary Keywords (High Intent, Related)
+### Từ khóa phụ (Ý định cao, Liên quan)
 
-| Keyword | Competition | Search Signal | Priority |
+| Từ khóa | Cạnh tranh | Tín hiệu tìm kiếm | Ưu tiên |
 |---------|-------------|---------------|----------|
-| cancel order | High | Community forum hot topic | High |
-| edit address | Medium | Top merchant pain point | High |
-| change order | Medium | Customer-facing language | High |
-| order modification | Low | Formal/enterprise term | Medium |
-| modify order | Low | Less common but targeted | Medium |
-| edit shipping address | Medium | Specific pain point | High |
-| change shipping address | Medium | Customer language | High |
-| order cancellation | Medium | Related need | High |
-| edit billing address | Low | Niche pain point (high value) | Medium |
+| cancel order | Cao | Chủ đề nóng trên diễn đàn cộng đồng | Cao |
+| edit address | Trung bình | Điểm đau hàng đầu của merchant | Cao |
+| change order | Trung bình | Ngôn ngữ phía khách hàng | Cao |
+| order modification | Thấp | Thuật ngữ trang trọng/doanh nghiệp | Trung bình |
+| modify order | Thấp | Ít phổ biến nhưng có mục tiêu | Trung bình |
+| edit shipping address | Trung bình | Điểm đau cụ thể | Cao |
+| change shipping address | Trung bình | Ngôn ngữ khách hàng | Cao |
+| order cancellation | Trung bình | Nhu cầu liên quan | Cao |
+| edit billing address | Thấp | Điểm đau ngách (giá trị cao) | Trung bình |
 
-### Feature Keywords (Medium Intent)
+### Từ khóa tính năng (Ý định trung bình)
 
-| Keyword | Competition | Search Signal | Priority |
+| Từ khóa | Cạnh tranh | Tín hiệu tìm kiếm | Ưu tiên |
 |---------|-------------|---------------|----------|
-| post-purchase upsell | High | Revenue-focused merchants | High |
-| order upsell | Medium | Revenue opportunity | High |
-| self-service order | Low | Operational efficiency | Medium |
-| address validation | Medium | Shipping accuracy need | Medium |
-| order management | Very High | Broad category | Low |
-| reduce support tickets | Low | Pain-point language | Medium |
-| customer self-service | Low | Operational language | Medium |
-| store credit refund | Low | Feature-specific | Low |
+| post-purchase upsell | Cao | Merchant tập trung doanh thu | Cao |
+| order upsell | Trung bình | Cơ hội doanh thu | Cao |
+| self-service order | Thấp | Hiệu quả vận hành | Trung bình |
+| address validation | Trung bình | Nhu cầu chính xác vận chuyển | Trung bình |
+| order management | Rất cao | Danh mục rộng | Thấp |
+| reduce support tickets | Thấp | Ngôn ngữ điểm đau | Trung bình |
+| customer self-service | Thấp | Ngôn ngữ vận hành | Trung bình |
+| store credit refund | Thấp | Theo tính năng cụ thể | Thấp |
 
-### Long-Tail Keywords (Low Competition, High Conversion)
+### Từ khóa dài (Cạnh tranh thấp, Chuyển đổi cao)
 
-| Keyword | Competition | Opportunity |
+| Từ khóa | Cạnh tranh | Cơ hội |
 |---------|-------------|-------------|
-| let customers edit orders | Very Low | Exact merchant query |
-| customer edit order after checkout | Very Low | How-to search intent |
-| edit order shopify app | Low | Direct app search |
-| free order editing app | Low | Price-sensitive segment |
-| order editing app free | Low | Price-sensitive segment |
-| edit order address shopify | Low | Specific need |
-| cancel order shopify app | Low | Related need |
-| change order after checkout | Very Low | Customer-perspective search |
-| edit order before shipping | Very Low | Time-window concern |
-| self-serve order editing | Very Low | Operational query |
+| let customers edit orders | Rất thấp | Truy vấn chính xác của merchant |
+| customer edit order after checkout | Rất thấp | Ý định tìm kiếm hướng dẫn |
+| edit order shopify app | Thấp | Tìm kiếm ứng dụng trực tiếp |
+| free order editing app | Thấp | Phân khúc nhạy cảm giá |
+| order editing app free | Thấp | Phân khúc nhạy cảm giá |
+| edit order address shopify | Thấp | Nhu cầu cụ thể |
+| cancel order shopify app | Thấp | Nhu cầu liên quan |
+| change order after checkout | Rất thấp | Tìm kiếm từ góc nhìn khách hàng |
+| edit order before shipping | Rất thấp | Quan tâm về khung thời gian |
+| self-serve order editing | Rất thấp | Truy vấn vận hành |
 
-### Negative/Competitor Keywords (Capture Switching Merchants)
+### Từ khóa tiêu cực/Đối thủ (Thu hút merchant đang chuyển đổi)
 
-| Keyword | Intent |
+| Từ khóa | Ý định |
 |---------|--------|
-| cleverific alternative | Switching from Cleverific |
-| orderediting alternative | Switching from OrderEditing |
-| cheap order editing app | Price-sensitive |
-| free order editing | Budget segment |
-| order editing app not working | Frustrated merchants |
-| better order editing app | Comparison shoppers |
+| cleverific alternative | Chuyển đổi từ Cleverific |
+| orderediting alternative | Chuyển đổi từ OrderEditing |
+| cheap order editing app | Nhạy cảm về giá |
+| free order editing | Phân khúc ngân sách |
+| order editing app not working | Merchant thất vọng |
+| better order editing app | Người mua so sánh |
 
 ---
 
-## 2. Competitor Listing Analysis
+## 2. Phân tích listing đối thủ
 
-### App Name Patterns
+### Mẫu tên ứng dụng
 
-| App | Name Format | Keyword Strategy |
+| Ứng dụng | Định dạng tên | Chiến lược từ khóa |
 |-----|-------------|-----------------|
-| OrderEditing.com | Brand + .com | Domain authority play |
-| AE: Order Editing & Upsell | Abbreviation + Category + Upsell | Dual keyword targeting |
-| Cleverific Order Editing | Brand + Category | Simple, established |
-| Revize: Order Editing & Upsell | Brand + Category + Upsell | Same as AE pattern |
-| Orderify - Order Edit Cancel | Brand + Edit + Cancel | Multi-keyword |
-| EOE - Easy Order Editing | Abbreviation + Adjective + Category | Easy = low friction |
-| EditMyOrder.ai | Verb + Object + .ai | Action-oriented + AI trend |
-| Recheck Order Editing + Upsell | Brand + Category + Upsell | Same pattern |
-| LEO - Order Editing & Upsell | Abbreviation + Category + Upsell | Same pattern |
-| Vista Order Editing | Brand + Category | Simple |
-| CP: Order Editing & Upsell | Abbreviation + Category + Upsell | Same pattern |
+| OrderEditing.com | Thương hiệu + .com | Chiến thuật uy tín tên miền |
+| AE: Order Editing & Upsell | Viết tắt + Danh mục + Upsell | Nhắm mục tiêu từ khóa kép |
+| Cleverific Order Editing | Thương hiệu + Danh mục | Đơn giản, đã thiết lập |
+| Revize: Order Editing & Upsell | Thương hiệu + Danh mục + Upsell | Giống mẫu AE |
+| Orderify - Order Edit Cancel | Thương hiệu + Edit + Cancel | Đa từ khóa |
+| EOE - Easy Order Editing | Viết tắt + Tính từ + Danh mục | Easy = ma sát thấp |
+| EditMyOrder.ai | Động từ + Đối tượng + .ai | Hướng hành động + xu hướng AI |
+| Recheck Order Editing + Upsell | Thương hiệu + Danh mục + Upsell | Cùng mẫu |
+| LEO - Order Editing & Upsell | Viết tắt + Danh mục + Upsell | Cùng mẫu |
+| Vista Order Editing | Thương hiệu + Danh mục | Đơn giản |
+| CP: Order Editing & Upsell | Viết tắt + Danh mục + Upsell | Cùng mẫu |
 
-**Pattern insight:** The dominant formula is `[Brand]: Order Editing & Upsell`. 6 out of 14 competitors use this exact structure.
+**Nhận định về mẫu:** Công thức phổ biến nhất là `[Thương hiệu]: Order Editing & Upsell`. 6 trong 14 đối thủ sử dụng chính xác cấu trúc này.
 
-### Subtitle Patterns (App Card)
+### Mẫu phụ đề (Thẻ ứng dụng)
 
-| App | Subtitle | Keywords Used |
+| Ứng dụng | Phụ đề | Từ khóa sử dụng |
 |-----|----------|---------------|
 | OrderEditing.com | "Let shoppers edit address, edit orders, cancel order, & upsell" | edit address, edit orders, cancel order, upsell |
 | AE | "Let shoppers edit orders, edit address, cancel order, & upsell" | edit orders, edit address, cancel order, upsell |
@@ -110,168 +110,168 @@ The Shopify App Store has ~100 apps in the "Order editing" category. Over 70% of
 | EditMyOrder.ai | "Let's Customers Edit Orders, Update Addresses, Cancel & Upsell" | edit orders, update addresses, cancel, upsell |
 | Recheck | "Order editor to cancel order, edit address, edit cart, etc" | order editor, cancel order, edit address, edit cart |
 
-**Subtitle insight:** Top performers pack 4-5 keywords into the subtitle. Common keywords: "edit orders", "edit address", "cancel order", "upsell". The winning formula includes the verb "Let" + audience + key actions.
+**Nhận định về phụ đề:** Các ứng dụng hàng đầu nhồi 4-5 từ khóa vào phụ đề. Từ khóa phổ biến: "edit orders", "edit address", "cancel order", "upsell". Công thức chiến thắng bao gồm động từ "Let" + đối tượng + hành động chính.
 
-### Description Keyword Density (Top 3 Apps)
+### Mật độ từ khóa trong mô tả (Top 3 ứng dụng)
 
-**Most used terms across top competitor descriptions:**
-1. "order editing" / "edit order" (appears 10-15x per listing)
-2. "cancel" / "cancellation" (appears 5-8x)
-3. "address" / "shipping address" (appears 5-8x)
-4. "upsell" / "post-purchase upsell" (appears 5-10x)
-5. "support tickets" / "reduce support" (appears 3-5x)
-6. "self-service" / "self-serve" (appears 3-5x)
-7. "customer" / "customers" / "shoppers" (appears 8-12x)
+**Các thuật ngữ được sử dụng nhiều nhất trong mô tả của đối thủ hàng đầu:**
+1. "order editing" / "edit order" (xuất hiện 10-15 lần mỗi listing)
+2. "cancel" / "cancellation" (xuất hiện 5-8 lần)
+3. "address" / "shipping address" (xuất hiện 5-8 lần)
+4. "upsell" / "post-purchase upsell" (xuất hiện 5-10 lần)
+5. "support tickets" / "reduce support" (xuất hiện 3-5 lần)
+6. "self-service" / "self-serve" (xuất hiện 3-5 lần)
+7. "customer" / "customers" / "shoppers" (xuất hiện 8-12 lần)
 
 ---
 
-## 3. Search Volume Signals
+## 3. Tín hiệu lượng tìm kiếm
 
-### Shopify Community Forum Analysis
+### Phân tích diễn đàn cộng đồng Shopify
 
-Most common terms merchants use when seeking order editing solutions:
+Các thuật ngữ phổ biến nhất mà merchant sử dụng khi tìm kiếm giải pháp chỉnh sửa đơn hàng:
 
-| Merchant Language | Frequency | App Store Equivalent |
+| Ngôn ngữ của merchant | Tần suất | Tương đương trên App Store |
 |-------------------|-----------|---------------------|
-| "how can customers modify orders" | High | order editing, modify order |
-| "edit order after checkout" | High | edit order, order editing |
-| "customer cancel order" | High | cancel order, order cancellation |
-| "change shipping address after order" | High | edit address, change address |
-| "let customers edit their order" | Medium | self-service order editing |
-| "reduce support tickets" | Medium | reduce support, self-service |
-| "order edit without recreating" | Medium | edit order |
-| "edit order billing address" | Medium | edit billing address |
-| "add items to existing order" | Medium | edit order, add products |
-| "guest customer edit order" | Low | guest order editing |
+| "how can customers modify orders" | Cao | order editing, modify order |
+| "edit order after checkout" | Cao | edit order, order editing |
+| "customer cancel order" | Cao | cancel order, order cancellation |
+| "change shipping address after order" | Cao | edit address, change address |
+| "let customers edit their order" | Trung bình | self-service order editing |
+| "reduce support tickets" | Trung bình | reduce support, self-service |
+| "order edit without recreating" | Trung bình | edit order |
+| "edit order billing address" | Trung bình | edit billing address |
+| "add items to existing order" | Trung bình | edit order, add products |
+| "guest customer edit order" | Thấp | guest order editing |
 
-### Shopify Help Center Search Patterns
+### Mẫu tìm kiếm trên Trung tâm trợ giúp Shopify
 
-Top help articles that drive app discovery:
-1. "Editing orders" (Shopify Help Center - high traffic)
-2. "How to edit an order on Shopify" (blog posts driving traffic)
-3. "Can I edit my order after it's been placed" (FAQ pattern)
-4. "Updating an order" (Shopify POS context)
+Các bài viết trợ giúp hàng đầu thúc đẩy khám phá ứng dụng:
+1. "Editing orders" (Trung tâm trợ giúp Shopify - lưu lượng cao)
+2. "How to edit an order on Shopify" (bài blog tạo lưu lượng)
+3. "Can I edit my order after it's been placed" (mẫu FAQ)
+4. "Updating an order" (bối cảnh Shopify POS)
 
-### Google Search Trends (Related Queries)
+### Xu hướng tìm kiếm Google (Truy vấn liên quan)
 
-| Query | Trend | Note |
+| Truy vấn | Xu hướng | Ghi chú |
 |-------|-------|------|
-| "shopify edit order" | Stable high | Evergreen demand |
-| "shopify order editing app" | Growing | App discovery intent |
-| "edit order after payment shopify" | Growing | Pain point search |
-| "shopify cancel order app" | Stable | Related need |
-| "shopify change address after order" | Growing | Common pain point |
-| "shopify self-service order editing" | Growing (new) | Emerging terminology |
-| "shopify post-purchase upsell" | Growing fast | Revenue opportunity |
+| "shopify edit order" | Cao ổn định | Nhu cầu bền vững |
+| "shopify order editing app" | Tăng trưởng | Ý định khám phá ứng dụng |
+| "edit order after payment shopify" | Tăng trưởng | Tìm kiếm điểm đau |
+| "shopify cancel order app" | Ổn định | Nhu cầu liên quan |
+| "shopify change address after order" | Tăng trưởng | Điểm đau phổ biến |
+| "shopify self-service order editing" | Tăng trưởng (mới) | Thuật ngữ mới nổi |
+| "shopify post-purchase upsell" | Tăng trưởng nhanh | Cơ hội doanh thu |
 
 ---
 
-## 4. Recommended App Name Options
+## 4. Các tùy chọn tên ứng dụng được đề xuất
 
-### Option A (Recommended): Action-Oriented Brand
-**Name:** `Avada Order Editing`
-**Subtitle:** `Let customers edit orders, edit address, cancel & upsell`
+### Tùy chọn A (Được khuyến nghị): Thương hiệu hướng hành động
+**Tên:** `Avada Order Editing`
+**Phụ đề:** `Let customers edit orders, edit address, cancel & upsell`
 
-- Leverages Avada brand recognition
-- Includes primary keyword "Order Editing" in name
-- Subtitle packs 4 high-value keywords
-- 20 characters in name (within 30-char limit)
+- Tận dụng sự nhận diện thương hiệu Avada
+- Bao gồm từ khóa chính "Order Editing" trong tên
+- Phụ đề nhồi 4 từ khóa giá trị cao
+- 20 ký tự trong tên (trong giới hạn 30 ký tự)
 
-### Option B: Feature-First with Brand
-**Name:** `Avada: Edit Orders & Upsell`
-**Subtitle:** `Let shoppers edit address, cancel order, reduce support tickets`
+### Tùy chọn B: Tính năng ưu tiên kèm thương hiệu
+**Tên:** `Avada: Edit Orders & Upsell`
+**Phụ đề:** `Let shoppers edit address, cancel order, reduce support tickets`
 
-- Leads with action verb "Edit"
-- Includes "Upsell" in name for revenue-seekers
-- Subtitle adds "reduce support tickets" differentiator
+- Dẫn đầu bằng động từ hành động "Edit"
+- Bao gồm "Upsell" trong tên cho những người tìm kiếm doanh thu
+- Phụ đề thêm "reduce support tickets" là yếu tố khác biệt
 
-### Option C: Value Proposition Lead
-**Name:** `Avada Order Editor`
-**Subtitle:** `Free order editing - let customers edit, cancel & upsell orders`
+### Tùy chọn C: Dẫn đầu bằng giá trị đề xuất
+**Tên:** `Avada Order Editor`
+**Phụ đề:** `Free order editing - let customers edit, cancel & upsell orders`
 
-- "Free" in subtitle captures price-sensitive searches
-- "Order Editor" is a common search term
-- Clear value proposition
+- "Free" trong phụ đề thu hút tìm kiếm nhạy cảm về giá
+- "Order Editor" là thuật ngữ tìm kiếm phổ biến
+- Giá trị đề xuất rõ ràng
 
-### Option D: Differentiation Play
-**Name:** `Avada: Self-Serve Order Edits`
-**Subtitle:** `Free order editing & upsell - edit address, cancel, swap products`
+### Tùy chọn D: Chiến thuật khác biệt hóa
+**Tên:** `Avada: Self-Serve Order Edits`
+**Phụ đề:** `Free order editing & upsell - edit address, cancel, swap products`
 
-- "Self-Serve" differentiates from admin-only editors
-- "Free" captures budget segment
+- "Self-Serve" khác biệt so với các trình chỉnh sửa chỉ dành cho admin
+- "Free" thu hút phân khúc ngân sách
 
-**Recommendation:** Option A. The Avada brand is already known, and "Order Editing" is the exact category keyword. Keep it simple and let the brand do the trust-building.
+**Khuyến nghị:** Tùy chọn A. Thương hiệu Avada đã được biết đến, và "Order Editing" chính là từ khóa danh mục chính xác. Giữ đơn giản và để thương hiệu xây dựng niềm tin.
 
 ---
 
-## 5. App Store Listing Optimization Strategy
+## 5. Chiến lược tối ưu hóa listing trên App Store
 
-### App Icon
-- Use Avada brand colors for ecosystem consistency
-- Include a recognizable order/edit visual metaphor (pencil + shopping bag)
-- Avoid text in icon (Shopify best practice)
-- Test 2-3 variants with different colors
+### Biểu tượng ứng dụng
+- Sử dụng màu thương hiệu Avada để đồng bộ hệ sinh thái
+- Bao gồm hình ảnh ẩn dụ trực quan dễ nhận biết về đơn hàng/chỉnh sửa (bút chì + túi mua sắm)
+- Tránh chữ trong biểu tượng (thực tiễn tốt nhất của Shopify)
+- Thử nghiệm 2-3 biến thể với các màu khác nhau
 
-### Screenshots (6 recommended)
-1. **Hero shot:** "Let Customers Edit Their Orders" with before/after UI
-2. **Address editing:** Show the address edit flow on order status page
-3. **Upsell:** "Boost Revenue with Post-Purchase Upsells" + revenue numbers
-4. **Dashboard:** Analytics showing support tickets reduced
-5. **Free plan:** "Start Free - 50 Edits/Month" pricing highlight
-6. **Integrations:** Shopify Flow, 3PL logos, multi-language flags
+### Ảnh chụp màn hình (khuyến nghị 6 ảnh)
+1. **Ảnh chính:** "Cho phép khách hàng chỉnh sửa đơn hàng" với giao diện trước/sau
+2. **Chỉnh sửa địa chỉ:** Hiển thị luồng chỉnh sửa địa chỉ trên trang trạng thái đơn hàng
+3. **Upsell:** "Tăng doanh thu với Upsell sau mua hàng" + số liệu doanh thu
+4. **Bảng điều khiển:** Phân tích hiển thị giảm ticket hỗ trợ
+5. **Gói miễn phí:** "Bắt đầu miễn phí - 50 lần chỉnh sửa/tháng" nổi bật giá
+6. **Tích hợp:** Shopify Flow, logo 3PL, cờ đa ngôn ngữ
 
-### Video (1-2 min demo)
-- Show the customer self-service flow (order status → edit → confirm)
-- Show the merchant dashboard with analytics
-- Emphasize speed: "Set up in 5 minutes"
-- End with social proof: "Join 1,000+ stores" (update as grows)
+### Video (demo 1-2 phút)
+- Hiển thị luồng tự phục vụ của khách hàng (trạng thái đơn hàng → chỉnh sửa → xác nhận)
+- Hiển thị bảng điều khiển merchant với phân tích
+- Nhấn mạnh tốc độ: "Thiết lập trong 5 phút"
+- Kết thúc với bằng chứng xã hội: "Tham gia cùng hơn 1.000 cửa hàng" (cập nhật khi phát triển)
 
-### Description Structure (2,800 characters max)
+### Cấu trúc mô tả (tối đa 2.800 ký tự)
 
 ```
-Paragraph 1 (Hook + Primary Keywords):
-"Avada Order Editing lets your customers edit orders, change shipping address, 
-cancel orders, and add products - all without contacting your support team. 
-Reduce support tickets by up to 80% while boosting revenue with built-in 
-post-purchase upsells."
+Đoạn 1 (Thu hút + Từ khóa chính):
+"Avada Order Editing cho phép khách hàng của bạn chỉnh sửa đơn hàng, thay đổi địa chỉ giao hàng, 
+hủy đơn hàng, và thêm sản phẩm - tất cả mà không cần liên hệ đội hỗ trợ. 
+Giảm ticket hỗ trợ lên đến 80% đồng thời tăng doanh thu với upsell sau mua hàng 
+tích hợp sẵn."
 
-Paragraph 2 (Feature List + Keywords):
-"With Avada Order Editing, customers can self-serve from the order status page 
-or customer account. Enable address editing, product swaps, quantity changes, 
-variant updates, order cancellations, and more. Built-in address validation 
-prevents shipping errors."
+Đoạn 2 (Danh sách tính năng + Từ khóa):
+"Với Avada Order Editing, khách hàng có thể tự phục vụ từ trang trạng thái đơn hàng 
+hoặc tài khoản khách hàng. Cho phép chỉnh sửa địa chỉ, đổi sản phẩm, thay đổi số lượng, 
+cập nhật biến thể, hủy đơn hàng, và nhiều hơn nữa. Xác thực địa chỉ tích hợp sẵn 
+ngăn ngừa lỗi vận chuyển."
 
-Paragraph 3 (Revenue Angle + Keywords):
-"Turn every order edit into a revenue opportunity. Post-purchase upsells 
-display during the editing flow, increasing average order value. Smart 
-cancellation rules offer store credit instead of refunds, retaining revenue."
+Đoạn 3 (Góc doanh thu + Từ khóa):
+"Biến mỗi lần chỉnh sửa đơn hàng thành cơ hội doanh thu. Upsell sau mua hàng 
+hiển thị trong luồng chỉnh sửa, tăng giá trị đơn hàng trung bình. Quy tắc hủy thông minh 
+đề xuất tín dụng cửa hàng thay vì hoàn tiền, giữ lại doanh thu."
 
-Paragraph 4 (Trust + Differentiators):
-"Start free with 50 order edits per month. No hidden fees, no overage charges. 
-Trusted by the Avada ecosystem of 100,000+ merchants. 24/7 support. Works with 
-Shopify Flow, 3PL providers, and all Shopify plans."
+Đoạn 4 (Niềm tin + Yếu tố khác biệt):
+"Bắt đầu miễn phí với 50 lần chỉnh sửa đơn hàng mỗi tháng. Không phí ẩn, không phí vượt mức. 
+Được tin tưởng bởi hệ sinh thái Avada với hơn 100.000 merchant. Hỗ trợ 24/7. Hoạt động với 
+Shopify Flow, nhà cung cấp 3PL, và tất cả các gói Shopify."
 
-Paragraph 5 (Feature Bullets):
-- Edit shipping address with Google-powered validation
-- Change product variants, quantities, and items
-- Post-purchase upsells to boost average order value
-- Smart order cancellation with store credit option
-- Shopify Flow integration for automated workflows
-- Multi-language support (20+ languages)
-- Works with all 3PL and fulfillment providers
-- Real-time analytics and reporting
+Đoạn 5 (Danh sách tính năng):
+- Chỉnh sửa địa chỉ giao hàng với xác thực do Google hỗ trợ
+- Thay đổi biến thể sản phẩm, số lượng, và mặt hàng
+- Upsell sau mua hàng để tăng giá trị đơn hàng trung bình
+- Hủy đơn hàng thông minh với tùy chọn tín dụng cửa hàng
+- Tích hợp Shopify Flow cho quy trình tự động
+- Hỗ trợ đa ngôn ngữ (hơn 20 ngôn ngữ)
+- Hoạt động với tất cả nhà cung cấp 3PL và fulfillment
+- Phân tích và báo cáo thời gian thực
 ```
 
-### SEO Keywords for Listing Metadata
+### Từ khóa SEO cho metadata listing
 
-**Primary (use in title + subtitle + first paragraph):**
+**Chính (sử dụng trong tiêu đề + phụ đề + đoạn đầu tiên):**
 - order editing
 - edit orders
 - edit address
 - cancel order
 - upsell
 
-**Secondary (use in description body):**
+**Phụ (sử dụng trong phần thân mô tả):**
 - self-service, self-serve
 - reduce support tickets
 - post-purchase
@@ -282,7 +282,7 @@ Paragraph 5 (Feature Bullets):
 - product swap
 - order management
 
-**Long-tail (use naturally in description):**
+**Dài (sử dụng tự nhiên trong mô tả):**
 - let customers edit orders
 - edit order after checkout
 - order editing app free
@@ -291,121 +291,121 @@ Paragraph 5 (Feature Bullets):
 
 ---
 
-## 6. Launch Plan: Review Seeding & Initial Visibility
+## 6. Kế hoạch ra mắt: Gieo mầm đánh giá & Khả năng hiển thị ban đầu
 
-### Phase 1: Pre-Launch (Weeks -4 to 0)
+### Giai đoạn 1: Trước ra mắt (Tuần -4 đến 0)
 
-1. **Beta testing with Avada's existing merchants**
-   - Recruit 50-100 merchants from Avada's existing app user base
-   - Focus on stores with 100-2,000 orders/mo
-   - Offer extended free trial (60 days) in exchange for feedback
-   - Goal: 20-30 beta testers ready to leave reviews at launch
+1. **Thử nghiệm beta với merchant hiện tại của Avada**
+   - Tuyển 50-100 merchant từ cơ sở người dùng ứng dụng hiện tại của Avada
+   - Tập trung vào các cửa hàng có 100-2.000 đơn hàng/tháng
+   - Cung cấp bản dùng thử miễn phí kéo dài (60 ngày) để đổi lấy phản hồi
+   - Mục tiêu: 20-30 người thử nghiệm beta sẵn sàng để lại đánh giá khi ra mắt
 
-2. **Content preparation**
-   - Write 3-5 blog posts targeting order editing keywords
-   - Create comparison pages: "Avada vs Cleverific", "Avada vs OrderEditing.com"
-   - Prepare Shopify Community answers to common order editing questions
-   - Create YouTube demo video
+2. **Chuẩn bị nội dung**
+   - Viết 3-5 bài blog nhắm mục tiêu từ khóa chỉnh sửa đơn hàng
+   - Tạo trang so sánh: "Avada vs Cleverific", "Avada vs OrderEditing.com"
+   - Chuẩn bị câu trả lời trên Cộng đồng Shopify cho các câu hỏi phổ biến về chỉnh sửa đơn hàng
+   - Tạo video demo trên YouTube
 
-3. **Listing optimization**
-   - Finalize app name, subtitle, description per strategy above
-   - Create 6 screenshots + demo video
-   - Set up all pricing tiers in Shopify Partners dashboard
+3. **Tối ưu hóa listing**
+   - Hoàn thiện tên ứng dụng, phụ đề, mô tả theo chiến lược trên
+   - Tạo 6 ảnh chụp màn hình + video demo
+   - Thiết lập tất cả các tầng giá trong bảng điều khiển Shopify Partners
 
-### Phase 2: Launch Week (Week 1)
+### Giai đoạn 2: Tuần ra mắt (Tuần 1)
 
-1. **Review seeding**
-   - Contact beta testers to leave honest reviews (Day 1-3)
-   - Target: 15-20 reviews in first week
-   - Focus on getting reviews that mention specific keywords naturally
+1. **Gieo mầm đánh giá**
+   - Liên hệ người thử nghiệm beta để lại đánh giá trung thực (Ngày 1-3)
+   - Mục tiêu: 15-20 đánh giá trong tuần đầu tiên
+   - Tập trung vào việc nhận đánh giá đề cập tự nhiên các từ khóa cụ thể
 
-2. **Shopify Community engagement**
-   - Answer existing threads about order editing problems
-   - Share app as solution (follow Shopify's promotional guidelines)
-   - Create a "How to set up self-service order editing" guide post
+2. **Tương tác trên Cộng đồng Shopify**
+   - Trả lời các chủ đề hiện có về vấn đề chỉnh sửa đơn hàng
+   - Chia sẻ ứng dụng như giải pháp (tuân theo hướng dẫn quảng cáo của Shopify)
+   - Tạo bài hướng dẫn "Cách thiết lập chỉnh sửa đơn hàng tự phục vụ"
 
-3. **Cross-promotion**
-   - Email Avada's existing merchant base about the new app
-   - In-app banners in other Avada apps
-   - Social media announcement
+3. **Quảng bá chéo**
+   - Gửi email cho cơ sở merchant hiện tại của Avada về ứng dụng mới
+   - Banner trong ứng dụng ở các ứng dụng Avada khác
+   - Thông báo trên mạng xã hội
 
-4. **Influencer outreach**
-   - Contact 5-10 Shopify app reviewers/YouTubers
-   - Offer extended free access for honest review
-   - Target channels: Casual Ecommerce, The Ecom King, etc.
+4. **Tiếp cận người có ảnh hưởng**
+   - Liên hệ 5-10 người đánh giá/YouTuber ứng dụng Shopify
+   - Cung cấp quyền truy cập miễn phí kéo dài để đổi lấy đánh giá trung thực
+   - Kênh mục tiêu: Casual Ecommerce, The Ecom King, v.v.
 
-### Phase 3: Growth (Weeks 2-12)
+### Giai đoạn 3: Tăng trưởng (Tuần 2-12)
 
-1. **Review velocity maintenance**
-   - In-app review prompts after 7 days of use (post-value delivery)
-   - Email follow-up at Day 14 for satisfied users
-   - Target: 5-10 new reviews per week
-   - Goal: 50+ reviews by end of Month 1, 100+ by Month 3
+1. **Duy trì tốc độ đánh giá**
+   - Lời nhắc đánh giá trong ứng dụng sau 7 ngày sử dụng (sau khi cung cấp giá trị)
+   - Email theo dõi vào Ngày 14 cho người dùng hài lòng
+   - Mục tiêu: 5-10 đánh giá mới mỗi tuần
+   - Mục tiêu: Hơn 50 đánh giá vào cuối Tháng 1, hơn 100 vào Tháng 3
 
-2. **Content marketing**
-   - Publish weekly blog posts targeting long-tail keywords
-   - Guest posts on Shopify-focused blogs
-   - Create case studies from early adopters
+2. **Tiếp thị nội dung**
+   - Đăng bài blog hàng tuần nhắm mục tiêu từ khóa dài
+   - Bài đăng khách trên các blog tập trung Shopify
+   - Tạo case study từ những người dùng sớm
 
-3. **Paid discovery (if available)**
-   - Shopify App Store Ads (if program available)
-   - Google Ads targeting "shopify order editing app"
-   - Facebook/Instagram retargeting for Shopify store owners
+3. **Khám phá trả phí (nếu có)**
+   - Quảng cáo Shopify App Store (nếu chương trình khả dụng)
+   - Google Ads nhắm mục tiêu "shopify order editing app"
+   - Retargeting Facebook/Instagram cho chủ cửa hàng Shopify
 
-4. **Category ranking strategy**
-   - Monitor ranking in "Order editing" category weekly
-   - Track install-to-review conversion rate
-   - A/B test screenshots and descriptions monthly
-   - Target: Top 5 in category by Month 3, Top 3 by Month 6
+4. **Chiến lược xếp hạng danh mục**
+   - Theo dõi xếp hạng trong danh mục "Order editing" hàng tuần
+   - Theo dõi tỷ lệ chuyển đổi cài đặt sang đánh giá
+   - A/B test ảnh chụp màn hình và mô tả hàng tháng
+   - Mục tiêu: Top 5 danh mục vào Tháng 3, Top 3 vào Tháng 6
 
-### Phase 4: Scaling (Months 3-12)
+### Giai đoạn 4: Mở rộng (Tháng 3-12)
 
-1. **Review quality**
-   - Respond to every review (positive and negative) within 24 hours
-   - Use negative feedback to improve product
-   - Highlight case studies with ROI metrics
+1. **Chất lượng đánh giá**
+   - Phản hồi mọi đánh giá (tích cực và tiêu cực) trong vòng 24 giờ
+   - Sử dụng phản hồi tiêu cực để cải thiện sản phẩm
+   - Nêu bật case study với chỉ số ROI
 
-2. **Listing optimization cycles**
-   - Monthly A/B tests on screenshots
-   - Quarterly description updates with new keywords
-   - Update demo video with new features
+2. **Chu kỳ tối ưu hóa listing**
+   - A/B test ảnh chụp màn hình hàng tháng
+   - Cập nhật mô tả hàng quý với từ khóa mới
+   - Cập nhật video demo với tính năng mới
 
-3. **Competitive response**
-   - Monitor competitor pricing changes
-   - Track competitor review sentiment
-   - Capture merchants switching from competitors with targeted messaging
+3. **Phản ứng cạnh tranh**
+   - Theo dõi thay đổi giá của đối thủ
+   - Theo dõi tâm lý đánh giá của đối thủ
+   - Thu hút merchant đang chuyển đổi từ đối thủ bằng thông điệp nhắm mục tiêu
 
 ---
 
-## 7. Key Metrics to Track
+## 7. Các chỉ số cần theo dõi
 
-| Metric | Target (Month 1) | Target (Month 3) | Target (Month 6) |
+| Chỉ số | Mục tiêu (Tháng 1) | Mục tiêu (Tháng 3) | Mục tiêu (Tháng 6) |
 |--------|-------------------|-------------------|-------------------|
-| App Store impressions | 5,000 | 15,000 | 30,000 |
-| Listing page views | 1,000 | 5,000 | 12,000 |
-| Installs | 200 | 1,000 | 3,000 |
-| Install conversion rate | 20% | 25% | 30% |
-| Reviews | 20 | 75 | 200 |
-| Average rating | 4.8+ | 4.8+ | 4.8+ |
-| Category ranking | Top 15 | Top 5 | Top 3 |
-| Search keyword rankings | 3-5 keywords top 10 | 8-10 keywords top 10 | 15+ keywords top 10 |
-| Free → Paid conversion | 10% | 15% | 20% |
+| Lượt hiển thị App Store | 5.000 | 15.000 | 30.000 |
+| Lượt xem trang listing | 1.000 | 5.000 | 12.000 |
+| Lượt cài đặt | 200 | 1.000 | 3.000 |
+| Tỷ lệ chuyển đổi cài đặt | 20% | 25% | 30% |
+| Đánh giá | 20 | 75 | 200 |
+| Xếp hạng trung bình | 4.8+ | 4.8+ | 4.8+ |
+| Xếp hạng danh mục | Top 15 | Top 5 | Top 3 |
+| Xếp hạng từ khóa tìm kiếm | 3-5 từ khóa top 10 | 8-10 từ khóa top 10 | 15+ từ khóa top 10 |
+| Chuyển đổi Miễn phí → Trả phí | 10% | 15% | 20% |
 
 ---
 
-## 8. Competitive Keyword Gap Analysis
+## 8. Phân tích khoảng trống từ khóa cạnh tranh
 
-Keywords where competitors rank but are vulnerable:
+Từ khóa mà đối thủ đang xếp hạng nhưng có điểm yếu:
 
-| Keyword | Current Top App | Their Weakness | Our Opportunity |
+| Từ khóa | Ứng dụng đứng đầu hiện tại | Điểm yếu của họ | Cơ hội của chúng ta |
 |---------|----------------|----------------|-----------------|
-| "free order editing" | EditMyOrder.ai | Sustainability unclear | More features + Avada trust |
-| "cheap order editing app" | Orderify | Poor support | Better support + modern UI |
-| "order editing upsell" | OrderEditing.com | $99 minimum | Same features at $9.99 |
-| "edit order address" | AE | $39 minimum | Free for 50 edits |
-| "cancel order app" | Orderify | App stopped working | Reliable + actively maintained |
-| "self-serve order editing" | Cleverific | $49+ with limits | Free tier + no overage |
-| "order editing shopify flow" | Cleverific | Automation fees | Included in Pro ($19.99) |
-| "edit billing address" | Cleverific | Only paid plans | Include in free tier |
-| "reduce support tickets" | OrderEditing.com | Expensive | Same ROI at lower price |
-| "post-purchase upsell order" | Revize | $149 for upsells | Basic upsells at $9.99 |
+| "free order editing" | EditMyOrder.ai | Tính bền vững không rõ ràng | Nhiều tính năng hơn + niềm tin Avada |
+| "cheap order editing app" | Orderify | Hỗ trợ kém | Hỗ trợ tốt hơn + giao diện hiện đại |
+| "order editing upsell" | OrderEditing.com | Tối thiểu $99 | Cùng tính năng với giá $9.99 |
+| "edit order address" | AE | Tối thiểu $39 | Miễn phí cho 50 lần chỉnh sửa |
+| "cancel order app" | Orderify | Ứng dụng ngừng hoạt động | Đáng tin cậy + được duy trì tích cực |
+| "self-serve order editing" | Cleverific | $49+ với giới hạn | Gói miễn phí + không phí vượt mức |
+| "order editing shopify flow" | Cleverific | Phí tự động hóa | Bao gồm trong gói Pro ($19.99) |
+| "edit billing address" | Cleverific | Chỉ gói trả phí | Bao gồm trong gói miễn phí |
+| "reduce support tickets" | OrderEditing.com | Đắt | Cùng ROI với giá thấp hơn |
+| "post-purchase upsell order" | Revize | $149 cho upsell | Upsell cơ bản với giá $9.99 |

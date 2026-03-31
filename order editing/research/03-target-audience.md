@@ -1,278 +1,278 @@
-# 03 - Target Audience: Shopify Order Editing
+# 03 - Đối tượng mục tiêu: Chỉnh sửa đơn hàng Shopify
 
-## 1. Segment Definitions
+## 1. Định nghĩa phân khúc
 
-### Segment A: Free / Development Stores
+### Phân khúc A: Cửa hàng miễn phí / Phát triển
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Shopify Plan** | Free trial, Development, Starter ($5/mo) |
-| **Monthly Orders** | 0-50 |
-| **Monthly Revenue** | $0-$5,000 |
-| **Team Size** | 1 (solo founder) |
-| **Budget for Apps** | $0 -- will only use free tools |
-| **Estimated Segment Size** | ~2M stores (mostly inactive/testing) |
+| **Gói Shopify** | Dùng thử miễn phí, Phát triển, Starter ($5/tháng) |
+| **Đơn hàng hàng tháng** | 0-50 |
+| **Doanh thu hàng tháng** | $0-$5,000 |
+| **Quy mô đội ngũ** | 1 (sáng lập viên độc lập) |
+| **Ngân sách cho ứng dụng** | $0 -- chỉ sử dụng công cụ miễn phí |
+| **Quy mô phân khúc ước tính** | ~2 triệu cửa hàng (phần lớn không hoạt động/đang thử nghiệm) |
 
-**Role:** Funnel entry. These stores install free apps to test. Some will grow into paying customers. Volume matters for app store ranking.
+**Vai trò:** Đầu vào phễu chuyển đổi. Các cửa hàng này cài đặt ứng dụng miễn phí để thử nghiệm. Một số sẽ phát triển thành khách hàng trả phí. Số lượng quan trọng cho thứ hạng trên cửa hàng ứng dụng.
 
 ---
 
-### Segment B: SMB / Core (PRIMARY TARGET)
+### Phân khúc B: SMB / Cốt lõi (MỤC TIÊU CHÍNH)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Shopify Plan** | Basic ($39/mo), Shopify ($105/mo) |
-| **Monthly Orders** | 50-2,000 |
-| **Monthly Revenue** | $5,000-$200,000 |
-| **Team Size** | 1-5 (founder + small team) |
-| **Budget for Apps** | $10-$50/month per app |
-| **Estimated Segment Size** | ~800K-1.2M active stores |
+| **Gói Shopify** | Basic ($39/tháng), Shopify ($105/tháng) |
+| **Đơn hàng hàng tháng** | 50-2,000 |
+| **Doanh thu hàng tháng** | $5,000-$200,000 |
+| **Quy mô đội ngũ** | 1-5 (sáng lập viên + đội nhỏ) |
+| **Ngân sách cho ứng dụng** | $10-$50/tháng mỗi ứng dụng |
+| **Quy mô phân khúc ước tính** | ~800K-1.2 triệu cửa hàng đang hoạt động |
 
-**Role:** Core revenue driver. These merchants feel pain acutely -- they handle support themselves, every ticket costs them personally, and they need affordable automation.
+**Vai trò:** Động lực doanh thu cốt lõi. Những người bán này cảm nhận nỗi đau rõ ràng -- họ tự xử lý hỗ trợ, mỗi ticket tiêu tốn chi phí cá nhân, và họ cần tự động hóa với giá phải chăng.
 
 ---
 
-### Segment C: Mid-Market
+### Phân khúc C: Thị trường tầm trung
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Shopify Plan** | Shopify ($105/mo), Advanced ($399/mo) |
-| **Monthly Orders** | 2,000-10,000 |
-| **Monthly Revenue** | $200K-$2M |
-| **Team Size** | 5-25 (dedicated CS team) |
-| **Budget for Apps** | $50-$200/month per app |
-| **Estimated Segment Size** | ~100K-200K active stores |
+| **Gói Shopify** | Shopify ($105/tháng), Advanced ($399/tháng) |
+| **Đơn hàng hàng tháng** | 2,000-10,000 |
+| **Doanh thu hàng tháng** | $200K-$2M |
+| **Quy mô đội ngũ** | 5-25 (đội CSKH chuyên trách) |
+| **Ngân sách cho ứng dụng** | $50-$200/tháng mỗi ứng dụng |
+| **Quy mô phân khúc ước tính** | ~100K-200K cửa hàng đang hoạt động |
 
-**Role:** High-value customers. They need robust features, integrations, and analytics. Willing to pay for time savings.
+**Vai trò:** Khách hàng giá trị cao. Họ cần tính năng mạnh mẽ, tích hợp và phân tích. Sẵn sàng trả tiền để tiết kiệm thời gian.
 
 ---
 
-### Segment D: Shopify Plus / Enterprise
+### Phân khúc D: Shopify Plus / Doanh nghiệp
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Shopify Plan** | Shopify Plus ($2,300+/mo) |
-| **Monthly Orders** | 10,000-100,000+ |
-| **Monthly Revenue** | $2M-$100M+ |
-| **Team Size** | 25-500+ (ops team, CS team, dev team) |
-| **Budget for Apps** | $200-$1,000+/month per app |
-| **Estimated Segment Size** | ~50,000 stores (Shopify reported ~51K Plus merchants) |
+| **Gói Shopify** | Shopify Plus ($2,300+/tháng) |
+| **Đơn hàng hàng tháng** | 10,000-100,000+ |
+| **Doanh thu hàng tháng** | $2M-$100M+ |
+| **Quy mô đội ngũ** | 25-500+ (đội vận hành, đội CSKH, đội phát triển) |
+| **Ngân sách cho ứng dụng** | $200-$1,000+/tháng mỗi ứng dụng |
+| **Quy mô phân khúc ước tính** | ~50,000 cửa hàng (Shopify báo cáo ~51K merchant Plus) |
 
-**Role:** Logo customers and revenue anchors. Need enterprise features: SOC 2, SLAs, custom integrations, B2B support, Slack support channels.
+**Vai trò:** Khách hàng thương hiệu lớn và trụ cột doanh thu. Cần tính năng doanh nghiệp: SOC 2, SLA, tích hợp tùy chỉnh, hỗ trợ B2B, kênh hỗ trợ Slack.
 
 ---
 
-## 2. Detailed Personas
+## 2. Chân dung khách hàng chi tiết
 
-### Persona 1: Sarah -- Solo Shopify Founder (Segment B - SMB)
+### Chân dung 1: Sarah -- Sáng lập viên Shopify độc lập (Phân khúc B - SMB)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Name** | Sarah Chen |
-| **Age** | 28-35 |
-| **Store Type** | DTC fashion / accessories brand |
-| **Shopify Plan** | Basic ($39/mo) |
-| **Monthly Orders** | 150-400 |
-| **Monthly Revenue** | $15,000-$40,000 |
-| **Team** | Just her + 1 part-time VA |
-| **Daily Support Tickets** | 5-15, mostly "can I change my size/address?" |
-| **Current Solution** | Manually editing orders in Shopify admin, takes 30-60 min/day |
-| **Pain** | "I spend an hour every day just changing addresses and swapping sizes. I can't afford a $99/month app but I'm drowning in support emails." |
-| **Budget** | $10-$25/month for an order editing app |
-| **Buying Triggers** | Free trial with enough edits to prove value; under $20/month paid plan |
-| **Decision Process** | Searches Shopify App Store, reads reviews, installs free trial, converts if it saves time |
+| **Tên** | Sarah Chen |
+| **Tuổi** | 28-35 |
+| **Loại cửa hàng** | Thương hiệu thời trang / phụ kiện DTC |
+| **Gói Shopify** | Basic ($39/tháng) |
+| **Đơn hàng hàng tháng** | 150-400 |
+| **Doanh thu hàng tháng** | $15,000-$40,000 |
+| **Đội ngũ** | Chỉ cô ấy + 1 trợ lý ảo bán thời gian |
+| **Ticket hỗ trợ hàng ngày** | 5-15, chủ yếu "tôi có thể đổi size/địa chỉ không?" |
+| **Giải pháp hiện tại** | Chỉnh sửa đơn hàng thủ công trong Shopify admin, mất 30-60 phút/ngày |
+| **Nỗi đau** | "Tôi dành một giờ mỗi ngày chỉ để thay đổi địa chỉ và đổi size. Tôi không đủ khả năng chi $99/tháng cho ứng dụng nhưng tôi đang ngập trong email hỗ trợ." |
+| **Ngân sách** | $10-$25/tháng cho ứng dụng chỉnh sửa đơn hàng |
+| **Yếu tố kích hoạt mua** | Dùng thử miễn phí với đủ lượt chỉnh sửa để chứng minh giá trị; gói trả phí dưới $20/tháng |
+| **Quy trình quyết định** | Tìm kiếm trên Shopify App Store, đọc đánh giá, cài dùng thử miễn phí, chuyển đổi nếu tiết kiệm thời gian |
 
-**What she needs:**
-- Generous free tier to test (50+ edits/month)
-- Simple setup (under 10 minutes)
-- Customer self-service portal (stop emails)
-- Address editing + variant swap
-- Under $20/month
+**Cô ấy cần gì:**
+- Gói miễn phí hào phóng để thử nghiệm (50+ lượt chỉnh sửa/tháng)
+- Cài đặt đơn giản (dưới 10 phút)
+- Cổng tự phục vụ cho khách hàng (giảm email)
+- Chỉnh sửa địa chỉ + đổi biến thể
+- Dưới $20/tháng
 
 ---
 
-### Persona 2: Mike -- Growing Brand Operations Manager (Segment C - Mid-Market)
+### Chân dung 2: Mike -- Quản lý vận hành thương hiệu đang phát triển (Phân khúc C - Thị trường tầm trung)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Name** | Mike Rodriguez |
-| **Age** | 32-40 |
-| **Store Type** | Health & wellness DTC brand |
-| **Shopify Plan** | Advanced ($399/mo) |
-| **Monthly Orders** | 4,000-8,000 |
-| **Monthly Revenue** | $400,000-$800,000 |
-| **Team** | 15 people (3 on CS, 2 on ops) |
-| **Daily Support Tickets** | 40-80, 60% are order modifications |
-| **Current Solution** | CS team manually handles edits; tried Cleverific but found it buggy |
-| **Pain** | "We need a reliable app that handles edits + upsells during the edit flow. Our CS team wastes 3-4 hours/day on order changes. We need Shopify Flow integration." |
-| **Budget** | $50-$150/month |
-| **Buying Triggers** | Shopify Flow integration, analytics dashboard, upsell capability, reliable support |
-| **Decision Process** | Evaluates 2-3 apps, runs trials, checks integrations, reads negative reviews carefully |
+| **Tên** | Mike Rodriguez |
+| **Tuổi** | 32-40 |
+| **Loại cửa hàng** | Thương hiệu sức khỏe & wellness DTC |
+| **Gói Shopify** | Advanced ($399/tháng) |
+| **Đơn hàng hàng tháng** | 4,000-8,000 |
+| **Doanh thu hàng tháng** | $400,000-$800,000 |
+| **Đội ngũ** | 15 người (3 CSKH, 2 vận hành) |
+| **Ticket hỗ trợ hàng ngày** | 40-80, 60% là yêu cầu chỉnh sửa đơn hàng |
+| **Giải pháp hiện tại** | Đội CSKH xử lý chỉnh sửa thủ công; đã thử Cleverific nhưng gặp nhiều lỗi |
+| **Nỗi đau** | "Chúng tôi cần một ứng dụng đáng tin cậy xử lý chỉnh sửa + bán thêm trong luồng chỉnh sửa. Đội CSKH lãng phí 3-4 giờ/ngày cho việc thay đổi đơn hàng. Chúng tôi cần tích hợp Shopify Flow." |
+| **Ngân sách** | $50-$150/tháng |
+| **Yếu tố kích hoạt mua** | Tích hợp Shopify Flow, bảng phân tích, khả năng bán thêm, hỗ trợ đáng tin cậy |
+| **Quy trình quyết định** | Đánh giá 2-3 ứng dụng, chạy thử nghiệm, kiểm tra tích hợp, đọc kỹ đánh giá tiêu cực |
 
-**What he needs:**
-- Full feature set (address, items, upsells, cancellation retention)
-- Shopify Flow automation
-- Analytics showing ROI (tickets saved, upsell revenue)
-- Reliable -- no duplicate orders, no tax bugs
-- 3PL integration (ShipStation)
+**Anh ấy cần gì:**
+- Bộ tính năng đầy đủ (địa chỉ, sản phẩm, bán thêm, giữ chân khi hủy đơn)
+- Tự động hóa Shopify Flow
+- Phân tích hiển thị ROI (ticket tiết kiệm được, doanh thu bán thêm)
+- Đáng tin cậy -- không trùng đơn hàng, không lỗi thuế
+- Tích hợp 3PL (ShipStation)
 
 ---
 
-### Persona 3: Jessica -- Shopify Plus Brand Director (Segment D - Enterprise)
+### Chân dung 3: Jessica -- Giám đốc thương hiệu Shopify Plus (Phân khúc D - Doanh nghiệp)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Name** | Jessica Park |
-| **Age** | 35-45 |
-| **Store Type** | Multi-brand fashion company, DTC + B2B wholesale |
-| **Shopify Plan** | Shopify Plus ($2,300/mo) |
-| **Monthly Orders** | 25,000-50,000 |
-| **Monthly Revenue** | $3M-$8M |
-| **Team** | 80+ people (10-person CS team, ops team, dev team) |
-| **Daily Support Tickets** | 200+, 50% order-related |
-| **Current Solution** | OrderEditing.com at $599/month, considering alternatives |
-| **Pain** | "We pay $600/month for OrderEditing.com and it's fine, but we need better B2B order editing, subscription support, and SOC 2 compliance. Also, their analytics are weak." |
-| **Budget** | $200-$500/month |
-| **Buying Triggers** | B2B/wholesale editing, subscription orders, SOC 2, dedicated support channel, custom integrations |
-| **Decision Process** | Security review, compliance check, demo with sales team, pilot program |
+| **Tên** | Jessica Park |
+| **Tuổi** | 35-45 |
+| **Loại cửa hàng** | Công ty thời trang đa thương hiệu, DTC + bán sỉ B2B |
+| **Gói Shopify** | Shopify Plus ($2,300/tháng) |
+| **Đơn hàng hàng tháng** | 25,000-50,000 |
+| **Doanh thu hàng tháng** | $3M-$8M |
+| **Đội ngũ** | 80+ người (đội CSKH 10 người, đội vận hành, đội phát triển) |
+| **Ticket hỗ trợ hàng ngày** | 200+, 50% liên quan đến đơn hàng |
+| **Giải pháp hiện tại** | OrderEditing.com với $599/tháng, đang cân nhắc các lựa chọn thay thế |
+| **Nỗi đau** | "Chúng tôi trả $600/tháng cho OrderEditing.com và nó ổn, nhưng chúng tôi cần chỉnh sửa đơn hàng B2B tốt hơn, hỗ trợ đơn hàng đăng ký, và tuân thủ SOC 2. Ngoài ra, phân tích của họ yếu." |
+| **Ngân sách** | $200-$500/tháng |
+| **Yếu tố kích hoạt mua** | Chỉnh sửa B2B/bán sỉ, đơn hàng đăng ký, SOC 2, kênh hỗ trợ chuyên dụng, tích hợp tùy chỉnh |
+| **Quy trình quyết định** | Đánh giá bảo mật, kiểm tra tuân thủ, demo với đội kinh doanh, chương trình thí điểm |
 
-**What she needs:**
-- Enterprise-grade reliability
-- B2B/wholesale order editing
-- Subscription order support
-- SOC 2 compliance
-- Dedicated Slack support channel
-- Custom API/webhook events
-- White-label option
+**Cô ấy cần gì:**
+- Độ tin cậy cấp doanh nghiệp
+- Chỉnh sửa đơn hàng B2B/bán sỉ
+- Hỗ trợ đơn hàng đăng ký
+- Tuân thủ SOC 2
+- Kênh hỗ trợ Slack chuyên dụng
+- API/sự kiện webhook tùy chỉnh
+- Tùy chọn white-label
 
 ---
 
-### Persona 4: Alex -- New Store Owner (Segment A - Free/Dev)
+### Chân dung 4: Alex -- Chủ cửa hàng mới (Phân khúc A - Miễn phí/Phát triển)
 
-| Attribute | Detail |
+| Thuộc tính | Chi tiết |
 |-----------|--------|
-| **Name** | Alex Thompson |
-| **Age** | 22-30 |
-| **Store Type** | Side hustle dropshipping / print-on-demand |
-| **Shopify Plan** | Basic ($39/mo), just started |
-| **Monthly Orders** | 10-50 |
-| **Monthly Revenue** | $500-$5,000 |
-| **Team** | Solo |
-| **Daily Support Tickets** | 1-3 |
-| **Current Solution** | Manually handles everything, Googles "how to edit order shopify" |
-| **Pain** | "I got my first 'wrong address' email and I don't know what to do. I can't afford any paid apps." |
-| **Budget** | $0 |
-| **Buying Triggers** | Free plan that actually works, simple setup, good onboarding |
-| **Decision Process** | Searches Google/YouTube, installs the first free app that looks good |
+| **Tên** | Alex Thompson |
+| **Tuổi** | 22-30 |
+| **Loại cửa hàng** | Dropshipping / in theo yêu cầu làm thêm |
+| **Gói Shopify** | Basic ($39/tháng), mới bắt đầu |
+| **Đơn hàng hàng tháng** | 10-50 |
+| **Doanh thu hàng tháng** | $500-$5,000 |
+| **Đội ngũ** | Một mình |
+| **Ticket hỗ trợ hàng ngày** | 1-3 |
+| **Giải pháp hiện tại** | Xử lý mọi thứ thủ công, Google "cách chỉnh sửa đơn hàng shopify" |
+| **Nỗi đau** | "Tôi nhận được email 'sai địa chỉ' đầu tiên và tôi không biết phải làm gì. Tôi không đủ khả năng chi trả cho bất kỳ ứng dụng trả phí nào." |
+| **Ngân sách** | $0 |
+| **Yếu tố kích hoạt mua** | Gói miễn phí thực sự hoạt động, cài đặt đơn giản, hướng dẫn tốt |
+| **Quy trình quyết định** | Tìm kiếm trên Google/YouTube, cài đặt ứng dụng miễn phí đầu tiên trông ổn |
 
-**What he needs:**
-- Completely free plan with enough edits
-- Dead-simple setup
-- Self-service customer portal
-- Good documentation/guides
+**Anh ấy cần gì:**
+- Gói miễn phí hoàn toàn với đủ lượt chỉnh sửa
+- Cài đặt cực kỳ đơn giản
+- Cổng tự phục vụ cho khách hàng
+- Tài liệu/hướng dẫn tốt
 
 ---
 
-## 3. Segment Sizing
+## 3. Quy mô phân khúc
 
-| Segment | Est. Store Count | % of Active Stores | Order Edit Need | Willingness to Pay | Revenue Potential |
+| Phân khúc | Số cửa hàng ước tính | % cửa hàng hoạt động | Nhu cầu chỉnh sửa đơn hàng | Sẵn sàng trả phí | Tiềm năng doanh thu |
 |---------|-----------------|-------------------|-----------------|-------------------|------------------|
-| Free/Dev | ~2M | 36% | Low | None | Low (funnel only) |
-| SMB (Core) | ~1M | 18% | HIGH | $10-$50/mo | **HIGHEST** |
-| Mid-Market | ~150K | 3% | HIGH | $50-$200/mo | High |
-| Plus/Enterprise | ~50K | 1% | HIGH | $200-$500/mo | High per-customer |
-| Inactive/Digital | ~2.3M | 42% | None | N/A | None |
+| Miễn phí/Phát triển | ~2M | 36% | Thấp | Không | Thấp (chỉ phễu) |
+| SMB (Cốt lõi) | ~1M | 18% | CAO | $10-$50/tháng | **CAO NHẤT** |
+| Thị trường tầm trung | ~150K | 3% | CAO | $50-$200/tháng | Cao |
+| Plus/Doanh nghiệp | ~50K | 1% | CAO | $200-$500/tháng | Cao theo khách hàng |
+| Không hoạt động/Kỹ thuật số | ~2.3M | 42% | Không | N/A | Không |
 
-**Key insight:** The SMB segment (~1M stores) represents the largest revenue opportunity due to sheer volume, even at lower price points. Current competitors are either too expensive (AE, OrderEditing.com) or too basic (Orderify) for this segment.
-
----
-
-## 4. Key Buying Triggers by Segment
-
-### Segment A (Free/Dev)
-1. "Free" in the app listing title
-2. Quick install, works immediately
-3. Positive reviews mentioning "easy to set up"
-4. No credit card required
-
-### Segment B (SMB) -- PRIMARY
-1. **Price under $25/month** -- this is the #1 gate
-2. Customer self-service (stop email/chat support volume)
-3. Free trial long enough to prove ROI (14+ days)
-4. Address editing + variant swap (covers 80% of use cases)
-5. "Built for Shopify" badge (trust signal)
-6. Good reviews (4.8+ stars, 50+ reviews)
-7. Fast setup (under 10 minutes)
-
-### Segment C (Mid-Market)
-1. Shopify Flow integration
-2. Analytics dashboard showing ROI
-3. Upsell/cross-sell during edit flow
-4. 3PL integrations (ShipStation, etc.)
-5. Reliable -- no bugs that create financial issues
-6. Priority support
-7. Cancellation retention features
-
-### Segment D (Plus/Enterprise)
-1. Enterprise security (SOC 2)
-2. B2B/wholesale editing
-3. Subscription order support
-4. Dedicated account manager / Slack channel
-5. Custom integrations via API
-6. SLA guarantees
-7. White-label / custom branding
+**Nhận định quan trọng:** Phân khúc SMB (~1 triệu cửa hàng) đại diện cho cơ hội doanh thu lớn nhất nhờ số lượng lớn, ngay cả ở mức giá thấp hơn. Các đối thủ hiện tại hoặc quá đắt (AE, OrderEditing.com) hoặc quá cơ bản (Orderify) cho phân khúc này.
 
 ---
 
-## 5. Primary vs Secondary Target Recommendation
+## 4. Yếu tố kích hoạt mua chính theo phân khúc
 
-### PRIMARY TARGET: SMB (Segment B)
+### Phân khúc A (Miễn phí/Phát triển)
+1. "Miễn phí" trong tiêu đề ứng dụng
+2. Cài đặt nhanh, hoạt động ngay lập tức
+3. Đánh giá tích cực đề cập "dễ cài đặt"
+4. Không cần thẻ tín dụng
 
-**Justification:**
-1. **Largest addressable volume**: ~1M stores that actively need order editing
-2. **Underserved by pricing**: Top apps charge $39-$99+/mo; SMBs need $10-$25/mo solutions
-3. **Highest growth potential**: These stores are growing. As they grow into mid-market, they upgrade their plan with us
-4. **Viral potential**: SMB merchants talk to each other in Facebook groups, Reddit, Shopify Community. A great affordable app spreads by word-of-mouth
-5. **Fastest to close**: Solo founders make buying decisions in minutes, not weeks
-6. **App store ranking**: Volume of installs drives ranking, which drives more installs (flywheel)
+### Phân khúc B (SMB) -- CHÍNH
+1. **Giá dưới $25/tháng** -- đây là rào cản số 1
+2. Tự phục vụ khách hàng (giảm lượng hỗ trợ qua email/chat)
+3. Dùng thử miễn phí đủ dài để chứng minh ROI (14+ ngày)
+4. Chỉnh sửa địa chỉ + đổi biến thể (đáp ứng 80% trường hợp sử dụng)
+5. Huy hiệu "Built for Shopify" (tín hiệu tin cậy)
+6. Đánh giá tốt (4.8+ sao, 50+ đánh giá)
+7. Cài đặt nhanh (dưới 10 phút)
 
-**Revenue model for SMB:**
-- Free: 50 edits/month (enough to hook, not enough for growing stores)
-- Starter: $9.99/mo -- 200 edits, core features
-- Growth: $19.99/mo -- unlimited edits, upsells, analytics
-- Pro: $29.99/mo -- all features, Shopify Flow, priority support
+### Phân khúc C (Thị trường tầm trung)
+1. Tích hợp Shopify Flow
+2. Bảng phân tích hiển thị ROI
+3. Bán thêm/bán chéo trong luồng chỉnh sửa
+4. Tích hợp 3PL (ShipStation, v.v.)
+5. Đáng tin cậy -- không có lỗi gây vấn đề tài chính
+6. Hỗ trợ ưu tiên
+7. Tính năng giữ chân khi hủy đơn
 
-### SECONDARY TARGET: Mid-Market (Segment C)
-
-**Justification:**
-1. **Higher ARPU**: $50-$150/mo per customer
-2. **Lower churn**: Mid-market stores are more stable, less likely to close
-3. **Feature validation**: Their needs push us to build enterprise-grade features early
-4. **Case study potential**: Recognizable brands using our app = marketing gold
-
-**Revenue model for Mid-Market:**
-- Business: $49.99/mo -- everything in Pro + advanced analytics, 3PL integrations
-- Enterprise: $99.99/mo -- B2B editing, subscription orders, dedicated support
-
-### TERTIARY TARGET: Shopify Plus (Segment D)
-
-**Timeline:** Phase 2 (Month 6+). Requires enterprise features (SOC 2, SLAs) that take time to build.
-
-### ACQUISITION TARGET (not revenue): Free/Dev (Segment A)
-
-**Role:** Drive install volume for app store ranking. Convert to SMB as they grow. The free tier is an investment in future revenue and social proof.
+### Phân khúc D (Plus/Doanh nghiệp)
+1. Bảo mật doanh nghiệp (SOC 2)
+2. Chỉnh sửa B2B/bán sỉ
+3. Hỗ trợ đơn hàng đăng ký
+4. Quản lý tài khoản chuyên dụng / kênh Slack
+5. Tích hợp tùy chỉnh qua API
+6. Cam kết SLA
+7. White-label / thương hiệu tùy chỉnh
 
 ---
 
-## 6. Go-To-Market by Segment
+## 5. Khuyến nghị mục tiêu chính và phụ
 
-| Channel | Free/Dev | SMB | Mid-Market | Plus |
+### MỤC TIÊU CHÍNH: SMB (Phân khúc B)
+
+**Lý do:**
+1. **Khối lượng có thể tiếp cận lớn nhất**: ~1 triệu cửa hàng thực sự cần chỉnh sửa đơn hàng
+2. **Chưa được phục vụ về giá**: Các ứng dụng hàng đầu tính phí $39-$99+/tháng; SMB cần giải pháp $10-$25/tháng
+3. **Tiềm năng tăng trưởng cao nhất**: Những cửa hàng này đang phát triển. Khi họ phát triển lên thị trường tầm trung, họ nâng cấp gói với chúng ta
+4. **Tiềm năng lan truyền**: Các merchant SMB nói chuyện với nhau trong nhóm Facebook, Reddit, Shopify Community. Một ứng dụng tuyệt vời giá phải chăng lan truyền qua truyền miệng
+5. **Nhanh nhất để chốt**: Các sáng lập viên độc lập đưa ra quyết định mua trong vài phút, không phải vài tuần
+6. **Thứ hạng cửa hàng ứng dụng**: Số lượng cài đặt thúc đẩy thứ hạng, thứ hạng thúc đẩy thêm cài đặt (vòng quay tăng trưởng)
+
+**Mô hình doanh thu cho SMB:**
+- Miễn phí: 50 lượt chỉnh sửa/tháng (đủ để thu hút, chưa đủ cho cửa hàng đang phát triển)
+- Starter: $9.99/tháng -- 200 lượt chỉnh sửa, tính năng cốt lõi
+- Growth: $19.99/tháng -- chỉnh sửa không giới hạn, bán thêm, phân tích
+- Pro: $29.99/tháng -- tất cả tính năng, Shopify Flow, hỗ trợ ưu tiên
+
+### MỤC TIÊU PHỤ: Thị trường tầm trung (Phân khúc C)
+
+**Lý do:**
+1. **ARPU cao hơn**: $50-$150/tháng mỗi khách hàng
+2. **Tỷ lệ rời thấp hơn**: Cửa hàng tầm trung ổn định hơn, ít khả năng đóng cửa
+3. **Xác nhận tính năng**: Nhu cầu của họ thúc đẩy chúng ta xây dựng tính năng cấp doanh nghiệp sớm
+4. **Tiềm năng case study**: Thương hiệu nổi tiếng sử dụng ứng dụng = vàng marketing
+
+**Mô hình doanh thu cho Thị trường tầm trung:**
+- Business: $49.99/tháng -- mọi thứ trong Pro + phân tích nâng cao, tích hợp 3PL
+- Enterprise: $99.99/tháng -- chỉnh sửa B2B, đơn hàng đăng ký, hỗ trợ chuyên dụng
+
+### MỤC TIÊU THỨ BA: Shopify Plus (Phân khúc D)
+
+**Lộ trình:** Giai đoạn 2 (Tháng 6+). Yêu cầu tính năng doanh nghiệp (SOC 2, SLA) cần thời gian để xây dựng.
+
+### MỤC TIÊU THU HÚT (không phải doanh thu): Miễn phí/Phát triển (Phân khúc A)
+
+**Vai trò:** Thúc đẩy số lượng cài đặt cho thứ hạng cửa hàng ứng dụng. Chuyển đổi sang SMB khi họ phát triển. Gói miễn phí là khoản đầu tư cho doanh thu tương lai và bằng chứng xã hội.
+
+---
+
+## 6. Chiến lược tiếp cận thị trường theo phân khúc
+
+| Kênh | Miễn phí/Phát triển | SMB | Thị trường tầm trung | Plus |
 |---------|----------|-----|------------|------|
-| Shopify App Store SEO | Primary | Primary | Secondary | Tertiary |
-| Content marketing (blog/SEO) | Secondary | Primary | Primary | Secondary |
-| Shopify Community | Primary | Primary | Secondary | - |
-| Reddit/Facebook groups | - | Primary | Secondary | - |
-| Shopify partner referrals | - | Secondary | Primary | Primary |
-| Direct sales / outbound | - | - | Secondary | Primary |
-| Case studies / testimonials | - | Secondary | Primary | Primary |
-| Shopify Flow marketplace | - | - | Primary | Primary |
+| SEO Shopify App Store | Chính | Chính | Phụ | Thứ ba |
+| Marketing nội dung (blog/SEO) | Phụ | Chính | Chính | Phụ |
+| Cộng đồng Shopify | Chính | Chính | Phụ | - |
+| Nhóm Reddit/Facebook | - | Chính | Phụ | - |
+| Giới thiệu từ đối tác Shopify | - | Phụ | Chính | Chính |
+| Bán hàng trực tiếp / outbound | - | - | Phụ | Chính |
+| Case study / lời chứng thực | - | Phụ | Chính | Chính |
+| Shopify Flow marketplace | - | - | Chính | Chính |
