@@ -17,7 +17,7 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 ## Config
 
 ### Parent Task (cập nhật theo tháng) — chỉ dùng cho Mode 1
-- **Tháng 3/2026**: `SB-9350` (Issue ID: `21880`)
+- **Tháng 4/2026**: `SB-10372`
 - Khi Roger thông báo đổi task cha → cập nhật tại đây
 
 ### Sprint
@@ -51,7 +51,7 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
-    parent: { key: 'SB-9350' },
+    parent: { key: 'SB-10372' },
     summary: '[BD][AFF] {TITLE}',
     issuetype: { name: 'Sub-task' },
     priority: { name: 'Low' },
@@ -114,7 +114,7 @@ Link: http://space.avada.net/browse/{KEY}
 
 ### Mode 1 (Roger)
 Roger đang trao đổi về "Forgot Password" → nói "tạo task"
-→ Tạo Sub-task "[BD][AFF] Forgot Password" trong SB-9350
+→ Tạo Sub-task "[BD][AFF] Forgot Password" trong SB-10372
 
 ### Mode 2 (Dev)
 Roger nói "tạo task jira cho dev với title: Settings page store name"

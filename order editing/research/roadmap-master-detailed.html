@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avada Order Editing — Master Roadmap Chi Tiết</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #0a0e1a;
+            --surface: #131831;
+            --surface2: #1a2040;
+            --surface3: #212850;
+            --border: #2a3260;
+            --text: #e8eaf6;
+            --text-dim: #8890b5;
+            --text-muted: #5a6290;
+
+            --red: #ef4444;
+            --red-dim: #ef444415;
+            --orange: #f59e0b;
+            --orange-dim: #f59e0b15;
+            --yellow: #eab308;
+            --yellow-dim: #eab30815;
+            --green: #10b981;
+            --green-dim: #10b98115;
+            --blue: #3b82f6;
+            --blue-dim: #3b82f615;
+            --indigo: #6366f1;
+            --indigo-dim: #6366f115;
+            --purple: #a78bfa;
+            --purple-dim: #a78bfa15;
+            --pink: #ec4899;
+            --pink-dim: #ec489915;
+            --cyan: #06b6d4;
+            --cyan-dim: #06b6d415;
+            --teal: #14b8a6;
+            --teal-dim: #14b8a615;
+            --gold: #fbbf24;
+            --gold-dim: #fbbf2415;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === HERO === */
+        .hero {
+            text-align: center;
+            padding: 60px 24px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--indigo);
+            background: var(--indigo-dim);
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(99,102,241,0.2);
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e8eaf6, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* === STICKY NAV === */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,14,26,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 24px;
+            overflow-x: auto;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .sticky-nav::-webkit-scrollbar { height: 0; }
+        .nav-btn {
+            white-space: nowrap;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .nav-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
+        .nav-btn.active { background: var(--indigo-dim); color: var(--indigo); border-color: rgba(99,102,241,0.3); }
+
+        /* === STATS BAR === */
+        .stats-bar {
+            max-width: 1200px;
+            margin: 24px auto 16px;
+            padding: 0 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .stat-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .stat-chip .val {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        .stat-chip .lbl {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* === PROGRESS === */
+        .progress-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 24px;
+        }
+        .progress-track {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+        }
+        .progress-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        .progress-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            margin-bottom: 6px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .progress-dot.active { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 12px rgba(245,158,11,0.4); }
+        .progress-dot.done { background: var(--green); border-color: var(--green); }
+        .progress-plabel {
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            max-width: 80px;
+        }
+        .progress-line {
+            position: absolute;
+            top: 27px;
+            left: 5%; right: 5%;
+            height: 2px;
+            background: var(--border);
+            z-index: 1;
+        }
+        .progress-line-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 0%;
+            background: linear-gradient(90deg, var(--green), var(--orange));
+            border-radius: 2px;
+        }
+
+        /* === MILESTONE === */
+        .milestone-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+        .milestone {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 56px;
+        }
+        .milestone::before {
+            content: '';
+            position: absolute;
+            left: 21px;
+            top: 40px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--border), transparent);
+        }
+        .milestone:last-child::before { display: none; }
+
+        .milestone-icon {
+            position: absolute;
+            left: 0; top: 0;
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border: 2px solid;
+        }
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .milestone-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+        .milestone-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+        .milestone-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        /* === FEATURE CARDS === */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: 32px 1fr auto;
+            gap: 12px;
+            align-items: start;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .feature-card:hover {
+            border-color: rgba(99,102,241,0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .feature-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-body { min-width: 0; cursor: pointer; }
+        .feature-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-name .expand-icon {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .feature-card.expanded .feature-name .expand-icon {
+            transform: rotate(90deg);
+        }
+        .feature-desc {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 6px;
+            display: none;
+        }
+        .feature-why {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            background: var(--surface2);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border-left: 2px solid;
+            display: none;
+        }
+        .feature-card.expanded .feature-desc,
+        .feature-card.expanded .feature-why {
+            display: block;
+        }
+
+        .ice-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.58rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(251,191,36,0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(251,191,36,0.2);
+            margin-left: 6px;
+            white-space: nowrap;
+            cursor: help;
+        }
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .tag {
+            font-size: 0.58rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .tag-dev { background: var(--blue-dim); color: var(--blue); }
+        .tag-ba { background: var(--purple-dim); color: var(--purple); }
+        .tag-qa { background: var(--orange-dim); color: var(--orange); }
+        .tag-mkt { background: var(--pink-dim); color: var(--pink); }
+        .tag-growth { background: var(--green-dim); color: var(--green); }
+        .tag-cs { background: var(--cyan-dim); color: var(--cyan); }
+        .tag-seo { background: var(--teal-dim); color: var(--teal); }
+        .tag-ai { background: var(--indigo-dim); color: var(--indigo); }
+        .tag-fe { background: var(--pink-dim); color: var(--pink); }
+        .tag-be { background: var(--blue-dim); color: var(--blue); }
+        .tag-infra { background: var(--cyan-dim); color: var(--cyan); }
+        .tag-ext { background: var(--teal-dim); color: var(--teal); }
+
+        /* === STATUS BADGES === */
+        .feature-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            min-width: 130px;
+        }
+        .status-badge {
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: all 0.15s;
+        }
+        .status-badge:hover { opacity: 0.85; transform: scale(1.04); }
+        .status-badge::after {
+            content: ' \25BE';
+            font-size: 0.7em;
+            opacity: 0.6;
+        }
+
+        /* === STATUS DROPDOWN === */
+        .status-dropdown {
+            position: fixed;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            z-index: 9999;
+            min-width: 150px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            display: none;
+        }
+        .status-dropdown.open { display: block; }
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .status-option:hover { background: var(--surface3); color: var(--text); }
+        .status-option .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-option.active { color: var(--text); background: var(--surface3); }
+        .status-option.active::after { content: ' \2713'; margin-left: auto; font-size: 0.8em; }
+        .status-todo { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+        .status-in-progress { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+        .status-waiting-code { background: rgba(167,139,250,0.15); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); }
+        .status-waiting-test { background: rgba(236,72,153,0.15); color: #f472b6; border: 1px solid rgba(236,72,153,0.3); }
+        .status-done { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+
+        .copy-btn {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: var(--surface2);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { background: var(--surface3); color: var(--text); }
+        .copy-btn.copied { background: var(--green-dim); color: var(--green); border-color: rgba(16,185,129,0.3); }
+
+        /* === KPI ROW === */
+        .kpi-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .kpi-pill {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .kpi-pill-value { font-size: 1rem; font-weight: 800; }
+        .kpi-pill-label { font-size: 0.68rem; color: var(--text-dim); }
+
+        /* === INFO BOX === */
+        .info-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 12px;
+        }
+        .info-box h5 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .info-box ul { list-style: none; padding: 0; }
+        .info-box li {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding: 2px 0 2px 14px;
+            position: relative;
+        }
+        .info-box li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 9px;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+        }
+
+        /* === MILESTONE COLOR CLASSES === */
+        .ms-1 .milestone-icon { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+        .ms-1 .milestone-title { color: var(--red); }
+        .ms-1 .milestone-tag { background: var(--red-dim); color: var(--red); }
+        .ms-1 .feature-num { background: var(--red-dim); color: var(--red); }
+        .ms-1 .feature-why { border-left-color: var(--red); }
+        .ms-1 .kpi-pill-value { color: var(--red); }
+        .ms-1 .info-box li::before { background: var(--red); }
+
+        .ms-2 .milestone-icon { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+        .ms-2 .milestone-title { color: var(--orange); }
+        .ms-2 .milestone-tag { background: var(--orange-dim); color: var(--orange); }
+        .ms-2 .feature-num { background: var(--orange-dim); color: var(--orange); }
+        .ms-2 .feature-why { border-left-color: var(--orange); }
+        .ms-2 .kpi-pill-value { color: var(--orange); }
+        .ms-2 .info-box li::before { background: var(--orange); }
+
+        .ms-3 .milestone-icon { background: var(--yellow-dim); border-color: var(--yellow); color: var(--yellow); }
+        .ms-3 .milestone-title { color: var(--yellow); }
+        .ms-3 .milestone-tag { background: var(--yellow-dim); color: var(--yellow); }
+        .ms-3 .feature-num { background: var(--yellow-dim); color: var(--yellow); }
+        .ms-3 .feature-why { border-left-color: var(--yellow); }
+        .ms-3 .kpi-pill-value { color: var(--yellow); }
+        .ms-3 .info-box li::before { background: var(--yellow); }
+
+        .ms-4 .milestone-icon { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+        .ms-4 .milestone-title { color: var(--green); }
+        .ms-4 .milestone-tag { background: var(--green-dim); color: var(--green); }
+        .ms-4 .feature-num { background: var(--green-dim); color: var(--green); }
+        .ms-4 .feature-why { border-left-color: var(--green); }
+        .ms-4 .kpi-pill-value { color: var(--green); }
+        .ms-4 .info-box li::before { background: var(--green); }
+
+        .ms-5 .milestone-icon { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+        .ms-5 .milestone-title { color: var(--blue); }
+        .ms-5 .milestone-tag { background: var(--blue-dim); color: var(--blue); }
+        .ms-5 .feature-num { background: var(--blue-dim); color: var(--blue); }
+        .ms-5 .feature-why { border-left-color: var(--blue); }
+        .ms-5 .kpi-pill-value { color: var(--blue); }
+        .ms-5 .info-box li::before { background: var(--blue); }
+
+        .ms-6 .milestone-icon { background: var(--indigo-dim); border-color: var(--indigo); color: var(--indigo); }
+        .ms-6 .milestone-title { color: var(--indigo); }
+        .ms-6 .milestone-tag { background: var(--indigo-dim); color: var(--indigo); }
+        .ms-6 .feature-num { background: var(--indigo-dim); color: var(--indigo); }
+        .ms-6 .feature-why { border-left-color: var(--indigo); }
+        .ms-6 .kpi-pill-value { color: var(--indigo); }
+        .ms-6 .info-box li::before { background: var(--indigo); }
+
+        .ms-7 .milestone-icon { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+        .ms-7 .milestone-title { color: var(--purple); }
+        .ms-7 .milestone-tag { background: var(--purple-dim); color: var(--purple); }
+        .ms-7 .feature-num { background: var(--purple-dim); color: var(--purple); }
+        .ms-7 .feature-why { border-left-color: var(--purple); }
+        .ms-7 .kpi-pill-value { color: var(--purple); }
+        .ms-7 .info-box li::before { background: var(--purple); }
+
+        .ms-8 .milestone-icon { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+        .ms-8 .milestone-title { color: var(--cyan); }
+        .ms-8 .milestone-tag { background: var(--cyan-dim); color: var(--cyan); }
+        .ms-8 .feature-num { background: var(--cyan-dim); color: var(--cyan); }
+        .ms-8 .feature-why { border-left-color: var(--cyan); }
+        .ms-8 .kpi-pill-value { color: var(--cyan); }
+        .ms-8 .info-box li::before { background: var(--cyan); }
+
+        .ms-9 .milestone-icon { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+        .ms-9 .milestone-title { color: var(--teal); }
+        .ms-9 .milestone-tag { background: var(--teal-dim); color: var(--teal); }
+        .ms-9 .feature-num { background: var(--teal-dim); color: var(--teal); }
+        .ms-9 .feature-why { border-left-color: var(--teal); }
+        .ms-9 .kpi-pill-value { color: var(--teal); }
+        .ms-9 .info-box li::before { background: var(--teal); }
+
+        .ms-10 .milestone-icon { background: var(--pink-dim); border-color: var(--pink); color: var(--pink); }
+        .ms-10 .milestone-title { color: var(--pink); }
+        .ms-10 .milestone-tag { background: var(--pink-dim); color: var(--pink); }
+        .ms-10 .feature-num { background: var(--pink-dim); color: var(--pink); }
+        .ms-10 .feature-why { border-left-color: var(--pink); }
+        .ms-10 .kpi-pill-value { color: var(--pink); }
+        .ms-10 .info-box li::before { background: var(--pink); }
+
+        .ms-11 .milestone-icon { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+        .ms-11 .milestone-title { color: var(--gold); }
+        .ms-11 .milestone-tag { background: var(--gold-dim); color: var(--gold); }
+        .ms-11 .feature-num { background: var(--gold-dim); color: var(--gold); }
+        .ms-11 .feature-why { border-left-color: var(--gold); }
+        .ms-11 .kpi-pill-value { color: var(--gold); }
+        .ms-11 .info-box li::before { background: var(--gold); }
+
+        /* === SUMMARY TABLE === */
+        .summary-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .summary-table th {
+            background: var(--surface2);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .summary-table td {
+            padding: 12px 14px;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            border-bottom: 1px solid rgba(42,50,96,0.4);
+        }
+        .summary-table tr:last-child td { border-bottom: none; }
+        .summary-table tr:hover td { background: var(--surface2); }
+
+        /* === FILTER BAR === */
+        .filter-bar {
+            max-width: 1200px;
+            margin: 0 auto 12px;
+            padding: 0 24px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 6px;
+        }
+        .filter-btn {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: var(--surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { color: var(--text); border-color: rgba(99,102,241,0.4); }
+        .filter-btn.active { background: var(--indigo-dim); color: var(--indigo); border-color: rgba(99,102,241,0.3); }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(16,185,129,0.3);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* === FADE IN === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- === HERO === -->
+<div class="hero">
+    <div class="hero-badge">Master Roadmap v1.0 &mdash; 01/04/2026</div>
+    <h1>Avada Order Editing &mdash; Roadmap</h1>
+    <p>Tầm nhìn chiến lược từ Planning &rarr; MVP &rarr; App Store #1 category &ldquo;Order Editing&rdquo; trên Shopify</p>
+</div>
+
+<!-- === STICKY NAV === -->
+<div class="sticky-nav">
+    <a class="nav-btn active" href="#ms-1">1. MVP Core</a>
+    <a class="nav-btn" href="#ms-2">2. MVP Polish</a>
+    <a class="nav-btn" href="#ms-3">3. Submit</a>
+    <a class="nav-btn" href="#ms-4">4. Launch</a>
+    <a class="nav-btn" href="#ms-5">5. Reviews</a>
+    <a class="nav-btn" href="#ms-6">6. BfS Badge</a>
+    <a class="nav-btn" href="#ms-7">7. Trang 2</a>
+    <a class="nav-btn" href="#ms-8">8. Trang 1</a>
+    <a class="nav-btn" href="#ms-9">9. Top 5</a>
+    <a class="nav-btn" href="#ms-10">10. Top 3</a>
+    <a class="nav-btn" href="#ms-11">11. #1</a>
+    <a class="nav-btn" href="#summary">Tổng hợp</a>
+</div>
+
+<!-- === STATS BAR === -->
+<div class="stats-bar">
+    <div class="stat-chip"><span class="val" id="statTodo" style="color:#94a3b8;">0</span><span class="lbl">Chưa làm</span></div>
+    <div class="stat-chip"><span class="val" id="statInProgress" style="color:#60a5fa;">0</span><span class="lbl">Đang làm</span></div>
+    <div class="stat-chip"><span class="val" id="statWaitingCode" style="color:#c4b5fd;">0</span><span class="lbl">Chờ code</span></div>
+    <div class="stat-chip"><span class="val" id="statWaitingTest" style="color:#f472b6;">0</span><span class="lbl">Chờ test</span></div>
+    <div class="stat-chip"><span class="val" id="statDone" style="color:#34d399;">0</span><span class="lbl">Hoàn thành</span></div>
+    <div class="stat-chip"><span class="val" id="statTotal" style="color:var(--text);">0</span><span class="lbl">Tổng</span></div>
+</div>
+
+<!-- === FILTER BAR === -->
+<div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">Tất cả</button>
+    <button class="filter-btn" data-filter="todo">Chưa làm</button>
+    <button class="filter-btn" data-filter="in-progress">Đang làm</button>
+    <button class="filter-btn" data-filter="waiting-code">Chờ code</button>
+    <button class="filter-btn" data-filter="waiting-test">Chờ test</button>
+    <button class="filter-btn" data-filter="done">Hoàn thành</button>
+</div>
+
+<!-- === PROGRESS TRACK === -->
+<div class="progress-section">
+    <div class="progress-track">
+        <div class="progress-line"><div class="progress-line-fill"></div></div>
+        <div class="progress-node"><a class="progress-dot active" href="#ms-1"></a><div class="progress-plabel">MVP Core</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-2"></a><div class="progress-plabel">MVP Polish</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-3"></a><div class="progress-plabel">Submit</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-4"></a><div class="progress-plabel">Launch</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-5"></a><div class="progress-plabel">Reviews</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-6"></a><div class="progress-plabel">BfS</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-7"></a><div class="progress-plabel">Trang 2</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-8"></a><div class="progress-plabel">Trang 1</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-9"></a><div class="progress-plabel">Top 5</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-10"></a><div class="progress-plabel">Top 3</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-11"></a><div class="progress-plabel">#1</div></div>
+    </div>
+</div>
+
+<!-- ================ MILESTONES ================ -->
+<div class="milestone-container">
+
+<!-- ==================== MS 1: MVP CORE ==================== -->
+<div class="milestone ms-1 fade-in" id="ms-1">
+    <div class="milestone-icon">1</div>
+    <div class="milestone-header">
+        <span class="milestone-title">MVP Core &mdash; Foundation + Backend</span>
+        <span class="milestone-tag">Tuần 1-4 &bull; P0</span>
+    </div>
+    <p class="milestone-subtitle">Xây dựng nền tảng: Shopify OAuth, Firestore schema, order sync, edit engine, storefront widget</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.1</div><div class="feature-body"><div class="feature-name">Shopify OAuth + App Setup</div><span class="ice-badge" title="Impact:10 Confidence:10 Ease:8">ICE 800</span><div class="feature-desc"><strong>Nó là gì:</strong> Shopify OAuth flow hoàn chỉnh, session token auth, HMAC webhook verification, app bridge setup. Firebase project init, Firestore security rules, hosting config.<br><br><strong>Để làm gì:</strong> Đây là foundation cho mọi thứ. Không có OAuth = không có app. Không có Firestore = không lưu data. Mọi feature khác đều phụ thuộc vào milestone này.<br><br><strong>Trông như thế nào:</strong> Merchant click "Install" trên App Store &rarr; OAuth flow &rarr; redirect về embedded app &rarr; dashboard trống (chưa có data). Backend: Firebase Functions chạy, Firestore có collection shops với shop data cơ bản.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-infra">Infra</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.2</div><div class="feature-body"><div class="feature-name">Order Sync + Webhook Listeners</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:7">ICE 630</span><div class="feature-desc"><strong>Nó là gì:</strong> Đồng bộ đơn hàng từ Shopify về Firestore qua webhooks (orders/create, orders/updated, orders/cancelled). Lưu order data cần thiết: line items, shipping address, customer info, fulfillment status. Real-time sync khi có thay đổi.<br><br><strong>Để làm gì:</strong> App cần data đơn hàng để biết đơn nào có thể edit. Webhook là cách duy nhất để nhận thông báo real-time từ Shopify. Không có order sync = app không biết gì về đơn hàng của merchant.<br><br><strong>Trông như thế nào:</strong> Merchant cài app &rarr; orders tự động sync về Firestore. Khi có đơn mới hoặc update &rarr; webhook fire &rarr; Firestore cập nhật. Admin UI hiện danh sách orders với status mới nhất.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.3</div><div class="feature-body"><div class="feature-name">Edit Window + Eligibility Engine</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:8">ICE 648</span><div class="feature-desc"><strong>Nó là gì:</strong> Logic xác định đơn hàng nào đủ điều kiện để edit. Cấu hình edit time window (30 phút &rarr; until fulfillment). Rules: chỉ cho edit khi chưa fulfilled, trong time window, không bị cancelled. Merchant tuỳ chỉnh window per product/collection.<br><br><strong>Để làm gì:</strong> Đây là "bộ não" của app &mdash; quyết định customer có được edit hay không. Edit window bảo vệ merchant khỏi việc customer edit đơn đã ship. 100% đối thủ đều có time window &mdash; đây là table stakes.<br><br><strong>Trông như thế nào:</strong> Settings page: slider chọn time window (30m, 1h, 2h, 6h, 12h, 24h, until fulfillment). Toggle on/off edit per order status. Backend: mọi request edit &rarr; check eligibility &rarr; allow/deny với message cụ thể.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.4</div><div class="feature-body"><div class="feature-name">Address Edit (Customer Self-Service)</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:7">ICE 630</span><div class="feature-desc"><strong>Nó là gì:</strong> Cho phép customer tự sửa địa chỉ giao hàng sau khi đặt hàng. Gọi Shopify Order Edit API (graphQL beginEdit &rarr; setOrderShippingAddress &rarr; commitEdit). Validate address format, tính lại shipping rate nếu cần.<br><br><strong>Để làm gì:</strong> 30% customer mắc lỗi địa chỉ khi checkout. Đây là use case #1 được merchant yêu cầu. 60% support tickets là về chỉnh sửa địa chỉ. Giải quyết vấn đề này = giảm 60% workload support.<br><br><strong>Trông như thế nào:</strong> Customer vào Order Status Page &rarr; thấy nút "Edit Order" &rarr; click &rarr; form edit địa chỉ (prefilled data hiện tại) &rarr; sửa &rarr; Submit &rarr; thông báo thành công. Merchant nhận email notification về thay đổi.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span><span class="tag tag-ext">Extension</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.5</div><div class="feature-body"><div class="feature-name">Variant Swap (Customer Self-Service)</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:6">ICE 486</span><div class="feature-desc"><strong>Nó là gì:</strong> Cho phép customer đổi variant sản phẩm (size, color, style) trong đơn hàng. Gọi Shopify Order Edit API: removeLineItem + addLineItem. Tự động tính chênh lệch giá, xử lý charge thêm hoặc refund.<br><br><strong>Để làm gì:</strong> "Tôi chọn nhầm size" là lý do #2 khách hàng liên hệ support. Đổi variant giúp giảm return rate 20-25% (return do lỗi customer, không phải lỗi sản phẩm). Tất cả đối thủ đều có &mdash; đây là core feature.<br><br><strong>Trông như thế nào:</strong> Customer click "Edit Order" &rarr; thấy danh sách line items &rarr; click "Change" bên cạnh item &rarr; popup chọn variant mới (size/color picker) &rarr; hiện chênh lệch giá (nếu có) &rarr; Confirm &rarr; Shopify tự charge/refund.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.6</div><div class="feature-body"><div class="feature-name">Quantity Adjustment</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Cho phép customer tăng/giảm số lượng sản phẩm trong đơn hàng. Check inventory availability khi tăng. Tự động tính lại tổng tiền, xử lý refund khi giảm, charge khi tăng.<br><br><strong>Để làm gì:</strong> Customer thường muốn thêm sản phẩm (quên mua) hoặc bớt (mua nhiều quá). Điều chỉnh số lượng đơn giản hơn huỷ + đặt lại. Giảm return rate và tăng AOV (Average Order Value).<br><br><strong>Trông như thế nào:</strong> Trong edit page: mỗi line item có nút +/- để điều chỉnh quantity. Hiện inventory còn lại. Hiện giá mới real-time. Confirm &rarr; update order qua Shopify API.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.7</div><div class="feature-body"><div class="feature-name">Order Cancellation + Inventory Restock</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Cho phép customer tự huỷ đơn hàng. Tự động restock inventory, xử lý refund (full hoặc partial). Cancel reason dropdown (changed mind, found better price, ordered by mistake, other). Merchant config: cho phép/không cho cancel, thời gian cho phép cancel.<br><br><strong>Để làm gì:</strong> Customer muốn huỷ đơn nhưng phải liên hệ support = friction. Tự động cancel giảm workload, restock inventory ngay = không mất bán. Cancel reason data giúp merchant hiểu tại sao customer huỷ.<br><br><strong>Trông như thế nào:</strong> Edit page có nút "Cancel Order" màu đỏ. Click &rarr; confirmation modal với dropdown reason &rarr; Confirm &rarr; order cancelled, inventory restocked, refund processed. Merchant nhận notification.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.8</div><div class="feature-body"><div class="feature-name">Auto Refund/Charge on Price Difference</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:5">ICE 360</span><div class="feature-desc"><strong>Nó là gì:</strong> Xử lý tự động chênh lệch giá khi customer edit đơn. Nếu giá tăng: charge thêm qua Shopify payment. Nếu giá giảm: refund chênh lệch. Hiện rõ chênh lệch trước khi confirm. Support cả partial refund.<br><br><strong>Để làm gì:</strong> Đây là pain point lớn nhất của đối thủ &mdash; nhiều app tính sai thuế, charge trùng, hoặc không refund. Làm đúng = trust. Làm sai = 1-star review + mất merchant. "It doubled the customer's charge" là review 1 sao phổ biến nhất.<br><br><strong>Trông như thế nào:</strong> Khi customer edit &rarr; hiện bảng so sánh: "Before: $50 &rarr; After: $45 &rarr; Refund: $5". Nút Confirm hiện rõ số tiền. Backend: gọi Shopify Refund API hoặc Order Edit API để xử lý. Transaction log lưu mọi thay đổi.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.9</div><div class="feature-body"><div class="feature-name">Storefront Widget (Order Status Page + Thank You)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:6">ICE 432</span><div class="feature-desc"><strong>Nó là gì:</strong> Theme App Extension embed "Edit Order" button trên Order Status Page và Thank You Page. Customer thấy nút ngay sau khi đặt hàng hoặc khi check order status. Widget responsive, match theme của store.<br><br><strong>Để làm gì:</strong> Đây là touchpoint chính để customer biết họ có thể edit. Không có widget = customer không biết tính năng tồn tại = không ai dùng = merchant không thấy giá trị = uninstall. Widget phải hiện ở đúng chỗ, đúng lúc.<br><br><strong>Trông như thế nào:</strong> Trên Order Status Page: banner nhỏ "Need to make changes? Edit your order" với nút "Edit Order". Click &rarr; mở edit page (app proxy hoặc modal). Trên Thank You Page: tương tự nhưng nhỏ hơn. Merchant customize: text, color, position trong Settings.</div><div class="feature-tags"><span class="tag tag-ext">Extension</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.10</div><div class="feature-body"><div class="feature-name">Merchant Admin &mdash; Order List + Edit Modal</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:6">ICE 432</span><div class="feature-desc"><strong>Nó là gì:</strong> Trang quản trị cho merchant trong embedded app. Order list với filters (status, date, edit history). Click vào order &rarr; detail page với edit modal cho merchant (sửa địa chỉ, đổi variant, điều chỉnh quantity, cancel). Nhanh hơn edit trong Shopify Admin.<br><br><strong>Để làm gì:</strong> Merchant cần công cụ để họ cũng có thể edit đơn hàng nhanh (khi customer gọi điện/email yêu cầu). Admin edit = giá trị trực tiếp cho merchant, không phụ thuộc customer tự làm. Tất cả đối thủ đều có admin edit.<br><br><strong>Trông như thế nào:</strong> Dashboard &rarr; Orders tab: bảng đơn hàng với cột Order #, Customer, Total, Status, Edit Status, Date. Search + filter. Click order &rarr; detail page: order info + timeline + nút "Edit Order" mở modal với tabs: Address, Items, Cancel.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">10</span><span class="kpi-pill-label">Features P0</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4 tuần</span><span class="kpi-pill-label">Timeline</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">Core</span><span class="kpi-pill-label">Edit Address + Variant + Qty + Cancel</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 2: MVP POLISH ==================== -->
+<div class="milestone ms-2 fade-in" id="ms-2">
+    <div class="milestone-icon">2</div>
+    <div class="milestone-header">
+        <span class="milestone-title">MVP Polish &mdash; Frontend + UX + Notifications</span>
+        <span class="milestone-tag">Tuần 5-6 &bull; P0</span>
+    </div>
+    <p class="milestone-subtitle">Hoàn thiện UI, email notifications, dashboard metrics, onboarding wizard, settings page</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.1</div><div class="feature-body"><div class="feature-name">Email Notifications (Merchant + Customer)</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:7">ICE 567</span><div class="feature-desc"><strong>Nó là gì:</strong> Hệ thống gửi email tự động: cho customer (xác nhận edit thành công, xác nhận cancel, refund processed), cho merchant (thông báo customer edit/cancel đơn, daily summary). Template responsive HTML.<br><br><strong>Để làm gì:</strong> Customer edit xong mà không nhận email = không tin tưởng. Merchant không biết customer edit = mất kiểm soát. Email là communication channel thiết yếu &mdash; 100% đối thủ đều có.<br><br><strong>Trông như thế nào:</strong> Customer edit address &rarr; nhận email "Your shipping address has been updated" với chi tiết cũ &rarr; mới. Merchant nhận email "Order #1234 was edited by customer" với summary thay đổi. Settings: toggle on/off từng loại email.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.2</div><div class="feature-body"><div class="feature-name">Dashboard + Edit Activity Metrics</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Dashboard tổng quan: cards hiện Total Edits, Edits Today, Cancellations, Revenue Saved (đơn hàng được edit thay vì cancel). Chart line hiện xu hướng edit theo thời gian. Recent activity feed.<br><br><strong>Để làm gì:</strong> Merchant cần thấy giá trị app mang lại. "Revenue Saved" là metric quan trọng nhất &mdash; cho merchant thấy bao nhiêu tiền họ đã giữ được nhờ app. Dashboard = ROI proof = merchant giữ app lâu hơn.<br><br><strong>Trông như thế nào:</strong> 4 metric cards trên cùng: Total Edits (icon pencil), Cancellations (icon x), Revenue Saved (icon dollar, màu xanh), Support Tickets Saved (icon clock). Line chart 30 ngày. Recent edits table: Order #, Type, Customer, Time ago.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.3</div><div class="feature-body"><div class="feature-name">Settings Page (Edit Rules + Branding)</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Trang Settings đầy đủ: Edit Time Window (slider), Edit Types toggle (address/variant/quantity/cancel), Widget Branding (text, button color, position), Email Settings (toggle per notification type), Usage &amp; Billing info.<br><br><strong>Để làm gì:</strong> Merchant cần kiểm soát app theo nhu cầu riêng. Store bán đồ ăn cần time window ngắn (30m), store bán thời trang cần dài hơn (24h). Customization = merchant cảm thấy app là của họ.<br><br><strong>Trông như thế nào:</strong> Settings page với tabs: General (time window, edit types), Widget (preview + customization), Notifications (toggles), Billing (plan info, usage). ContextualSaveBar hiện khi thay đổi.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.4</div><div class="feature-body"><div class="feature-name">Onboarding Wizard</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:7">ICE 448</span><div class="feature-desc"><strong>Nó là gì:</strong> Wizard 3 bước hướng dẫn merchant mới: Bước 1 &mdash; Chọn edit types cho phép (address, variant, quantity, cancel). Bước 2 &mdash; Set time window. Bước 3 &mdash; Preview widget trên store. Auto-enable widget sau wizard.<br><br><strong>Để làm gì:</strong> Time-to-value quyết định merchant giữ hay uninstall. Merchant cài app xong mà không biết bắt đầu từ đâu = uninstall trong 5 phút. Wizard giúp setup trong 60 giây.<br><br><strong>Trông như thế nào:</strong> Sau khi cài app lần đầu: full-screen wizard. Bước 1: checkboxes edit types + giới thiệu ngắn. Bước 2: slider time window + explain. Bước 3: live preview widget + "Activate" button. Done: redirect về dashboard với confetti animation.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.5</div><div class="feature-body"><div class="feature-name">Edit History + Audit Trail</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:8">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Log mọi edit action: ai edit (customer/merchant), edit gì (address/variant/qty), giá trị cũ &rarr; mới, thời gian. Timeline view trong order detail. Export ra CSV.<br><br><strong>Để làm gì:</strong> Merchant cần biết ai đã sửa gì, khi nào. Dispute resolution: customer nói "tôi không edit", merchant có bằng chứng. Compliance và accountability. Đối thủ yếu thường không có audit trail &mdash; đây là differentiator.<br><br><strong>Trông như thế nào:</strong> Order detail page: tab "Edit History" với timeline: icon + "Customer changed shipping address" + old/new values + timestamp. Filter theo type. Merchant có thể revert edit (undo) nếu cần.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.6</div><div class="feature-body"><div class="feature-name">Usage Tracking + Billing (Free/Paid Tiers)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:6">ICE 384</span><div class="feature-desc"><strong>Nó là gì:</strong> Đếm số edit mỗi tháng per merchant. Free tier: 50 edits/tháng. Starter $9.99: 300 edits. Growth $19.99: 1000 edits. Pro $29.99: unlimited. Shopify Billing API integration. Upgrade prompts khi gần hết quota.<br><br><strong>Để làm gì:</strong> Revenue model của app. Free tier đủ generous để attract (50 edits/tháng &mdash; đối thủ chỉ cho 7-day trial hoặc không có free). Paid tiers giá rẻ hơn đối thủ 3-10x. Usage-based giúp merchant chỉ trả theo nhu cầu.<br><br><strong>Trông như thế nào:</strong> Settings &rarr; Billing: hiện plan hiện tại, usage bar "23/50 edits used this month", nút Upgrade. Khi đạt 80% quota: banner cảnh báo. Khi hết quota: block edit với message "Upgrade to continue editing". Shopify Billing API xử lý thanh toán.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2"><div class="feature-num">2.7</div><div class="feature-body"><div class="feature-name">GDPR Webhooks + App Uninstall Cleanup</div><span class="ice-badge" title="Impact:7 Confidence:10 Ease:8">ICE 560</span><div class="feature-desc"><strong>Nó là gì:</strong> Implement đầy đủ 3 mandatory GDPR webhooks: customers/data_request, customers/redact, shop/redact. App uninstall webhook cleanup data sau 48h grace period.<br><br><strong>Để làm gì:</strong> Shopify bắt buộc. Không có = app bị reject khi review. Cần làm đúng từ đầu để không phải fix lại sau.<br><br><strong>Trông như thế nào:</strong> Backend webhooks, không có UI. customers/data_request: export JSON data customer. customers/redact: anonymize customer data. shop/redact: xoá toàn bộ data shop. Audit log mọi action.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">7</span><span class="kpi-pill-label">Features</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">2 tuần</span><span class="kpi-pill-label">Timeline</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">MVP Ready</span><span class="kpi-pill-label">Đủ để submit</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 3: SUBMIT APP STORE ==================== -->
+<div class="milestone ms-3 fade-in" id="ms-3">
+    <div class="milestone-icon">3</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Submit App Store &mdash; QA + Listing</span>
+        <span class="milestone-tag">Tuần 7-8 &bull; Launch Prep</span>
+    </div>
+    <p class="milestone-subtitle">Test kỹ lưỡng, chuẩn bị App Store listing, privacy policy, demo store &rarr; Submit</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="3"><div class="feature-num">3.1</div><div class="feature-body"><div class="feature-name">End-to-End Testing + Bug Fixes</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:6">ICE 540</span><div class="feature-desc"><strong>Nó là gì:</strong> Test toàn bộ flow: install &rarr; onboarding &rarr; customer edit address/variant/quantity &rarr; cancel &rarr; refund/charge &rarr; email notifications &rarr; merchant admin edit. Test edge cases: out of stock, expired window, concurrent edits. Fix tất cả bugs.<br><br><strong>Để làm gì:</strong> App lỗi = 1-star review = chết. Phải đảm bảo 0 critical bugs trước khi submit. Shopify review team cũng test &mdash; nếu có bug họ reject.<br><br><strong>Trông như thế nào:</strong> Checklist QA 50+ test cases. Playwright automated tests cho critical flows. Manual test trên nhiều devices (desktop, mobile, tablet). Demo store chạy full flow.</div><div class="feature-tags"><span class="tag tag-qa">QA</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3"><div class="feature-num">3.2</div><div class="feature-body"><div class="feature-name">App Store Listing + Screenshots + Description</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:8">ICE 648</span><div class="feature-desc"><strong>Nó là gì:</strong> Viết App Store listing: title (chứa keywords), description (features, pricing, USP), 6-8 screenshots có annotation, video demo 30s, app icon, category tags. SEO-optimized cho keywords: "order editing", "edit order", "order management".<br><br><strong>Để làm gì:</strong> Listing là "mặt tiền" của app. 80% merchant quyết định install/không dựa trên listing + screenshots. Listing tốt = conversion rate 15-25% (từ view &rarr; install). Listing xấu = 2-5%.<br><br><strong>Trông như thế nào:</strong> Title: "Avada Order Editing | Customer Self-Service Edit Orders". Hero screenshot: customer editing address trên Order Status Page. Feature screenshots: variant swap, cancel flow, merchant dashboard, settings. Banner: "50 Free Edits/Month Forever".</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3"><div class="feature-num">3.3</div><div class="feature-body"><div class="feature-name">Privacy Policy + Terms of Service</div><span class="ice-badge" title="Impact:7 Confidence:10 Ease:9">ICE 630</span><div class="feature-desc"><strong>Nó là gì:</strong> Viết Privacy Policy và Terms of Service đầy đủ, bao gồm: data thu thập (order data, customer info), mục đích sử dụng, data retention, GDPR compliance, CCPA compliance. Host trên website hoặc app.<br><br><strong>Để làm gì:</strong> Shopify bắt buộc có Privacy Policy để submit. Không có = reject. Cần viết đúng pháp luật để bảo vệ cả Avada và merchant.<br><br><strong>Trông như thế nào:</strong> 2 trang web: Privacy Policy và Terms of Service. Link trong app footer và App Store listing. Nội dung rõ ràng, dễ hiểu, không jargon.</div><div class="feature-tags"><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3"><div class="feature-num">3.4</div><div class="feature-body"><div class="feature-name">Submit lên Shopify App Store</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:8">ICE 720</span><div class="feature-desc"><strong>Nó là gì:</strong> Bấm nút Submit. Điền đầy đủ form submission: app info, testing instructions cho Shopify review team, demo store credentials, video walkthrough.<br><br><strong>Để làm gì:</strong> Mục tiêu cuối cùng của Phase MVP. Sau khi submit, Shopify review 5-10 ngày làm việc. Trong lúc chờ, bắt đầu chuẩn bị marketing.<br><br><strong>Trông như thế nào:</strong> Shopify Partner Dashboard &rarr; App &rarr; Distribution &rarr; Submit for review. Kèm theo: test account, test data, video demo 3-5 phút.</div><div class="feature-tags"><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">4</span><span class="kpi-pill-label">Tasks</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">Submitted</span><span class="kpi-pill-label">Chờ Shopify review</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 4: LAUNCH + P1 FEATURES ==================== -->
+<div class="milestone ms-4 fade-in" id="ms-4">
+    <div class="milestone-icon">4</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Launch + P1 Features &mdash; Đón merchant đầu tiên</span>
+        <span class="milestone-tag">Sau khi publish &bull; 4-6 tuần</span>
+    </div>
+    <p class="milestone-subtitle">Marketing ra mắt + phát triển tính năng P1 để giữ chân merchant và tạo lợi thế cạnh tranh</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.1</div><div class="feature-body"><div class="feature-name">Launch Campaign (Community + Reddit + Social)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:8">ICE 576</span><div class="feature-desc"><strong>Nó là gì:</strong> Chiến dịch marketing đa kênh: Shopify Community, Reddit (r/shopify, r/ecommerce), Facebook groups, Twitter/X thread. Thông điệp: "Free order editing app &mdash; 50 edits/month forever, no performance fee".<br><br><strong>Để làm gì:</strong> 10-50 installs đầu tiên không đến từ organic. App mới cần momentum ban đầu để Shopify algorithm nhận diện. Không có launch = app chìm trong 8000+ apps.<br><br><strong>Trông như thế nào:</strong> Reddit: "I built a free Shopify order editing app" (indie dev story). Facebook: post hỏi feedback. Shopify Community: tutorial post. Tất cả dẫn về App Store listing.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.2</div><div class="feature-body"><div class="feature-name">Google Address Validation</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Tích hợp Google Address Validation API để validate + autocomplete địa chỉ khi customer edit. Gợi ý địa chỉ đúng, cảnh báo địa chỉ không hợp lệ, tự động format theo chuẩn quốc gia.<br><br><strong>Để làm gì:</strong> 20% địa chỉ customer nhập bị sai format hoặc không tồn tại. Address validation giảm shipping failures, return rate, và chi phí re-ship. Đây là differentiator &mdash; chỉ OrderEditing.com có ($39/tháng).<br><br><strong>Trông như thế nào:</strong> Khi customer gõ địa chỉ: dropdown autocomplete gợi ý. Sau khi nhập xong: validate &rarr; nếu có vấn đề, hiện banner vàng "Did you mean: [suggested address]?" với nút Apply. Merchant thấy badge "Validated" trên orders đã validate.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.3</div><div class="feature-body"><div class="feature-name">Upsell/Cross-sell trong Edit Flow</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:5">ICE 315</span><div class="feature-desc"><strong>Nó là gì:</strong> Khi customer edit đơn hàng, hiện gợi ý sản phẩm liên quan: "Customers also bought...", "Complete the look", "Add [item] for just $X more". AI-powered recommendations dựa trên order history và product relationships.<br><br><strong>Để làm gì:</strong> Đây là BLUE OCEAN &mdash; không đối thủ nào có upsell trong edit flow. Edit moment = customer đang engaged với đơn hàng = cơ hội upsell tuyệt vời. Tăng AOV 10-15% cho mỗi edit session. Tạo revenue trực tiếp cho merchant = merchant thấy ROI cực lớn.<br><br><strong>Trông như thế nào:</strong> Trong edit page: section "You might also like" với 3-4 product cards. Click "Add to order" &rarr; thêm vào đơn + tính chênh lệch giá. Merchant config: bật/tắt, chọn products/collections để recommend, set discount cho upsell items.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span><span class="tag tag-ai">AI</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.4</div><div class="feature-body"><div class="feature-name">Store Credit Refund Option</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:6">ICE 384</span><div class="feature-desc"><strong>Nó là gì:</strong> Khi customer cancel hoặc edit giảm giá, cho option refund bằng store credit (Shopify Gift Card) thay vì refund tiền mặt. Incentivize: "Get $5 extra if you choose store credit".<br><br><strong>Để làm gì:</strong> Store credit giữ tiền trong ecosystem của merchant. 30-40% customers chọn store credit nếu có bonus. Giảm refund costs, tăng repeat purchases. Đây là money-retention feature &mdash; merchant yêu thích nhất.<br><br><strong>Trông như thế nào:</strong> Khi customer cancel/edit giảm giá: modal hiện 2 options: "Refund to original payment ($45)" hoặc "Store Credit ($50 &mdash; $5 bonus!)". Chọn store credit &rarr; Shopify Gift Card API tạo gift card &rarr; gửi email với code. Merchant config: enable/disable, bonus amount.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.5</div><div class="feature-body"><div class="feature-name">Cancellation Retention Flow</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:5">ICE 315</span><div class="feature-desc"><strong>Nó là gì:</strong> Khi customer bấm Cancel &rarr; thay vì cancel ngay, hiện retention offers: discount code, free shipping upgrade, swap product, store credit bonus. Mục tiêu: cứu 20-30% đơn hàng sắp bị cancel.<br><br><strong>Để làm gì:</strong> BLUE OCEAN #2 &mdash; không đối thủ nào làm tốt retention flow. Mỗi đơn hàng cứu được = revenue saved. Nếu app cứu 20% cancellations &rarr; ROI cực lớn cho merchant. Đây là tính năng "wow" để xin 5-star reviews.<br><br><strong>Trông như thế nào:</strong> Customer click "Cancel" &rarr; modal: "Before you go..." với 3 offers: 1) 10% discount (auto-generated code), 2) Free shipping upgrade, 3) Swap to different product. Nếu customer vẫn muốn cancel &rarr; ask reason &rarr; process cancel. Dashboard: "Saved Orders" metric &mdash; số đơn đã cứu + revenue.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.6</div><div class="feature-body"><div class="feature-name">Shopify Flow Integration</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:6">ICE 336</span><div class="feature-desc"><strong>Nó là gì:</strong> Tích hợp với Shopify Flow: trigger events (order_edited, order_cancelled, edit_window_expired) để merchant tạo automation workflows. VD: "Khi customer edit address &rarr; tự động tag order &rarr; notify team Slack".<br><br><strong>Để làm gì:</strong> Shopify Flow là tool automation #1 trên Shopify. Integration = merchant có thể tạo workflows phức tạp mà không cần code. Đây là yêu cầu cho Built for Shopify badge.<br><br><strong>Trông như thế nào:</strong> Shopify Flow app: 3-5 triggers từ Avada Order Editing (order_edited, order_cancelled, retention_offer_accepted). Merchant vào Flow &rarr; thấy triggers mới &rarr; tạo workflows. Không cần UI trong app &mdash; tất cả trong Shopify Flow.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.7</div><div class="feature-body"><div class="feature-name">Multi-language Support (i18n)</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:6">ICE 336</span><div class="feature-desc"><strong>Nó là gì:</strong> Hỗ trợ đa ngôn ngữ cho customer-facing UI (edit page, widget, emails). 5 ngôn ngữ đầu: English, Spanish, French, German, Portuguese. Auto-detect từ store locale.<br><br><strong>Để làm gì:</strong> 60% Shopify merchants ngoài US/UK. Customer không đọc được tiếng Anh = không biết cách edit = không dùng = merchant không thấy giá trị. i18n là yêu cầu cho Built for Shopify badge.<br><br><strong>Trông như thế nào:</strong> Widget và edit page tự động hiện ngôn ngữ theo store locale. Merchant có thể override trong Settings. Email templates đa ngôn ngữ. Tech: react-i18next, JSON translation files.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.8</div><div class="feature-body"><div class="feature-name">Monitoring + Error Tracking</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:7">ICE 441</span><div class="feature-desc"><strong>Nó là gì:</strong> Sentry error tracking, UptimeRobot health checks, Firebase Functions performance monitoring, Slack alerts khi có lỗi. Dashboard nội bộ: installs, uninstalls, active users, error rate.<br><br><strong>Để làm gì:</strong> Bug production không ai biết = merchant churn âm thầm = bad reviews. Cần phát hiện và fix critical bugs trong vòng 4 giờ. Production monitoring là must-have trước khi có merchant thật.<br><br><strong>Trông như thế nào:</strong> Slack channel #order-editing-alerts: error spikes, uninstall rate, function timeouts. Sentry dashboard: top errors, trends. Không có UI cho merchant &mdash; chỉ nội bộ.</div><div class="feature-tags"><span class="tag tag-infra">Infra</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">1-10</span><span class="kpi-pill-label">MC cài đặt</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">&lt; 5%</span><span class="kpi-pill-label">Uninstall rate</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">&lt; 2h</span><span class="kpi-pill-label">Support response</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 5: 5 REVIEWS ==================== -->
+<div class="milestone ms-5 fade-in" id="ms-5">
+    <div class="milestone-icon">5</div>
+    <div class="milestone-header">
+        <span class="milestone-title">5 Reviews (4.8+ sao) &mdash; Social Proof</span>
+        <span class="milestone-tag">Traction</span>
+    </div>
+    <p class="milestone-subtitle">Iterate từ feedback, xây dựng social proof &mdash; 5 reviews chất lượng tạo nền tin cho merchant mới</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.1</div><div class="feature-body"><div class="feature-name">Iterate từ feedback 10 MC đầu tiên</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:8">ICE 648</span><div class="feature-desc"><strong>Nó là gì:</strong> Thu thập feedback có hệ thống: phỏng vấn qua chat/email, phân tích top 3 pain points, fix ngay feature được yêu cầu nhiều nhất. Maintain feedback loop hàng tuần.<br><br><strong>Để làm gì:</strong> 10 MC đầu tiên là gold mine. Feedback thực tế có giá trị hơn mọi giả định. Iterate nhanh giữ chân merchant sớm, giảm churn, định hướng roadmap chính xác.<br><br><strong>Trông như thế nào:</strong> Notion/Sheet tracking: merchant name, feedback, priority, status. Hàng tuần: check-in &rarr; tổng hợp &rarr; fix top pain point. Thông báo merchant khi fix xong: "Hey, we fixed X based on your feedback!"</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.2</div><div class="feature-body"><div class="feature-name">In-app Review Prompt thông minh</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:6">ICE 378</span><div class="feature-desc"><strong>Nó là gì:</strong> Hiện review prompt tại đúng thời điểm merchant đạt milestone tích cực (edit đầu tiên thành công, 10 edits, "Revenue Saved" đạt $100). NPS survey trước &mdash; chỉ route 8-10 sang review. "Remind later" và "Don't ask again".<br><br><strong>Để làm gì:</strong> In-app prompt có conversion rate 5-10%. Timing quan trọng: hiện ngay sau merchant thấy giá trị (Revenue Saved tăng). NPS filter đảm bảo chỉ merchant hài lòng thấy review prompt.<br><br><strong>Trông như thế nào:</strong> Trigger: sau "Revenue Saved" đạt $100 hoặc 10 edits thành công. NPS modal: "How would you rate Avada Order Editing?" (1-10). Score 8-10: "Leave a Review" button. Score 1-7: feedback form gửi về team.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.3</div><div class="feature-body"><div class="feature-name">Email Drip Campaign (Day 1-30)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>Nó là gì:</strong> Chuỗi email tự động: Day 1 (Welcome + setup guide), Day 3 (Tips tối ưu), Day 7 (Advanced features), Day 14 (Check-in + feedback), Day 30 (Nhờ review nếu active).<br><br><strong>Để làm gì:</strong> Day 1-7 quyết định merchant giữ hay uninstall. Email drip giữ merchant engaged, tăng setup completion từ 30% lên 60-70%. Day 30 email xin review = consistent review pipeline.<br><br><strong>Trông như thế nào:</strong> Day 1: Welcome + 3 bước setup nhanh + video 2 phút. Day 3: "3 ways to reduce support tickets with Order Editing". Day 7: "Did you know? Upsell during edits". Day 14: "How's it going?" + feedback form. Day 30: Thank you + review request (chỉ gửi nếu active).</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.4</div><div class="feature-body"><div class="feature-name">Content Marketing SEO (5+ bài blog)</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:7">ICE 343</span><div class="feature-desc"><strong>Nó là gì:</strong> 5+ bài blog SEO: "Best order editing app Shopify 2026", "How to let customers edit orders", "Avada vs OrderEditing.com comparison", "Reduce support tickets 60%". Đăng trên Medium, dev.to, website.<br><br><strong>Để làm gì:</strong> SEO content mất 2-3 tháng để rank. Bắt đầu ngay. Mỗi bài rank tốt = 50-200 visits/tháng miễn phí. Long-term organic traffic không phụ thuộc ads.<br><br><strong>Trông như thế nào:</strong> Bài dài 1500-2500 từ, SEO structure (H2/H3), screenshots, comparison tables, CTA "Install Free" cuối bài.</div><div class="feature-tags"><span class="tag tag-seo">SEO</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.5</div><div class="feature-body"><div class="feature-name">Export CSV (Edit History + Orders)</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:7">ICE 441</span><div class="feature-desc"><strong>Nó là gì:</strong> Export edit history và order data ra CSV. Filter theo date range, edit type, status. Cho accounting, reporting, phân tích offline.<br><br><strong>Để làm gì:</strong> Tính năng cơ bản mà thiếu sẽ trở thành pain point. Merchant cần export cho tax reporting và internal analytics. Không có export = merchant phải copy thủ công.<br><br><strong>Trông như thế nào:</strong> Nút "Export CSV" trên Orders và Edit History pages. Modal chọn filters. Auto-download CSV UTF-8 với header row. Toast "Exported 150 records successfully".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">5+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.8+</span><span class="kpi-pill-label">Rating</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">30-50</span><span class="kpi-pill-label">MC active</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 6: BUILT FOR SHOPIFY ==================== -->
+<div class="milestone ms-6 fade-in" id="ms-6">
+    <div class="milestone-icon">6</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Built for Shopify Badge</span>
+        <span class="milestone-tag">Trust Signal</span>
+    </div>
+    <p class="milestone-subtitle">Đạt huy hiệu "Built for Shopify" &mdash; boost ranking, tăng conversion rate 20-40%</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.1</div><div class="feature-body"><div class="feature-name">Nộp đơn Built for Shopify</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:7">ICE 630</span><div class="feature-desc"><strong>Nó là gì:</strong> Self-audit checklist (App Bridge, Polaris compliance, webhooks, session token, performance), điền application form, chuẩn bị documentation kỹ thuật. Review từ Shopify mất 2-4 tuần.<br><br><strong>Để làm gì:</strong> Badge = ranking boost + trust signal mạnh nhất. Hiện trên listing, nổi bật hơn đối thủ không có. Được mời tham gia Shopify partner programs.<br><br><strong>Trông như thế nào:</strong> Internal checklist: từng requirement của Shopify (xanh = pass, đỏ = cần sửa). Sau khi approve: badge hiện trên App Store listing.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.2</div><div class="feature-body"><div class="feature-name">Performance Optimization (Core Web Vitals)</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:6">ICE 486</span><div class="feature-desc"><strong>Nó là gì:</strong> Tối ưu hiệu suất: LCP &lt; 2.5s, INP &lt; 200ms, CLS &lt; 0.1. Code splitting, tree shaking, lazy loading, Redis caching, CDN cho static assets.<br><br><strong>Để làm gì:</strong> Shopify đo performance của app. App chậm bị reject khi nộp Built for Shopify. Tốc độ ảnh hưởng trực tiếp đến trải nghiệm merchant.<br><br><strong>Trông như thế nào:</strong> Lighthouse audit hàng tuần. Merchant chỉ cảm nhận app nhanh hơn. Không có UI thay đổi.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-qa">QA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.3</div><div class="feature-body"><div class="feature-name">Analytics Dashboard v2 (Charts + ROI)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>Nó là gì:</strong> Analytics nâng cao: revenue trends (line chart), edit funnel (view widget &rarr; start edit &rarr; complete edit), ROI calculator ("App saved you $X this month"), top edited products, edit type breakdown (pie chart). Date range picker.<br><br><strong>Để làm gì:</strong> Merchant cần data để ra quyết định (sản phẩm nào bị edit nhiều nhất &rarr; fix product listing). ROI proof giữ merchant &mdash; "App saved me $500/month" = không uninstall. Đối thủ không có analytics &mdash; đây là differentiator.<br><br><strong>Trông như thế nào:</strong> Analytics page: 4 metric cards + area chart revenue saved + pie chart edit types + table top edited products. Date range: 7d/30d/90d/custom.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.4</div><div class="feature-body"><div class="feature-name">Build Website (Landing + Docs)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:4">ICE 256</span><div class="feature-desc"><strong>Nó là gì:</strong> Website chính thức: Landing page ("Let customers edit their own orders"), Documentation cho merchant (setup guide, FAQ, troubleshooting), Pricing page với comparison table.<br><br><strong>Để làm gì:</strong> Website tăng trust. Docs giúp merchant tự giải quyết vấn đề = ít support tickets. Shopify đánh giá docs khi review Built for Shopify. Landing page convert organic traffic thành installs.<br><br><strong>Trông như thế nào:</strong> Landing: hero + features + pricing + CTA. Docs: Getting Started, Settings Guide, FAQ, Troubleshooting. Tech: Next.js/Astro, deploy Vercel.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">100+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">10+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$1K</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 7: TRANG 2 ==================== -->
+<div class="milestone ms-7 fade-in" id="ms-7">
+    <div class="milestone-icon">7</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Lên Trang 2 &mdash; Search "Order Editing"</span>
+        <span class="milestone-tag">Visibility</span>
+    </div>
+    <p class="milestone-subtitle">Xuất hiện trang 2 khi search "order editing" &mdash; bắt đầu có organic installs</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.1</div><div class="feature-body"><div class="feature-name">Local Delivery Order Edits</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:4">ICE 252</span><div class="feature-desc"><strong>Nó là gì:</strong> Hỗ trợ edit đơn hàng giao nội địa (local delivery, in-store pickup). Shopify API hiện block editing local delivery orders &mdash; cần workaround. Cho phép customer đổi địa chỉ pickup, đổi thời gian giao, đổi location.<br><br><strong>Để làm gì:</strong> BLUE OCEAN LỚN NHẤT &mdash; không đối thủ nào hỗ trợ. Shopify Community có hàng trăm posts yêu cầu tính năng này. Merchant giao nội địa (restaurants, bakeries, grocery) = phân khúc lớn, chưa được phục vụ.<br><br><strong>Trông như thế nào:</strong> Customer với đơn local delivery thấy nút "Edit Delivery" &rarr; đổi pickup location, thời gian, địa chỉ giao. Backend: workaround Shopify API limitations. Listing highlight: "Only app that supports local delivery edits".</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.2</div><div class="feature-body"><div class="feature-name">Batch Edit Orders (Staff Tool)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:4">ICE 224</span><div class="feature-desc"><strong>Nó là gì:</strong> Cho phép merchant edit nhiều đơn hàng cùng lúc: batch update shipping address (VD: đổi warehouse), batch cancel nhiều đơn, batch adjust quantities. Chọn orders qua checkboxes &rarr; bulk action.<br><br><strong>Để làm gì:</strong> BLUE OCEAN #3 &mdash; không đối thủ nào có. Merchant có 100+ đơn cần edit (đổi warehouse, recall product) mất hàng giờ làm thủ công. Batch edit tiết kiệm hours/ngày cho operations team.<br><br><strong>Trông như thế nào:</strong> Orders page: checkboxes từng order + "Select All" + bulk action dropdown: "Edit Address", "Cancel Selected", "Adjust Quantities". Confirmation modal hiện summary trước khi execute. Progress bar khi processing. Success/fail report.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.3</div><div class="feature-body"><div class="feature-name">Review Campaign có hệ thống (Target 20-30)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:7">ICE 504</span><div class="feature-desc"><strong>Nó là gì:</strong> Hệ thống review tự động: NPS survey định kỳ, route 8-10 đến review page, email follow-up sau support ticket resolved. Target 2-3 reviews/tuan.<br><br><strong>Để làm gì:</strong> 20+ reviews với 4.7+ = bắt đầu xuất hiện trang 2. Review velocity quan trọng hơn tổng số. Systematic approach đảm bảo dòng chảy review liên tục.<br><br><strong>Trông như thế nào:</strong> NPS widget + auto-email sequence sau resolved tickets + review dashboard nội bộ.</div><div class="feature-tags"><span class="tag tag-growth">Growth</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.4</div><div class="feature-body"><div class="feature-name">Custom Edit Rules per Product/Collection</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:6">ICE 336</span><div class="feature-desc"><strong>Nó là gì:</strong> Merchant tạo rules riêng cho từng product/collection: "Final Sale items không cho edit", "Custom products chỉ cho đổi địa chỉ", "Apparel cho đổi size nhưng không đổi màu". Rule engine với conditions + actions.<br><br><strong>Để làm gì:</strong> Merchant bán nhiều loại sản phẩm, mỗi loại cần rules khác nhau. Custom products không thể đổi variant. Final sale không refund. Rules linh hoạt = merchant kiểm soát tốt hơn = ít vấn đề.<br><br><strong>Trông như thế nào:</strong> Settings &rarr; Edit Rules tab: bảng rules với cột Product/Collection, Allowed Edit Types (checkboxes), Time Window Override. Nút "Add Rule" + modal tạo rule mới. Rules có priority ordering.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.5</div><div class="feature-body"><div class="feature-name">YouTube + Blog SEO Campaign (10+ bài)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:6">ICE 336</span><div class="feature-desc"><strong>Nó là gì:</strong> 5-10 video YouTube (setup guide, comparison, tips) + 10+ bài blog SEO nhắm vào long-tail keywords. Backlinks từ Shopify community, guest posts.<br><br><strong>Để làm gì:</strong> Content = organic traffic = free installs. Ranking "best shopify order editing app" mang lại hàng trăm installs/tháng. Video tạo trust.<br><br><strong>Trông như thế nào:</strong> YouTube playlist "Order Editing Tutorials". Blog: "Top 5 Order Editing Apps 2026", "How to reduce support tickets 60%". 2-3 bài/tuần.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-seo">SEO</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">200+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">20+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$3K</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 8: TRANG 1 ==================== -->
+<div class="milestone ms-8 fade-in" id="ms-8">
+    <div class="milestone-icon">8</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Lên Trang 1 &mdash; Search "Order Editing"</span>
+        <span class="milestone-tag">Breakthrough</span>
+    </div>
+    <p class="milestone-subtitle">Vào top 12 kết quả &mdash; bước ngoặt lớn, phần lớn install đến từ trang 1</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.1</div><div class="feature-body"><div class="feature-name">Subscription Order Edits</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:4">ICE 224</span><div class="feature-desc"><strong>Nó là gì:</strong> Hỗ trợ edit đơn hàng subscription (Recharge, Appstle, Bold). Customer đổi variant, skip delivery, pause subscription, đổi địa chỉ cho subscription tiếp theo.<br><br><strong>Để làm gì:</strong> Subscription commerce tăng 100%+/năm. Merchant bán subscription (coffee, supplements) cần edit cho recurring orders. Không đối thủ nào làm tốt.<br><br><strong>Trông như thế nào:</strong> Integrations page: cards Recharge, Appstle với nút Connect. Customer thấy "Edit Subscription" option. Edit applies cho deliveries tiếp theo.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.2</div><div class="feature-body"><div class="feature-name">AI Product Suggestions trong Edit Flow</div><span class="ice-badge" title="Impact:8 Confidence:6 Ease:4">ICE 192</span><div class="feature-desc"><strong>Nó là gì:</strong> AI phân tích order history + product catalog để suggest sản phẩm phù hợp khi customer edit. "Based on your order, you might prefer..." Personalized recommendations.<br><br><strong>Để làm gì:</strong> BLUE OCEAN &mdash; không đối thủ nào có AI suggestions. Tăng AOV 15-20% cho mỗi edit session. Demo video viral potential &mdash; "Order editing app with AI".<br><br><strong>Trông như thế nào:</strong> Trong edit page: "AI Recommended" section với 3-4 products. Merchant config: enable/disable, chọn AI model (popular items, complementary, same category). Analytics: conversion rate của AI suggestions.</div><div class="feature-tags"><span class="tag tag-ai">AI</span><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.3</div><div class="feature-body"><div class="feature-name">Tối ưu Infrastructure cho Scale</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:5">ICE 405</span><div class="feature-desc"><strong>Nó là gì:</strong> Redis caching, Cloud Tasks queue, database optimization, auto-scaling. Target: mọi API response &lt; 500ms với 1000 merchants đồng thời.<br><br><strong>Để làm gì:</strong> Infrastructure phải đi trước growth 3-6 tháng. App chậm = churn = bad reviews.<br><br><strong>Trông như thế nào:</strong> Redis cache hit rate &gt;90%, Cloud Tasks queue monitor, auto-alert khi response &gt; 1s. Merchant chỉ cảm nhận app nhanh hơn.</div><div class="feature-tags"><span class="tag tag-infra">Infra</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.4</div><div class="feature-body"><div class="feature-name">B2B / Wholesale Order Edits</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:4">ICE 196</span><div class="feature-desc"><strong>Nó là gì:</strong> Hỗ trợ edit cho B2B orders: bulk quantity adjustments, PO number changes, custom pricing edits, shipping method changes. Tích hợp với Shopify B2B features.<br><br><strong>Để làm gì:</strong> B2B là phân khúc growing nhanh trên Shopify (Shopify Plus B2B features mới). Không đối thủ nào hỗ trợ B2B edits. High-value merchants ($99+/tháng) cần tính năng này.<br><br><strong>Trông như thế nào:</strong> B2B edit modal: edit PO number, adjust quantities (min order qty), change shipping method, update billing address. Net terms support. Approval workflow cho edits lớn.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.5</div><div class="feature-body"><div class="feature-name">Case Studies + Community Building</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:7">ICE 448</span><div class="feature-desc"><strong>Nó là gì:</strong> 5-10 case studies merchant thành công. Discord/Slack community cho merchants chia sẻ tips, feature requests.<br><br><strong>Để làm gì:</strong> Case studies là social proof mạnh nhất. Community tạo retention + word-of-mouth. Brand authority.<br><br><strong>Trông như thế nào:</strong> Case study page: problem &rarr; solution &rarr; results (số liệu). Community: Discord với channels #general, #tips, #feature-requests.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">500+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">50+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$8K</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 9: TOP 5 ==================== -->
+<div class="milestone ms-9 fade-in" id="ms-9">
+    <div class="milestone-icon">9</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Top 5 &mdash; Serious Contender</span>
+        <span class="milestone-tag">Scale</span>
+    </div>
+    <p class="milestone-subtitle">Top 5 &mdash; thương hiệu được nhận diện, organic install chiếm 70%+</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.1</div><div class="feature-body"><div class="feature-name">Strategic Partnerships (Agencies + Integrations)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:7">ICE 392</span><div class="feature-desc"><strong>Nó là gì:</strong> Partnerships với Shopify Plus agencies, shipping providers, CRM apps. Co-marketing campaigns, mutual recommendations.<br><br><strong>Để làm gì:</strong> Agency recommend = high-quality installs. Integration partners tạo ecosystem lock-in. Co-marketing giảm CAC.<br><br><strong>Trông như thế nào:</strong> Partner Program page trên website. In-app Integrations page. Joint webinars, co-branded content.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.2</div><div class="feature-body"><div class="feature-name">Enterprise Features (Multi-currency, Team Roles)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:4">ICE 256</span><div class="feature-desc"><strong>Nó là gì:</strong> Multi-currency support (auto-convert khi edit), team roles &amp; permissions, activity audit logs, custom branding widget.<br><br><strong>Để làm gì:</strong> Enterprise merchants ($99+/tháng) = high LTV. 60% merchants ngoài US cần multi-currency. Team roles bắt buộc cho shops nhiều nhân viên.<br><br><strong>Trông như thế nào:</strong> Team Settings: members table, role picker (Admin/Editor/Viewer). Currency Settings: auto-detect từ Shopify. Audit Log: timeline mọi action.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.3</div><div class="feature-body"><div class="feature-name">Public API + Webhooks cho Developers</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:4">ICE 224</span><div class="feature-desc"><strong>Nó là gì:</strong> REST API public: CRUD edit rules, query edit history, trigger edits. Webhook events (order_edited, order_cancelled). API key management, rate limiting.<br><br><strong>Để làm gì:</strong> Enterprise cần tích hợp với hệ thống riêng. Developer ecosystem tạo thêm use cases. API integration tăng switching cost + giảm churn.<br><br><strong>Trông như thế nào:</strong> Developer Portal: interactive API docs (OpenAPI), code examples. In-app: API Keys page. Webhook Settings: toggle events, test button, delivery logs.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.4</div><div class="feature-body"><div class="feature-name">Chiến dịch Migration từ OrderEditing.com</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:6">ICE 336</span><div class="feature-desc"><strong>Nó là gì:</strong> Migration tool 1-click từ OrderEditing.com ($39-$599/tháng). Landing page "Switch from OrderEditing" với savings calculator. Case studies merchant đã switch.<br><br><strong>Để làm gì:</strong> OrderEditing.com users complaint: giá quá đắt ($39+/tháng). Avada $9.99-$29.99 = strongest pitch. Migration tool giảm friction chuyển đổi.<br><br><strong>Trông như thế nào:</strong> Landing page với calculator, feature comparison, testimonials. Blog "OrderEditing Alternative". Migration wizard trong app.</div><div class="feature-tags"><span class="tag tag-growth">Growth</span><span class="tag tag-dev">Dev</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">2K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">200+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$20K</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 10: TOP 3 ==================== -->
+<div class="milestone ms-10 fade-in" id="ms-10">
+    <div class="milestone-icon">10</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Top 3 &mdash; Market Leader</span>
+        <span class="milestone-tag">Dominance</span>
+    </div>
+    <p class="milestone-subtitle">Top 3 &mdash; thay thế đối thủ cũ, trở thành lựa chọn mặc định cho merchant mới</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.1</div><div class="feature-body"><div class="feature-name">AI Order Edit Copilot</div><span class="ice-badge" title="Impact:9 Confidence:6 Ease:3">ICE 162</span><div class="feature-desc"><strong>Nó là gì:</strong> AI chatbot giúp merchant: "Đơn nào có rủi ro cancel?", "Suggest retention offer tốt nhất", "Forecast edits tuần tới", auto-optimize edit rules dựa trên data.<br><br><strong>Để làm gì:</strong> AI copilot = wow factor. Demo video viral. Competitor gap ít nhất 2 năm. Giải quyết: merchant không biết optimize edit rules thế nào.<br><br><strong>Trông như thế nào:</strong> Chat widget góc phải. Merchant hỏi &rarr; AI trả lời với data từ store. Action buttons: "Apply suggestion". Pre-built prompts: "Optimize my edit rules", "Analyze cancellation reasons".</div><div class="feature-tags"><span class="tag tag-ai">AI</span><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.2</div><div class="feature-body"><div class="feature-name">POS Integration</div><span class="ice-badge" title="Impact:6 Confidence:7 Ease:4">ICE 168</span><div class="feature-desc"><strong>Nó là gì:</strong> Tích hợp Shopify POS: staff edit orders từ POS terminal. Đồng bộ edit giữa online và POS. Hữu ích cho stores có cả online + physical.<br><br><strong>Để làm gì:</strong> Omnichannel là xu hướng. Merchant có POS cần edit đơn trên cả 2 kênh. Không đối thủ nào có POS integration.<br><br><strong>Trông như thế nào:</strong> POS app extension: "Edit Order" button trên POS order detail. Same edit flow nhưng optimized cho POS UI.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-ext">Extension</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.3</div><div class="feature-body"><div class="feature-name">PDF Invoice After Edit</div><span class="ice-badge" title="Impact:6 Confidence:8 Ease:6">ICE 288</span><div class="feature-desc"><strong>Nó là gì:</strong> Tự động generate và gửi PDF invoice mới sau mỗi edit. Reflect giá mới, địa chỉ mới, line items mới. Merchant custom template (logo, colors).<br><br><strong>Để làm gì:</strong> Compliance và accounting cần invoice chính xác. Edit đơn &rarr; invoice cũ sai &rarr; vấn đề với tax/accounting. Auto-PDF giải quyết hoàn toàn.<br><br><strong>Trông như thế nào:</strong> Sau mỗi edit: auto-generate PDF &rarr; attach vào email notification &rarr; lưu trong order detail. Merchant download bất kỳ lúc nào.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.4</div><div class="feature-body"><div class="feature-name">Thought Leadership + Brand Authority</div><span class="ice-badge" title="Impact:7 Confidence:6 Ease:7">ICE 294</span><div class="feature-desc"><strong>Nó là gì:</strong> Annual Report "State of Order Editing on Shopify", speaker slots tại Shopify events, podcast appearances, media kit.<br><br><strong>Để làm gì:</strong> Brand authority = merchant trust = organic installs. Thought leadership đặt Avada là tiếng nói uy tín trong ngành.<br><br><strong>Trông như thế nào:</strong> Annual report PDF data-driven. Speaker at Shopify Unite/Editions. Blog + podcast content hub.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">5K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">500+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$50K</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 11: #1 ==================== -->
+<div class="milestone ms-11 fade-in" id="ms-11">
+    <div class="milestone-icon">#1</div>
+    <div class="milestone-header">
+        <span class="milestone-title">#1 &mdash; Order Editing App trên Shopify</span>
+        <span class="milestone-tag">The Goal</span>
+    </div>
+    <p class="milestone-subtitle">Vị trí #1 &mdash; thống lĩnh category, brand name = category name, self-reinforcing growth loop</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.1</div><div class="feature-body"><div class="feature-name">Innovation Velocity duy trì</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:5">ICE 315</span><div class="feature-desc"><strong>Nó là gì:</strong> Ship feature mới hàng tuần, 30% resource đầu tư R&amp;D, AI-first approach, patent key technologies.<br><br><strong>Để làm gì:</strong> Khi là #1, mọi người copy. Cách duy nhất giữ vị trí = chạy nhanh hơn tất cả. Innovation velocity là competitive advantage dài hạn.<br><br><strong>Trông như thế nào:</strong> Sprint 1 tuần, release notes public, changelog page, "Coming Soon" roadmap public. R&amp;D lab cho experimental features.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-ai">AI</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.2</div><div class="feature-body"><div class="feature-name">Revenue Diversification + Scale Team</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:5">ICE 280</span><div class="feature-desc"><strong>Nó là gì:</strong> Đa dạng nguồn thu (SaaS + premium add-ons + consulting) và mở rộng team từ 5 lên 15-20 người.<br><br><strong>Để làm gì:</strong> Đa nguồn thu = bền vững. Team lớn hơn = ship nhanh hơn = giữ #1. Mỗi nguồn thu mới tăng LTV per merchant.<br><br><strong>Trông như thế nào:</strong> Revenue dashboard nội bộ: breakdown theo source. Team: Product (5), AI (2), Growth (2), CS (3), Sales (2), Design (1). "Expert Services" cho enterprise.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.3</div><div class="feature-body"><div class="feature-name">Multi-Platform Expansion (WooCommerce, BigCommerce)</div><span class="ice-badge" title="Impact:9 Confidence:6 Ease:2">ICE 108</span><div class="feature-desc"><strong>Nó là gì:</strong> Mở rộng sang WooCommerce, BigCommerce, Wix. Shared backend, platform-specific frontends.<br><br><strong>Để làm gì:</strong> Shopify = 30% e-commerce market. Multi-platform = 100% market. Chỉ khi Shopify đã #1 solid.<br><br><strong>Trông như thế nào:</strong> WooCommerce Plugin + BigCommerce App. Unified Dashboard cho multi-store. "The only order editing app that works everywhere".</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-infra">Infra</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.4</div><div class="feature-body"><div class="feature-name">Avada Ecosystem Integration</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:6">ICE 384</span><div class="feature-desc"><strong>Nó là gì:</strong> Tích hợp sâu với bộ ứng dụng Avada: Avada Email Marketing (trigger email khi edit), Avada SEO (rich snippets cho edited orders), Avada Trust Badges, Affily (edit-to-referral flow).<br><br><strong>Để làm gì:</strong> Avada ecosystem là lợi thế độc nhất. Cross-sell giữa các app tăng LTV. Merchant dùng nhiều app Avada = switching cost cao = retention tự nhiên. "Suite discount" cho merchants dùng 3+ apps.<br><br><strong>Trông như thế nào:</strong> In-app: "Works better with Avada Email Marketing" banner. Cross-app triggers: edit event &rarr; Avada Email workflow. Bundle pricing: 20% off khi dùng 3+ apps Avada.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chưa làm</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">10K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">1K+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.9+</span><span class="kpi-pill-label">Rating</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$100K+</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+</div><!-- end milestone-container -->
+
+<!-- === SUMMARY TABLE === -->
+<div class="summary-section fade-in" id="summary">
+    <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--indigo); margin-bottom: 8px;">Tổng hợp</div>
+        <h2 style="font-size: 1.4rem; font-weight: 800;">Bảng tổng hợp Milestone</h2>
+    </div>
+
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Milestone</th>
+                <th>Tasks</th>
+                <th>MC Active</th>
+                <th>Reviews</th>
+                <th>Rating</th>
+                <th>MRR</th>
+                <th>Focus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td style="color:var(--red);font-weight:800;">1</td><td>MVP Core (Backend + Edit Engine)</td><td>10</td><td style="font-weight:800;color:var(--red);">0</td><td>0</td><td>&mdash;</td><td>$0</td><td>OAuth, Order Sync, Address/Variant/Qty Edit, Cancel, Widget</td></tr>
+            <tr><td style="color:var(--orange);font-weight:800;">2</td><td>MVP Polish (UI + Notifications)</td><td>7</td><td style="font-weight:800;color:var(--orange);">0</td><td>0</td><td>&mdash;</td><td>$0</td><td>Email, Dashboard, Settings, Onboarding, Billing</td></tr>
+            <tr><td style="color:var(--yellow);font-weight:800;">3</td><td>Submit App Store</td><td>4</td><td style="font-weight:800;color:var(--yellow);">0</td><td>0</td><td>&mdash;</td><td>$0</td><td>QA, Listing, Privacy Policy, Submit</td></tr>
+            <tr><td style="color:var(--green);font-weight:800;">4</td><td>Launch + P1 Features</td><td>8</td><td style="font-weight:800;color:var(--green);">1-10</td><td>0</td><td>&mdash;</td><td>$0</td><td>Marketing, Upsell, Retention, Address Validation, i18n</td></tr>
+            <tr><td style="color:var(--blue);font-weight:800;">5</td><td>5 Reviews</td><td>5</td><td style="font-weight:800;color:var(--blue);">30-50</td><td style="font-weight:700;color:var(--blue);">5+</td><td>4.8+</td><td>$500</td><td>Feedback, Review Prompt, Drip, SEO</td></tr>
+            <tr><td style="color:var(--indigo);font-weight:800;">6</td><td>Built for Shopify</td><td>4</td><td style="font-weight:800;color:var(--indigo);">100+</td><td>10+</td><td>4.5+</td><td>$1K</td><td>Badge, Performance, Analytics v2, Website</td></tr>
+            <tr><td style="color:var(--purple);font-weight:800;">7</td><td>Trang 2</td><td>5</td><td style="font-weight:800;color:var(--purple);">200+</td><td>20+</td><td>4.7+</td><td>$3K</td><td>Local Delivery, Batch Edit, Custom Rules, SEO</td></tr>
+            <tr><td style="color:var(--cyan);font-weight:800;">8</td><td>Trang 1</td><td>5</td><td style="font-weight:800;color:var(--cyan);">500+</td><td>50+</td><td>4.8+</td><td>$8K</td><td>Subscription, AI Suggestions, B2B, Scale</td></tr>
+            <tr><td style="color:var(--teal);font-weight:800;">9</td><td>Top 5</td><td>4</td><td style="font-weight:800;color:var(--teal);">2K+</td><td>200+</td><td>4.8+</td><td>$20K</td><td>Partnerships, Enterprise, API, Migration</td></tr>
+            <tr><td style="color:var(--pink);font-weight:800;">10</td><td>Top 3</td><td>4</td><td style="font-weight:800;color:var(--pink);">5K+</td><td>500+</td><td>4.9+</td><td>$50K</td><td>AI Copilot, POS, PDF Invoice, Brand</td></tr>
+            <tr><td style="color:var(--gold);font-weight:800;font-size:1rem;">&#9733;</td><td style="color:var(--gold);font-weight:800;">#1 Order Editing App</td><td>4</td><td style="font-weight:800;color:var(--gold);">10K+</td><td style="font-weight:700;color:var(--gold);">1K+</td><td style="color:var(--gold);">4.9+</td><td style="color:var(--gold);font-weight:700;">$100K+</td><td>Innovation, Multi-platform, Avada Ecosystem</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- === FOOTER === -->
+<div class="footer">
+    <p>Avada Order Editing Master Roadmap v1.0 &mdash; 01/04/2026</p>
+    <p style="margin-top: 4px;">Built by Roger &amp; Team | 60 tasks | 11 milestones | Mục tiêu: #1 Order Editing App on Shopify</p>
+</div>
+
+<!-- === TOAST === -->
+<div class="toast" id="toast">Đã copy task!</div>
+
+<script>
+    // === STATUS CONFIG ===
+    const STATUS_MAP = {
+        'todo':            { label: 'Chưa làm',    css: 'status-todo',           dot: '#94a3b8' },
+        'in-progress':     { label: 'Đang làm',    css: 'status-in-progress',    dot: '#60a5fa' },
+        'waiting-code':    { label: 'Chờ code',     css: 'status-waiting-code',   dot: '#c4b5fd' },
+        'waiting-test':    { label: 'Chờ test',     css: 'status-waiting-test',   dot: '#f472b6' },
+        'done':            { label: 'Hoàn thành',  css: 'status-done',           dot: '#34d399' }
+    };
+
+    // === LOAD SAVED STATUSES FROM LOCALSTORAGE ===
+    function loadStatuses() {
+        try {
+            const saved = JSON.parse(localStorage.getItem('order-editing-roadmap-statuses') || '{}');
+            document.querySelectorAll('.feature-card').forEach(card => {
+                const id = getCardId(card);
+                if (saved[id]) {
+                    applyStatus(card, saved[id], false);
+                }
+            });
+        } catch(e) {}
+    }
+
+    function saveStatuses() {
+        const data = {};
+        document.querySelectorAll('.feature-card').forEach(card => {
+            data[getCardId(card)] = card.dataset.status;
+        });
+        localStorage.setItem('order-editing-roadmap-statuses', JSON.stringify(data));
+    }
+
+    function getCardId(card) {
+        return card.querySelector('.feature-num')?.textContent?.trim() || '';
+    }
+
+    // === APPLY STATUS TO CARD ===
+    function applyStatus(card, newStatus, save = true) {
+        const info = STATUS_MAP[newStatus];
+        if (!info) return;
+
+        card.dataset.status = newStatus;
+
+        const badge = card.querySelector('.status-badge');
+        Object.values(STATUS_MAP).forEach(s => badge.classList.remove(s.css));
+        badge.classList.add(info.css);
+        badge.childNodes[0].textContent = info.label;
+
+        if (save) {
+            saveStatuses();
+            updateStats();
+            showToast('Đổi thành "' + info.label + '"');
+        }
+    }
+
+    // === STATUS DROPDOWN ===
+    function createDropdown(badge) {
+        document.querySelectorAll('.status-dropdown').forEach(d => d.remove());
+
+        const card = badge.closest('.feature-card');
+        const currentStatus = card.dataset.status;
+        const dropdown = document.createElement('div');
+        dropdown.className = 'status-dropdown open';
+
+        Object.entries(STATUS_MAP).forEach(([key, val]) => {
+            const opt = document.createElement('div');
+            opt.className = 'status-option' + (key === currentStatus ? ' active' : '');
+            opt.innerHTML = '<span class="dot" style="background:' + val.dot + '"></span>' + val.label;
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyStatus(card, key);
+                dropdown.remove();
+
+                const activeFilter = document.querySelector('.filter-btn.active');
+                if (activeFilter && activeFilter.dataset.filter !== 'all') {
+                    const filter = activeFilter.dataset.filter;
+                    card.style.display = (key === filter) ? '' : 'none';
+                }
+            });
+            dropdown.appendChild(opt);
+        });
+
+        document.body.appendChild(dropdown);
+
+        const rect = badge.getBoundingClientRect();
+        dropdown.style.top = (rect.bottom + 4) + 'px';
+        dropdown.style.left = Math.min(rect.left, window.innerWidth - 170) + 'px';
+
+        setTimeout(() => {
+            const close = (e) => {
+                if (!dropdown.contains(e.target) && e.target !== badge) {
+                    dropdown.remove();
+                    document.removeEventListener('click', close);
+                }
+            };
+            document.addEventListener('click', close);
+        }, 10);
+    }
+
+    document.querySelectorAll('.status-badge').forEach(badge => {
+        badge.addEventListener('click', (e) => {
+            e.stopPropagation();
+            createDropdown(badge);
+        });
+    });
+
+    // === COPY TASK ===
+    function copyTask(btn) {
+        const card = btn.closest('.feature-card');
+        const num = card.querySelector('.feature-num').textContent.trim();
+        const name = card.querySelector('.feature-name').childNodes[0].textContent.trim();
+        const desc = card.querySelector('.feature-desc')?.textContent?.trim() || '';
+
+        const text = `[${num}] ${name}\n${desc}`;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy task';
+                btn.classList.remove('copied');
+            }, 1500);
+        });
+    }
+
+    // === TOAST ===
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // === UPDATE STATS ===
+    function updateStats() {
+        const cards = document.querySelectorAll('.feature-card');
+        let todo = 0, inProgress = 0, waitingCode = 0, waitingTest = 0, done = 0;
+        cards.forEach(c => {
+            const s = c.dataset.status;
+            if (s === 'todo') todo++;
+            else if (s === 'in-progress') inProgress++;
+            else if (s === 'waiting-code') waitingCode++;
+            else if (s === 'waiting-test') waitingTest++;
+            else if (s === 'done') done++;
+        });
+        document.getElementById('statTodo').textContent = todo;
+        document.getElementById('statInProgress').textContent = inProgress;
+        document.getElementById('statWaitingCode').textContent = waitingCode;
+        document.getElementById('statWaitingTest').textContent = waitingTest;
+        document.getElementById('statDone').textContent = done;
+        document.getElementById('statTotal').textContent = cards.length;
+    }
+
+    // === FILTER ===
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.feature-card').forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = '';
+                } else {
+                    card.style.display = card.dataset.status === filter ? '' : 'none';
+                }
+            });
+        });
+    });
+
+    // === SCROLL SPY NAV ===
+    const milestones = document.querySelectorAll('.milestone[id]');
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const summaryEl = document.getElementById('summary');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        milestones.forEach(ms => {
+            if (window.scrollY >= ms.offsetTop - 100) current = ms.id;
+        });
+        if (summaryEl && window.scrollY >= summaryEl.offsetTop - 100) current = 'summary';
+        navBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('href') === '#' + current);
+        });
+    });
+
+    // === FADE IN ===
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // === EXPAND CARDS ===
+    document.querySelectorAll('.feature-card .feature-body').forEach(body => {
+        body.addEventListener('click', (e) => {
+            if (e.target.closest('.feature-actions')) return;
+            const card = body.closest('.feature-card');
+            card.classList.toggle('expanded');
+        });
+    });
+
+    // Add expand icons
+    document.querySelectorAll('.feature-card .feature-name').forEach(name => {
+        if (!name.querySelector('.expand-icon')) {
+            const icon = document.createElement('span');
+            icon.className = 'expand-icon';
+            icon.textContent = '\u25B6';
+            name.appendChild(icon);
+        }
+    });
+
+    // === INIT ===
+    loadStatuses();
+    updateStats();
+</script>
+
+</body>
+</html>
