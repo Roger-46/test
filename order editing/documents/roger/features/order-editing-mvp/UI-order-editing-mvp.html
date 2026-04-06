@@ -239,6 +239,30 @@
         /* === HIDE === */
         .hidden { display: none !important; }
 
+        /* === COLLAPSIBLE CARD === */
+        .collapse-cards-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .collapse-trigger { flex: 1; min-width: 180px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 14px 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: all 0.15s; box-shadow: var(--shadow-card); }
+        .collapse-trigger:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); }
+        .collapse-trigger.active { border-color: var(--primary); background: var(--primary-bg); }
+        .collapse-trigger-left { display: flex; align-items: center; gap: 10px; }
+        .collapse-trigger-icon { font-size: 18px; }
+        .collapse-trigger-label { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+        .collapse-trigger-status { font-size: 11px; color: var(--gray-500); }
+        .collapse-trigger-chevron { font-size: 12px; color: var(--gray-400); transition: transform 0.2s; }
+        .collapse-trigger.active .collapse-trigger-chevron { transform: rotate(180deg); }
+
+        .collapse-panel { display: none; margin-bottom: 16px; }
+        .collapse-panel.open { display: block; }
+
+        /* === TOGGLE SWITCH === */
+        .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0; }
+        .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--gray-300); border-radius: 24px; transition: 0.2s; }
+        .toggle-slider::before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background: var(--white); border-radius: 50%; transition: 0.2s; }
+        .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
         /* === COLOR PICKER SIMPLE === */
         .color-preview { display: inline-flex; align-items: center; gap: 8px; }
         .color-swatch { width: 24px; height: 24px; border-radius: var(--radius-sm); border: 1px solid var(--gray-300); }
@@ -501,7 +525,6 @@
             </div>
         </div>
 
-        <!-- Allowed Edit Types -->
         <div class="card">
             <h3 class="card-title" style="margin-bottom:16px">Allowed Edit Types</h3>
             <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">Choose what customers can modify on their orders.</p>
