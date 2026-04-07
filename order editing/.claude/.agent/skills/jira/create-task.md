@@ -21,8 +21,16 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 - Khi Roger thông báo đổi task cha → cập nhật tại đây
 
 ### Sprint
+- **Hiện tại**: Sprint **52** (cả Mode 1 và Mode 2)
 - **Mode 1 (Sub-task)**: Tự kế thừa sprint từ task cha — KHÔNG cần truyền `customfield_10101`
-- **Mode 2 (Task)**: Set sprint qua `customfield_10101` (Sprint ID: 51 = Sprint 51 active)
+- **Mode 2 (Task)**: Set sprint qua `customfield_10101` (Sprint ID: **52**)
+
+### Lịch đổi Sprint (mỗi 2 tuần, vào thứ 3)
+- Sprint 52: hiện tại
+- Sprint 53: thứ 3, 15/04/2026
+- Sprint 54: thứ 3, 29/04/2026
+- *(tiếp tục +1 mỗi 2 tuần vào thứ 3)*
+> **Nhắc Roger** khi gần đến ngày đổi sprint để cập nhật.
 
 ### Jira Credentials
 - **Base URL**: `https://space.avada.net`
@@ -36,30 +44,39 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 ### Default Field Values
 | Field | Giá trị mặc định |
 |-------|-----------------|
-| Title prefix | **[BD][AFF]** (bắt buộc, thêm trước title) |
+| Title prefix | **[BD][OE]** (bắt buộc, thêm trước title) |
 | Issue Type | Sub-task |
 | Assignee | haidx |
+| Assignees | haidx (`customfield_10700`) |
 | Reviewer | Sơn Nguyễn (`customfield_10900`: `sonnv`) |
 | Product Owner | Roger (`customfield_11000`) |
 | Sprint | Tự kế thừa từ task cha — không cần set |
 | Priority | Low |
 | Description | (để trống) |
 
-### API Call
+### API Call (2 bước: tạo task → set assignee + assignees)
 
 ```js
+// Bước 1: Tạo task
 const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
     parent: { key: 'SB-10372' },
-    summary: '[BD][AFF] {TITLE}',
+    summary: '[BD][OE] {TITLE}',
     issuetype: { name: 'Sub-task' },
     priority: { name: 'Low' },
     customfield_10900: [{ name: 'sonnv' }],   // Reviewer: Sơn Nguyễn
     customfield_11000: { value: 'Roger' }      // Product Owner
   }
 });
+// POST /rest/api/2/issue
+
+// Bước 2: Set Assignee + Assignees (BẮT BUỘC — không set được lúc create)
+// PUT /rest/api/2/issue/{KEY}/assignee → { "name": "haidx" }
+// PUT /rest/api/2/issue/{KEY} → { "fields": { "customfield_10700": [{ "name": "haidx" }] } }
 ```
+
+> ⚠️ **KHÔNG ĐƯỢC QUÊN** bước 2 — Jira không cho set assignee trong request create Sub-task.
 
 ---
 
@@ -68,9 +85,10 @@ const body = JSON.stringify({
 ### Default Field Values
 | Field | Giá trị mặc định |
 |-------|-----------------|
-| Title prefix | **[DEV][AFF]** (bắt buộc, thêm trước title) |
+| Title prefix | **[DEV][OE]** (bắt buộc, thêm trước title) |
 | Issue Type | Task |
 | Assignee | cuongnh01 |
+| Assignees | cuongnh01 (`customfield_10700`) |
 | Reviewer | tunght (`customfield_10900`) |
 | Product Owner | Roger (`customfield_11000`) |
 | Sprint | `customfield_10101`: 51 (Sprint 51 — cập nhật khi đổi sprint) |
@@ -84,12 +102,12 @@ const body = JSON.stringify({
 const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
-    summary: '[DEV][AFF] {TITLE}',
+    summary: '[DEV][OE] {TITLE}',
     issuetype: { name: 'Task' },
     priority: { name: 'Low' },
     customfield_10900: [{ name: 'tunght' }],   // Reviewer: tunght
     customfield_11000: { value: 'Roger' },      // Product Owner
-    customfield_10101: 51                        // Sprint 51
+    customfield_10101: 52                        // Sprint 52 (cập nhật mỗi 2 tuần)
     // description: nếu có Notion URL → thêm vào
   }
 });
@@ -113,12 +131,12 @@ Link: http://space.avada.net/browse/{KEY}
 ## Ví dụ
 
 ### Mode 1 (Roger)
-Roger đang trao đổi về "Forgot Password" → nói "tạo task"
-→ Tạo Sub-task "[BD][AFF] Forgot Password" trong SB-10372
+Roger đang trao đổi về "Edit Time Window Settings" → nói "tạo task"
+→ Tạo Sub-task "[BD][OE] Edit Time Window Settings" trong SB-10372
 
 ### Mode 2 (Dev)
-Roger nói "tạo task jira cho dev với title: Settings page store name"
-→ Tạo Task "[DEV][AFF] Settings page store name", assign cuongnh01, reviewer tunght, Sprint 51
+Roger nói "tạo task jira cho dev với title: Order Edit Engine"
+→ Tạo Task "[DEV][OE] Order Edit Engine", assign cuongnh01, reviewer tunght, Sprint 52
 
 ## Lưu ý
 - **Không mở browser** — chỉ dùng REST API
