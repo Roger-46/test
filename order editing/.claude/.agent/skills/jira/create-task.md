@@ -52,7 +52,37 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 | Product Owner | Roger (`customfield_11000`) |
 | Sprint | Tự kế thừa từ task cha — không cần set |
 | Priority | Low |
-| Description | (để trống) |
+| Description | Theo format 4 mục chuẩn (xem bên dưới) |
+
+### Description Format (4 mục chuẩn)
+
+Khi tạo task, description PHẢI theo format 4 mục sau (Jira wiki markup):
+
+```
+h3. 1. Vấn đề
+• [Bullet 1: pain point chính]
+• [Bullet 2: hệ quả]
+• [Bullet 3: bối cảnh thị trường / đối thủ]
+• [Bullet 4: tại sao cần làm]
+
+h3. 2. Giải pháp
+• [Bullet 1: giải pháp chính]
+• [Bullet 2: cách hoạt động]
+• [Bullet 3: chi tiết kỹ thuật quan trọng]
+• [Bullet 4: giá trị cho merchant]
+
+h3. 3. Scope
+• [Bullet 1: deliverable chính]
+• [Bullet 2: deliverable phụ nếu có]
+• [Bullet 3: test case / QA scope]
+• [Bullet 4: kết quả review nếu có]
+
+h3. 4. Tài liệu
+[Link đến PRD, UI mockup, hoặc tài liệu liên quan]
+_(Đang cập nhật...)_ nếu chưa có
+```
+
+> **Lưu ý**: Tự suy nội dung từ context cuộc trò chuyện. Nếu Roger chỉ nói "tạo task" mà chưa có đủ thông tin cho cả 4 mục → điền những gì biết, phần còn lại ghi _(Đang cập nhật...)_
 
 ### API Call (2 bước: tạo task → set assignee + assignees)
 

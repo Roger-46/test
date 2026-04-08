@@ -40,14 +40,39 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font); background: var(--gray-100); color: var(--gray-900); font-size: 14px; line-height: 1.5; }
 
-        /* === NAV === */
-        .nav { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 24px; display: flex; gap: 0; position: sticky; top: 0; z-index: 100; }
-        .nav-section { display: flex; gap: 0; }
-        .nav-section-label { padding: 12px 16px; font-size: 12px; color: var(--gray-500); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; display: flex; align-items: center; }
-        .nav-btn { padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 13px; color: var(--gray-600); font-family: var(--font); border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
-        .nav-btn:hover { color: var(--gray-900); background: var(--gray-50); }
-        .nav-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
-        .nav-divider { width: 1px; background: var(--gray-200); margin: 8px 8px; }
+        /* === SHOPIFY TOPBAR === */
+        .shopify-topbar { height: 56px; background: #1A1C1D; display: flex; align-items: center; padding: 0 16px; gap: 12px; position: fixed; top: 0; left: 0; right: 0; z-index: 200; }
+        .shopify-topbar-logo { display: flex; align-items: center; }
+        .shopify-topbar-logo svg { width: 24px; height: 24px; }
+        .shopify-topbar-search { flex: 1; max-width: 580px; margin: 0 auto; background: #303030; border: 1px solid #505050; border-radius: 8px; padding: 7px 12px; color: #999; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .shopify-topbar-right { display: flex; align-items: center; gap: 12px; }
+        .shopify-topbar-avatar { width: 28px; height: 28px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600; }
+        .shopify-topbar-store { color: #ccc; font-size: 13px; font-weight: 500; }
+
+        /* === SIDEBAR === */
+        .sidebar { width: 240px; position: fixed; top: 56px; left: 0; bottom: 0; background: var(--white); border-right: 1px solid var(--gray-200); overflow-y: auto; z-index: 100; }
+        .sidebar-header { padding: 16px 16px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--gray-200); }
+        .sidebar-app-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+        .sidebar-app-name { font-size: 14px; font-weight: 600; }
+        .sidebar-app-sub { font-size: 11px; color: var(--gray-500); }
+        .sidebar-nav { padding: 8px 0; }
+        .sidebar-section { padding: 8px 16px 4px; font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+        .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 13.5px; color: var(--gray-600); cursor: pointer; border-left: 3px solid transparent; transition: all 0.1s; text-decoration: none; }
+        .sidebar-item:hover { background: var(--gray-50); color: var(--gray-900); }
+        .sidebar-item.active { background: #F4F5FA; color: #2C6ECB; font-weight: 600; border-left-color: #2C6ECB; }
+        .sidebar-item-icon { font-size: 16px; width: 20px; text-align: center; }
+        .sidebar-item-badge { margin-left: auto; background: var(--gray-200); color: var(--gray-600); font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
+        .sidebar-divider { height: 1px; background: var(--gray-200); margin: 8px 16px; }
+
+        /* === MAIN CONTENT (offset by sidebar + topbar) === */
+        .main-content { margin-left: 240px; margin-top: 56px; min-height: calc(100vh - 56px); }
+
+        /* === OLD NAV (hidden, kept for compatibility) === */
+        .nav { display: none; }
+        .nav-section { display: none; }
+        .nav-section-label { display: none; }
+        .nav-btn { display: none; }
+        .nav-divider { display: none; }
 
         /* === LAYOUT === */
         .page { max-width: 960px; margin: 0 auto; padding: 24px; }
@@ -270,32 +295,75 @@
 </head>
 <body>
 
-<!-- ============ NAVIGATION ============ -->
-<nav class="nav">
-    <div class="nav-section">
-        <span class="nav-section-label">ADMIN</span>
-        <button class="nav-btn active" onclick="showScreen('admin-dashboard')">Dashboard</button>
-        <button class="nav-btn" onclick="showScreen('admin-orders')">Orders</button>
-        <button class="nav-btn" onclick="showScreen('admin-settings')">Settings</button>
+<!-- ============ SHOPIFY TOPBAR ============ -->
+<div class="shopify-topbar">
+    <div class="shopify-topbar-logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15.34 3.38c-.06-.02-.12-.01-.17.03a.2.2 0 0 0-.08.14s-.47 2.25-1.13 3.5c-.67-1.93-1.86-3.65-1.86-3.65a.2.2 0 0 0-.17-.09.2.2 0 0 0-.17.08L7.81 9.15a.2.2 0 0 0 0 .22l1.78 2.81L7.18 16a.2.2 0 0 0 .17.31h2.44a.2.2 0 0 0 .17-.1l2.05-3.57 2.04 3.57a.2.2 0 0 0 .17.1h2.44a.2.2 0 0 0 .17-.31l-2.41-3.82 1.78-2.81a.2.2 0 0 0 0-.22L15.4 3.4a.2.2 0 0 0-.06-.02z" fill="#95BF47"/></svg>
     </div>
-    <div class="nav-divider"></div>
-    <div class="nav-section">
-        <span class="nav-section-label">STOREFRONT</span>
-        <button class="nav-btn" onclick="showScreen('sf-widget')">Widget</button>
-        <button class="nav-btn" onclick="showScreen('sf-edit-portal')">Edit Portal</button>
-        <button class="nav-btn" onclick="showScreen('sf-swap')">Swap Variant</button>
-        <button class="nav-btn" onclick="showScreen('sf-review')">Review Changes</button>
-        <button class="nav-btn" onclick="showScreen('sf-cancel')">Cancel Order</button>
-        <button class="nav-btn" onclick="showScreen('sf-success')">Success</button>
+    <div class="shopify-topbar-search">&#128269; Search</div>
+    <div class="shopify-topbar-right">
+        <span style="color:#999;font-size:18px;">&#128276;</span>
+        <span class="shopify-topbar-store">My Dev Store</span>
+        <div class="shopify-topbar-avatar">M</div>
     </div>
-    <div class="nav-divider"></div>
-    <div class="nav-section">
-        <span class="nav-section-label">STATES</span>
-        <button class="nav-btn" onclick="showScreen('state-empty')">Empty</button>
-        <button class="nav-btn" onclick="showScreen('state-loading')">Loading</button>
-        <button class="nav-btn" onclick="showScreen('state-expired')">Expired</button>
+</div>
+
+<!-- ============ SIDEBAR ============ -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-app-icon">A</div>
+        <div>
+            <div class="sidebar-app-name">Avada Order Editing</div>
+            <div class="sidebar-app-sub">by Avada</div>
+        </div>
     </div>
-</nav>
+    <nav class="sidebar-nav">
+        <a class="sidebar-item active" onclick="showScreen('admin-dashboard')">
+            <span class="sidebar-item-icon">&#127968;</span> Dashboard
+        </a>
+        <a class="sidebar-item" onclick="showScreen('admin-orders')">
+            <span class="sidebar-item-icon">&#128230;</span> Orders
+            <span class="sidebar-item-badge">247</span>
+        </a>
+        <a class="sidebar-item" onclick="showScreen('admin-settings')">
+            <span class="sidebar-item-icon">&#9881;</span> Settings
+        </a>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">Storefront Preview</div>
+        <a class="sidebar-item" onclick="showScreen('sf-widget')">
+            <span class="sidebar-item-icon">&#128396;</span> Edit Widget
+        </a>
+        <a class="sidebar-item" onclick="showScreen('sf-edit-portal')">
+            <span class="sidebar-item-icon">&#128221;</span> Edit Portal
+        </a>
+        <a class="sidebar-item" onclick="showScreen('sf-swap')">
+            <span class="sidebar-item-icon">&#128260;</span> Swap Variant
+        </a>
+        <a class="sidebar-item" onclick="showScreen('sf-review')">
+            <span class="sidebar-item-icon">&#9989;</span> Review Changes
+        </a>
+        <a class="sidebar-item" onclick="showScreen('sf-cancel')">
+            <span class="sidebar-item-icon">&#10060;</span> Cancel Flow
+        </a>
+        <a class="sidebar-item" onclick="showScreen('sf-success')">
+            <span class="sidebar-item-icon">&#127881;</span> Success
+        </a>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">States</div>
+        <a class="sidebar-item" onclick="showScreen('state-empty')">
+            <span class="sidebar-item-icon">&#128449;</span> Empty
+        </a>
+        <a class="sidebar-item" onclick="showScreen('state-loading')">
+            <span class="sidebar-item-icon">&#9203;</span> Loading
+        </a>
+        <a class="sidebar-item" onclick="showScreen('state-expired')">
+            <span class="sidebar-item-icon">&#9200;</span> Expired
+        </a>
+    </nav>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<div class="main-content">
 
 <!-- ============ SCREEN: ADMIN DASHBOARD ============ -->
 <div id="admin-dashboard" class="screen">
@@ -1014,6 +1082,8 @@
     </div>
 </div>
 
+</div><!-- end main-content -->
+
 <!-- ============ TOAST ============ -->
 <div id="toast" class="toast">✅ <span id="toast-msg"></span></div>
 
@@ -1024,10 +1094,10 @@
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
 
-        // Update nav
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => {
-            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) {
+        // Update sidebar active state
+        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.sidebar-item').forEach(b => {
+            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
                 b.classList.add('active');
             }
         });

@@ -1,4 +1,4 @@
-# Avada Order Editing — PRD MVP (Submit-First)
+# Avada Order Editing — PRD MVP (Full)
 
 **Link task Jira:** SB-10644
 
@@ -13,7 +13,8 @@
 | Phiên bản | Ngày | Tác giả | Loại | Mô tả |
 |-----------|------|---------|------|-------|
 | 1.0 | 01/04/2026 | Roger | A | Tạo mới PRD MVP |
-| 2.0 | 07/04/2026 | Roger | M | Viết lại — phiên bản submit-first, cắt scope tối thiểu |
+| 2.0 | 07/04/2026 | Roger | M | Viết lại — phiên bản submit-first |
+| 3.0 | 08/04/2026 | Roger | M | Restore full MVP scope — MVP là bản gốc, Submit rút gọn từ đây |
 
 > A = Added, M = Modified, D = Deleted
 
@@ -31,12 +32,13 @@
 
 ## 1. Executive Summary
 
-- **Mục tiêu #1**: Submit lên Shopify App Store nhanh nhất, pass review lần đầu.
-- **Chiến lược**: Ship FREE app (không cần billing) → giảm complexity → dễ pass review. Thêm billing sau qua app update (không cần re-submit).
+- **Đây là PRD MVP đầy đủ** — bản gốc cho mọi phiên bản (Submit, Growth, Scale...).
+- **Mục tiêu**: App order editing hoàn chỉnh đủ cho nhóm merchant đầu tiên sử dụng vui vẻ.
+- **Chiến lược**: Build full MVP → rút gọn thành bản Submit (xem PRD Submit riêng) → pass review → bật lại full MVP.
 - **Vấn đề**: Shopify không cho khách hàng tự chỉnh sửa đơn hàng — mọi thay đổi phải qua đội hỗ trợ.
-- **Giải pháp**: App cho phép khách hàng tự sửa địa chỉ, đổi biến thể, thay đổi số lượng, hủy đơn từ Order Status Page.
-- **Đối tượng**: Merchant SMB trên Shopify.
-- **Scope**: 6 features cốt lõi — chỉ đủ để app hoạt động end-to-end, có giá trị thực, pass Shopify review.
+- **Giải pháp**: App cho phép khách hàng tự sửa địa chỉ, đổi biến thể, thay đổi số lượng, hủy đơn. Merchant quản lý, chỉnh sửa đơn hàng, xem analytics, nhận notifications.
+- **Đối tượng**: Merchant SMB trên Shopify (50-2.000 đơn/tháng).
+- **Scope**: 14 features đầy đủ — app hoạt động end-to-end, merchant có đủ công cụ quản lý.
 
 ---
 
@@ -49,18 +51,24 @@
 | **Customer** | Khách mua hàng trên Shopify store | Tự sửa lỗi đơn hàng mà không cần email support |
 | **Merchant** | Chủ cửa hàng Shopify, 50-2.000 đơn/tháng | Giảm ticket hỗ trợ, cấu hình quyền chỉnh sửa |
 
-### User Stories (Submit Scope — chỉ 8 stories)
+### User Stories (MVP Full — 14 stories)
 
-| ID | User Story | Priority |
-|----|-----------|----------|
-| US-01 | Là **customer**, tôi muốn **chỉnh sửa địa chỉ giao hàng** sau khi đặt hàng, để gói hàng đến đúng nơi. | P0 |
-| US-02 | Là **customer**, tôi muốn **đổi biến thể sản phẩm** (size, color), để nhận đúng sản phẩm. | P0 |
-| US-03 | Là **customer**, tôi muốn **thay đổi số lượng** sản phẩm trước khi giao. | P0 |
-| US-04 | Là **customer**, tôi muốn **hủy đơn hàng** trong khung thời gian cho phép. | P0 |
-| US-05 | Là **customer**, tôi muốn **xem chênh lệch giá** trước khi xác nhận thay đổi. | P0 |
-| US-06 | Là **customer**, tôi muốn **truy cập chỉnh sửa từ Order Status Page**. | P0 |
-| US-07 | Là **merchant**, tôi muốn **cấu hình loại chỉnh sửa cho phép + khung thời gian**. | P0 |
-| US-08 | Là **merchant**, tôi muốn **xem dashboard** edits/cancels cơ bản. | P0 |
+| ID | User Story | Priority | Submit? |
+|----|-----------|----------|---------|
+| US-01 | Là **customer**, tôi muốn **chỉnh sửa địa chỉ giao hàng** sau khi đặt hàng, để gói hàng đến đúng nơi. | P0 | ✅ |
+| US-02 | Là **customer**, tôi muốn **đổi biến thể sản phẩm** (size, color), để nhận đúng sản phẩm. | P0 | ✅ |
+| US-03 | Là **customer**, tôi muốn **thay đổi số lượng** sản phẩm trước khi giao. | P0 | ✅ |
+| US-04 | Là **customer**, tôi muốn **hủy đơn hàng** trong khung thời gian cho phép. | P0 | ✅ |
+| US-05 | Là **customer**, tôi muốn **xem chênh lệch giá** trước khi xác nhận thay đổi. | P0 | ✅ |
+| US-06 | Là **customer**, tôi muốn **truy cập chỉnh sửa từ Order Status Page + Thank You Page**. | P0 | ✅ (chỉ OSP) |
+| US-07 | Là **merchant**, tôi muốn **cấu hình loại chỉnh sửa cho phép + khung thời gian**. | P0 | ✅ |
+| US-08 | Là **merchant**, tôi muốn **xem dashboard** edits/cancels + revenue saved + analytics. | P0 | ✅ (basic) |
+| US-09 | Là **merchant**, tôi muốn **xem danh sách orders** editable với filters/search. | P0 | |
+| US-10 | Là **merchant**, tôi muốn **chỉnh sửa đơn hàng từ admin** (giống customer nhưng nhanh hơn). | P0 | |
+| US-11 | Là **merchant**, tôi muốn **nhận email notification** khi customer edit/cancel đơn. | P0 | |
+| US-12 | Là **customer**, tôi muốn **nhận email xác nhận** khi edit thành công. | P0 | |
+| US-13 | Là **merchant**, tôi muốn **cấu hình widget** (text, color, vị trí). | P0 | ✅ (basic) |
+| US-14 | Là **merchant**, tôi muốn **xem edit history/audit trail** cho mỗi order. | P0 | |
 
 ---
 
@@ -74,39 +82,53 @@ App gồm 2 phần:
 
 ### 3.2. Scope
 
-**TRONG scope (Submit):**
+**TRONG scope (MVP Full):**
 
-| # | Feature | Lý do phải có |
-|---|---------|---------------|
-| 1 | **Customer edit address** | Core value — use case #1 của merchant |
-| 2 | **Customer swap variant** | Core value — use case #2 |
-| 3 | **Customer change quantity** | Core value — đơn giản, đi kèm swap |
-| 4 | **Customer cancel order** | Core value — giảm friction |
-| 5 | **Widget Order Status Page** | Entry point duy nhất cho customer |
-| 6 | **Admin Settings** | Merchant cần control — Shopify review yêu cầu |
-| 7 | **Admin Dashboard** (basic) | Shopify review yêu cầu app có value rõ ràng |
-| 8 | **GDPR webhooks** | BẮT BUỘC — lý do reject #1 |
-| 9 | **App uninstall cleanup** | BẮT BUỘC — lý do reject #3 |
-| 10 | **Onboarding** (simple) | Shopify review check first-time experience |
+| # | Feature | Submit? | Lý do |
+|---|---------|---------|-------|
+| 1 | **Customer edit address** | ✅ | Core value — use case #1 |
+| 2 | **Customer swap variant** | ✅ | Core value — use case #2 |
+| 3 | **Customer change quantity** | ✅ | Core value — đi kèm swap |
+| 4 | **Customer cancel order + auto refund/restock** | ✅ | Core value — giảm friction |
+| 5 | **Widget Order Status Page** | ✅ | Entry point cho customer |
+| 6 | **Widget Thank You Page** | | Thêm sau submit |
+| 7 | **Admin Dashboard** (full: metrics + charts + recent activity) | ✅ basic | Charts thêm sau |
+| 8 | **Admin Orders list** (filters, search, edit status) | | Thêm sau submit |
+| 9 | **Admin Settings** (time window, edit types, notifications, widget) | ✅ basic | Full settings sau |
+| 10 | **Merchant edit orders từ admin** | | Thêm sau submit |
+| 11 | **Email notifications** (merchant + customer) | | Thêm sau submit |
+| 12 | **Edit history / Audit trail** | | Thêm sau submit |
+| 13 | **Onboarding wizard** (2-step checklist) | ✅ | First-time experience |
+| 14 | **Usage tracking + Billing** (Free/Starter/Growth) | | Submit FREE, billing sau |
+| 15 | **GDPR webhooks** | ✅ | BẮT BUỘC |
+| 16 | **App uninstall cleanup** | ✅ | BẮT BUỘC |
+| 17 | **Transaction safety / idempotency** | ✅ | Tránh duplicate charge |
 
-**NGOÀI scope (thêm sau khi publish):**
-- Thank You Page widget → app update
-- Merchant order editing từ admin → app update
-- Email notifications → app update
-- Analytics/Charts → app update
-- Billing/Pricing tiers → app update (không cần re-submit)
-- Upsell, retention, store credit → P1
-- Edit rules per product/collection → P1
-- Multi-language → P1
-- Google address validation → P1
+**NGOÀI scope (P1 — phát triển sau MVP):**
+- Upsell/cross-sell trong edit flow
+- Cancellation retention flow
+- Store credit refund option
+- Google address validation
+- Shopify Flow integration
+- Multi-language support (i18n)
+- Custom edit rules per product/collection
+- Monitoring + Error tracking (Sentry)
 
-### 3.3. Chiến lược Submit
+### 3.3. Chiến lược phiên bản
 
-1. **FREE app** — không implement billing → giảm 1 tuần dev, dễ pass review
-2. **Sau khi publish** → thêm billing qua app update (Shopify cho phép, không cần re-submit)
-3. **Free tier = 50 edits/tháng** — đủ giá trị, merchant thấy app hoạt động
-4. **Demo store** sẵn sàng + video walkthrough 3-5 phút
-5. **Test account** cho Shopify reviewer
+**MVP là bản gốc** — build đầy đủ, rút gọn thành Submit, sau khi pass → bật lại full MVP.
+
+| Phiên bản | Scope | Mục tiêu |
+|-----------|-------|----------|
+| **Submit** | Features #1-5, #7(basic), #9(basic), #13, #15-17 | Pass Shopify review (FREE app) |
+| **MVP** (bản này) | Tất cả 17 features | Merchant đầu tiên dùng vui vẻ |
+| **P1** | + Upsell, Retention, i18n, Flow, Address validation | Competitive advantage |
+
+**Sau khi Submit pass:**
+1. Enable Orders page, Merchant editing, Email notifications
+2. Add Billing/Pricing tiers (app update, không cần re-submit)
+3. Full Dashboard với charts
+4. → Đây chính là MVP
 
 ### 3.4. UI Flow
 
@@ -222,8 +244,9 @@ Edit Portal (App Proxy page) → chọn loại edit:
 #### Flow B: Merchant Admin
 
 ```
-Mở app → Dashboard (metrics + recent activity)
-       → Settings (time window, edit types)
+Mở app → Dashboard (metrics + charts + recent activity)
+       → Orders (list + filters + edit modal)
+       → Settings (time window, edit types, notifications, widget, billing)
 ```
 
 **Màn hình 7: Admin Dashboard**
@@ -479,18 +502,25 @@ Mở app → Dashboard (metrics + recent activity)
 
 ---
 
-## Timeline ước tính (Submit-First)
+## Timeline ước tính
 
+### Phase 1: Submit (Tuần 1-6) — Rút gọn từ MVP
 | Tuần | Việc | Output |
 |------|------|--------|
 | 1 | Foundation: monorepo, auth, OAuth, repositories | Backend skeleton |
 | 2 | Edit engine: eligibility, edit API, cancel, refund | Core APIs working |
 | 3 | Storefront: theme extension widget + edit page (Preact) | Customer flow done |
-| 4 | Admin: dashboard + settings + onboarding (Polaris) | Merchant flow done |
+| 4 | Admin: dashboard (basic) + settings + onboarding (Polaris) | Merchant flow done |
 | 5 | GDPR, uninstall cleanup, error handling, testing | App Store ready |
-| 6 | App listing, screenshots, video, demo store → **SUBMIT** | 🚀 Submitted |
+| 6 | App listing, screenshots, video → **SUBMIT FREE** | Submitted |
 
-**Tổng: ~6 tuần** từ bắt đầu code đến submit.
+### Phase 2: MVP Full (Tuần 7-8) — Trong lúc chờ + sau approval
+| Tuần | Việc | Output |
+|------|------|--------|
+| 7 | Orders page + Merchant editing + Edit history | Admin full |
+| 8 | Email notifications + Billing + Dashboard charts | MVP complete |
+
+**Tổng: ~6 tuần submit + ~2 tuần hoàn thiện MVP = 8 tuần đến MVP full.**
 
 ---
 
