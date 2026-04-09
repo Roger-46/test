@@ -49,6 +49,10 @@ firestore-indexes/        # Compound query indexes (run yarn firestore:build)
 | `.claude/skills/security/` | Auth, IDOR prevention, webhook verification |
 | `.claude/skills/shopify-testing/` | Browser testing with Playwright MCP |
 | `.claude/.agent/skills/capture-app-interface/` | Chup anh toan bo giao dien app |
+| `.claude/.agent/skills/feature-organizer/` | Organize feature docs into correct folder structure |
+| `.claude/.agent/skills/orchestrator/` | Agent/workflow/skill routing and orchestration |
+| `.claude/.agent/skills/retrospective/` | Learning loop - analyze output, find patterns, lessons learned |
+| `.claude/.agent/skills/notion/` | Create tasks on Notion |
 
 ## Commands
 
@@ -84,6 +88,7 @@ firestore-indexes/        # Compound query indexes (run yarn firestore:build)
 | `code-reviewer` | Code review with Avada standards |
 | `security-auditor` | Security vulnerability analysis |
 | `shopify-app-tester` | MR impact and testing checklist |
+| `leader-agent` | Leader Agent - team status from Jira, daily briefing, sprint report |
 
 ## Key Rules
 

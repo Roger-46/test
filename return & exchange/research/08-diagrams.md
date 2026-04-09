@@ -1,927 +1,832 @@
-# Technical Diagrams - Avada Order Editing
+# 08 - Technical Diagrams: Avada Return & Exchange
 
 ## 1. System Architecture Diagram
 
 ```mermaid
 graph TB
     subgraph "Shopify Platform"
-        SA[Shopify Admin]
-        SF[Storefront]
-        OSP[Order Status Page]
-        TYP[Thank You Page]
-        SAPI[Shopify GraphQL Admin API]
-        SREST[Shopify REST API]
-        SWH[Shopify Webhooks]
+        SA[Shopify Admin API<br/>GraphQL + REST]
+        SW[Shopify Webhooks<br/>orders/create, orders/updated<br/>refunds/create, app/uninstalled]
+        SF[Shopify Flow]
+        SPOS[Shopify POS]
     end
 
-    subgraph "Embedded Admin App"
-        PA[React / Polaris v12+ App]
-        AB[Shopify App Bridge]
-        PA --> AB
-        AB --> SAPI
+    subgraph "Frontend - Shopify Admin App"
+        FE[React + Polaris v12+<br/>Embedded Admin App]
+        FE_DASH[Dashboard]
+        FE_LIST[Return Request List]
+        FE_DETAIL[Return Detail View]
+        FE_SETTINGS[Settings & Policies]
+        FE_ANALYTICS[Analytics Dashboard]
+        FE_ONBOARD[Quick-Start Wizard]
+        FE --> FE_DASH
+        FE --> FE_LIST
+        FE --> FE_DETAIL
+        FE --> FE_SETTINGS
+        FE --> FE_ANALYTICS
+        FE --> FE_ONBOARD
     end
 
-    subgraph "Storefront Layer"
+    subgraph "Theme Extension"
         TE[Theme App Extension<br/>Liquid Blocks]
-        SW[Scripttag Widget<br/>Preact]
-        TE --> OSP
-        TE --> TYP
-        SW --> SF
+        RP[Customer Return Portal<br/>Order Lookup + Return Flow]
+        RT[Return Status Tracker]
+        RW[Return Prevention Widgets<br/>Size Guides, Return Rate Badges]
+        TE --> RP
+        TE --> RT
+        TE --> RW
     end
 
-    subgraph "GCP / Firebase Backend"
-        subgraph "Firebase Hosting"
-            FH[Static Frontend Assets]
-        end
-
-        subgraph "Firebase Functions"
-            API[REST API Handlers]
-            WHH[Webhook Handlers]
-            BGW[Background Workers]
-            CRON[Scheduled Functions]
-        end
-
-        subgraph "Data Layer"
-            FS[(Firestore)]
-            BQ[(BigQuery)]
-        end
-
-        subgraph "Async Processing"
-            PS[Cloud Pub/Sub]
-            CT[Cloud Tasks]
-        end
+    subgraph "Firebase Backend"
+        CF[Cloud Functions<br/>Node.js Handlers]
+        FS[(Firestore<br/>Multi-tenant Database)]
+        CS[Cloud Storage<br/>Return Photos]
+        CT[Cloud Tasks<br/>Background Jobs]
+        CF --> FS
+        CF --> CS
+        CF --> CT
     end
 
-    subgraph "External Services"
-        GADDR[Google Address Validation API]
-        EMAIL[Email Service<br/>SendGrid / Mailgun]
+    subgraph "Integrations"
+        SHIP[Shipping Carriers<br/>via EasyPost / Shippo<br/>USPS, FedEx, UPS, DHL]
+        EMAIL[Email Service<br/>Transactional Emails<br/>Status Notifications]
+        SMS[SMS Service<br/>Twilio / MessageBird]
+        HD[Helpdesk Integrations<br/>Gorgias, Zendesk, Freshdesk]
+        KLAV[Klaviyo Integration<br/>Email Marketing Flows]
     end
 
-    SA --> PA
-    PA --> API
-    SW --> API
-    TE --> API
-
-    SWH -->|HMAC Verified| WHH
-    WHH --> PS
-    PS --> BGW
-    BGW --> FS
-    BGW --> SAPI
-    BGW --> EMAIL
-
-    API --> FS
-    API --> SAPI
-    API --> SREST
-    API --> GADDR
-
-    CRON --> CT
-    CT --> BGW
-
-    FS -->|Change Streams| BQ
-    BGW --> BQ
-
-    PA -->|Dashboard & Analytics| BQ
-
-    style SA fill:#5c6ac4,color:#fff
-    style SF fill:#5c6ac4,color:#fff
-    style FS fill:#f4b400,color:#000
-    style BQ fill:#4285f4,color:#fff
-    style PS fill:#34a853,color:#fff
-```
-
-## 2. Order Edit Lifecycle State Machine
-
-```mermaid
-stateDiagram-v2
-    [*] --> OrderPlaced: Order created via Shopify
-
-    OrderPlaced --> EditWindowOpen: Webhook received &<br/>edit rules evaluated
-
-    EditWindowOpen --> EditRequested_Customer: Customer initiates edit<br/>(order status page / widget)
-    EditWindowOpen --> EditRequested_Merchant: Merchant initiates edit<br/>(admin dashboard)
-    EditWindowOpen --> CancelRequested: Customer initiates cancel
-    EditWindowOpen --> EditWindowClosed: Time window expires<br/>(scheduled function)
-
-    EditRequested_Customer --> EditValidating: Validate edit rules &<br/>inventory availability
-    EditRequested_Merchant --> EditValidating: Validate against<br/>Shopify constraints
-
-    EditValidating --> EditRejected: Validation fails<br/>(out of stock, rule violation,<br/>already fulfilled)
-    EditValidating --> PriceDiffCalculated: Validation passes
-
-    PriceDiffCalculated --> PaymentRequired: Price increased<br/>(charge customer)
-    PriceDiffCalculated --> RefundRequired: Price decreased<br/>(refund customer)
-    PriceDiffCalculated --> EditProcessing: No price change
-
-    PaymentRequired --> EditProcessing: Payment captured
-    PaymentRequired --> EditRejected: Payment failed
-    RefundRequired --> EditProcessing: Refund issued
-
-    EditProcessing --> EditApplied: Shopify API<br/>orderEditCommit success
-    EditProcessing --> EditRejected: Shopify API error
-
-    EditApplied --> NotificationSent: Email / SMS sent
-    NotificationSent --> EditWindowOpen: Window still open<br/>(allow further edits)
-    NotificationSent --> EditWindowClosed: Window expired
-
-    CancelRequested --> RetentionFlow: Show retention offers
-    RetentionFlow --> EditWindowOpen: Customer retained<br/>(accepted offer)
-    RetentionFlow --> CancelProcessing: Customer confirms cancel
-    CancelProcessing --> OrderCancelled: Cancel via Shopify API<br/>+ restock inventory
-
-    EditRejected --> EditWindowOpen: Customer can retry
-    EditWindowClosed --> [*]
-    OrderCancelled --> [*]
-
-    note right of EditWindowOpen
-        Time-based window controlled by
-        merchant settings (e.g., 2 hours,
-        before fulfillment, etc.)
-    end note
-
-    note right of PriceDiffCalculated
-        Compares original order total
-        with new line items total
-    end note
-```
-
-## 3. Customer Self-Service Edit Flow (Sequence Diagram)
-
-```mermaid
-sequenceDiagram
-    actor C as Customer
-    participant OSP as Order Status Page<br/>(Theme Extension)
-    participant SW as Storefront Widget<br/>(Preact)
-    participant API as Firebase Functions<br/>(API Handler)
-    participant SVC as Edit Service
-    participant FS as Firestore
-    participant SHOP as Shopify GraphQL API
-    participant EMAIL as Email Service
-
-    C->>OSP: Views order status page
-    OSP->>API: GET /api/orders/{orderId}/edit-eligibility
-    API->>FS: Fetch editSettings for shop
-    API->>FS: Fetch order record
-    API->>SVC: checkEditEligibility(order, settings)
-    SVC-->>API: {eligible: true, allowedActions, timeRemaining}
-    API-->>OSP: Edit eligibility response
-
-    OSP->>SW: Render "Edit Order" button
-
-    C->>SW: Clicks "Edit Order"
-    SW->>API: GET /api/orders/{orderId}/edit-options
-    API->>SHOP: query order(id) { lineItems, variants }
-    SHOP-->>API: Order details + available variants
-    API->>FS: Fetch editRules for shop
-    API-->>SW: {lineItems, swapOptions, quantityLimits}
-
-    SW->>SW: Display edit form<br/>(item swap, qty change, address edit)
-
-    C->>SW: Selects changes<br/>(e.g., swap variant, change qty)
-    SW->>API: POST /api/orders/{orderId}/edits
-    Note over API: Request body: {changes: [{type, lineItemId, newVariantId, newQty}]}
-
-    API->>SVC: validateEdit(order, changes, rules)
-    SVC->>SHOP: query inventoryLevel(variantId)
-    SHOP-->>SVC: Stock availability
-    SVC->>SVC: Check edit rules<br/>(time window, max edits, allowed types)
-    SVC-->>API: Validation result
-
-    alt Validation fails
-        API-->>SW: 422 {error: "Item out of stock"}
-        SW->>C: Show error message
-    else Validation passes
-        API->>SVC: calculatePriceDiff(originalOrder, changes)
-        SVC-->>API: {priceDiff: +$5.00, newTotal: $55.00}
-        API-->>SW: {valid: true, priceDiff, requiresPayment: true}
-
-        SW->>C: Show price difference & confirm
-
-        C->>SW: Confirms changes
-        SW->>API: POST /api/orders/{orderId}/edits/confirm
-
-        API->>SVC: processEdit(order, changes)
-        SVC->>SHOP: mutation orderEditBegin(id)
-        SHOP-->>SVC: calculatedOrder
-
-        SVC->>SHOP: mutation orderEditAddVariant / removeVariant / setQuantity
-        SHOP-->>SVC: Updated calculated order
-
-        alt Price increased
-            SVC->>SHOP: mutation orderEditCommit(id)<br/>with notifyCustomer: false
-            SHOP-->>SVC: Order updated
-            SVC->>SHOP: mutation orderInvoiceSend(id)
-            Note over SVC: Customer pays via invoice link
-        else Price decreased
-            SVC->>SHOP: mutation orderEditCommit(id)
-            SHOP-->>SVC: Order updated + refund issued
-        else No price change
-            SVC->>SHOP: mutation orderEditCommit(id)
-            SHOP-->>SVC: Order updated
-        end
-
-        SVC->>FS: Save orderEdit record
-        SVC->>FS: Increment shop edit count (usage tracking)
-
-        API-->>SW: {success: true, updatedOrder}
-        SW->>C: Show success confirmation
-
-        API->>EMAIL: Send edit confirmation email
-        EMAIL-->>C: "Your order has been updated"
-    end
-```
-
-## 4. Merchant Admin Edit Flow (Sequence Diagram)
-
-```mermaid
-sequenceDiagram
-    actor M as Merchant
-    participant APP as Admin App<br/>(React/Polaris)
-    participant AB as App Bridge
-    participant API as Firebase Functions
-    participant SVC as Edit Service
-    participant FS as Firestore
-    participant SHOP as Shopify GraphQL API
-    participant PS as Cloud Pub/Sub
-    participant EMAIL as Email Service
-
-    M->>APP: Opens Order Editing dashboard
-    APP->>API: GET /api/orders?status=open&page=1
-    API->>FS: Query orders (shopId, status, pagination)
-    FS-->>API: Order list
-    API-->>APP: Paginated order list
-
-    M->>APP: Clicks on specific order
-    APP->>AB: Direct API: query order(id) { full details }
-    AB->>SHOP: GraphQL query
-    SHOP-->>AB: Order details
-    AB-->>APP: Order data (no backend round-trip)
-
-    M->>APP: Clicks "Edit Order"
-    APP->>API: POST /api/orders/{orderId}/merchant-edit/begin
-    API->>SVC: beginMerchantEdit(order)
-    SVC->>SHOP: mutation orderEditBegin(id)
-    SHOP-->>SVC: calculatedOrder with editableFields
-    SVC-->>API: Edit session with editable fields
-    API-->>APP: {editSession, lineItems, availableProducts}
-
-    APP->>APP: Render edit form with current values
-
-    M->>APP: Makes changes<br/>(add product, change qty, update address)
-    M->>APP: Clicks "Save Changes"
-    APP->>API: POST /api/orders/{orderId}/merchant-edit/commit
-    Note over API: {changes: [...], notifyCustomer: true, reason: "Customer request"}
-
-    API->>SVC: processMerchantEdit(order, changes)
-    SVC->>SHOP: mutation orderEditAddVariant / setQuantity
-    SHOP-->>SVC: Updated calculated order
-    SVC->>SHOP: mutation orderEditCommit(id, staffNote)
-    SHOP-->>SVC: Committed order
-
-    SVC->>FS: Save orderEdit record (editedBy: "merchant")
-    SVC->>FS: Log to analytics collection
-
-    API-->>APP: {success: true, updatedOrder}
-    APP->>M: Show success toast (Polaris Banner)
-
-    API->>PS: Publish "order.edited" event
-    PS->>EMAIL: Send customer notification
-    EMAIL-->>EMAIL: "The merchant updated your order"
-```
-
-## 5. Cancellation Retention Flow
-
-```mermaid
-sequenceDiagram
-    actor C as Customer
-    participant SW as Storefront Widget
-    participant API as Firebase Functions
-    participant SVC as Cancel Service
-    participant RS as Retention Service
-    participant FS as Firestore
-    participant SHOP as Shopify GraphQL API
-    participant EMAIL as Email Service
-
-    C->>SW: Clicks "Cancel Order"
-    SW->>API: POST /api/orders/{orderId}/cancel/init
-    API->>FS: Fetch editSettings.cancellation for shop
-    API->>SVC: initCancellation(order, settings)
-    SVC->>SVC: Check cancellation eligibility<br/>(not fulfilled, within window)
-
-    alt Not eligible
-        API-->>SW: {eligible: false, reason: "Order already shipped"}
-        SW->>C: Show "Cannot cancel" message
-    else Eligible
-        SVC->>RS: getRetentionOffers(order, shopSettings)
-        RS->>FS: Fetch retention strategies for shop
-        RS-->>SVC: Available retention offers
-
-        API-->>SW: {eligible: true, retentionOffers: [...]}
-
-        SW->>SW: Show cancellation reason picker
-        C->>SW: Selects reason: "Found cheaper elsewhere"
-
-        SW->>SW: Display targeted retention offers based on reason
-        Note over SW: Reason-specific offers:<br/>"Found cheaper" → discount<br/>"Don't need anymore" → delay delivery<br/>"Wrong item" → swap product
-
-        rect rgb(255, 248, 220)
-            Note over SW: Retention Offer Display
-            SW->>C: Offer 1: "Get 15% off this order"
-            SW->>C: Offer 2: "Swap to a different product"
-            SW->>C: Offer 3: "Delay delivery instead"
-            SW->>C: Option: "No thanks, cancel order"
-        end
-
-        alt Customer accepts discount offer
-            C->>SW: Accepts "15% off" offer
-            SW->>API: POST /api/orders/{orderId}/cancel/retain
-            Note over API: {retentionType: "discount", offerId: "..."}
-            API->>RS: applyRetentionOffer(order, offer)
-            RS->>SHOP: mutation discountCodeBasicCreate or orderEditBegin + adjust prices
-            SHOP-->>RS: Discount applied
-            RS->>FS: Log retention success
-            RS->>FS: Update analytics (retention_saved)
-            API-->>SW: {retained: true, discount: "15%", newTotal}
-            SW->>C: "Great! 15% discount applied to your order"
-            API->>EMAIL: Send retention confirmation
-
-        else Customer accepts swap offer
-            C->>SW: Accepts product swap
-            SW->>API: POST /api/orders/{orderId}/cancel/retain
-            Note over API: {retentionType: "swap", newVariantId: "..."}
-            API->>RS: applyRetentionOffer(order, offer)
-            RS->>SHOP: orderEditBegin → removeVariant → addVariant → commit
-            SHOP-->>RS: Order updated with swapped product
-            RS->>FS: Log retention success
-            API-->>SW: {retained: true, swappedProduct}
-            SW->>C: "Order updated with your new selection"
-
-        else Customer rejects all offers
-            C->>SW: Clicks "No thanks, cancel order"
-            SW->>API: POST /api/orders/{orderId}/cancel/confirm
-            Note over API: {reason: "Found cheaper elsewhere"}
-            API->>SVC: processCancellation(order, reason)
-            SVC->>SHOP: mutation orderCancel(orderId, reason, refund, restock)
-            SHOP-->>SVC: Order cancelled
-            SVC->>FS: Save cancellation record
-            SVC->>FS: Log analytics (retention_failed, reason)
-            API-->>SW: {cancelled: true, refundAmount}
-            SW->>C: "Order cancelled. Refund of $X issued."
-            API->>EMAIL: Send cancellation confirmation
-        end
-    end
-```
-
-## 6. Post-Purchase Upsell Flow (Sequence Diagram)
-
-```mermaid
-sequenceDiagram
-    actor C as Customer
-    participant SW as Storefront Widget
-    participant API as Firebase Functions
-    participant ES as Edit Service
-    participant US as Upsell Service
-    participant FS as Firestore
-    participant SHOP as Shopify GraphQL API
-
-    Note over C,SHOP: Customer is in the middle of an order edit flow
-
-    C->>SW: Editing order (changing item/qty)
-    SW->>API: POST /api/orders/{orderId}/edits
-    API->>ES: validateEdit(order, changes)
-    ES-->>API: Validation passes
-
-    API->>US: getUpsellRecommendations(order, changes)
-    US->>FS: Fetch upsellOffers for shop
-    US->>FS: Fetch product recommendation rules
-    US->>US: Match rules to current cart<br/>(complementary items, frequently bought together,<br/>volume discounts)
-
-    alt Recommendations available
-        US-->>API: {recommendations: [{productId, title, price, reason, discount}]}
-        API-->>SW: {editValid: true, priceDiff, upsellOffers: [...]}
-
-        rect rgb(232, 245, 233)
-            Note over SW: Upsell Display (before edit confirmation)
-            SW->>C: "Customers who bought X also bought Y"
-            SW->>C: "Add matching accessory - $14.99 (10% off)"
-            SW->>C: "Upgrade to bundle and save $8"
-        end
-
-        alt Customer adds upsell product
-            C->>SW: Clicks "Add to order" on recommendation
-            SW->>API: POST /api/orders/{orderId}/edits/confirm
-            Note over API: {changes: [...originalChanges], upsellItems: [{variantId, qty}]}
-
-            API->>ES: processEditWithUpsell(order, changes, upsellItems)
-            ES->>SHOP: mutation orderEditBegin(id)
-            SHOP-->>ES: calculatedOrder
-
-            loop For each change + upsell item
-                ES->>SHOP: mutation orderEditAddVariant / setQuantity
-                SHOP-->>ES: Updated calculated order
-            end
-
-            ES->>ES: Calculate final price diff<br/>(original changes + upsell items)
-
-            alt Additional payment needed
-                ES->>SHOP: mutation orderEditCommit(id)
-                SHOP-->>ES: Order committed
-                ES->>SHOP: mutation orderInvoiceSend(id)
-                Note over SHOP: Customer receives invoice for additional amount
-            else Price neutral or refund
-                ES->>SHOP: mutation orderEditCommit(id)
-                SHOP-->>ES: Order committed
-            end
-
-            ES->>FS: Save orderEdit with upsell data
-            ES->>FS: Log upsell conversion analytics
-            Note over FS: {editId, upsellOfferId, revenue, accepted: true}
-
-            API-->>SW: {success: true, updatedOrder, upsellApplied: true}
-            SW->>C: "Order updated with added items!"
-
-        else Customer declines upsell
-            C->>SW: Clicks "No thanks, just save changes"
-            SW->>API: POST /api/orders/{orderId}/edits/confirm
-            Note over API: {changes: [...originalChanges], upsellItems: []}
-            API->>ES: processEdit(order, changes)
-            ES->>FS: Log upsell impression (declined)
-            API-->>SW: {success: true, updatedOrder}
-        end
-
-    else No recommendations
-        US-->>API: {recommendations: []}
-        API-->>SW: {editValid: true, priceDiff, upsellOffers: []}
-        Note over SW: Proceed with normal edit flow (no upsell shown)
-    end
-```
-
-## 7. Data Flow Diagram
-
-```mermaid
-graph TB
-    subgraph "Data Sources"
-        SWH[Shopify Webhooks<br/>orders/create, orders/updated,<br/>orders/cancelled, app/uninstalled]
-        CUST[Customer Actions<br/>edit, cancel, upsell accept]
-        MERCH[Merchant Actions<br/>edit, settings change, rule update]
+    subgraph "Analytics"
+        BQ[(BigQuery<br/>Return Analytics<br/>Product Insights<br/>Financial Reports)]
     end
 
-    subgraph "Ingestion Layer (Firebase Functions)"
-        WHR[Webhook Receiver<br/>HMAC validation + idempotency]
-        APIR[API Router<br/>Auth + rate limiting]
-    end
-
-    subgraph "Processing Layer"
-        PS[Cloud Pub/Sub Topics]
-        CT[Cloud Tasks<br/>Delayed / Scheduled]
-
-        PS --- T1[order.created]
-        PS --- T2[order.edited]
-        PS --- T3[order.cancelled]
-        PS --- T4[edit.requested]
-        PS --- T5[notification.send]
-
-        BGW[Background Workers]
-        T1 --> BGW
-        T2 --> BGW
-        T3 --> BGW
-        T4 --> BGW
-        T5 --> BGW
-    end
-
-    subgraph "Data Storage (Firestore)"
-        FS_SHOPS[(shops<br/>shopId, domain, settings,<br/>plan, accessToken)]
-        FS_ORDERS[(orders<br/>shopId, orderId, status,<br/>editWindow, lineItems)]
-        FS_EDITS[(orderEdits<br/>shopId, orderId, editType,<br/>changes, status, priceDiff)]
-        FS_SETTINGS[(editSettings<br/>shopId, timeWindow, rules,<br/>allowedActions)]
-        FS_SUBS[(subscriptions<br/>shopId, plan, usage,<br/>billingCycle)]
-        FS_NOTIF[(notifications<br/>shopId, type, recipient,<br/>sentAt, TTL)]
-    end
-
-    subgraph "Analytics Pipeline"
-        BQ[(BigQuery)]
-        BQ_EDITS[edits table<br/>partitioned by date<br/>clustered by shopId]
-        BQ_CANCEL[cancellations table<br/>partitioned by date]
-        BQ_UPSELL[upsell_conversions table<br/>partitioned by date]
-        BQ_USAGE[usage_metrics table<br/>partitioned by date<br/>clustered by shopId, plan]
-
-        BQ --- BQ_EDITS
-        BQ --- BQ_CANCEL
-        BQ --- BQ_UPSELL
-        BQ --- BQ_USAGE
-    end
-
-    subgraph "Output Layer"
-        DASH[Admin Dashboard<br/>React/Polaris]
-        EMAILS[Email Notifications]
-        SAPI_OUT[Shopify API Updates]
-    end
-
-    SWH --> WHR
-    CUST --> APIR
-    MERCH --> APIR
-
-    WHR --> PS
-    APIR --> PS
-
-    BGW --> FS_ORDERS
-    BGW --> FS_EDITS
-    BGW --> FS_NOTIF
-
-    APIR --> FS_SHOPS
-    APIR --> FS_SETTINGS
-    APIR --> FS_SUBS
-
-    BGW -->|Streaming insert| BQ
-    CT -->|Daily aggregation| BQ
-
-    FS_EDITS -.->|Change stream<br/>Cloud Function trigger| BQ_EDITS
-    FS_NOTIF -.->|TTL auto-delete<br/>after 30 days| FS_NOTIF
-
-    BQ --> DASH
-    BGW --> EMAILS
-    BGW --> SAPI_OUT
-
-    style BQ fill:#4285f4,color:#fff
-    style PS fill:#34a853,color:#fff
-    style FS_SHOPS fill:#f4b400,color:#000
-    style FS_ORDERS fill:#f4b400,color:#000
-    style FS_EDITS fill:#f4b400,color:#000
-```
-
-## 8. Entity Relationship Diagram (ERD)
-
-```mermaid
-erDiagram
-    SHOPS {
-        string shopId PK "Shopify shop domain"
-        string domain "mystore.myshopify.com"
-        string accessToken "Shopify API token (encrypted)"
-        string plan "free | starter | growth | pro | business | enterprise"
-        string status "active | inactive | uninstalled"
-        timestamp installedAt
-        timestamp uninstalledAt
-        object appSettings "Global app preferences"
-    }
-
-    EDIT_SETTINGS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        number timeWindowMinutes "Edit window duration (e.g., 120)"
-        string timeWindowType "minutes | hours | before_fulfillment"
-        boolean allowAddressEdit
-        boolean allowItemSwap
-        boolean allowQuantityChange
-        boolean allowAddItem
-        boolean allowRemoveItem
-        boolean allowCancellation
-        number maxEditsPerOrder "Max edits allowed per order"
-        object retentionSettings "Cancellation retention config"
-        object upsellSettings "Post-purchase upsell config"
-        object notificationSettings "Email template config"
-    }
-
-    ORDERS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string shopifyOrderId "Shopify order GID"
-        string orderNumber "Human-readable #1001"
-        string customerEmail
-        string customerName
-        string financialStatus "paid | partially_refunded | refunded"
-        string fulfillmentStatus "unfulfilled | partial | fulfilled"
-        string editWindowStatus "open | closed | expired"
-        timestamp editWindowExpiresAt
-        number editCount "Number of edits made"
-        number originalTotal "Original order total"
-        number currentTotal "Current total after edits"
-        string currency "USD, EUR, etc."
-        timestamp orderCreatedAt
-        timestamp lastEditedAt
-        timestamp syncedAt
-    }
-
-    ORDER_EDITS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string orderId FK "References orders"
-        string shopifyOrderId
-        string editType "item_swap | quantity_change | address_edit | add_item | remove_item | cancel"
-        string initiatedBy "customer | merchant"
-        string status "pending | processing | applied | rejected | failed"
-        array changes "Array of change objects"
-        number priceDiff "Positive = charge, negative = refund"
-        string refundId "Shopify refund ID if applicable"
-        string reason "Customer-provided reason"
-        string staffNote "Merchant-provided note"
-        object previousState "Snapshot before edit"
-        object newState "Snapshot after edit"
-        timestamp requestedAt
-        timestamp processedAt
-    }
-
-    EDIT_RULES {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string ruleType "product | collection | tag | all"
-        string targetId "Product/Collection ID or * for all"
-        boolean allowSwap
-        boolean allowQuantityChange
-        boolean allowRemove
-        array swapTargets "Allowed swap product/variant IDs"
-        number minQuantity
-        number maxQuantity
-        boolean active
-    }
-
-    SUBSCRIPTIONS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string plan "free | starter | growth | pro | business | enterprise"
-        string shopifyChargeId "Recurring charge ID"
-        string status "active | frozen | cancelled | pending"
-        number monthlyEditLimit "50 | 200 | unlimited"
-        number currentMonthUsage "Edits used this cycle"
-        timestamp billingCycleStart
-        timestamp billingCycleEnd
-        timestamp createdAt
-    }
-
-    UPSELL_OFFERS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string offerType "complementary | upgrade | bundle | discount"
-        string triggerType "product | collection | cart_value | edit_type"
-        string triggerValue "Product ID, collection ID, or threshold"
-        array recommendedProducts "Product/variant IDs to recommend"
-        number discountPercent "Optional discount on upsell"
-        string discountType "percentage | fixed_amount"
-        number priority "Display order"
-        boolean active
-        timestamp createdAt
-    }
-
-    NOTIFICATIONS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string orderId FK "References orders"
-        string editId FK "References orderEdits"
-        string type "edit_confirmation | cancel_confirmation | retention_offer | upsell_accepted | invoice"
-        string channel "email | sms"
-        string recipient "Customer email or phone"
-        string status "queued | sent | failed | bounced"
-        string templateId "Email template reference"
-        object templateData "Dynamic template variables"
-        timestamp sentAt
-        timestamp expiresAt "TTL for auto-deletion"
-    }
-
-    ANALYTICS_EVENTS {
-        string id PK "auto-generated"
-        string shopId FK "References shops"
-        string eventType "edit | cancel | retention | upsell | widget_view"
-        string orderId
-        string editId
-        object eventData "Event-specific payload"
-        timestamp createdAt
-        timestamp expiresAt "TTL 90 days"
-    }
-
-    SHOPS ||--o{ ORDERS : "has many"
-    SHOPS ||--|| EDIT_SETTINGS : "has one"
-    SHOPS ||--o{ EDIT_RULES : "has many"
-    SHOPS ||--|| SUBSCRIPTIONS : "has one active"
-    SHOPS ||--o{ UPSELL_OFFERS : "has many"
-    ORDERS ||--o{ ORDER_EDITS : "has many"
-    ORDERS ||--o{ NOTIFICATIONS : "has many"
-    ORDER_EDITS ||--o{ NOTIFICATIONS : "triggers"
-    SHOPS ||--o{ ANALYTICS_EVENTS : "has many"
-```
-
-## 9. Deployment Architecture
-
-```mermaid
-graph TB
-    subgraph "Client Layer"
-        BROWSER[Merchant Browser<br/>Shopify Admin iFrame]
-        CUST_BROWSER[Customer Browser<br/>Storefront / Order Status]
-    end
-
-    subgraph "CDN / Edge"
-        CF[Firebase Hosting CDN<br/>Global Edge Network]
-    end
-
-    subgraph "GCP Project: avada-order-editing"
-        subgraph "Compute"
-            FF_API[Firebase Functions<br/>API Handlers<br/>Node.js 18 | 256MB-1GB RAM<br/>us-central1]
-            FF_WH[Firebase Functions<br/>Webhook Handlers<br/>Node.js 18 | 256MB RAM<br/>us-central1]
-            FF_BG[Firebase Functions<br/>Background Workers<br/>Pub/Sub triggered<br/>Node.js 18 | 512MB RAM]
-            FF_CRON[Firebase Functions<br/>Scheduled Functions<br/>Cloud Scheduler triggered<br/>Edit window expiry, usage reset]
-        end
-
-        subgraph "Messaging & Scheduling"
-            PUBSUB[Cloud Pub/Sub]
-            PUBSUB_T1[Topic: order-events]
-            PUBSUB_T2[Topic: edit-events]
-            PUBSUB_T3[Topic: notification-events]
-            PUBSUB_DLQ[Dead Letter Topic<br/>Failed message retry]
-
-            TASKS[Cloud Tasks]
-            TASKS_Q1[Queue: delayed-edits]
-            TASKS_Q2[Queue: bulk-operations]
-
-            SCHEDULER[Cloud Scheduler]
-            SCHED_1[Every 5 min: expire edit windows]
-            SCHED_2[Monthly: reset usage counters]
-            SCHED_3[Daily: sync analytics to BigQuery]
-        end
-
-        subgraph "Database"
-            FIRESTORE[(Cloud Firestore<br/>Native Mode<br/>nam5 multi-region)]
-            FIRESTORE_IDX[Compound Indexes<br/>shopId + status<br/>shopId + orderCreatedAt<br/>shopId + editWindowStatus]
-        end
-
-        subgraph "Analytics"
-            BIGQUERY[(BigQuery<br/>Dataset: order_editing)]
-            BQ_P[Partitioned Tables<br/>by _PARTITIONDATE]
-            BQ_C[Clustered by<br/>shopId, plan, eventType]
-        end
-
-        subgraph "Security"
-            SA[Service Accounts<br/>Least privilege per function]
-            SM[Secret Manager<br/>API keys, tokens]
-        end
-
-        subgraph "Monitoring"
-            LOG[Cloud Logging<br/>Structured logs]
-            MON[Cloud Monitoring<br/>Alerts & dashboards]
-            TRACE[Cloud Trace<br/>Request tracing]
-        end
-    end
-
-    subgraph "External"
-        SHOPIFY[Shopify Platform<br/>GraphQL Admin API<br/>REST Admin API<br/>Webhooks]
-        SENDGRID[Email Provider<br/>SendGrid]
-        GADDR_API[Google Maps<br/>Address Validation API]
-    end
-
-    BROWSER --> CF
-    CUST_BROWSER --> CF
-    CF --> FF_API
-
-    SHOPIFY -->|Webhooks| FF_WH
-    FF_WH --> PUBSUB
-    PUBSUB --> PUBSUB_T1
-    PUBSUB --> PUBSUB_T2
-    PUBSUB --> PUBSUB_T3
-    PUBSUB_T1 --> FF_BG
-    PUBSUB_T2 --> FF_BG
-    PUBSUB_T3 --> FF_BG
-    PUBSUB_T1 -.->|On failure| PUBSUB_DLQ
-
-    SCHEDULER --> SCHED_1
-    SCHEDULER --> SCHED_2
-    SCHEDULER --> SCHED_3
-    SCHED_1 --> FF_CRON
-    SCHED_2 --> FF_CRON
-    SCHED_3 --> FF_CRON
-
-    TASKS --> TASKS_Q1
-    TASKS --> TASKS_Q2
-    TASKS_Q1 --> FF_BG
-    TASKS_Q2 --> FF_BG
-
-    FF_API --> FIRESTORE
-    FF_BG --> FIRESTORE
-    FF_CRON --> FIRESTORE
-    FIRESTORE --> FIRESTORE_IDX
-
-    FF_BG --> BIGQUERY
-    FF_CRON --> BIGQUERY
-    BIGQUERY --> BQ_P
-    BIGQUERY --> BQ_C
-
-    FF_API --> SHOPIFY
-    FF_BG --> SHOPIFY
-    FF_BG --> SENDGRID
-    FF_API --> GADDR_API
-
-    FF_API --> SM
-    FF_WH --> SM
-
-    FF_API --> LOG
-    FF_BG --> LOG
-    LOG --> MON
-
-    style FIRESTORE fill:#f4b400,color:#000
-    style BIGQUERY fill:#4285f4,color:#fff
-    style PUBSUB fill:#34a853,color:#fff
-    style CF fill:#ff9800,color:#fff
-```
-
-## 10. Webhook Processing Flow
-
-```mermaid
-sequenceDiagram
-    participant SHOP as Shopify Platform
-    participant FF as Firebase Function<br/>(Webhook Handler)
-    participant HMAC as HMAC Validator
-    participant IDEM as Idempotency Check
-    participant FS as Firestore
-    participant PS as Cloud Pub/Sub
-    participant BG as Background Worker<br/>(Pub/Sub triggered)
-    participant SVC as Service Layer
-    participant SAPI as Shopify GraphQL API
-    participant EMAIL as Email Service
-    participant BQ as BigQuery
-    participant DLQ as Dead Letter Queue
-
-    SHOP->>FF: POST /webhooks/{topic}<br/>Headers: X-Shopify-Hmac-Sha256,<br/>X-Shopify-Topic, X-Shopify-Shop-Domain
-
-    FF->>HMAC: Verify HMAC-SHA256 signature
-    Note over HMAC: Compare computed HMAC<br/>using app secret vs header value
-
-    alt HMAC invalid
-        HMAC-->>FF: Invalid signature
-        FF-->>SHOP: 401 Unauthorized
-    else HMAC valid
-        HMAC-->>FF: Signature verified
-
-        FF->>IDEM: Check webhook ID in Firestore
-        FF->>FS: GET webhookLogs/{webhookId}
-
-        alt Already processed
-            FS-->>FF: Document exists (duplicate)
-            FF-->>SHOP: 200 OK (idempotent, skip)
-        else New webhook
-            FS-->>FF: Document not found
-
-            FF->>FS: SET webhookLogs/{webhookId}<br/>{topic, shopDomain, receivedAt, TTL: 7d}
-
-            FF->>PS: Publish message to topic
-            Note over FF,PS: Topic selected by webhook type:<br/>orders/create → order-events<br/>orders/updated → order-events<br/>orders/cancelled → order-events<br/>app/uninstalled → app-events
-
-            FF-->>SHOP: 200 OK
-            Note over FF,SHOP: Response within 5 seconds<br/>(Shopify requirement)
-        end
-    end
-
-    Note over PS,BG: Async processing begins
-
-    PS->>BG: Deliver message (auto-retry on failure)
-
-    alt orders/create
-        BG->>SVC: handleOrderCreated(orderData)
-        SVC->>FS: Fetch editSettings for shop
-        SVC->>SVC: Calculate edit window expiry<br/>(now + timeWindowMinutes)
-        SVC->>FS: CREATE orders/{id}<br/>{shopifyOrderId, editWindowStatus: "open",<br/>editWindowExpiresAt, lineItems, customer}
-        SVC->>BQ: Insert order_created event
-
-    else orders/updated
-        BG->>SVC: handleOrderUpdated(orderData)
-        SVC->>FS: GET orders by shopifyOrderId
-        SVC->>SVC: Detect changes<br/>(fulfillment status, payment status)
-
-        alt Fulfillment started
-            SVC->>FS: UPDATE orders/{id}<br/>{editWindowStatus: "closed",<br/>fulfillmentStatus: "partial"}
-            SVC->>BQ: Insert edit_window_closed event
-        else Other update
-            SVC->>FS: UPDATE orders/{id} with new data
-        end
-
-    else orders/cancelled
-        BG->>SVC: handleOrderCancelled(orderData)
-        SVC->>FS: UPDATE orders/{id}<br/>{editWindowStatus: "closed", status: "cancelled"}
-        SVC->>FS: Query related orderEdits<br/>UPDATE status to "void"
-        SVC->>BQ: Insert order_cancelled event
-
-    else app/uninstalled
-        BG->>SVC: handleAppUninstalled(shopDomain)
-        SVC->>FS: UPDATE shops/{shopId}<br/>{status: "uninstalled", uninstalledAt}
-        SVC->>FS: Clear sensitive data (accessToken)
-        SVC->>BQ: Insert app_uninstalled event
-    end
-
-    alt Processing fails (3 retries exhausted)
-        BG-->>PS: NACK (not acknowledged)
-        PS->>DLQ: Move to dead letter topic
-        DLQ->>FS: Log failed webhook for manual review
-        Note over DLQ: Alert via Cloud Monitoring
-    end
+    FE <-->|App Bridge API| SA
+    FE <-->|HTTPS| CF
+    TE <-->|HTTPS| CF
+    SW -->|Webhook Events| CF
+    CF <-->|GraphQL / REST| SA
+    CF --> SHIP
+    CF --> EMAIL
+    CF --> SMS
+    CF <--> HD
+    CF <--> KLAV
+    CF --> SF
+    CF --> BQ
+    CT -->|Async Processing| CF
+    SPOS -.->|Future: P2| CF
+
+    style FE fill:#5C6AC4,color:#fff
+    style TE fill:#008060,color:#fff
+    style CF fill:#FFA726,color:#fff
+    style FS fill:#4FC3F7,color:#fff
+    style BQ fill:#7E57C2,color:#fff
+    style SHIP fill:#EF5350,color:#fff
 ```
 
 ---
 
-## Diagram Index
+## 2. Return Request Lifecycle State Machine
 
-| # | Diagram | Type | Purpose |
-|---|---------|------|---------|
-| 1 | System Architecture | Component | Full system overview with all services and connections |
-| 2 | Order Edit Lifecycle | State Machine | All possible states an order edit can be in |
-| 3 | Customer Self-Service Edit | Sequence | End-to-end customer edit flow with payment handling |
-| 4 | Merchant Admin Edit | Sequence | Merchant-initiated edit via admin dashboard |
-| 5 | Cancellation Retention | Sequence | Cancel flow with retention offers to reduce churn |
-| 6 | Post-Purchase Upsell | Sequence | Upsell recommendations during edit flow |
-| 7 | Data Flow | Data Flow | How data moves through the system |
-| 8 | Entity Relationships | ERD | Firestore collections and their relationships |
-| 9 | Deployment Architecture | Infrastructure | GCP/Firebase resource topology |
-| 10 | Webhook Processing | Sequence | Webhook receipt, validation, and async processing |
+```mermaid
+stateDiagram-v2
+    [*] --> Requested: Customer submits return
+
+    Requested --> UnderReview: Manual review required
+    Requested --> AutoApproved: Matches auto-approve rules
+    Requested --> Rejected: Violates policy<br/>(outside window, non-returnable)
+
+    UnderReview --> Approved: Merchant approves
+    UnderReview --> Rejected: Merchant rejects
+    UnderReview --> MoreInfoNeeded: Request photos/details
+
+    MoreInfoNeeded --> UnderReview: Customer provides info
+
+    AutoApproved --> Approved
+
+    Approved --> LabelGenerated: Return shipping label created
+    Approved --> KeepItem: Green return<br/>(low-value item, skip shipping)
+    Approved --> QRCodeIssued: QR code for box-free drop-off
+
+    LabelGenerated --> ItemShipped: Customer ships item
+    QRCodeIssued --> ItemShipped: Customer drops off item
+
+    ItemShipped --> InTransit: Carrier tracking active
+    InTransit --> ItemReceived: Delivered to warehouse
+
+    ItemReceived --> Inspecting: Warehouse inspects item
+
+    Inspecting --> Passed: Item condition acceptable
+    Inspecting --> Failed: Item condition unacceptable
+
+    Failed --> PartialRefund: Partial refund issued<br/>(damaged/worn item)
+    Failed --> Rejected: Return denied post-inspection
+
+    Passed --> RefundIssued: Refund to original payment
+    Passed --> StoreCreditIssued: Store credit / gift card
+    Passed --> ExchangeCreated: Exchange order created
+    Passed --> RestockedInventory: Item returned to inventory
+
+    KeepItem --> RefundIssued
+    KeepItem --> StoreCreditIssued
+    KeepItem --> ExchangeCreated
+
+    RefundIssued --> Completed
+    StoreCreditIssued --> Completed
+    ExchangeCreated --> Completed
+    PartialRefund --> Completed
+    Rejected --> Closed
+
+    Completed --> [*]
+    Closed --> [*]
+
+    state Approved {
+        [*] --> DetermineResolution
+        DetermineResolution --> SelectShipping: Refund or Store Credit
+        DetermineResolution --> InitiateExchange: Exchange selected
+    }
+
+    note right of AutoApproved
+        Rules engine checks:
+        - Within return window
+        - Item is returnable
+        - Order value threshold
+        - Customer not blocklisted
+        - No fraud flags
+    end note
+
+    note right of KeepItem
+        Triggered when:
+        - Item value < merchant threshold
+        - Shipping cost > item value
+        - Sustainability preference
+    end note
+```
+
+---
+
+## 3. Exchange Flow Diagram
+
+```mermaid
+flowchart TB
+    Start([Customer Initiates Return]) --> SelectItems[Select Items to Return]
+    SelectItems --> ChooseResolution{Choose Resolution Type}
+
+    ChooseResolution -->|Refund| RefundFlow[Standard Refund Flow]
+    ChooseResolution -->|Store Credit| CreditFlow[Store Credit Flow]
+    ChooseResolution -->|Exchange| ExchangeType{Exchange Type}
+
+    ExchangeType -->|Same Product<br/>Different Variant| VariantExchange[Variant Exchange]
+    ExchangeType -->|Different Product| ProductExchange[Cross-Product Exchange]
+    ExchangeType -->|Shop Now| ShopNowFlow[Browse Store Catalog]
+
+    VariantExchange --> SelectVariant[Select Size / Color / Option]
+    ProductExchange --> SelectProduct[Select Replacement Product]
+    ShopNowFlow --> BrowseCatalog[Browse Full Catalog<br/>with Return Credit Applied]
+
+    SelectVariant --> CheckInventory{Inventory Available?}
+    SelectProduct --> CheckInventory
+    BrowseCatalog --> SelectFromCatalog[Customer Selects Item] --> CheckInventory
+
+    CheckInventory -->|Yes| ReserveInventory[Reserve Exchange Item<br/>Hold for 7 days]
+    CheckInventory -->|No| SuggestAlternatives[Suggest In-Stock Alternatives<br/>AI Recommendations]
+    SuggestAlternatives --> SelectVariant
+
+    ReserveInventory --> PriceComparison{Price Difference?}
+
+    PriceComparison -->|Same Price| NoCharge[No Additional Charge]
+    PriceComparison -->|New Item Costs More<br/>Upsell| CollectDifference[Charge Price Difference<br/>to Customer Payment Method]
+    PriceComparison -->|New Item Costs Less<br/>Downsell| IssueCredit[Issue Remaining as<br/>Store Credit]
+
+    NoCharge --> BonusCredit{Merchant Offers<br/>Bonus Credit?}
+    CollectDifference --> BonusCredit
+    IssueCredit --> BonusCredit
+
+    BonusCredit -->|Yes| ApplyBonus[Apply Bonus Credit<br/>e.g., Extra $5 for choosing exchange]
+    BonusCredit -->|No| SkipBonus[Continue without bonus]
+
+    ApplyBonus --> InstantExchange{Instant Exchange<br/>Enabled?}
+    SkipBonus --> InstantExchange
+
+    InstantExchange -->|Yes - Pro Plan| CreateNewOrder[Create Exchange Order<br/>Ship Immediately]
+    InstantExchange -->|No - Standard| WaitForReturn[Wait for Return Receipt<br/>Then Create Exchange Order]
+
+    CreateNewOrder --> HoldCard[Hold Customer Card<br/>as Security Deposit]
+    HoldCard --> ShipExchange[Ship Exchange Item]
+    ShipExchange --> AwaitReturn[Await Original Item Return]
+
+    WaitForReturn --> CustomerShips[Customer Ships Return]
+    CustomerShips --> ReceiveItem[Receive & Inspect Return]
+    ReceiveItem --> CreateExchangeOrder[Create Exchange Order]
+    CreateExchangeOrder --> ShipExchangeStd[Ship Exchange Item]
+
+    AwaitReturn --> ReturnReceived{Return Received<br/>Within Window?}
+    ReturnReceived -->|Yes| ReleaseHold[Release Card Hold]
+    ReturnReceived -->|No - Expired| ChargeCard[Charge Security Deposit]
+
+    ReleaseHold --> ExchangeComplete([Exchange Complete])
+    ChargeCard --> ExchangeComplete
+    ShipExchangeStd --> ExchangeComplete
+
+    style Start fill:#5C6AC4,color:#fff
+    style ExchangeComplete fill:#008060,color:#fff
+    style InstantExchange fill:#FFA726,color:#000
+    style BonusCredit fill:#7E57C2,color:#fff
+    style CheckInventory fill:#EF5350,color:#fff
+```
+
+---
+
+## 4. Customer Return Portal Flow
+
+```mermaid
+flowchart TB
+    Entry([Customer Visits Return Portal]) --> Lookup[Order Lookup]
+
+    Lookup --> LookupMethod{Lookup Method}
+    LookupMethod -->|Order # + Email| ValidateOrder[Validate Order]
+    LookupMethod -->|Login to Account| AccountOrders[Show Customer Orders]
+
+    ValidateOrder --> OrderFound{Order Found?}
+    OrderFound -->|No| ErrorMsg[Show Error:<br/>Order Not Found]
+    ErrorMsg --> Lookup
+    OrderFound -->|Yes| CheckEligibility{Return Eligible?}
+
+    AccountOrders --> SelectOrder[Select Order to Return] --> CheckEligibility
+
+    CheckEligibility -->|No - Outside Window| NotEligible[Show: Return Window Expired<br/>Contact support for help]
+    CheckEligibility -->|No - Non-returnable| NonReturnable[Show: This item cannot be returned<br/>per store policy]
+    CheckEligibility -->|Yes| SelectItems[Select Items to Return]
+
+    SelectItems --> ItemList[Display Order Items<br/>with Checkboxes]
+    ItemList --> SelectQuantity[Select Quantity per Item]
+    SelectQuantity --> SelectReason[Select Return Reason<br/>per Item]
+
+    SelectReason --> ReasonDropdown{Reason Category}
+    ReasonDropdown -->|Sizing Issue| SizeDetail[Specify: Too Small / Too Large]
+    ReasonDropdown -->|Damaged/Defective| DamageDetail[Describe Damage]
+    ReasonDropdown -->|Not As Described| DescDetail[Describe Difference]
+    ReasonDropdown -->|Changed Mind| MindDetail[Optional Comment]
+    ReasonDropdown -->|Other| OtherDetail[Provide Details]
+
+    SizeDetail --> PhotoRequired{Photo Required<br/>by Policy?}
+    DamageDetail --> PhotoRequired
+    DescDetail --> PhotoRequired
+    MindDetail --> PhotoRequired
+    OtherDetail --> PhotoRequired
+
+    PhotoRequired -->|Yes| UploadPhotos[Upload Photos<br/>Max 5 images, 10MB each<br/>Stored in Cloud Storage]
+    PhotoRequired -->|No| ChooseResolution
+
+    UploadPhotos --> ChooseResolution{Choose Resolution}
+
+    ChooseResolution -->|Refund to Original| RefundOption[Refund to Original Payment]
+    ChooseResolution -->|Store Credit| CreditOption[Store Credit / Gift Card<br/>Show Bonus: +$5 incentive]
+    ChooseResolution -->|Exchange| ExchangeOption[Exchange for Another Item<br/>Show Bonus: +$5 incentive]
+
+    RefundOption --> ShippingMethod
+    CreditOption --> ShippingMethod
+    ExchangeOption --> ExchangeSelection[Select Exchange Item<br/>Variant or Product] --> ShippingMethod
+
+    ShippingMethod{Return Shipping Method}
+    ShippingMethod -->|Prepaid Label| GenerateLabel[Generate Return Label<br/>USPS / FedEx / UPS]
+    ShippingMethod -->|QR Code| GenerateQR[Generate QR Code<br/>for Box-Free Drop-off]
+    ShippingMethod -->|Keep Item| KeepItemOption[Green Return:<br/>Keep the Item]
+    ShippingMethod -->|Customer Pays| CustomerShip[Customer Arranges Shipping<br/>Provide Warehouse Address]
+
+    GenerateLabel --> ReviewSummary
+    GenerateQR --> ReviewSummary
+    KeepItemOption --> ReviewSummary
+    CustomerShip --> ReviewSummary
+
+    ReviewSummary[Review Return Summary<br/>Items, Reasons, Resolution, Shipping]
+    ReviewSummary --> Submit[Submit Return Request]
+
+    Submit --> Confirmation[Confirmation Page<br/>Return ID, Next Steps,<br/>Tracking Link, Email Sent]
+
+    Confirmation --> TrackStatus[Track Return Status<br/>Real-time Updates]
+
+    TrackStatus --> StatusPage[Status Page Shows:<br/>Submitted > Approved > Shipped ><br/>Received > Inspected > Resolved]
+
+    style Entry fill:#5C6AC4,color:#fff
+    style Confirmation fill:#008060,color:#fff
+    style CreditOption fill:#7E57C2,color:#fff
+    style ExchangeOption fill:#FFA726,color:#000
+```
+
+---
+
+## 5. Data Flow Diagram
+
+```mermaid
+flowchart LR
+    subgraph "Shopify Platform"
+        SO[Shopify Orders]
+        SP[Shopify Products]
+        SC[Shopify Customers]
+        SPAY[Shopify Payments]
+        SINV[Shopify Inventory]
+    end
+
+    subgraph "Inbound Webhooks"
+        WH_OC[orders/create]
+        WH_OU[orders/updated]
+        WH_RC[refunds/create]
+        WH_AU[app/uninstalled]
+        WH_PI[products/update]
+    end
+
+    subgraph "Firebase Cloud Functions"
+        direction TB
+        WH_Handler[Webhook Handlers<br/>Verify HMAC, Queue Processing]
+        API_Handler[API Handlers<br/>Return Portal + Admin APIs]
+
+        subgraph "Services Layer"
+            RS[Return Service<br/>Create, Update, Process]
+            ES[Exchange Service<br/>Variant, Product, Instant]
+            RFS[Refund Service<br/>Original Payment, Store Credit]
+            PS[Policy Service<br/>Eligibility, Rules Engine]
+            NS[Notification Service<br/>Email, SMS]
+            SS[Shipping Service<br/>Labels, QR Codes, Tracking]
+            AS[Analytics Service<br/>Events, Aggregations]
+            FDS[Fraud Detection Service<br/>Score, Block, Alert]
+        end
+
+        subgraph "Repositories"
+            RR[(ReturnRequests)]
+            SR[(Shops / Settings)]
+            RIR[(ReturnItems)]
+            ER[(Exchanges)]
+            SLR[(ShippingLabels)]
+            NR[(Notifications)]
+            ALR[(AuditLogs)]
+        end
+    end
+
+    subgraph "External Services"
+        EP[EasyPost / Shippo<br/>Label Generation]
+        EM[Email Provider<br/>SendGrid / Mailgun]
+        SMSP[SMS Provider<br/>Twilio]
+    end
+
+    subgraph "Analytics Pipeline"
+        BQ[(BigQuery)]
+        BQ_RET[Return Events Table<br/>Partitioned by date]
+        BQ_PROD[Product Return Rates<br/>Clustered by product_id]
+        BQ_FIN[Financial Impact<br/>Partitioned by month]
+    end
+
+    SO -->|Webhook| WH_OC --> WH_Handler
+    SO -->|Webhook| WH_OU --> WH_Handler
+    SPAY -->|Webhook| WH_RC --> WH_Handler
+    SP -->|Webhook| WH_PI --> WH_Handler
+
+    WH_Handler --> RS
+    WH_Handler --> RFS
+
+    API_Handler --> RS
+    API_Handler --> ES
+    API_Handler --> RFS
+    API_Handler --> PS
+    API_Handler --> SS
+
+    RS --> RR
+    RS --> RIR
+    RS --> NS
+    RS --> AS
+    RS --> FDS
+    ES --> ER
+    ES --> SINV
+    RFS --> SPAY
+    SS --> EP
+    SS --> SLR
+    NS --> EM
+    NS --> SMSP
+    NS --> NR
+    AS --> BQ
+
+    BQ --> BQ_RET
+    BQ --> BQ_PROD
+    BQ --> BQ_FIN
+
+    PS --> SR
+    FDS --> ALR
+
+    style WH_Handler fill:#FFA726,color:#000
+    style API_Handler fill:#FFA726,color:#000
+    style BQ fill:#7E57C2,color:#fff
+    style RS fill:#4FC3F7,color:#000
+    style ES fill:#4FC3F7,color:#000
+```
+
+---
+
+## 6. Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    SHOPS {
+        string shopId PK
+        string shopDomain
+        string shopName
+        string plan "free|starter|pro|enterprise"
+        object settings
+        object branding "logo, colors, fonts"
+        timestamp installedAt
+        timestamp updatedAt
+        boolean active
+    }
+
+    RETURN_POLICIES {
+        string policyId PK
+        string shopId FK
+        int returnWindowDays "e.g., 30"
+        boolean requirePhotos
+        boolean autoApproveEnabled
+        object autoApproveRules
+        array nonReturnableProducts
+        array nonReturnableTags
+        boolean exchangeBonusEnabled
+        number exchangeBonusAmount
+        boolean greenReturnsEnabled
+        number greenReturnsThreshold
+        boolean restockingFeeEnabled
+        number restockingFeePercent
+        array returnReasons
+        timestamp createdAt
+        timestamp updatedAt
+    }
+
+    RETURN_REQUESTS {
+        string returnId PK
+        string shopId FK
+        string orderId FK
+        string orderName "e.g., #1234"
+        string customerId
+        string customerEmail
+        string customerName
+        string status "requested|under_review|approved|rejected|shipped|received|inspected|completed|closed"
+        string resolutionType "refund|store_credit|exchange"
+        string shippingMethod "label|qr_code|keep_item|customer_ships"
+        number totalReturnValue
+        number refundAmount
+        number storeCreditAmount
+        boolean isFraudFlagged
+        number fraudScore
+        string notes
+        timestamp requestedAt
+        timestamp approvedAt
+        timestamp shippedAt
+        timestamp receivedAt
+        timestamp resolvedAt
+        timestamp ttl "Auto-delete after 2 years"
+    }
+
+    RETURN_ITEMS {
+        string itemId PK
+        string returnId FK
+        string shopId FK
+        string lineItemId
+        string productId
+        string variantId
+        string productTitle
+        string variantTitle
+        int quantity
+        number unitPrice
+        string returnReason
+        string returnReasonDetail
+        string conditionOnReceipt "new|like_new|used|damaged"
+        boolean restocked
+        array photoUrls
+        timestamp createdAt
+    }
+
+    EXCHANGES {
+        string exchangeId PK
+        string returnId FK
+        string shopId FK
+        string originalVariantId
+        string newVariantId
+        string newProductId
+        string newOrderId "Shopify order ID for exchange"
+        string exchangeType "variant|cross_product|shop_now"
+        number originalPrice
+        number newPrice
+        number priceDifference
+        number bonusCreditApplied
+        boolean isInstantExchange
+        string status "pending|order_created|shipped|completed|cancelled"
+        timestamp reservedUntil "Inventory hold expiry"
+        timestamp createdAt
+        timestamp completedAt
+    }
+
+    REFUNDS {
+        string refundId PK
+        string returnId FK
+        string shopId FK
+        string shopifyRefundId "Shopify refund ID"
+        string type "original_payment|store_credit|gift_card|partial"
+        number amount
+        string currency
+        string status "pending|processed|failed"
+        string giftCardId "If store credit"
+        timestamp processedAt
+        timestamp createdAt
+    }
+
+    STORE_CREDITS {
+        string creditId PK
+        string shopId FK
+        string customerId
+        string customerEmail
+        string giftCardId "Shopify gift card ID"
+        number amount
+        number remainingBalance
+        string currency
+        string source "return_refund|exchange_bonus|exchange_downsell|promotional"
+        string returnId FK
+        boolean active
+        timestamp issuedAt
+        timestamp expiresAt
+    }
+
+    SHIPPING_LABELS {
+        string labelId PK
+        string returnId FK
+        string shopId FK
+        string carrier "usps|fedex|ups|dhl"
+        string trackingNumber
+        string trackingUrl
+        string labelUrl "PDF download link"
+        string qrCodeUrl "QR code image if box-free"
+        string labelType "prepaid|qr_code"
+        number shippingCost
+        string status "created|in_transit|delivered|expired"
+        timestamp createdAt
+        timestamp expiresAt
+    }
+
+    RETURN_REASONS {
+        string reasonId PK
+        string shopId FK
+        string label "e.g., Too Small"
+        string category "sizing|defective|not_as_described|changed_mind|other"
+        boolean requiresPhoto
+        boolean active
+        int sortOrder
+        timestamp createdAt
+    }
+
+    NOTIFICATIONS {
+        string notificationId PK
+        string shopId FK
+        string returnId FK
+        string type "email|sms"
+        string event "return_requested|return_approved|return_rejected|label_created|item_received|refund_issued|exchange_shipped"
+        string recipient
+        string subject
+        string status "sent|failed|pending"
+        timestamp sentAt
+        timestamp ttl "Auto-delete after 90 days"
+    }
+
+    AUDIT_LOGS {
+        string logId PK
+        string shopId FK
+        string returnId FK
+        string action "created|approved|rejected|refunded|exchanged|note_added|status_changed"
+        string performedBy "system|merchant_email"
+        object previousState
+        object newState
+        timestamp createdAt
+        timestamp ttl "Auto-delete after 1 year"
+    }
+
+    SHOPS ||--o{ RETURN_POLICIES : "configures"
+    SHOPS ||--o{ RETURN_REQUESTS : "receives"
+    SHOPS ||--o{ RETURN_REASONS : "defines"
+    RETURN_REQUESTS ||--o{ RETURN_ITEMS : "contains"
+    RETURN_REQUESTS ||--o| EXCHANGES : "may create"
+    RETURN_REQUESTS ||--o| REFUNDS : "may issue"
+    RETURN_REQUESTS ||--o| SHIPPING_LABELS : "may generate"
+    RETURN_REQUESTS ||--o{ NOTIFICATIONS : "triggers"
+    RETURN_REQUESTS ||--o{ AUDIT_LOGS : "logs"
+    RETURN_REQUESTS }o--o| STORE_CREDITS : "may issue"
+    EXCHANGES }o--o| STORE_CREDITS : "may use bonus"
+```
+
+---
+
+## 7. Deployment Architecture
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        ADMIN[Shopify Admin<br/>Embedded App<br/>React + Polaris]
+        STORE[Shopify Storefront<br/>Theme Extension<br/>Liquid + JS]
+        MOBILE[Mobile Browsers<br/>Responsive Portal]
+    end
+
+    subgraph "CDN / Hosting"
+        FH[Firebase Hosting<br/>Static Assets<br/>SPA, CSS, JS]
+    end
+
+    subgraph "Google Cloud Platform"
+        subgraph "Compute"
+            CF1[Cloud Functions<br/>API Handlers<br/>Node.js 20]
+            CF2[Cloud Functions<br/>Webhook Processors<br/>Node.js 20]
+            CF3[Cloud Functions<br/>Background Workers<br/>Triggered by Cloud Tasks]
+            CF4[Cloud Functions<br/>Scheduled Jobs<br/>Pub/Sub Cron]
+        end
+
+        subgraph "Data Storage"
+            FS[(Firestore<br/>Primary Database<br/>Multi-region)]
+            GCS[Cloud Storage<br/>Return Photos<br/>Shipping Labels PDFs]
+            RC[Redis / Memorystore<br/>Rate Limiting<br/>Session Cache]
+        end
+
+        subgraph "Async Processing"
+            CT[Cloud Tasks<br/>Queued Jobs]
+            PS_PUB[Pub/Sub Topics<br/>return.created<br/>return.approved<br/>return.completed<br/>exchange.created<br/>refund.processed]
+        end
+
+        subgraph "Analytics & Monitoring"
+            BQ[(BigQuery<br/>Analytics Warehouse)]
+            CL[Cloud Logging<br/>Structured Logs]
+            CM[Cloud Monitoring<br/>Alerts & Dashboards]
+        end
+    end
+
+    subgraph "External APIs"
+        SHOPIFY_API[Shopify Admin API<br/>GraphQL + REST]
+        EASYPOST[EasyPost API<br/>Multi-carrier Labels]
+        SENDGRID[SendGrid<br/>Transactional Email]
+        TWILIO[Twilio<br/>SMS Notifications]
+    end
+
+    ADMIN --> FH
+    STORE --> CF1
+    MOBILE --> FH
+
+    FH --> CF1
+    SHOPIFY_API -->|Webhooks| CF2
+
+    CF1 --> FS
+    CF1 --> GCS
+    CF1 --> RC
+    CF1 --> CT
+
+    CF2 --> PS_PUB
+    PS_PUB --> CF3
+
+    CF3 --> FS
+    CF3 --> SHOPIFY_API
+    CF3 --> EASYPOST
+    CF3 --> SENDGRID
+    CF3 --> TWILIO
+    CF3 --> BQ
+
+    CF4 -->|Daily| BQ
+    CF4 -->|Hourly| FS
+
+    CT --> CF3
+
+    CF1 --> CL
+    CF2 --> CL
+    CF3 --> CL
+    CL --> CM
+
+    style CF1 fill:#FFA726,color:#000
+    style CF2 fill:#FFA726,color:#000
+    style CF3 fill:#FFA726,color:#000
+    style CF4 fill:#FFA726,color:#000
+    style FS fill:#4FC3F7,color:#000
+    style BQ fill:#7E57C2,color:#fff
+    style GCS fill:#66BB6A,color:#000
+    style FH fill:#5C6AC4,color:#fff
+```
+
+### Webhook Processing Flow (Must Respond < 5 Seconds)
+
+```mermaid
+sequenceDiagram
+    participant S as Shopify
+    participant WH as Webhook Handler<br/>(Cloud Function)
+    participant PS as Pub/Sub
+    participant W as Background Worker<br/>(Cloud Function)
+    participant DB as Firestore
+    participant EXT as External APIs
+
+    S->>WH: POST /webhooks/orders/updated
+    WH->>WH: Verify HMAC signature
+    WH->>PS: Publish to topic<br/>(return.order_updated)
+    WH-->>S: 200 OK (< 1 second)
+
+    Note over WH,S: Webhook responds immediately.<br/>Heavy processing happens async.
+
+    PS->>W: Trigger background worker
+    W->>DB: Read return request data
+    W->>W: Process business logic
+    W->>DB: Update return status
+    W->>EXT: Send notification / Update Shopify
+```
+
+---
+
+## 8. Merchant Admin Flow
+
+```mermaid
+flowchart TB
+    Login([Merchant Opens App<br/>in Shopify Admin]) --> FirstTime{First Visit?}
+
+    FirstTime -->|Yes| Wizard[Quick-Start Wizard<br/>10-Minute Setup]
+    FirstTime -->|No| Dashboard
+
+    subgraph "Quick-Start Wizard"
+        Wizard --> W1[Step 1: Import Shopify Policies<br/>Auto-detect return window, items]
+        W1 --> W2[Step 2: Configure Return Portal<br/>Upload logo, set colors]
+        W2 --> W3[Step 3: Set Up Shipping<br/>Connect carrier or use Avada labels]
+        W3 --> W4[Step 4: Email Templates<br/>Preview & customize notifications]
+        W4 --> W5[Step 5: Activate Portal<br/>Enable theme extension block]
+        W5 --> Dashboard
+    end
+
+    Dashboard[Dashboard<br/>Key Metrics Overview]
+
+    Dashboard --> Metrics[Quick Stats:<br/>Open Returns, Pending Review,<br/>Revenue Retained, Exchange Rate]
+
+    Dashboard --> ReturnList[Return Request List]
+    Dashboard --> AnalyticsPage[Analytics & Reports]
+    Dashboard --> SettingsPage[Settings]
+
+    subgraph "Return List View"
+        ReturnList --> Filters[Filter & Search<br/>Status, Date, Customer, Product]
+        Filters --> BulkSelect[Select Multiple Returns]
+        BulkSelect --> BulkActions{Bulk Actions}
+        BulkActions -->|Approve All| BulkApprove[Bulk Approve]
+        BulkActions -->|Generate Labels| BulkLabels[Bulk Label Generation]
+        BulkActions -->|Export| BulkExport[Export to CSV]
+
+        Filters --> SingleReturn[Click Single Return]
+    end
+
+    subgraph "Return Detail View"
+        SingleReturn --> DetailView[Return Detail Page]
+        DetailView --> OrderInfo[Order Information<br/>Customer, Items, Dates]
+        DetailView --> ReturnItemsList[Return Items<br/>with Reasons & Photos]
+        DetailView --> Timeline[Activity Timeline<br/>Status Changes, Notes]
+
+        DetailView --> Actions{Available Actions}
+        Actions -->|Approve| ApproveReturn[Approve Return<br/>Select Resolution Type]
+        Actions -->|Reject| RejectReturn[Reject Return<br/>Add Reason, Send Email]
+        Actions -->|Request Info| RequestInfo[Request More Info<br/>Ask for Photos/Details]
+        Actions -->|Process Refund| ProcessRefund[Issue Refund<br/>Original / Store Credit / Partial]
+        Actions -->|Create Exchange| CreateExchange[Create Exchange Order<br/>Select Replacement Item]
+        Actions -->|Generate Label| GenLabel[Generate Shipping Label<br/>Select Carrier]
+        Actions -->|Mark Received| MarkReceived[Mark Item Received<br/>Set Condition]
+        Actions -->|Add Note| AddNote[Internal Note<br/>for Team Communication]
+    end
+
+    subgraph "Analytics Page"
+        AnalyticsPage --> OverviewMetrics[Overview Metrics<br/>Total Returns, Rate, Avg Time]
+        AnalyticsPage --> ReasonChart[Return Reasons Breakdown<br/>Bar Chart by Category]
+        AnalyticsPage --> ResolutionChart[Resolution Distribution<br/>Refund vs Exchange vs Credit]
+        AnalyticsPage --> ProductInsights[Product-Level Insights<br/>Top Returned Products<br/>Variant-Level Return Rates]
+        AnalyticsPage --> FinancialReport[Financial Impact<br/>Total Refunded, Revenue Retained<br/>Exchange Conversion Rate]
+        AnalyticsPage --> TrendChart[Trends Over Time<br/>Returns Volume, Resolution Mix]
+    end
+
+    subgraph "Settings Page"
+        SettingsPage --> PolicySettings[Return Policies<br/>Windows, Rules, Eligibility]
+        SettingsPage --> PortalSettings[Portal Customization<br/>Branding, Layout, Language]
+        SettingsPage --> ShippingSettings[Shipping Configuration<br/>Carriers, Label Preferences]
+        SettingsPage --> NotifSettings[Notification Templates<br/>Email & SMS Content]
+        SettingsPage --> AutomationSettings[Automation Rules<br/>Auto-approve, Workflows]
+        SettingsPage --> FraudSettings[Fraud Prevention<br/>Blocklist, Thresholds, Alerts]
+        SettingsPage --> IntegrationSettings[Integrations<br/>Gorgias, Klaviyo, Shopify Flow]
+        SettingsPage --> BillingSettings[Billing & Plan<br/>Current Plan, Usage, Upgrade]
+    end
+
+    style Login fill:#5C6AC4,color:#fff
+    style Dashboard fill:#008060,color:#fff
+    style Wizard fill:#FFA726,color:#000
+    style DetailView fill:#4FC3F7,color:#000
+```
+
+---
+
+## Summary
+
+This document contains 8 comprehensive technical diagrams covering the full architecture and user flows for the Avada Return & Exchange app:
+
+| # | Diagram | Purpose |
+|---|---------|---------|
+| 1 | System Architecture | Overall system topology and integrations |
+| 2 | Return Request Lifecycle | State machine with all status transitions and edge cases |
+| 3 | Exchange Flow | Complete exchange process including variant, cross-product, Shop Now, instant exchange, and price difference handling |
+| 4 | Customer Return Portal | End-to-end customer journey from order lookup to tracking |
+| 5 | Data Flow | How data moves between Shopify, Firebase, external services, and BigQuery |
+| 6 | Entity Relationship | Full database schema with all collections and relationships |
+| 7 | Deployment Architecture | GCP/Firebase topology with async processing and webhook flow |
+| 8 | Merchant Admin Flow | Admin dashboard navigation, actions, and settings |
+
+All diagrams are based on the feature matrix (02), target audience requirements (03), opportunity scoring (04), and competitive analysis (05-06) from previous research files. The architecture is designed to support the proposed pricing tiers: Free (50 returns), Starter ($9/150 returns), Pro ($29/500 returns), and Enterprise ($99/2,000 returns).

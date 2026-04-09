@@ -1,339 +1,458 @@
-# 06 - Competitor Pricing Analysis
+# 06 - Competitor Pricing Analysis: Avada Return & Exchange
 
-> Research Date: March 2026 | All prices in USD/month
+## 1. Detailed Pricing Tiers for Each Competitor
 
----
+### AfterShip Returns & Exchanges
 
-## Executive Summary
+| Plan | Monthly Price | Annual Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|-------------|--------------|-------------------|-------------------|
+| **Free** | $0 | $0 | Shopper-funded | N/A | Basic portal, shopper pays return shipping |
+| **Essentials** | $11/mo | $108/yr ($9/mo) | 20 | $0.50/return | Return labels, basic automation, email notifications |
+| **Pro** | $59/mo | $588/yr ($49/mo) | 100 | $0.50/return | Auto-approve, store credit, tracking, advanced rules |
+| **Premium** | $239/mo | $2,388/yr ($199/mo) | 200 | Not disclosed | Exchanges, SMS, POS returns, advanced automation |
 
-The order editing app market has a clear pricing bifurcation: premium apps ($39-$599/mo) targeting mid-market/enterprise, and budget/free apps with limited features. **No competitor effectively serves the SMB sweet spot of $10-$30/mo with comprehensive features.** This is the pricing gap Avada should exploit.
+**Billing model**: Monthly or annual subscription + per-return overage. "$1 for the first month" promotional offer on Essentials+.
 
----
+**Hidden costs**: Additional seat charges on top of per-return fees. Shopper-funded free plan means customers pay for return shipping (reducing customer experience).
 
-## Detailed Pricing by Competitor
-
-### 1. OrderEditing.com (Premium Leader)
-
-| Plan | Price/mo | Annual | Orders/mo | Trial |
-|------|----------|--------|-----------|-------|
-| Starter | $99 | $999/yr (16% off) | 1,000-2,500 | 7 days |
-| Growth | $199 | $1,999/yr (16% off) | 2,500-5,000 | 14 days |
-| Scale | $399 | $3,999/yr (16% off) | 5,000-10,000 | 14 days |
-| Enterprise | $599+ | $6,000/yr (17% off) | 10,000-20,000 | 14 days |
-
-**Add-ons:**
-- Address Validation (US): $0.01/order
-- Address Validation (Intl): up to $0.04/order
-
-**Features per plan:** All plans include unlimited edits, all features. Higher plans add dedicated account manager, white-glove onboarding, dedicated Slack channel.
-
-**Effective cost per edit (est.):** $0.04-$0.60 depending on volume and edit rate.
+**Effective cost per return** (on-plan): $0.55 (Essentials), $0.59 (Pro), $1.20 (Premium)
 
 ---
 
-### 2. AE: Order Editing & Upsell
+### Loop Returns & Exchanges
 
-| Plan | Price/mo | Annual | Orders/mo | Trial |
-|------|----------|--------|-----------|-------|
-| Starter | $39 | $374.40/yr (20% off) | 0-1,200 | 14 days |
-| Growth | $99 | $950.40/yr (20% off) | 1,201-5,000 | 14 days |
-| Scale | $179 | $1,718.40/yr (20% off) | 5,001-10,000 | 14 days |
-| Enterprise | $259 | $2,390.40/yr (23% off) | 10,001-20,000 | 14 days |
+| Plan | Monthly Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|--------------|-------------------|-------------------|
+| **Free** | $0 | Limited | N/A | US & Canada domestic labels, Return Bars |
+| **Essential** | $155/mo | Unlimited | Included | Unlimited destinations, automated policies, carrier rate shopping, workflows |
+| **Advanced** | $340/mo | Unlimited | Included | Shop Now, instant exchange, bonus credit, fraud prevention |
 
-**Features per plan:** All plans include unlimited edits, address changes, discount recalculation, upsell. No feature differentiation between tiers.
+**Billing model**: Flat monthly subscription (no per-return fees on paid plans). Previously had a $29/mo plan that was removed.
 
----
+**Hidden costs**: Annual contracts may be required. Revenue share model offered to some merchants (30-40% of retained revenue). Custom pricing for enterprise (reportedly $800+/month for some merchants).
 
-### 3. Cleverific Order Editing
-
-| Plan | Price/mo | Edits/mo | Automations | Support | Overage |
-|------|----------|----------|-------------|---------|---------|
-| Free | $0 | Dev only | - | - | - |
-| Growth | $49 | 100 | 200 | Standard | $0.79/edit |
-| Professional | $99 | 400 | 500 | Priority (1-2hr) | $0.59/edit |
-| Premium Plus | $299 | 800 | 2,500 | VIP + SOC 2 | $0.49/edit |
-| PRO Platform | Custom | Unlimited | Unlimited | Managed | Custom |
-
-**Additional charges:**
-- Automation fees: $5.90-$7.90 per 100 automations (varies by plan)
-- Overage per edit: $0.49-$0.79
-
-**Key:** Cleverific is the most complex pricing with per-edit limits + overage + automation fees. A store doing 200 edits/mo on Growth plan pays: $49 + (100 x $0.79) = **$128/mo effective**.
+**Effective cost per return**: Depends on volume. At 500 returns/mo: $0.31 (Essential), $0.68 (Advanced). At 100 returns/mo: $1.55 (Essential), $3.40 (Advanced). Inversely favorable for high-volume stores.
 
 ---
 
-### 4. Revize: Order Editing & Upsell
+### Return Prime: Return & Exchange
 
-| Plan | Price/mo | Edits/mo | Key Feature Gates |
-|------|----------|----------|-------------------|
-| Free | $0 | 20 | Basic editing, localization |
-| Starter | $49 | Unlimited | + Custom notifications, priority support |
-| Pro | $149 | Unlimited | + AI upsells, invoices, store credit, delivery dates |
-| Enterprise | Custom | Unlimited | Custom workflows, integrations |
+| Plan | Monthly Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|--------------|-------------------|-------------------|
+| **Free** | $0 | 5 | N/A | Branded portal, labels, email notifications |
+| **Grow** | $19.99/mo | 60 | Not disclosed | Exchanges, custom upsells, automated workflows, 24/7 support |
+| **Grow & Boost** | $49.99/mo | 180 | Not disclosed | Multi-language, logistics integration, in-store returns |
+| **Scale** | $149.99/mo | 450+ | Not disclosed | WMS integration, all refund methods, API access, dedicated manager |
 
-**Annual:** Pro at $1,430.40/yr (20% off)
+**Billing model**: Monthly subscription. 15-day free trial on all paid plans.
 
-**Feature gating:** Upsells, invoices, store credit, and delivery date features locked to $149/mo Pro plan.
+**Hidden costs**: Exchange and automation features gated behind Grow ($19.99). Multi-language portal requires Grow & Boost ($49.99). Per-return overages exist but pricing not clearly published.
 
----
-
-### 5. Recheck Order Editing + Upsell
-
-| Plan | Price/mo | Edits/mo | Key Feature Gates |
-|------|----------|----------|-------------------|
-| Starter | Free | 20 | All editing options |
-| Growth | $19 | 50 | + Upsells, address validation |
-| Scale | $49 | 200 | + Revert unpaid edits, fulfillment hold |
-| Enterprise | $299 | 1,000 | + Custom requests, 3PL/WMS |
-
-**Note:** Most affordable paid competitor at $19/mo, but only 50 edits at that tier.
+**Effective cost per return** (on-plan): $0.33 (Grow), $0.28 (Grow & Boost), $0.33 (Scale)
 
 ---
 
-### 6. Editify Order Editing & Upsell
+### ReturnGO Returns & Exchanges
 
-| Plan | Price/mo | Key Feature Gates |
-|------|----------|-------------------|
-| Starter | $19 | Admin editing, shipping costs, billing, invoices |
-| Pro | $39 + 1% upsell revenue | + Customer portal, Flow actions |
-| Enterprise | $199 | + ERP, Slack, white-glove |
+| Plan | Monthly Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|--------------|-------------------|-------------------|
+| **Starter** | $23/mo | 20 | $1.25/return | Full returns solution, variant exchange, labels, unlimited rules, store credit, auto-approve, 2 languages |
+| **Premium** | $147/mo | 110 | $1.25/return | Product exchange, Shop Now, white-label, donation, shipping integrations, AI store credit |
+| **Pro** | $297/mo | 300 | $0.90/return | Advanced automation, packing slips, item validation, ERP, unlimited languages, advanced analytics, API |
 
-**Hidden cost:** 1% of upsell revenue on Pro plan. A store generating $5,000/mo in upsell revenue pays $39 + $50 = **$89/mo**.
+**Billing model**: Monthly subscription + per-return overage. 14-day free trial only (no free plan).
 
----
+**Hidden costs**: $1.25 per extra return adds up fast. A store with 50 returns/month on Starter pays $23 + (30 x $1.25) = $60.50/month effective. No free option means immediate cost barrier.
 
-### 7. Orderify - Order Edit Cancel
-
-| Plan | Price/mo | Edits | Shopify Plan Required |
-|------|----------|-------|----------------------|
-| Basic | $4.99 | Unlimited | Shopify Basic |
-| Shopify | $8.99 | Unlimited | Shopify |
-| Advanced | $24.99 | Unlimited | Shopify Advanced |
-| Plus | $99.99 | Unlimited | Shopify Plus |
-
-**Unique model:** Pricing tied to Shopify plan, not usage. Simple but penalizes stores upgrading Shopify plans. All features included at every tier.
+**Effective cost per return** (on-plan): $1.15 (Starter), $1.34 (Premium), $0.99 (Pro)
 
 ---
 
-### 8. EOE - Easy Order Editing
+### Redo
 
-| Plan | Price/mo | Orders/mo | Trial |
-|------|----------|-----------|-------|
-| Free | $0 | 5 | - |
-| Pro | $9.99 | 100 | 10 days |
-| Elite | $89.99 | 1,000 | 10 days |
-| Ultra | $299.99 | Unlimited | 10 days |
+| Plan | Monthly Price | Key Feature Unlocks |
+|------|-------------|-------------------|
+| **Returns** | $0 | Portal for returns/claims, AI exchange agent, analytics, customizable flows |
+| **Checkout Optimizer** | $10/mo | A/B testing, tailored offers |
+| **Email and SMS** | $10/mo | Cross-sell, shoppable emails, SMS ($0.016+/send) |
+| **Fulfillment** | $99/mo | Order batching/merging, bulk shipping |
 
-**Gap alert:** $9.99 → $89.99 is a 9x price jump with no middle tier.
+**Billing model**: Modular pricing -- returns are free, pay for add-on modules. Redo subsidizes return costs (shipping labels, etc.).
 
----
+**Hidden costs**: Returns are "free" but Redo's sustainability depends on their funding/business model. If this changes, merchants could face sudden costs. SMS pricing is per-send ($0.016+).
 
-### 9. EditMyOrder.ai
-
-| Plan | Price/mo |
-|------|----------|
-| Free | $0 (all features) |
-
-Completely free. No paid tiers. Unclear sustainability.
+**Effective cost per return**: $0 (subsidized by Redo's platform economics). This is the most disruptive pricing model in the category.
 
 ---
 
-### 10. CP: Order Editing & Upsell (ClickPost)
+### ParcelWILL Returns & Exchange
 
-| Plan | Price/mo | Orders/mo | Edits/mo |
-|------|----------|-----------|----------|
-| Free | $0 | 0-500 | 25 (+$1/extra) |
-| Professional | $49 | 500-5,000 | Unlimited |
-| Enterprise | $129 | 5,000-10,000 | Unlimited |
+| Plan | Monthly Price | Annual Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|-------------|--------------|-------------------|-------------------|
+| **Free** | $0 | $0 | 6 | N/A | Branded return page, labels, multi-language |
+| **Essential** | $29/mo | ~$23/mo (20% off) | 50 | $0.45/return | Refunds, exchanges, restocking fees, embedded page |
+| **Professional** | $99/mo | ~$79/mo (20% off) | 200 | $0.45/return | Unlimited carriers, workflows, tracking, analytics |
+| **Enterprise** | $299/mo | ~$237/mo (21% off) | 500 | $0.45/return | Webhooks, custom integrations, dedicated support |
 
-**Overage:** $1 per extra edit on free plan is expensive.
+**Billing model**: Monthly or annual subscription + per-return overage. Annual billing saves 20-21%.
 
----
+**Hidden costs**: Only 6 free returns is barely usable. $0.45 per additional return across all paid tiers adds consistent overage costs.
 
-### 11. Postsell
-
-| Plan | Price/mo | Annual |
-|------|----------|--------|
-| Pro | $15 | $150/yr (17% off) |
-
-Single plan, simple pricing. Unique email-upsell focus.
+**Effective cost per return** (on-plan): $0.58 (Essential), $0.50 (Professional), $0.60 (Enterprise)
 
 ---
 
-### 12. Vista Order Editing
+### EcoReturns: AI Powered Returns
 
-| Plan | Price/mo | Annual | Edits/mo |
-|------|----------|--------|----------|
-| Free | $0 | - | 50 |
-| Pro | $15 | $160/yr (11% off) | 100 |
-| Premium | $25 | $250/yr (17% off) | Unlimited |
+| Plan | Monthly Price | Annual Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|-------------|--------------|-------------------|-------------------|
+| **Starter** | $0 | $0 | 20 | N/A | Branded portal, unlimited reasons/policies, manual approvals, labels, email notifications |
+| **Smart Automation** | $29/mo | $299/yr ($25/mo) | 100 | $0.40/return | Auto-process, variant exchange, 100+ integrations, analytics, store credit, multi-language |
+| **Scale AI** | $99/mo | $999/yr ($83/mo) | 400 | $0.25/return | Refund optimizer, multi-warehouse routing, smart rules, APIs/webhooks |
+| **Enterprise** | $299/mo | $2,999/yr ($250/mo) | Custom | Custom | Custom integrations, personalized onboarding, SLA-backed support |
 
-**Most similar to Avada's target pricing.** Very new (1 review).
+**Billing model**: Monthly or annual subscription + per-return overage. Trials range from 7-30 days depending on tier.
 
----
-
-### 13. Orderly
-
-| Plan | Price/mo | Annual | Shopify Plan |
-|------|----------|--------|--------------|
-| Basic | $3.99 | $39.99/yr | Shopify Basic |
-| Grow | $5.99 | $59.99/yr | Shopify |
-| Advanced | $19.99 | $199.99/yr | Shopify Advanced |
-| Plus | $99.99 | $999.99/yr | Shopify Plus |
-
-New app (Oct 2025), 0 reviews. Very affordable but unproven.
+**Effective cost per return** (on-plan): $0.29 (Smart Automation), $0.25 (Scale AI)
 
 ---
 
-## Feature-Per-Tier Comparison Table
+### ZigZag Returns & Exchanges (Sorted Returns Center)
 
-| Feature | OrderEditing ($99+) | AE ($39+) | Cleverific ($49+) | Revize (Free+) | Recheck (Free+) | Orderify ($5+) | EOE (Free+) | Vista (Free+) |
-|---------|-------|----|----|------|------|------|-----|------|
-| **Self-serve editing** | All | All | All | All | All | All | All | All |
-| **Address editing** | All | All | All | All | Growth+ | All | All | All |
-| **Product swaps** | All | All | All | All | All | All | Pro+ | All |
-| **Quantity changes** | All | All | All | All | All | All | All | All |
-| **Order cancellation** | All | All | All | All | All | All | All | All |
-| **Address validation** | Add-on | All | N/A | N/A | Growth+ | N/A | N/A | N/A |
-| **Post-purchase upsell** | All | All | N/A | Pro ($149) | Growth+ | N/A | N/A | N/A |
-| **Shopify Flow** | All | All | All | N/A | N/A | N/A | N/A | N/A |
-| **Store credit refunds** | N/A | N/A | N/A | Pro ($149) | N/A | All | N/A | Pro ($15) |
-| **Tax invoice** | N/A | N/A | N/A | Pro ($149) | N/A | N/A | Free | N/A |
-| **3PL integration** | All | All | N/A | N/A | Enterprise ($299) | N/A | N/A | N/A |
-| **SOC 2 compliance** | N/A | N/A | $299 | N/A | N/A | N/A | N/A | N/A |
-| **Multi-language** | All | 8 lang | N/A | All | 23 lang | N/A | 6 lang | N/A |
-| **Analytics** | All | All | N/A | Starter+ | N/A | N/A | N/A | N/A |
-| **Unlimited edits** | All | All | No (100-800) | Starter+ | No (20-1000) | All | No (5-unlimited) | Premium ($25) |
+| Plan | Monthly Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|--------------|-------------------|-------------------|
+| **Silver** | $20/mo | 100 | Pay-as-you-go | Branded portal, international returns to UK, unlimited reasons, gift cards |
+| **Gold** | $50/mo | 300 | Billed separately | All Silver + automated returns/refunds, exchanges, holiday return windows |
+
+**Billing model**: Monthly subscription + pay-as-you-go overages.
+
+**Hidden costs**: Previously $20/mo features were reportedly hiked to $150/mo without warning. No free plan or trial mentioned.
+
+**Effective cost per return** (on-plan): $0.20 (Silver), $0.17 (Gold)
 
 ---
 
-## Willingness-to-Pay Signals from Reviews
+### Rich Returns & Exchanges
 
-### Evidence from merchant reviews:
+| Plan | Monthly Price | Returns/Month | Extra Return Cost | Key Feature Unlocks |
+|------|-------------|--------------|-------------------|-------------------|
+| **Standard** | $19/mo | 10 | $1.00/return | Branded portal, labels, notifications, custom reasons |
+| **Pro** | $39/mo | 50 | $0.75/return | Variants, ResolutionHub, analytics, multi-language |
+| **Premium** | $99/mo | 100 | $0.50/return | Advanced rules, reports, auto-refunds, automatic exchanges |
+| **Enterprise Plus** | $199/mo | 500+ | Scalable | Custom domain, international labels, API, Stripe integration |
 
-1. **"The price is a bit high. Pricing could have been better."** - Orderify 3-star review
-   - Signal: Merchants on basic Shopify plans resist even $4.99-$24.99
+**Billing model**: Monthly subscription + per-return overage. 30-day free trial.
 
-2. **"Pricing leaves a bitter taste"** - Revize review
-   - Signal: $49/mo is above comfort zone for many merchants
-
-3. **"Too expensive for small businesses"** - Cleverific pattern
-   - Signal: $49/mo entry point excludes SMBs
-
-4. **"Good app... not too costly"** - Recheck review (on $19-$49 plans)
-   - Signal: $19-$49 range perceived as fair for value delivered
-
-5. **"Cheapest and easiest way to edit orders"** - Editify review (on $19/mo)
-   - Signal: $19/mo perceived as cheap/good value
-
-6. **Orderify's popularity at $4.99-$8.99** despite poor support
-   - Signal: Strong demand exists at sub-$10 price point
-
-7. **Multiple free apps gaining traction** (EditMyOrder, LEO, Vista)
-   - Signal: Significant merchant segment unwilling to pay anything
-
-### Willingness-to-Pay Distribution (Estimated):
-
-| Price Point | % of Market | Segment |
-|-------------|-------------|---------|
-| Free only | 25-30% | Micro stores, testing |
-| $1-$9.99/mo | 20-25% | Small stores, 0-500 orders/mo |
-| $10-$29.99/mo | 25-30% | Growth stores, 500-2,000 orders/mo |
-| $30-$99/mo | 10-15% | Established stores, 2,000-5,000 orders/mo |
-| $100-$299/mo | 5-8% | Mid-market, 5,000-10,000 orders/mo |
-| $300+/mo | 2-3% | Enterprise, 10,000+ orders/mo |
+**Effective cost per return** (on-plan): $1.90 (Standard), $0.78 (Pro), $0.99 (Premium), $0.40 (Enterprise Plus)
 
 ---
 
-## Pricing Gaps & Opportunities
+### Happy Returns (UPS Company)
 
-### Gap 1: No quality app at $10-$30/mo with full features
-- Cleverific starts at $49 with 100-edit limit
-- AE starts at $39
-- Recheck has $19 but only 50 edits
-- **Opportunity:** $9.99-$29.99 with generous edit limits and upsell features
+| Plan | Monthly Price | Key Feature Unlocks |
+|------|-------------|-------------------|
+| **Enterprise** | Free to install | Branded portal, Return Shopping, analytics (shipping charges apply) |
+| **Plus** | $500/mo | All Enterprise + additional features (shipping charges may apply) |
 
-### Gap 2: Free tiers are too limited
-- Most free tiers: 5-25 edits/mo
-- **Opportunity:** 50 edits/mo free tier captures market attention
-
-### Gap 3: No transparent, simple pricing
-- Cleverific: base + overage + automation fees (3 cost components)
-- OrderEditing: base + address validation add-on
-- Editify: base + 1% revenue share
-- **Opportunity:** Flat per-tier pricing, no hidden fees
-
-### Gap 4: Feature gating on essential features
-- Upsells locked behind $49+ (Recheck) or $149+ (Revize)
-- Address validation often an add-on or premium feature
-- **Opportunity:** Include upsells and validation from $9.99 tier
-
-### Gap 5: No annual discount standard
-- Only AE (20%) and OrderEditing (16%) offer meaningful annual discounts
-- **Opportunity:** 20-25% annual discount to improve retention
+**Billing model**: Free to install but shipping and additional charges apply. Effectively enterprise-only.
 
 ---
 
-## Recommended Pricing Strategy for Avada Order Editing
+### ReturnZap Returns & Exchanges
 
-### Pricing Tiers
+| Plan | Monthly Price | Key Feature Unlocks |
+|------|-------------|-------------------|
+| **Starting plan** | $29.95/mo | Branded portal, automated/manual approvals, exchanges, analytics, no per-label fees |
+| **Higher tiers** | Not fully published | Additional features at higher price points |
 
-| Plan | Price/mo | Annual | Edits/mo | Target |
-|------|----------|--------|----------|--------|
-| **Free** | $0 | - | 50 | Trial, micro stores |
-| **Basic** | $9.99 | $95.90/yr (20% off) | 200 | Small stores (0-500 orders) |
-| **Pro** | $19.99 | $191.90/yr (20% off) | 500 | Growth stores (500-2,000 orders) |
-| **Business** | $29.99 | $287.90/yr (20% off) | 1,000 | Established stores (2,000-5,000 orders) |
-| **Advanced** | $49.99 | $479.90/yr (20% off) | 3,000 | Mid-market (5,000-10,000 orders) |
-| **Enterprise** | $99.99 | $959.90/yr (20% off) | Unlimited | High-volume (10,000+) |
+**Billing model**: Monthly subscription. No per-label fees (unique selling point). 14-day free trial.
 
-### Feature Inclusion per Tier
+---
 
-| Feature | Free | Basic | Pro | Business | Advanced | Enterprise |
-|---------|------|-------|-----|----------|----------|-----------|
-| Self-serve editing | Yes | Yes | Yes | Yes | Yes | Yes |
-| Address editing | Yes | Yes | Yes | Yes | Yes | Yes |
-| Product swaps | Yes | Yes | Yes | Yes | Yes | Yes |
-| Order cancellation | Yes | Yes | Yes | Yes | Yes | Yes |
-| Address validation | No | Yes | Yes | Yes | Yes | Yes |
-| Post-purchase upsell | No | Basic | Full | Full | Full | Full |
-| Shopify Flow | No | No | Yes | Yes | Yes | Yes |
-| Analytics | Basic | Full | Full | Full | Full | Full |
-| Store credit refunds | No | Yes | Yes | Yes | Yes | Yes |
-| Multi-language | 2 | 5 | All | All | All | All |
-| Custom branding | No | No | Yes | Yes | Yes | Yes |
-| Priority support | No | No | No | Yes | Yes | Yes |
-| Dedicated manager | No | No | No | No | No | Yes |
-| 3PL integrations | No | No | No | Yes | Yes | Yes |
+### Narvar Return and Exchange
 
-### Key Pricing Principles
+| Plan | Monthly Price | Key Feature Unlocks |
+|------|-------------|-------------------|
+| **Custom** | Custom-quoted | All features (pricing based on volume, carriers, products) |
 
-1. **No overage charges** - When merchants hit their edit limit, upsell to next tier (soft gate with warning, not hard block)
-2. **No hidden fees** - No per-edit overage, no automation fees, no add-on costs
-3. **Generous free tier** - 50 edits is 2.5x the market average free tier
-4. **Value at every tier** - Even Basic ($9.99) includes upsells and address validation
-5. **20% annual discount** - Standard across all paid tiers
-6. **14-day trial** on all paid tiers
+**Benchmark**: Approximately $0.49 per return for stores processing 100,000 returns/year. Enterprise-only pricing model.
 
-### Price Comparison: Avada vs Market
+---
 
-| Store Size (orders/mo) | Avada | OrderEditing | AE | Cleverific | Savings vs Cheapest Alt |
-|------------------------|-------|-------------|-----|-----------|------------------------|
-| 0-50 edits | **Free** | $99 | $39 | $49 | 100% savings |
-| 200 edits | **$9.99** | $99 | $39 | $49+overage | 74-90% savings |
-| 500 edits | **$19.99** | $99 | $39 | $99+overage | 49-80% savings |
-| 1,000 edits | **$29.99** | $99 | $39 | $99+overage | 24-70% savings |
-| 3,000 edits | **$49.99** | $199 | $99 | $299+ | 49-83% savings |
-| Unlimited | **$99.99** | $399 | $179 | Custom | 44-75% savings |
+## 2. Feature-Per-Tier Comparison Table
 
-### Revenue Projections
+### What $0/month Gets You (Free Plans)
 
-Assuming 5,000 installs in Year 1 with conversion funnel:
-- Free: 60% (3,000 stores) = $0
-- Basic: 15% (750 stores) = $7,493/mo
-- Pro: 12% (600 stores) = $11,994/mo
-- Business: 8% (400 stores) = $11,996/mo
-- Advanced: 3% (150 stores) = $7,499/mo
-- Enterprise: 2% (100 stores) = $9,999/mo
+| Feature | Avada (Planned) | AfterShip | Return Prime | ParcelWILL | EcoReturns | Redo | Yanet |
+|---------|----------------|-----------|-------------|------------|------------|------|-------|
+| Returns/month | **50** | Shopper-funded | 5 | 6 | 20 | Unlimited | Unknown |
+| Self-service portal | Yes | Yes | Yes | Yes | Yes | Yes | Yes |
+| Return labels | Yes | No (shopper pays) | Yes (limited) | Yes | Yes | Yes (Redo pays) | Basic |
+| Store credit | **Yes** | No | No | No | No | Yes | No |
+| Variant exchange | **Yes** | No | No | No | No | Yes | No |
+| Auto-approve | **Yes** | No | No | No | No | Yes | No |
+| Email notifications | Yes | Basic | Yes | Basic | Yes | Yes | Yes |
+| Return tracking | **Yes** | No | No | No | No | Yes | No |
+| Custom branding | Yes | Basic | Basic | Yes | Yes | Yes | Basic |
+| Multi-language | **5 languages** | No | No | Yes | 1 language | Unknown | No |
+| Green returns | **Yes** | No | No | No | No | No | No |
+| Analytics | **Basic** | No | No | No | No | Yes | No |
 
-**Estimated MRR at 5,000 installs: ~$48,981/mo ($587,772/yr)**
+**Key insight**: Avada's planned free tier is dramatically more generous than every competitor except Redo. The combination of 50 returns + store credit + variant exchange + auto-approve on the free plan is unmatched.
+
+---
+
+### What $9-$29/month Gets You (Starter/Growth Plans)
+
+| Feature | Avada Starter ($9) | AfterShip Essentials ($11) | Return Prime Grow ($20) | ReturnGO Starter ($23) | ParcelWILL Essential ($29) | EcoReturns Smart ($29) |
+|---------|-------------------|--------------------------|----------------------|---------------------|--------------------------|---------------------|
+| Returns/month | 150 | 20 | 60 | 20 | 50 | 100 |
+| Cost per on-plan return | $0.06 | $0.55 | $0.33 | $1.15 | $0.58 | $0.29 |
+| Cross-product exchange | **Yes** | No | Yes | No (variant only) | Yes | No (variant only) |
+| Bonus credit for exchanges | **Yes** | No | Yes (upsell) | No | No | No |
+| SMS notifications | **Yes** | No | No | No | No | No |
+| Fraud alerts | **Yes** | No | No | No | No | No |
+| Shopify Flow | **Yes** | No | Yes | No | No | No |
+| Advanced policy rules | **Yes** | Basic | Yes | Yes (unlimited) | Basic | Basic |
+| Extra return cost | $0.25 | $0.50 | Not disclosed | $1.25 | $0.45 | $0.40 |
+
+**Key insight**: Avada's $9 Starter plan offers 150 returns (7.5x AfterShip Essentials, 2.5x Return Prime Grow) with more features than competitors charging 2-3x the price.
+
+---
+
+### What $29-$99/month Gets You (Pro/Growth Plans)
+
+| Feature | Avada Pro ($29) | AfterShip Pro ($59) | Return Prime G&B ($50) | ReturnGO Premium ($147) | ParcelWILL Pro ($99) | EcoReturns Scale ($99) |
+|---------|----------------|--------------------|-----------------------|----------------------|---------------------|-----------------------|
+| Returns/month | 500 | 100 | 180 | 110 | 200 | 400 |
+| Instant exchange | **Yes** | No | No | No | No | No |
+| Shop Now flow | **Yes** | No | No | Yes | No | No |
+| Product-level analytics | **Yes** | No | No | Yes | Yes | No |
+| QR code returns | **Yes** | Yes | No | Yes | No | No |
+| White-label portal | **Yes** | No | No | Yes | No | No |
+| Helpdesk integrations | **Yes** | No | No | No | No | No |
+| API access | **Yes** | No | No | No | No | Yes |
+| Fraud detection | **Yes** | Yes | No | No | No | No |
+
+**Key insight**: Avada's $29 Pro plan delivers instant exchange (only available from Loop at $340), product analytics, and white-label portal -- features that competitors charge $147-$340 for.
+
+---
+
+### What $99+/month Gets You (Enterprise Plans)
+
+| Feature | Avada Enterprise ($99) | AfterShip Premium ($239) | Return Prime Scale ($150) | ReturnGO Pro ($297) | Loop Advanced ($340) |
+|---------|----------------------|------------------------|-----------------------|--------------------|--------------------|
+| Returns/month | 2,000 | 200 | 450+ | 300 | Unlimited |
+| Multi-warehouse routing | **Yes** | No | No | No | Yes |
+| Cross-border returns | **Yes** | Yes | Yes | Yes | No |
+| ERP integrations | **Yes** | No | Yes | Yes | Yes |
+| Custom reports | **Yes** | No | No | Yes | Yes |
+| AI return prevention | **Yes** | No | No | No | Yes (AI platform) |
+| Dedicated support | **Yes** | Yes | Yes | Yes | Yes |
+
+**Key insight**: Avada's $99 Enterprise plan offers features that Loop charges $340 for, with 2,000 returns included vs. Loop's unlimited (but at 3.5x the price).
+
+---
+
+## 3. Willingness-to-Pay Signals from Reviews
+
+### Signal 1: "I switched from [X] because it was too expensive"
+
+Numerous merchants across all competitors mention switching or considering switching due to price:
+
+- **Loop to cheaper alternatives**: Multiple reviewers on Return Rabbit and ReturnZap mention switching from Loop because $155-$340/month was not justifiable. One Return Rabbit merchant noted "nearly matched functionality at a much lower price."
+- **ReturnGO to competitors**: Merchants mention the $1.25/extra return fee as a dealbreaker as return volume grows.
+- **AfterShip to competitors**: Per-return overage fees plus seat-based pricing leads to bill shock.
+
+**WTP signal**: SMB merchants are willing to pay $10-$30/month for full-featured returns. Mid-market merchants are willing to pay $50-$100/month for advanced features. Enterprise merchants will pay $100-$200/month for comprehensive solutions but resist $300+.
+
+### Signal 2: "I would pay more for working exchanges"
+
+Exchange capability is the #1 feature merchants are willing to pay premium for:
+
+- Merchants switching from basic apps (Yanet, ParcelWILL free) specifically cite needing exchange functionality
+- Return Rabbit user reported exchange rate going from 5-10% to 16% after switching -- directly measurable ROI
+- Loop's $340/mo Advanced plan adoption proves merchants will pay for instant exchange when they can afford it
+
+**WTP signal**: Instant exchange has high perceived value. Merchants would pay $20-$50/month for this alone. Offering it at $29/month (vs. Loop's $340) is a massive value play.
+
+### Signal 3: "The free plan was enough to get started but I need more"
+
+The free-to-paid conversion pattern is clearly validated:
+
+- ParcelWILL's 6 free returns drives installs but forces rapid upgrade
+- Return Prime's 5 free returns creates friction -- merchants want more before committing
+- EcoReturns' 20 free returns gets better traction
+
+**WTP signal**: 50 free returns is the sweet spot -- enough to validate the app for 2-4 weeks, not enough for sustained use at moderate volume. This creates a natural upgrade trigger.
+
+### Signal 4: "I need analytics to justify the cost to my team/boss"
+
+Mid-market merchants specifically mention needing data to justify returns app spending:
+
+- Product-level return rates help identify problematic SKUs
+- Financial impact reporting shows CFOs the cost of returns
+- Exchange conversion rate demonstrates revenue retention ROI
+
+**WTP signal**: Analytics are a key paid upgrade driver. Merchants will pay $29-$99/month for actionable return insights that demonstrate ROI.
+
+---
+
+## 4. Pricing Gap Analysis
+
+### The Market Pricing Landscape
+
+```
+$0 ---|---- $10 ----|---- $25 ----|---- $50 ----|---- $100 ----|---- $150 ----|---- $250 ----|---- $350 ---|
+      |             |             |             |              |              |              |            |
+      |  AfterShip  |  ReturnGO   | Return      | EcoReturns   | Loop         | AfterShip    | Loop       |
+      |  Essentials |  Starter    | Prime G&B   | Scale AI     | Essential    | Premium      | Advanced   |
+      |  ($11)      |  ($23)      | ($50)       | ($99)        | ($155)       | ($239)       | ($340)     |
+      |             |             |             |              |              |              |            |
+      | Return      | ParcelWILL  |             | Return Prime |              | ReturnGO     |            |
+      | Prime Grow  | Essential   |             | Scale        |              | Pro          |            |
+      | ($20)       | ($29)       |             | ($150)       |              | ($297)       |            |
+```
+
+### Gap 1: The "Meaningful Free" Gap
+
+**Current state**: Most free plans offer 3-6 returns/month -- useless for any real store. Redo is the exception with unlimited free returns (subsidized model).
+
+**Gap**: No competitor offers a sustainable free plan with 25-50 returns AND exchange + store credit features.
+
+**Avada position**: 50 free returns with store credit, variant exchange, auto-approve, tracking, analytics, and green returns. This is 8-10x more generous than the nearest sustainable competitor (EcoReturns at 20 free returns with manual approvals only).
+
+### Gap 2: The "$10-$30 Full-Featured" Gap
+
+**Current state**: At $10-$30/month, merchants get basic returns with limited exchanges and no advanced features. Cross-product exchange, SMS, fraud detection, and Shopify Flow are all gated behind $50+/month plans.
+
+**Gap**: No app delivers cross-product exchange + fraud alerts + Shopify Flow + SMS at under $30/month.
+
+**Avada position**: $9/month Starter with 150 returns, cross-product exchange, bonus credit, SMS, fraud alerts, and Shopify Flow. This collapses the feature-access hierarchy.
+
+### Gap 3: The "Instant Exchange Under $100" Gap
+
+**Current state**: Instant exchange is only available from Loop at $340/month. No other competitor offers it at any price.
+
+**Gap**: Merchants who want instant exchange but can't justify $340/month have zero options.
+
+**Avada position**: Instant exchange on the Pro plan at $29/month. This is a 91% price reduction for the single most demanded premium feature.
+
+### Gap 4: The "Analytics Without Enterprise Pricing" Gap
+
+**Current state**: Product-level return analytics, financial impact reporting, and custom reports are only available at $147+ (ReturnGO Premium), $155+ (Loop Essential), or $99+ (EcoReturns Scale AI).
+
+**Gap**: SMB merchants growing into mid-market need analytics to optimize their product catalog but can't justify $100+/month for data.
+
+**Avada position**: Product-level analytics on Pro at $29/month. Return reason analysis on free plan.
+
+---
+
+## 5. Recommended Pricing Strategy for Avada
+
+### Proposed Pricing Tiers
+
+| Plan | Price | Returns/Month | Overage | Positioning |
+|------|-------|--------------|---------|-------------|
+| **Free** | $0 | 50 | N/A | "The most generous free returns app on Shopify" |
+| **Starter** | $9/mo | 150 | $0.25/return | "Everything a growing store needs" |
+| **Pro** | $29/mo | 500 | $0.50/return | "Enterprise features at SMB prices" |
+| **Enterprise** | $99/mo | 2,000 | $0.75/return | "Full power, fraction of the cost" |
+
+### Pricing Principles
+
+1. **No hidden fees**: All costs visible upfront. No seat-based charges. No surprise billings.
+2. **Predictable overages**: Per-return overage is clearly stated and reasonable ($0.25-$0.75 vs. competitors' $0.50-$1.25).
+3. **Features unlock value, not access**: Core features (exchanges, store credit, auto-approve) on free plan. Paid plans add depth and volume, not basic functionality.
+4. **Easy cancellation**: Month-to-month billing. Cancel anytime with one click. No retention calls.
+5. **Annual discount**: 20% discount for annual billing (aligning with ParcelWILL, EcoReturns).
+
+### Price Positioning Map
+
+| Tier | Avada | Cheapest Competitor Equivalent | Avada Savings |
+|------|-------|-------------------------------|---------------|
+| Free (50 returns) | $0 | EcoReturns Smart Automation ($29) for 100 returns, but 50 returns at $0 is unmatched | 100% savings |
+| Starter (150 returns) | $9 | Return Prime Grow ($20) for 60 returns | 55% cheaper, 2.5x more returns |
+| Pro (500 returns) | $29 | ReturnGO Premium ($147) for 110 returns with similar features | 80% cheaper, 4.5x more returns |
+| Enterprise (2,000 returns) | $99 | Loop Advanced ($340) for unlimited returns | 71% cheaper |
+
+### Why This Pricing Wins
+
+1. **Free tier acquisition engine**: 50 returns/month is enough for stores with 200-400 orders/month (30% return rate on fashion = 60-120 returns). This captures merchants just above the free-plan threshold of competitors.
+
+2. **$9 Starter removes friction**: Under $10/month is an impulse purchase for Shopify merchants. No approval needed from business partners or CFOs. Compared to the $20-$29 entry point of most competitors, this is 55-69% cheaper.
+
+3. **$29 Pro is the hero plan**: This is where Avada's positioning is strongest. Instant exchange (only Loop at $340), product analytics (ReturnGO at $147+), fraud detection (Loop at $155+), and white-label portal (ReturnGO at $147+) -- all for $29. This plan will drive the highest LTV through feature stickiness.
+
+4. **$99 Enterprise captures mid-market switchers**: Merchants paying $150-$340/month for Loop, ReturnGO Pro, or AfterShip Premium can get equivalent features for $99. Annual savings of $600-$2,900 is a compelling migration story.
+
+### Revenue Mix Projection (Year 2)
+
+| Plan | Est. Paid Users | % of Revenue | Monthly Revenue |
+|------|----------------|-------------|----------------|
+| Free | 20,000 (no revenue) | 0% | $0 |
+| Starter ($9) | 3,000 | 22% | $27,000 |
+| Pro ($29) | 2,000 | 47% | $58,000 |
+| Enterprise ($99) | 500 | 31% | $49,500 |
+| **Total** | **5,500 paid** | **100%** | **$134,500** |
+
+The Pro plan at $29/month is projected to generate the most revenue, validating the strategy of making it the most compelling value tier.
+
+---
+
+## 6. Competitive Pricing Response Scenarios
+
+### Scenario 1: AfterShip Drops Essentials to $5/month
+
+**Probability**: Medium (20-30%)
+**Impact**: Low -- AfterShip's free plan is shopper-funded (poor UX), and their $5 plan would still cap at ~20 returns with limited features
+**Response**: Maintain pricing. Highlight feature superiority at every tier.
+
+### Scenario 2: Return Prime Increases Free Tier to 25 Returns
+
+**Probability**: Medium (30-40%)
+**Impact**: Medium -- Would close part of our free-tier gap
+**Response**: Maintain 50 free returns. Emphasize store credit + variant exchange on free (Return Prime would likely still gate these behind Grow).
+
+### Scenario 3: Loop Launches a $49/month Plan
+
+**Probability**: Low (10-15%) -- Loop has been moving up-market
+**Impact**: High -- Would directly compete with our Pro plan
+**Response**: Emphasize instant exchange at $29 (if Loop's $49 plan excludes it). Highlight no annual contracts. Move fast to ship P1 differentiators.
+
+### Scenario 4: Redo Monetizes Returns Module
+
+**Probability**: Medium (30-40%) -- Free model may not be sustainable
+**Impact**: Medium -- Would level the playing field on free
+**Response**: Our free tier remains competitive with real features. Redo's pivot would actually validate our pricing model.
+
+### Scenario 5: New Well-Funded Competitor Launches
+
+**Probability**: Medium (30%)
+**Impact**: Low-Medium -- Takes 12-18 months to build competitive feature set and review count
+**Response**: Move fast on installs and reviews in first year. Build switching costs through data and workflow integration depth.
+
+---
+
+## Sources
+
+- [Shopify App Store - AfterShip Returns](https://apps.shopify.com/returns-center-by-aftership)
+- [Shopify App Store - Loop Returns](https://apps.shopify.com/loop-returns)
+- [Shopify App Store - Return Prime](https://apps.shopify.com/return-prime)
+- [Shopify App Store - ReturnGO](https://apps.shopify.com/returngo)
+- [Shopify App Store - Redo](https://apps.shopify.com/redo)
+- [Shopify App Store - ParcelWILL Returns](https://apps.shopify.com/parcel-panel-returns-exchanges)
+- [Shopify App Store - EcoReturns](https://apps.shopify.com/ecoreturns-by-saarainc)
+- [Shopify App Store - ZigZag Returns](https://apps.shopify.com/sorted-returns-center)
+- [Shopify App Store - Rich Returns](https://apps.shopify.com/rich-returns)
+- [Shopify App Store - Happy Returns](https://apps.shopify.com/happyreturns)
+- [Shopify App Store - ReturnZap](https://apps.shopify.com/returnzap)
+- [Shopify App Store - Return Rabbit](https://apps.shopify.com/return_rabbit)
+- [Shopify App Store - Narvar Returns](https://apps.shopify.com/narvar-returns)
+- [ZigZag Global - Loop Returns Pricing Analysis](https://www.zigzag.global/blogs/is-loop-returns-worth-the-price)
+- [Cahoot - Loop Returns Pros and Cons](https://www.cahoot.ai/loop-returns-pros-cons/)
+- [Cahoot - Return Prime Pros and Cons](https://www.cahoot.ai/return-prime-pros-cons/)
+- [Cahoot - ReturnGO Pros and Cons](https://www.cahoot.ai/returngo-pros-cons/)
+- [Ringly - Best Shopify Returns Apps 2026](https://www.ringly.io/blog/shopify-returns-app)
+- [ClickPost - Shopify Returns Apps 2026](https://www.clickpost.ai/blog/shopify-returns-apps)
+- [Shopify Community - AfterShip Billing Complaints](https://community.shopify.com/c/shopify-apps/how-aftership-is-a-scam-and-why-you-should-look-for-a-different/td-p/759152)
