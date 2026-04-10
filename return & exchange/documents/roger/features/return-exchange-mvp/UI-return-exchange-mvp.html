@@ -211,15 +211,6 @@
 
         .sf-footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--gray-200); font-size: 12px; color: var(--gray-400); }
 
-        /* === VARIANT PICKER === */
-        .variant-group { margin-bottom: 16px; }
-        .variant-group-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .variant-options { display: flex; flex-wrap: wrap; gap: 8px; }
-        .variant-opt { padding: 6px 14px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; background: var(--white); transition: all 0.15s; }
-        .variant-opt:hover { border-color: var(--primary); }
-        .variant-opt.selected { border-color: var(--primary); background: var(--primary-bg); color: #1a6b4f; font-weight: 500; }
-        .variant-opt.oos { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
-
         /* === TABS === */
         .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
         .admin-tab { padding: 10px 16px; border: none; background: none; cursor: pointer; font-size: 14px; color: var(--gray-600); font-family: var(--font); border-bottom: 2px solid transparent; }
@@ -266,38 +257,12 @@
         .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
         .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
 
-        /* === COLOR PICKER === */
-        .color-preview { display: inline-flex; align-items: center; gap: 8px; }
-        .color-swatch { width: 24px; height: 24px; border-radius: var(--radius-sm); border: 1px solid var(--gray-300); }
-
         /* === PHOTO UPLOAD === */
         .photo-upload-grid { display: flex; gap: 8px; flex-wrap: wrap; }
         .photo-upload-item { width: 80px; height: 80px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; background: var(--gray-50); overflow: hidden; }
         .photo-upload-add { width: 80px; height: 80px; border: 2px dashed var(--gray-300); border-radius: var(--radius-sm); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: var(--gray-500); font-size: 11px; gap: 2px; }
         .photo-upload-add:hover { border-color: var(--primary); color: var(--primary); }
         .photo-upload-add span { font-size: 24px; line-height: 1; }
-
-        /* === CHART PLACEHOLDER === */
-        .chart-placeholder { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 32px; text-align: center; color: var(--gray-400); min-height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
-
-        /* === BAR CHART (CSS) === */
-        .bar-chart { display: flex; flex-direction: column; gap: 10px; }
-        .bar-row { display: flex; align-items: center; gap: 12px; }
-        .bar-label { width: 100px; font-size: 12px; color: var(--gray-700); text-align: right; flex-shrink: 0; }
-        .bar-track { flex: 1; height: 20px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
-        .bar-fill.green { background: var(--primary); }
-        .bar-fill.blue { background: var(--blue); }
-        .bar-fill.yellow { background: var(--yellow); }
-        .bar-fill.red { background: var(--red); }
-        .bar-value { font-size: 12px; font-weight: 600; color: var(--gray-700); width: 40px; flex-shrink: 0; }
-
-        /* === DONUT CHART (CSS) === */
-        .donut-chart { display: flex; align-items: center; gap: 24px; justify-content: center; }
-        .donut-visual { width: 120px; height: 120px; border-radius: 50%; position: relative; }
-        .donut-legend { display: flex; flex-direction: column; gap: 8px; }
-        .donut-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-        .donut-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
         /* === USAGE BAR === */
         .usage-bar-container { margin-bottom: 24px; }
@@ -306,13 +271,6 @@
         .usage-bar-fill { height: 100%; border-radius: 4px; background: var(--primary); transition: width 0.5s; }
         .usage-bar-fill.warning { background: var(--yellow); }
         .usage-bar-fill.critical { background: var(--red); }
-
-        /* === RULE CARD === */
-        .rule-card { border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; }
-        .rule-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .rule-card-title { font-weight: 600; font-size: 14px; }
-        .rule-card-logic { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
-        .rule-card-logic strong { color: var(--blue); }
 
         /* === NOTIFICATION ITEM === */
         .notif-item { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
@@ -324,18 +282,6 @@
 
         /* === TWO COLUMN LAYOUT === */
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-        /* === PRODUCT GRID === */
-        .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .product-card { border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px; text-align: center; cursor: pointer; transition: all 0.15s; }
-        .product-card:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); }
-        .product-card-img { width: 100%; height: 80px; background: var(--gray-100); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 8px; }
-        .product-card-name { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
-        .product-card-price { font-size: 13px; font-weight: 600; }
-        .product-card-diff { font-size: 11px; margin-top: 2px; }
-
-        /* === QR CODE PLACEHOLDER === */
-        .qr-placeholder { width: 160px; height: 160px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 64px; margin: 0 auto; }
 
         /* === FEATURE CARDS === */
         .feature-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
@@ -392,20 +338,11 @@
         <a class="sidebar-item" onclick="showScreen('admin-detail')">
             <span class="sidebar-item-icon">&#128196;</span> Request Detail
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-analytics')">
-            <span class="sidebar-item-icon">&#128200;</span> Analytics
-        </a>
         <a class="sidebar-item" onclick="showScreen('admin-policy')">
             <span class="sidebar-item-icon">&#128220;</span> Policy Settings
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-automation')">
-            <span class="sidebar-item-icon">&#9889;</span> Automation Rules
-        </a>
         <a class="sidebar-item" onclick="showScreen('admin-notifications')">
             <span class="sidebar-item-icon">&#128276;</span> Notifications
-        </a>
-        <a class="sidebar-item" onclick="showScreen('admin-branding')">
-            <span class="sidebar-item-icon">&#127912;</span> Branding
         </a>
         <div class="sidebar-divider"></div>
         <div class="sidebar-section">Storefront Preview</div>
@@ -418,14 +355,11 @@
         <a class="sidebar-item" onclick="showScreen('sf-reason')">
             <span class="sidebar-item-icon">&#128172;</span> Return Reason
         </a>
-        <a class="sidebar-item" onclick="showScreen('sf-exchange')">
-            <span class="sidebar-item-icon">&#128260;</span> Exchange Selection
-        </a>
         <a class="sidebar-item" onclick="showScreen('sf-summary')">
             <span class="sidebar-item-icon">&#9989;</span> Summary & Confirm
         </a>
         <a class="sidebar-item" onclick="showScreen('sf-label')">
-            <span class="sidebar-item-icon">&#128230;</span> Shipping Label
+            <span class="sidebar-item-icon">&#128230;</span> Confirmation
         </a>
         <a class="sidebar-item" onclick="showScreen('sf-tracking')">
             <span class="sidebar-item-icon">&#128666;</span> Return Tracking
@@ -465,14 +399,9 @@
                 <div class="metric-change" style="color: var(--yellow);">Action needed</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Revenue Retained</div>
-                <div class="metric-value">$1,240</div>
-                <div class="metric-change up">+12% MoM</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Exchange Rate</div>
-                <div class="metric-value">34%</div>
-                <div class="metric-change up">+5% MoM</div>
+                <div class="metric-label">Refunds Processed</div>
+                <div class="metric-value">$890</div>
+                <div class="metric-change down">This month</div>
             </div>
         </div>
 
@@ -533,46 +462,6 @@
             </div>
         </div>
 
-        <!-- Charts Row -->
-        <div class="two-col">
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 16px;">Returns by Reason</h3>
-                <div class="bar-chart">
-                    <div class="bar-row">
-                        <div class="bar-label">Sizing</div>
-                        <div class="bar-track"><div class="bar-fill green" style="width: 42%;"></div></div>
-                        <div class="bar-value">42%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Damaged</div>
-                        <div class="bar-track"><div class="bar-fill blue" style="width: 28%;"></div></div>
-                        <div class="bar-value">28%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Wrong Item</div>
-                        <div class="bar-track"><div class="bar-fill yellow" style="width: 18%;"></div></div>
-                        <div class="bar-value">18%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Other</div>
-                        <div class="bar-track"><div class="bar-fill red" style="width: 12%;"></div></div>
-                        <div class="bar-value">12%</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 16px;">Resolution Distribution</h3>
-                <div class="donut-chart">
-                    <div class="donut-visual" style="background: conic-gradient(var(--red) 0% 45%, var(--primary) 45% 79%, var(--blue) 79% 100%);"></div>
-                    <div class="donut-legend">
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--red);"></div> Refund: 45%</div>
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--primary);"></div> Exchange: 34%</div>
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--blue);"></div> Store Credit: 21%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Recent Activity -->
         <div class="card">
             <div class="card-header">
@@ -596,17 +485,9 @@
                     <span class="badge badge-success">Completed</span>
                 </li>
                 <li class="activity-item">
-                    <div class="activity-icon exchange">&#128260;</div>
-                    <div class="activity-content">
-                        <div class="activity-title"><strong>#RET-0038</strong> &mdash; Exchange shipped (Order #1456)</div>
-                        <div class="activity-time">9:48 AM today</div>
-                    </div>
-                    <span class="badge badge-info">Shipped</span>
-                </li>
-                <li class="activity-item">
                     <div class="activity-icon approve">&#9989;</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#RET-0037</strong> &mdash; Auto-approved by rule "Low-value returns"</div>
+                        <div class="activity-title"><strong>#RET-0037</strong> &mdash; Return approved</div>
                         <div class="activity-time">9:30 AM today</div>
                     </div>
                     <span class="badge badge-success">Approved</span>
@@ -780,7 +661,6 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-200);">
                 <div class="btn-group">
                     <button class="btn btn-sm">Bulk Approve</button>
-                    <button class="btn btn-sm">Generate Labels</button>
                 </div>
                 <div class="pagination">
                     <button>&larr;</button>
@@ -842,7 +722,7 @@
                     <div style="margin-top: 8px; font-size: 13px;">
                         <strong>Reason:</strong> Too Small<br>
                         <strong>Detail:</strong> "Fits like an XS, runs very small compared to the size chart."<br>
-                        <strong>Resolution:</strong> Exchange for Size XL
+                        <strong>Resolution:</strong> Refund requested
                     </div>
                     <div style="margin-top: 10px;">
                         <strong style="font-size: 12px; display: block; margin-bottom: 6px;">Uploaded Photos:</strong>
@@ -871,13 +751,11 @@
                 <div class="btn-group">
                     <button class="btn">&#128176; Process Refund</button>
                     <button class="btn">&#127873; Issue Store Credit</button>
-                    <button class="btn">&#128260; Create Exchange Order</button>
                 </div>
             </div>
             <div>
                 <div style="font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Shipping</div>
                 <div class="btn-group">
-                    <button class="btn">&#128230; Generate Label</button>
                     <button class="btn" onclick="showToast('Marked as received.')">&#128229; Mark as Received</button>
                 </div>
             </div>
@@ -899,7 +777,7 @@
                 <div class="timeline-item active">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">April 9, 2026 &bull; 10:32 AM</div>
-                    <div class="timeline-text"><strong>Return requested</strong> by customer. Reason: Too Small. Resolution requested: Exchange for Size XL.</div>
+                    <div class="timeline-text"><strong>Return requested</strong> by customer. Reason: Too Small. Resolution requested: Refund.</div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
@@ -1135,377 +1013,6 @@
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN 5: AUTOMATION RULES                                       -->
-<!-- ================================================================ -->
-<div id="admin-automation" class="screen hidden">
-    <div class="page">
-        <div class="page-header">
-            <h1 class="page-title">Automation Rules</h1>
-            <button class="btn btn-primary">+ Create Rule</button>
-        </div>
-
-        <!-- Active Rules -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Active Rules (3)</h3>
-
-            <div class="rule-card">
-                <div class="rule-card-header">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="rule-card-title">Auto-approve low-value returns</span>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-sm">Edit</button>
-                        <button class="btn btn-sm" style="color: var(--red);">Delete</button>
-                    </div>
-                </div>
-                <div class="rule-card-logic">
-                    <strong>IF</strong> order value &lt; $50<br>
-                    <strong>AND</strong> reason is NOT "Damaged/Defective"<br>
-                    <strong>THEN</strong> auto-approve + generate shipping label
-                </div>
-            </div>
-
-            <div class="rule-card">
-                <div class="rule-card-header">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="rule-card-title">Green return for items under $15</span>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-sm">Edit</button>
-                        <button class="btn btn-sm" style="color: var(--red);">Delete</button>
-                    </div>
-                </div>
-                <div class="rule-card-logic">
-                    <strong>IF</strong> item value &lt; $15<br>
-                    <strong>THEN</strong> mark as "Keep the Item" + issue store credit
-                </div>
-            </div>
-
-            <div class="rule-card">
-                <div class="rule-card-header">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="rule-card-title">Flag frequent returners</span>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-sm">Edit</button>
-                        <button class="btn btn-sm" style="color: var(--red);">Delete</button>
-                    </div>
-                </div>
-                <div class="rule-card-logic">
-                    <strong>IF</strong> customer has &gt; 3 returns in 60 days<br>
-                    <strong>THEN</strong> flag for manual review + add to watchlist
-                </div>
-            </div>
-        </div>
-
-        <!-- Inactive Rules -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Inactive Rules (1)</h3>
-            <div class="rule-card" style="opacity: 0.6;">
-                <div class="rule-card-header">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <label class="toggle-switch">
-                            <input type="checkbox">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="rule-card-title">VIP auto-approve</span>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-sm">Edit</button>
-                        <button class="btn btn-sm" style="color: var(--red);">Delete</button>
-                    </div>
-                </div>
-                <div class="rule-card-logic">
-                    <strong>IF</strong> customer tag = "VIP"<br>
-                    <strong>THEN</strong> auto-approve + instant exchange
-                </div>
-            </div>
-        </div>
-
-        <!-- Rule Builder -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Create New Rule</h3>
-            <div class="form-group">
-                <label class="form-label">Rule Name</label>
-                <input type="text" class="form-input" placeholder="e.g., Auto-approve loyalty customers" style="max-width: 400px;" />
-            </div>
-
-            <div style="margin-bottom: 16px;">
-                <div style="font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px;">IF:</div>
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
-                    <select class="form-input form-select" style="width: 180px;">
-                        <option>Customer tag</option>
-                        <option>Order value</option>
-                        <option>Return reason</option>
-                        <option>Product type</option>
-                        <option>Returns in period</option>
-                    </select>
-                    <select class="form-input form-select" style="width: 120px;">
-                        <option>equals</option>
-                        <option>not equals</option>
-                        <option>greater than</option>
-                        <option>less than</option>
-                        <option>contains</option>
-                    </select>
-                    <input type="text" class="form-input" placeholder="Value..." style="width: 160px;" />
-                </div>
-                <button class="btn btn-sm">+ Add Condition (AND)</button>
-            </div>
-
-            <div style="margin-bottom: 16px;">
-                <div style="font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px;">THEN:</div>
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
-                    <select class="form-input form-select" style="width: 280px;">
-                        <option>Auto-approve return</option>
-                        <option>Auto-reject return</option>
-                        <option>Flag for manual review</option>
-                        <option>Generate shipping label</option>
-                        <option>Send custom email</option>
-                        <option>Apply restocking fee</option>
-                        <option>Mark as green return</option>
-                    </select>
-                </div>
-                <button class="btn btn-sm">+ Add Action</button>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Priority (lower = higher priority)</label>
-                <input type="number" class="form-input" value="4" min="1" max="100" style="width: 80px;" />
-            </div>
-
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="showToast('Rule saved')">Save Rule</button>
-                <button class="btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ================================================================ -->
-<!-- SCREEN 6: ANALYTICS                                              -->
-<!-- ================================================================ -->
-<div id="admin-analytics" class="screen hidden">
-    <div class="page page-wide">
-        <div class="page-header">
-            <h1 class="page-title">Analytics</h1>
-            <div class="btn-group">
-                <select class="form-input form-select" style="width: 180px;">
-                    <option>Last 7 days</option>
-                    <option selected>Last 30 days</option>
-                    <option>Last 90 days</option>
-                    <option>This year</option>
-                    <option>Custom range</option>
-                </select>
-                <button class="btn">Export</button>
-            </div>
-        </div>
-
-        <!-- Metrics -->
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">Total Returns</div>
-                <div class="metric-value">127</div>
-                <div class="metric-change up">+15% MoM</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Return Rate</div>
-                <div class="metric-value">18.3%</div>
-                <div class="metric-change up">-2% MoM</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Avg Process Time</div>
-                <div class="metric-value">4.2 d</div>
-                <div class="metric-change up">-0.5 day</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Revenue Retained</div>
-                <div class="metric-value">$3,820</div>
-                <div class="metric-change up">+22% MoM</div>
-            </div>
-        </div>
-
-        <!-- Returns Over Time -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Returns Over Time</h3>
-            <div class="chart-placeholder" style="min-height: 220px;">
-                <div style="width: 100%; height: 160px; display: flex; align-items: flex-end; justify-content: space-around; gap: 4px; padding: 0 20px;">
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 40%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 55%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 70%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 60%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 85%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 50%;"></div>
-                    <div style="width: 14px; background: var(--primary); border-radius: 2px 2px 0 0; height: 65%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 30%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 45%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 55%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 40%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 60%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 35%;"></div>
-                    <div style="width: 14px; background: var(--blue); border-radius: 2px 2px 0 0; height: 50%;"></div>
-                </div>
-                <div style="display: flex; gap: 20px; font-size: 12px; color: var(--gray-500); margin-top: 8px;">
-                    <span>&#9632; Returns</span>
-                    <span style="color: var(--blue);">&#9632; Exchanges</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; width: 100%; font-size: 11px; color: var(--gray-400); padding: 0 20px;">
-                    <span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>Apr 30</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Charts Row -->
-        <div class="two-col">
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 16px;">Return Reasons Breakdown</h3>
-                <div class="bar-chart">
-                    <div class="bar-row">
-                        <div class="bar-label">Too Small</div>
-                        <div class="bar-track"><div class="bar-fill green" style="width: 38%;"></div></div>
-                        <div class="bar-value">38%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Too Large</div>
-                        <div class="bar-track"><div class="bar-fill green" style="width: 22%;"></div></div>
-                        <div class="bar-value">22%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Damaged</div>
-                        <div class="bar-track"><div class="bar-fill blue" style="width: 15%;"></div></div>
-                        <div class="bar-value">15%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Not as Desc.</div>
-                        <div class="bar-track"><div class="bar-fill yellow" style="width: 14%;"></div></div>
-                        <div class="bar-value">14%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Changed Mind</div>
-                        <div class="bar-track"><div class="bar-fill red" style="width: 11%;"></div></div>
-                        <div class="bar-value">11%</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 16px;">Exchange vs Refund Ratio</h3>
-                <div class="donut-chart">
-                    <div class="donut-visual" style="background: conic-gradient(var(--red) 0% 42%, var(--primary) 42% 76%, var(--blue) 76% 100%);"></div>
-                    <div class="donut-legend">
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--red);"></div> Refund: 42%</div>
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--primary);"></div> Exchange: 34%</div>
-                        <div class="donut-legend-item"><div class="donut-legend-dot" style="background: var(--blue);"></div> Store Credit: 24%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Top Returned Products -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Top Returned Products</h3>
-                <span class="badge badge-info">PRO</span>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Product</th>
-                            <th>Returns</th>
-                            <th>Return Rate</th>
-                            <th>Top Reason</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><strong>White Cotton T-Shirt</strong></td>
-                            <td>23</td>
-                            <td>32.4%</td>
-                            <td>Too Small (61%)</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><strong>Blue Denim Jacket</strong></td>
-                            <td>18</td>
-                            <td>24.1%</td>
-                            <td>Too Large (44%)</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><strong>Slim Fit Chinos</strong></td>
-                            <td>14</td>
-                            <td>28.7%</td>
-                            <td>Too Small (72%)</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><strong>Summer Dress</strong></td>
-                            <td>11</td>
-                            <td>19.2%</td>
-                            <td>Not as Described (55%)</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><strong>Running Shorts</strong></td>
-                            <td>9</td>
-                            <td>12.1%</td>
-                            <td>Changed Mind (67%)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Financial Impact -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Financial Impact</h3>
-                <span class="badge badge-info">PRO</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Total Return Value</div>
-                    <div style="font-size: 20px; font-weight: 700;">$8,450</div>
-                </div>
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Revenue Retained Total</div>
-                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">$4,901 (58%)</div>
-                </div>
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Refunded to Payment</div>
-                    <div style="font-size: 16px; font-weight: 600;">$3,549 (42%)</div>
-                </div>
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Retained via Exchange</div>
-                    <div style="font-size: 16px; font-weight: 600;">$2,873 (34%)</div>
-                </div>
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Retained via Store Credit</div>
-                    <div style="font-size: 16px; font-weight: 600;">$2,028 (24%)</div>
-                </div>
-                <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-sm);">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Avg Label Cost / Green Savings</div>
-                    <div style="font-size: 16px; font-weight: 600;">$6.20 / $186</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ================================================================ -->
 <!-- SCREEN 7: NOTIFICATION SETTINGS                                  -->
 <!-- ================================================================ -->
 <div id="admin-notifications" class="screen hidden">
@@ -1533,7 +1040,6 @@
                     <div class="notif-desc">Sent when a customer submits a return request</div>
                 </div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
             </div>
 
             <div class="notif-item">
@@ -1543,7 +1049,6 @@
                     <div class="notif-desc">Sent when a return is approved (manual or auto)</div>
                 </div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
             </div>
 
             <div class="notif-item">
@@ -1553,17 +1058,6 @@
                     <div class="notif-desc">Sent when a return is rejected with reason</div>
                 </div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
-            </div>
-
-            <div class="notif-item">
-                <div class="notif-icon">&#128230;</div>
-                <div class="notif-info">
-                    <div class="notif-name">Shipping Label Created</div>
-                    <div class="notif-desc">Sent when a prepaid shipping label is generated</div>
-                </div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
             </div>
 
             <div class="notif-item">
@@ -1573,7 +1067,6 @@
                     <div class="notif-desc">Sent when the returned item is received at the warehouse</div>
                 </div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
             </div>
 
             <div class="notif-item">
@@ -1583,17 +1076,6 @@
                     <div class="notif-desc">Sent when refund is processed to the customer</div>
                 </div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
-            </div>
-
-            <div class="notif-item">
-                <div class="notif-icon">&#128260;</div>
-                <div class="notif-info">
-                    <div class="notif-name">Exchange Shipped</div>
-                    <div class="notif-desc">Sent when the exchange replacement item ships</div>
-                </div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-                <button class="btn btn-sm" style="margin-left: 8px;">Preview</button>
             </div>
         </div>
 
@@ -1622,163 +1104,6 @@
                 <label class="form-label">Notification email</label>
                 <input type="email" class="form-input" value="owner@mystore.com" style="max-width: 320px;" />
                 <p style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">Leave empty to use your shop owner email.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ================================================================ -->
-<!-- SCREEN 8: BRANDING                                               -->
-<!-- ================================================================ -->
-<div id="admin-branding" class="screen hidden">
-    <div class="page page-wide">
-        <div class="page-header">
-            <h1 class="page-title">Portal Branding</h1>
-            <div class="btn-group">
-                <button class="btn">Discard</button>
-                <button class="btn btn-primary" onclick="showToast('Branding saved')">Save</button>
-            </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-            <!-- Left: Settings -->
-            <div>
-                <div class="card">
-                    <h3 class="card-title" style="margin-bottom: 16px;">Branding</h3>
-                    <div class="form-group">
-                        <label class="form-label">Logo</label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <div style="width: 64px; height: 64px; border: 2px dashed var(--gray-300); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: 24px; cursor: pointer;">+</div>
-                            <div>
-                                <button class="btn btn-sm">Upload Logo</button>
-                                <p style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">PNG or SVG, max 2MB</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Store Name</label>
-                        <input type="text" class="form-input" value="Greg's Fashion" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Primary Color</label>
-                        <div class="color-preview">
-                            <div class="color-swatch" style="background: #2C6ECB;"></div>
-                            <input type="text" class="form-input" value="#2C6ECB" style="width: 120px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Accent Color</label>
-                        <div class="color-preview">
-                            <div class="color-swatch" style="background: #2D9D78;"></div>
-                            <input type="text" class="form-input" value="#2D9D78" style="width: 120px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-preview">
-                            <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ddd;"></div>
-                            <input type="text" class="form-input" value="#FFFFFF" style="width: 120px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Font Family</label>
-                        <select class="form-input form-select" style="width: 200px;">
-                            <option selected>Inter</option>
-                            <option>Roboto</option>
-                            <option>Open Sans</option>
-                            <option>Lato</option>
-                            <option>Poppins</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Button Style</label>
-                        <div style="display: flex; gap: 12px;">
-                            <label class="checkbox-item"><input type="radio" name="btn-style" checked /> Rounded</label>
-                            <label class="checkbox-item"><input type="radio" name="btn-style" /> Square</label>
-                            <label class="checkbox-item"><input type="radio" name="btn-style" /> Pill</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">"Powered by Avada"</label>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <label class="checkbox-item"><input type="checkbox" checked /> Show</label>
-                            <span class="badge badge-info" style="font-size: 11px;">PRO: Remove</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title" style="margin-bottom: 16px;">Custom Text / Language</h3>
-                    <div class="form-group">
-                        <label class="form-label">Language</label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <select class="form-input form-select" style="width: 180px;">
-                                <option selected>English</option>
-                                <option>Spanish</option>
-                                <option>French</option>
-                                <option>German</option>
-                            </select>
-                            <button class="btn btn-sm">+ Add Language</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Portal Title</label>
-                        <input type="text" class="form-input" value="Returns & Exchanges" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Subtitle</label>
-                        <input type="text" class="form-input" value="Enter your order details to get started." />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Submit Button Text</label>
-                        <input type="text" class="form-input" value="Submit Return Request" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Success Message</label>
-                        <input type="text" class="form-input" value="Your return has been submitted!" />
-                    </div>
-                    <button class="btn btn-sm" style="color: var(--gray-500);">Reset to Defaults</button>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title" style="margin-bottom: 16px;">Custom CSS (Advanced)</h3>
-                    <textarea class="form-textarea" style="font-family: monospace; font-size: 12px; min-height: 100px;">.avada-return-portal {
-  /* Add custom CSS here */
-}</textarea>
-                </div>
-            </div>
-
-            <!-- Right: Live Preview -->
-            <div>
-                <div class="card" style="position: sticky; top: 80px;">
-                    <div class="card-header">
-                        <h3 class="card-title">Live Preview</h3>
-                        <div class="btn-group">
-                            <button class="btn btn-sm" style="font-size: 11px;">Desktop</button>
-                            <button class="btn btn-sm" style="font-size: 11px;">Mobile</button>
-                        </div>
-                    </div>
-                    <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 24px; background: var(--white);">
-                        <div style="text-align: center; margin-bottom: 16px;">
-                            <div style="font-size: 20px; margin-bottom: 4px;">&#128717;</div>
-                            <div style="font-size: 16px; font-weight: 600; letter-spacing: 1px;">RETURNS & EXCHANGES</div>
-                        </div>
-                        <div style="text-align: center; margin-bottom: 16px;">
-                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">Start Your Return</div>
-                            <div style="font-size: 13px; color: var(--gray-500);">Enter your order details to get started.</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Order Number</label>
-                            <input type="text" class="form-input" placeholder="#1234" disabled style="background: var(--gray-50);" />
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="text" class="form-input" placeholder="you@example.com" disabled style="background: var(--gray-50);" />
-                        </div>
-                        <button class="btn btn-primary" style="width: 100%; justify-content: center;" disabled>Look Up Order</button>
-                        <div style="text-align: center; margin-top: 12px; font-size: 11px; color: var(--gray-400);">Powered by Avada</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -1838,13 +1163,13 @@
             <div class="feature-cards">
                 <div class="feature-card">
                     <div class="feature-card-icon">&#128230;</div>
-                    <div class="feature-card-title">Free Shipping Labels</div>
-                    <div class="feature-card-desc">We'll send you a prepaid return label.</div>
+                    <div class="feature-card-title">Easy Returns</div>
+                    <div class="feature-card-desc">Submit a return request in minutes.</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-card-icon">&#128260;</div>
-                    <div class="feature-card-title">Easy Exchanges</div>
-                    <div class="feature-card-desc">Swap for a different size or product.</div>
+                    <div class="feature-card-icon">&#128176;</div>
+                    <div class="feature-card-title">Fast Refunds</div>
+                    <div class="feature-card-desc">Get your refund processed quickly.</div>
                 </div>
             </div>
 
@@ -2006,132 +1331,8 @@
             </div>
 
             <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-exchange')">Continue to Resolution &rarr;</button>
+                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-summary')">Continue to Summary &rarr;</button>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- ================================================================ -->
-<!-- SCREEN SF-4: EXCHANGE SELECTION                                   -->
-<!-- ================================================================ -->
-<div id="sf-exchange" class="screen hidden">
-    <div class="sf-container">
-        <div class="sf-header">
-            <div class="sf-header-logo">&#128717;</div>
-            <div class="sf-header-title">RETURNS & EXCHANGES</div>
-        </div>
-        <span class="sf-back" onclick="showScreen('sf-reason')">&larr; Back to Return Reason</span>
-
-        <div class="card">
-            <h3 style="font-size: 18px; margin-bottom: 20px;">Choose Your Resolution</h3>
-
-            <!-- Resolution Options -->
-            <div class="radio-group">
-                <div class="radio-card">
-                    <input type="radio" name="resolution" />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">Refund to Original Payment</div>
-                        <div class="radio-card-desc">Refund to Visa ending in 4242. 5-10 business days.</div>
-                    </div>
-                    <div class="radio-card-right">$29.00</div>
-                </div>
-
-                <div class="radio-card">
-                    <input type="radio" name="resolution" />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">
-                            Store Credit
-                            <span class="badge badge-bonus">+$5 BONUS</span>
-                        </div>
-                        <div class="radio-card-desc">Get $34.00 store credit instantly. +$5.00 bonus for choosing store credit!</div>
-                    </div>
-                    <div class="radio-card-right" style="color: var(--primary);">$34.00</div>
-                </div>
-
-                <div class="radio-card selected">
-                    <input type="radio" name="resolution" checked />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">
-                            Exchange for Another Item
-                            <span class="badge badge-bonus">+$5 BONUS</span>
-                            <span class="badge badge-info">Recommended</span>
-                        </div>
-                        <div class="radio-card-desc">+$5.00 bonus credit for choosing exchange! Pick a replacement below.</div>
-                    </div>
-                    <div class="radio-card-right" style="color: var(--primary);">$34.00 credit</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Exchange Options -->
-        <div class="card">
-            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 16px;">Same Product, Different Variant:</h4>
-
-            <div class="variant-group">
-                <div class="variant-group-label">Size</div>
-                <div class="variant-options">
-                    <div class="variant-opt">S</div>
-                    <div class="variant-opt">M</div>
-                    <div class="variant-opt" style="border-color: var(--gray-300); background: var(--yellow-bg); color: var(--yellow); font-weight: 500;">L (current)</div>
-                    <div class="variant-opt selected">XL</div>
-                    <div class="variant-opt oos">XXL</div>
-                </div>
-            </div>
-
-            <div class="variant-group">
-                <div class="variant-group-label">Color</div>
-                <div class="variant-options">
-                    <div class="variant-opt selected">White</div>
-                    <div class="variant-opt">Black</div>
-                    <div class="variant-opt">Navy</div>
-                </div>
-            </div>
-
-            <div style="background: var(--primary-bg); border-radius: var(--radius-md); padding: 16px; margin-top: 16px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <span style="font-size: 13px; color: var(--gray-600);">New selection:</span>
-                    <span style="font-weight: 500;">White Cotton T-Shirt - XL</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <span style="font-size: 13px; color: var(--gray-600);">Price:</span>
-                    <span style="font-weight: 500;">$29.00 (same price)</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="font-size: 13px; color: var(--gray-600);">Stock status:</span>
-                    <span class="badge badge-success">In Stock</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Or Browse Other Products -->
-        <div class="card">
-            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 16px;">Or Browse Other Products:</h4>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-card-img">&#128085;</div>
-                    <div class="product-card-name">Premium Cotton Tee</div>
-                    <div class="product-card-price">$35.00</div>
-                    <div class="product-card-diff" style="color: var(--red);">+$1.00 due</div>
-                </div>
-                <div class="product-card">
-                    <div class="product-card-img">&#128085;</div>
-                    <div class="product-card-name">V-Neck T-Shirt</div>
-                    <div class="product-card-price">$32.00</div>
-                    <div class="product-card-diff" style="color: var(--primary);">$0 (credit covers)</div>
-                </div>
-                <div class="product-card">
-                    <div class="product-card-img">&#128085;</div>
-                    <div class="product-card-name">Henley Shirt</div>
-                    <div class="product-card-price">$42.00</div>
-                    <div class="product-card-diff" style="color: var(--red);">+$8.00 due</div>
-                </div>
-            </div>
-            <button class="btn-plain" style="margin-top: 12px;">Browse Full Catalog &rarr;</button>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-            <button class="btn btn-primary btn-lg" onclick="showScreen('sf-summary')">Confirm Exchange: T-Shirt XL &rarr;</button>
         </div>
     </div>
 </div>
@@ -2145,44 +1346,24 @@
             <div class="sf-header-logo">&#128717;</div>
             <div class="sf-header-title">RETURNS & EXCHANGES</div>
         </div>
-        <span class="sf-back" onclick="showScreen('sf-exchange')">&larr; Back to Exchange Selection</span>
+        <span class="sf-back" onclick="showScreen('sf-reason')">&larr; Back to Return Reason</span>
 
+        <!-- Shipping Info -->
         <div class="card">
-            <h3 style="font-size: 18px; margin-bottom: 20px;">How would you like to return your item?</h3>
+            <h3 style="font-size: 18px; margin-bottom: 20px;">Ship Your Item Back</h3>
 
-            <!-- Shipping Method -->
-            <div class="radio-group" style="margin-bottom: 20px;">
-                <div class="radio-card selected">
-                    <input type="radio" name="shipping" checked />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">Prepaid Shipping Label</div>
-                        <div class="radio-card-desc">We'll email you a USPS label. Print it and drop off at any post office.</div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <span style="font-size: 20px;">&#128230;</span>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Ship It Yourself</div>
+                        <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 8px;">Please ship your item to our warehouse address below:</div>
+                        <div style="font-size: 13px; font-weight: 500; line-height: 1.6;">
+                            Greg's Fashion Returns<br>
+                            123 Warehouse St<br>
+                            Brooklyn, NY 11201
+                        </div>
                     </div>
-                    <div class="radio-card-right" style="color: var(--primary);">FREE</div>
-                </div>
-                <div class="radio-card">
-                    <input type="radio" name="shipping" />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">QR Code (Box-Free) <span class="badge badge-info">PRO</span></div>
-                        <div class="radio-card-desc">Show QR code at FedEx/UPS. No box or label needed.</div>
-                    </div>
-                    <div class="radio-card-right" style="color: var(--primary);">FREE</div>
-                </div>
-                <div class="radio-card">
-                    <input type="radio" name="shipping" />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">Keep the Item <span class="badge badge-success">Green Return</span></div>
-                        <div class="radio-card-desc">No need to ship anything back. Your credit will be issued immediately.</div>
-                    </div>
-                    <div class="radio-card-right"></div>
-                </div>
-                <div class="radio-card">
-                    <input type="radio" name="shipping" />
-                    <div class="radio-card-content">
-                        <div class="radio-card-title">Ship It Yourself</div>
-                        <div class="radio-card-desc">Send to: 123 Warehouse St, Brooklyn, NY 11201. You pay for shipping.</div>
-                    </div>
-                    <div class="radio-card-right"></div>
                 </div>
             </div>
         </div>
@@ -2194,20 +1375,10 @@
             <div class="sf-summary" style="margin-top: 0;">
                 <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
                 <div class="sf-summary-row"><span>Reason</span><span>Too Small</span></div>
-                <div class="sf-summary-row"><span>Resolution</span><span>Exchange for Size XL</span></div>
-                <div class="sf-summary-row"><span>Bonus Credit</span><span style="color: var(--primary); font-weight: 600;">+$5.00</span></div>
-                <div class="sf-summary-row"><span>Shipping</span><span>Prepaid Label (USPS)</span></div>
+                <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment - $29.00</span></div>
+                <div class="sf-summary-row"><span>Shipping</span><span>Ship to warehouse address above</span></div>
                 <div class="sf-summary-row"><span>Est. Processing</span><span>5-7 business days after receipt</span></div>
-                <div class="sf-summary-row total"><span>Return Value</span><span>$29.00</span></div>
-                <div class="sf-summary-row highlight"><span>Exchange Credit Applied</span><span>$34.00 (incl. $5 bonus)</span></div>
-                <div class="sf-summary-row highlight"><span>Additional Charge</span><span>$0.00</span></div>
-            </div>
-
-            <div class="banner banner-info" style="margin-top: 16px;">
-                <span class="banner-icon">&#128276;</span>
-                <div class="banner-content">
-                    Your exchange item (White Cotton T-Shirt - XL) will be shipped once we receive your return.
-                </div>
+                <div class="sf-summary-row total"><span>Refund Amount</span><span>$29.00</span></div>
             </div>
 
             <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
@@ -2218,7 +1389,7 @@
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-6: SHIPPING LABEL                                      -->
+<!-- SCREEN SF-6: CONFIRMATION                                        -->
 <!-- ================================================================ -->
 <div id="sf-label" class="screen hidden">
     <div class="sf-container">
@@ -2236,65 +1407,22 @@
         </div>
 
         <div class="card">
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Your Shipping Label</h3>
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Ship Your Item To:</h3>
 
-            <div style="display: flex; gap: 24px; align-items: flex-start;">
-                <div style="flex: 1;">
-                    <div class="banner banner-success" style="margin-bottom: 16px;">
-                        <span class="banner-icon">&#128230;</span>
-                        <div class="banner-content">
-                            <div class="banner-title">Prepaid USPS Label Ready</div>
-                            Print this label and attach it to your package. Drop off at any post office or schedule a pickup.
-                        </div>
-                    </div>
-
-                    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 20px; text-align: center; margin-bottom: 16px;">
-                        <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 8px;">Shipping Label</div>
-                        <div style="background: white; border: 2px solid var(--gray-900); border-radius: 4px; padding: 16px; display: inline-block; text-align: left; font-size: 12px; line-height: 1.6;">
-                            <strong>FROM:</strong> Jane Doe<br>
-                            456 Oak Ave, Brooklyn, NY 11201<br><br>
-                            <strong>TO:</strong> Greg's Fashion Returns<br>
-                            123 Warehouse St, Brooklyn, NY 11201<br><br>
-                            <strong>USPS Priority Mail</strong><br>
-                            Tracking: 9400111899223456789012
-                        </div>
-                    </div>
-
-                    <div class="btn-group" style="justify-content: center;">
-                        <button class="btn btn-primary">&#128424; Download Label (PDF)</button>
-                        <button class="btn">&#128424; Print Label</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center;">
-                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 8px;">Or scan QR code:</div>
-                    <div class="qr-placeholder">&#9641;</div>
-                    <div style="font-size: 11px; color: var(--gray-400); margin-top: 6px;">Show at any USPS location</div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+                <div style="font-size: 14px; font-weight: 500; line-height: 1.8;">
+                    Greg's Fashion Returns<br>
+                    123 Warehouse St<br>
+                    Brooklyn, NY 11201
                 </div>
             </div>
-        </div>
 
-        <!-- Drop-off Instructions -->
-        <div class="card">
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Drop-off Instructions</h3>
-            <ol style="font-size: 13px; color: var(--gray-700); line-height: 2; padding-left: 20px;">
-                <li>Pack your item securely in any box or padded envelope</li>
-                <li>Print and attach the shipping label to the outside of the package</li>
-                <li>Drop off at any USPS Post Office or schedule a free pickup at <a href="#" style="color: var(--blue);">usps.com/pickup</a></li>
-                <li>Keep your tracking number: <strong>9400111899223456789012</strong></li>
-            </ol>
-
-            <div class="banner banner-warning" style="margin-top: 12px;">
+            <div class="banner banner-warning">
                 <span class="banner-icon">&#9200;</span>
                 <div class="banner-content">
-                    Please ship your return within <strong>14 days</strong>. The label expires on April 23, 2026.
+                    Please ship your return within <strong>14 days</strong>. Your return request expires on April 23, 2026.
                 </div>
             </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 16px;">
-            <span style="font-size: 13px; color: var(--gray-500);">Prefer to ship it yourself?</span>
-            <button class="btn-plain">Use your own shipping &rarr;</button>
         </div>
 
         <div style="text-align: center; margin-top: 16px;">
@@ -2374,8 +1502,7 @@
                 <div class="sf-summary" style="margin-top: 0; background: transparent; padding: 0;">
                     <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
                     <div class="sf-summary-row"><span>Reason</span><span>Too Small</span></div>
-                    <div class="sf-summary-row"><span>Resolution</span><span>Exchange for Size XL</span></div>
-                    <div class="sf-summary-row"><span>Bonus Credit</span><span style="color: var(--primary);">+$5.00</span></div>
+                    <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment</span></div>
                 </div>
             </div>
 
@@ -2391,7 +1518,7 @@
                     <div class="timeline-item active">
                         <div class="timeline-dot"></div>
                         <div class="timeline-date">April 9, 2026 &bull; 10:45 AM</div>
-                        <div class="timeline-text"><strong>Approved</strong> &mdash; Return approved. Shipping label emailed to you.</div>
+                        <div class="timeline-text"><strong>Approved</strong> &mdash; Return approved.</div>
                     </div>
                     <div class="timeline-item active">
                         <div class="timeline-dot"></div>
@@ -2495,20 +1622,6 @@
                 const radio = this.querySelector('input[type="radio"]');
                 if (radio) radio.checked = true;
             }
-        });
-    });
-
-    // Variant option selection
-    document.querySelectorAll('.variant-options').forEach(group => {
-        group.querySelectorAll('.variant-opt:not(.oos)').forEach(opt => {
-            opt.addEventListener('click', function() {
-                // Don't deselect "current" items
-                if (this.style.background) return;
-                group.querySelectorAll('.variant-opt').forEach(o => {
-                    if (!o.style.background) o.classList.remove('selected');
-                });
-                this.classList.add('selected');
-            });
         });
     });
 
