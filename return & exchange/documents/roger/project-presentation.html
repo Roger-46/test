@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avada Returns & Exchanges — Giới Thiệu Dự Án</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d2e;
+            --surface2: #242842;
+            --surface3: #2e3354;
+            --border: #3d4266;
+            --text: #e8eaf0;
+            --text-dim: #a0a6b8;
+            --text-muted: #6b7190;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-dim: #10b98115;
+            --green: #10b981;
+            --green-dim: #10b98115;
+            --blue: #3b82f6;
+            --blue-dim: #3b82f615;
+            --orange: #f59e0b;
+            --orange-dim: #f59e0b15;
+            --red: #ef4444;
+            --red-dim: #ef444415;
+            --purple: #a855f7;
+            --purple-dim: #a855f715;
+            --teal: #14b8a6;
+            --teal-dim: #14b8a615;
+            --cyan: #22d3ee;
+            --cyan-dim: #22d3ee15;
+            --indigo: #6366f1;
+            --indigo-dim: #6366f115;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 28px 100px; }
+
+        /* ---- Hero ---- */
+        .hero {
+            text-align: center;
+            padding: 72px 0 48px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            background: var(--accent-dim);
+            color: var(--accent-light);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid #10b98130;
+        }
+        .hero h1 {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            position: relative;
+            background: linear-gradient(135deg, #e8eaf0 0%, #34d399 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-dim);
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* ---- Section ---- */
+        .section { margin-top: 56px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .section-header h2 { font-size: 22px; font-weight: 700; }
+        .section-header .section-sub { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+
+        /* ---- Card ---- */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: var(--accent); }
+        .card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p, .card li { font-size: 14.5px; color: var(--text-dim); line-height: 1.75; }
+        .card ul { list-style: none; padding: 0; }
+        .card ul li { padding: 6px 0 6px 24px; position: relative; }
+        .card ul li::before {
+            content: '›';
+            position: absolute;
+            left: 6px;
+            color: var(--accent-light);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* ---- Grid ---- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+        /* ---- Stat Box ---- */
+        .stat-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+        }
+        .stat-box .stat-value { font-size: 32px; font-weight: 800; line-height: 1.2; }
+        .stat-box .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
+
+        /* ---- Tag ---- */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .tag-p0 { background: var(--red-dim); color: var(--red); }
+        .tag-p1 { background: var(--orange-dim); color: var(--orange); }
+        .tag-p2 { background: var(--blue-dim); color: var(--blue); }
+        .tag-done { background: var(--green-dim); color: var(--green); }
+
+        /* ---- Table ---- */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        thead th {
+            background: var(--surface2);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        tbody td { padding: 12px 16px; border-bottom: 1px solid #2a2f4a; color: var(--text-dim); }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: var(--surface2); }
+
+        /* ---- Flow Diagram ---- */
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        .flow-step {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 140px;
+        }
+        .flow-step .flow-num { font-size: 11px; color: var(--accent-light); font-weight: 700; margin-bottom: 4px; }
+        .flow-step .flow-label { font-size: 13px; font-weight: 600; }
+        .flow-step .flow-desc { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .flow-arrow { font-size: 20px; color: var(--accent-light); padding: 0 8px; }
+
+        /* ---- Timeline ---- */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 11px; top: 8px; bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-item { position: relative; padding-bottom: 28px; }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-dot {
+            position: absolute;
+            left: -32px; top: 4px;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 1;
+        }
+        .timeline-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .timeline-item p { font-size: 13px; color: var(--text-dim); }
+        .timeline-item .timeline-tag { font-size: 11px; font-weight: 600; margin-left: 8px; }
+
+        /* ---- Highlight Box ---- */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--accent-dim), var(--teal-dim));
+            border: 1px solid #10b98130;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 16px;
+        }
+        .highlight-box h3 { font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--accent-light); }
+
+        /* ---- TOC ---- */
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-top: 32px;
+        }
+        .toc h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--accent-light); }
+        .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+        .toc a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s;
+        }
+        .toc a:hover { background: var(--surface2); color: var(--text); }
+        .toc a .toc-num { font-size: 11px; font-weight: 700; color: var(--accent-light); width: 24px; }
+
+        /* ---- Print ---- */
+        @media print {
+            body { background: #fff; color: #111; }
+            .card, .stat-box { border-color: #ddd; background: #fafafa; }
+            .hero h1 { -webkit-text-fill-color: #111; background: none; }
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 32px; }
+            .flow { flex-direction: column; align-items: center; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ============ HERO ============ -->
+    <div class="hero">
+        <div class="hero-badge">AVADA COMMERCE &bull; Q2 2026</div>
+        <h1>Returns & Exchanges</h1>
+        <p>Ứng dụng Shopify giúp khách hàng tự yêu cầu đổi/trả hàng, tự động hoàn tiền & tạo đơn exchange — giảm 70% thời gian xử lý return và giữ lại doanh thu qua store credit & exchange flow.</p>
+    </div>
+
+    <!-- ============ TOC ============ -->
+    <div class="toc">
+        <h3>Mục Lục</h3>
+        <div class="toc-grid">
+            <a href="#problem"><span class="toc-num">01</span> Vấn Đề & Cơ Hội</a>
+            <a href="#solution"><span class="toc-num">02</span> Giải Pháp</a>
+            <a href="#features"><span class="toc-num">03</span> Tính Năng Chính</a>
+            <a href="#flow"><span class="toc-num">04</span> Luồng Xử Lý</a>
+            <a href="#competitors"><span class="toc-num">05</span> So Sánh Đối Thủ</a>
+            <a href="#status"><span class="toc-num">06</span> Tiến Độ Hiện Tại</a>
+            <a href="#roadmap"><span class="toc-num">07</span> Lộ Trình & Bước Tiếp Theo</a>
+        </div>
+    </div>
+
+    <!-- ============ 01. VẤN ĐỀ ============ -->
+    <div class="section" id="problem">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--red-dim); color: var(--red);">01</div>
+            <div>
+                <h2>Vấn Đề & Cơ Hội Thị Trường</h2>
+                <div class="section-sub">Tại sao chúng ta xây dựng sản phẩm này?</div>
+            </div>
+        </div>
+
+        <div class="grid-3">
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--red);">$1.93B</div>
+                <div class="stat-label">Quy mô thị trường Returns Management toàn cầu</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--orange);">20-30%</div>
+                <div class="stat-label">Tỷ lệ trả hàng trung bình eCommerce</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--accent-light);">$6-12M</div>
+                <div class="stat-label">ARR mục tiêu năm thứ 3</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+            <h3>Vấn Đề Của Merchant</h3>
+            <ul>
+                <li>Shopify <strong>không có</strong> return portal cho khách hàng — mọi return đều qua email/ticket thủ công</li>
+                <li>Xử lý 1 return request tốn trung bình <strong>15-20 phút</strong> nhân lực</li>
+                <li>Phần lớn merchant xử lý return bằng <strong>email + spreadsheet</strong> — dễ sai sót, mất tracking</li>
+                <li>Các app đối thủ giá <strong>$19 - $599/tháng</strong>, nhiều app tính thêm phí per-label</li>
+                <li>Không có app nào có <strong>exchange flow tốt</strong> — đa số chỉ refund rồi tạo đơn mới</li>
+                <li>Merchant mất <strong>doanh thu vĩnh viễn</strong> khi refund 100% thay vì convert sang store credit hoặc exchange</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Cơ Hội Cho Avada</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">
+                <strong style="color: var(--text);">3.9M Shopify stores</strong> — trong đó 1.17M store có >50 đơn/tháng cần return management. Phần lớn app đối thủ tập trung Shopify Plus ($99+/tháng).
+                Thị trường SMB (<strong style="color: var(--text);">$0-30/tháng</strong>) gần như bỏ trống — đây chính là phân khúc Avada mạnh nhất.
+            </p>
+        </div>
+    </div>
+
+    <!-- ============ 02. GIẢI PHÁP ============ -->
+    <div class="section" id="solution">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--green-dim); color: var(--green);">02</div>
+            <div>
+                <h2>Giải Pháp: Avada Returns & Exchanges</h2>
+                <div class="section-sub">Self-service portal + Revenue retention engine</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3 style="color: var(--teal);">Cho Khách Hàng</h3>
+                <ul>
+                    <li>Self-service return portal — tự tra cứu đơn hàng</li>
+                    <li>Chọn item muốn trả, nhập lý do + ảnh chụp</li>
+                    <li>3 lựa chọn: <strong>Refund / Store Credit / Exchange</strong></li>
+                    <li>Exchange trực tiếp — đổi size/màu ngay lập tức</li>
+                    <li>Tự in shipping label hoặc nhận QR code</li>
+                    <li>Theo dõi trạng thái return real-time</li>
+                    <li>Giao diện đa ngôn ngữ, responsive mobile</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--purple);">Cho Merchant</h3>
+                <ul>
+                    <li>Dashboard quản lý return — filter, search, bulk actions</li>
+                    <li>Cấu hình return policy linh hoạt (theo product/tag/collection)</li>
+                    <li>Auto-approve return theo rules</li>
+                    <li>Store credit incentive — thưởng bonus khi chọn credit</li>
+                    <li>Tự động tạo shipping label (USPS, FedEx, UPS, DHL)</li>
+                    <li>Analytics: return rate, revenue retained, top reasons</li>
+                    <li>Email notifications tùy chỉnh template</li>
+                    <li>10-phút quick-start wizard</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 16px;">
+            <div style="background: var(--green-dim); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #10b98130;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--green);">70%</div>
+                <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">Giảm thời gian xử lý return</div>
+            </div>
+            <div style="background: var(--purple-dim); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #a855f730;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--purple);">40%</div>
+                <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">Revenue retained qua store credit & exchange</div>
+            </div>
+            <div style="background: var(--blue-dim); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #3b82f630;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--blue);">10 phút</div>
+                <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">Setup wizard — bắt đầu ngay</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 03. TÍNH NĂNG ============ -->
+    <div class="section" id="features">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--indigo-dim); color: var(--indigo);">03</div>
+            <div>
+                <h2>Tính Năng Chính</h2>
+                <div class="section-sub">Phân theo độ ưu tiên P0 / P1 / P2</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><span class="tag tag-p0">P0 — MVP</span> Tính Năng Lõi (12 tuần)</h3>
+            <div class="table-wrap" style="margin-top: 12px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tính Năng</th>
+                            <th>Khách Hàng</th>
+                            <th>Merchant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Return Portal</strong></td>
+                            <td>Tra cứu đơn hàng, chọn item, nhập lý do</td>
+                            <td>Custom branding (logo, màu sắc)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Return Reasons + Photos</strong></td>
+                            <td>Chọn lý do từ danh sách, đính kèm ảnh (max 5)</td>
+                            <td>Tùy chỉnh danh sách lý do</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Refund Processing</strong></td>
+                            <td>Hoàn tiền về payment method gốc</td>
+                            <td>Partial refund, restocking fee</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Store Credit</strong></td>
+                            <td>Nhận store credit (gift card) + bonus</td>
+                            <td>Incentive bonus %, tự động tạo gift card</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exchange (Variant Swap)</strong></td>
+                            <td>Đổi sang size/màu khác trong cùng sản phẩm</td>
+                            <td>Xử lý chênh lệch giá, tạo đơn exchange</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Return Policy Engine</strong></td>
+                            <td>Hệ thống tự kiểm tra eligibility</td>
+                            <td>Return window, exclude products/tags</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auto-Approve</strong></td>
+                            <td>Return được duyệt tự động ngay lập tức</td>
+                            <td>Cấu hình rules: theo giá trị, lý do, lịch sử</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shipping Labels</strong></td>
+                            <td>Tự in label hoặc nhận qua email</td>
+                            <td>Tích hợp EasyPost (USPS, FedEx, UPS, DHL)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Return Tracking</strong></td>
+                            <td>Xem trạng thái: Submitted → Approved → Shipped → Received → Resolved</td>
+                            <td>Timeline activity log chi tiết</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email Notifications</strong></td>
+                            <td>Nhận thông báo ở mỗi bước</td>
+                            <td>Tùy chỉnh template, SendGrid</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard & Analytics</strong></td>
+                            <td>—</td>
+                            <td>Return volume, reasons, revenue retained</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-language</strong></td>
+                            <td>Portal hiển thị ngôn ngữ phù hợp</td>
+                            <td>5 ngôn ngữ (Free), 20+ (Pro)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3><span class="tag tag-p1">P1</span> Competitive Advantage</h3>
+                <ul>
+                    <li><strong>Instant Exchange</strong> — Ship mới trước khi nhận return</li>
+                    <li><strong>Cross-product Exchange</strong> — Đổi sang sản phẩm khác</li>
+                    <li><strong>Shop Now Exchange</strong> — Khách browse catalog khi exchange</li>
+                    <li><strong>Fraud Detection</strong> — Chặn serial returner, blocklist</li>
+                    <li><strong>QR Code Returns</strong> — Box-free, in-store drop-off</li>
+                    <li><strong>SMS Notifications</strong> — Twilio integration</li>
+                    <li><strong>Green Returns</strong> — Keep-item (dưới ngưỡng giá)</li>
+                    <li><strong>Shopify Flow</strong> — Trigger automation</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><span class="tag tag-p2">P2</span> Enterprise & Scale</h3>
+                <ul>
+                    <li><strong>Multi-warehouse Routing</strong> — Return đến kho gần nhất</li>
+                    <li><strong>Cross-border Returns</strong> — Quốc tế, customs handling</li>
+                    <li><strong>In-store Returns (POS)</strong> — Nhận return tại store</li>
+                    <li><strong>Warranty Management</strong> — Claims theo product warranty</li>
+                    <li><strong>White-label Portal</strong> — Custom domain</li>
+                    <li><strong>API & Webhooks</strong> — Tích hợp ERP/3PL</li>
+                    <li><strong>Advanced Analytics</strong> — Product-level insights</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 04. LUỒNG XỬ LÝ ============ -->
+    <div class="section" id="flow">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--teal-dim); color: var(--teal);">04</div>
+            <div>
+                <h2>Luồng Xử Lý Return & Exchange</h2>
+                <div class="section-sub">Trải nghiệm khách hàng từ đầu đến cuối</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Customer Return Flow</h3>
+            <div class="flow">
+                <div class="flow-step">
+                    <div class="flow-num">BƯỚC 1</div>
+                    <div class="flow-label">Return Portal</div>
+                    <div class="flow-desc">Nhập order # + email</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-num">BƯỚC 2</div>
+                    <div class="flow-label">Chọn Items</div>
+                    <div class="flow-desc">Số lượng, lý do, ảnh</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-num">BƯỚC 3</div>
+                    <div class="flow-label">Chọn Resolution</div>
+                    <div class="flow-desc">Refund / Credit / Exchange</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-num">BƯỚC 4</div>
+                    <div class="flow-label">Shipping</div>
+                    <div class="flow-desc">In label / QR code</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step">
+                    <div class="flow-num">BƯỚC 5</div>
+                    <div class="flow-label">Resolved</div>
+                    <div class="flow-desc">Refund / Credit / Ship mới</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>3 Phương Thức Giải Quyết</h3>
+            <div class="grid-3" style="margin-top: 12px;">
+                <div style="background: var(--red-dim); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-weight: 700; font-size: 14px; color: var(--red);">Refund</div>
+                    <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">Hoàn tiền về payment method gốc. Có thể trừ restocking fee.</div>
+                </div>
+                <div style="background: var(--purple-dim); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-weight: 700; font-size: 14px; color: var(--purple);">Store Credit</div>
+                    <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">Tạo gift card + bonus incentive. <strong>Giữ lại 100% doanh thu.</strong></div>
+                </div>
+                <div style="background: var(--green-dim); padding: 16px; border-radius: 10px; text-align: center;">
+                    <div style="font-weight: 700; font-size: 14px; color: var(--green);">Exchange</div>
+                    <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">Đổi variant/sản phẩm. Tự tạo đơn mới, xử lý chênh lệch giá.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Return Status Flow</h3>
+            <div class="flow">
+                <div class="flow-step" style="border-color: var(--orange); min-width: 110px;">
+                    <div class="flow-label" style="font-size: 12px; color: var(--orange);">Submitted</div>
+                    <div class="flow-desc">Khách gửi yêu cầu</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step" style="border-color: var(--blue); min-width: 110px;">
+                    <div class="flow-label" style="font-size: 12px; color: var(--blue);">Approved</div>
+                    <div class="flow-desc">Merchant/Auto duyệt</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step" style="border-color: var(--purple); min-width: 110px;">
+                    <div class="flow-label" style="font-size: 12px; color: var(--purple);">Shipped</div>
+                    <div class="flow-desc">Khách gửi hàng trả</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step" style="border-color: var(--teal); min-width: 110px;">
+                    <div class="flow-label" style="font-size: 12px; color: var(--teal);">Received</div>
+                    <div class="flow-desc">Warehouse nhận</div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-step" style="border-color: var(--green); min-width: 110px;">
+                    <div class="flow-label" style="font-size: 12px; color: var(--green);">Resolved</div>
+                    <div class="flow-desc">Refund/Credit/Exchange</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Revenue Retention Engine</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">Thay vì refund 100% (mất doanh thu), app khuyến khích khách chọn <strong style="color: var(--text);">store credit</strong> bằng cách thưởng bonus (VD: hoàn 110% dưới dạng credit). Kết hợp với <strong style="color: var(--text);">exchange flow</strong> giúp merchant giữ lại trung bình <strong style="color: var(--text);">40% doanh thu</strong> từ các đơn return. Đây là USP chính so với đối thủ giá rẻ.</p>
+        </div>
+    </div>
+
+    <!-- ============ 05. SO SÁNH ĐỐI THỦ ============ -->
+    <div class="section" id="competitors">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--purple-dim); color: var(--purple);">05</div>
+            <div>
+                <h2>So Sánh Đối Thủ</h2>
+                <div class="section-sub">Vị trí của Avada trên thị trường</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-wrap" style="margin-top: 0;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tính năng</th>
+                            <th style="color: var(--accent-light);">Avada (kế hoạch)</th>
+                            <th>AfterShip Returns</th>
+                            <th>Loop Returns</th>
+                            <th>Return Prime</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Giá khởi điểm</strong></td>
+                            <td style="color: var(--accent-light); font-weight: 700;">Free (50 returns)</td>
+                            <td>$23/tháng</td>
+                            <td>$59/tháng</td>
+                            <td>Free (limited)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Self-service Portal</strong></td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Store Credit + Bonus</strong></td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exchange Flow</strong></td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td>Hạn chế</td>
+                            <td style="color: var(--green);">&#10003; (mạnh)</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auto-Approve Rules</strong></td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shipping Labels</strong></td>
+                            <td style="color: var(--green);">&#10003; (EasyPost)</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td>Có phí thêm</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Green Returns</strong></td>
+                            <td style="color: var(--green);">&#10003; (P1)</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fraud Detection</strong></td>
+                            <td style="color: var(--green);">&#10003; (P1)</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                            <td style="color: var(--green);">&#10003;</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-language (Free)</strong></td>
+                            <td style="color: var(--green);">5 ngôn ngữ</td>
+                            <td>Chỉ paid plan</td>
+                            <td>Chỉ paid plan</td>
+                            <td style="color: var(--red);">&#10007;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phù hợp SMB</strong></td>
+                            <td style="color: var(--accent-light); font-weight: 700;">Rất tốt</td>
+                            <td>Trung bình</td>
+                            <td>Yếu (giá cao)</td>
+                            <td>Tốt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Lợi Thế Cạnh Tranh Avada</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">
+                <strong style="color: var(--text);">1. Giá cả:</strong> Free plan thực sự dùng được (50 returns/tháng) — đối thủ free plan rất giới hạn.<br>
+                <strong style="color: var(--text);">2. Revenue retention:</strong> Store credit bonus + exchange flow ở mọi plan — đối thủ chỉ có ở plan cao.<br>
+                <strong style="color: var(--text);">3. Avada ecosystem:</strong> Cross-sell với Order Editing, Email Marketing — tạo moat cho merchant.
+            </p>
+        </div>
+    </div>
+
+    <!-- ============ 06. TIẾN ĐỘ ============ -->
+    <div class="section" id="status">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--cyan-dim); color: var(--cyan);">06</div>
+            <div>
+                <h2>Tiến Độ Hiện Tại</h2>
+                <div class="section-sub">Research & Planning đã hoàn tất — sẵn sàng implement</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3><span class="tag tag-done">DONE</span> Đã Hoàn Thành</h3>
+                <ul>
+                    <li><strong>Market Research</strong> — Pain points, thị trường, đối tượng</li>
+                    <li><strong>Competitor Analysis</strong> — 6 đối thủ, pricing benchmark</li>
+                    <li><strong>PRD</strong> — Đầy đủ features, pricing, go-to-market</li>
+                    <li><strong>Architecture Design</strong> — Firestore schema (11 collections), API endpoints</li>
+                    <li><strong>UI/UX Mockups</strong> — 15+ screen wireframes</li>
+                    <li><strong>User Stories</strong> — 22 stories, 100+ test cases</li>
+                    <li><strong>Implementation Checklist</strong> — 110+ tasks, dependency map</li>
+                    <li><strong>Dev Environment</strong> — CLAUDE.md, skills, agents, workflows</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><span class="tag tag-p0">NEXT</span> Cần Làm Tiếp</h3>
+                <ul>
+                    <li><strong>Project Scaffolding</strong> — Shopify app, Firebase, Firestore</li>
+                    <li><strong>Backend Core</strong> — Repositories, services, handlers</li>
+                    <li><strong>Return Portal</strong> — Customer-facing UI (Theme Extension)</li>
+                    <li><strong>Admin Dashboard</strong> — Merchant UI (React/Polaris)</li>
+                    <li><strong>Integrations</strong> — EasyPost, SendGrid, BigQuery</li>
+                    <li><strong>Testing & QA</strong> — End-to-end testing</li>
+                    <li><strong>Shopify App Store Review</strong> — Submit app</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Tài Liệu Đã Có</h3>
+            <div class="table-wrap" style="margin-top: 12px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tài Liệu</th>
+                            <th>Nội Dung</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>01-market-pain-points.md</strong></td>
+                            <td>Pain points merchant, quy mô thị trường $1.93B</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>02-feature-matrix.md</strong></td>
+                            <td>45 features phân P0/P1/P2, so sánh đối thủ</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>05-competitor-analysis.md</strong></td>
+                            <td>Deep dive 6 đối thủ: strengths/weaknesses</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>09-prd.md</strong></td>
+                            <td>Full PRD 13 sections, pricing, go-to-market</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>10-mockups.md</strong></td>
+                            <td>15+ screen wireframes (portal + admin)</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>12-architecture.md</strong></td>
+                            <td>Firestore schema, API endpoints, component tree</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>13-checklist.md</strong></td>
+                            <td>110+ tasks implementation, 12-week timeline</td>
+                            <td><span class="tag tag-done">Done</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 07. LỘ TRÌNH ============ -->
+    <div class="section" id="roadmap">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--orange-dim); color: var(--orange);">07</div>
+            <div>
+                <h2>Lộ Trình & Bước Tiếp Theo</h2>
+                <div class="section-sub">MVP 12 tuần → P1 competitive features → P2 enterprise</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><span class="tag tag-p0">P0 — MVP</span> Kế Hoạch 12 Tuần</h3>
+            <div class="table-wrap" style="margin-top: 12px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Tuần</th>
+                            <th style="width: 200px;">Mục Tiêu</th>
+                            <th>Chi Tiết Công Việc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 1-2</strong></td>
+                            <td><strong>Foundation</strong></td>
+                            <td>
+                                Shopify app config, Firebase setup, Firestore schema (shops, returns, returnItems, policies, returnSettings), TypeScript types, repositories, webhook endpoints, helpers
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 3-5</strong></td>
+                            <td><strong>Core Return Flow</strong></td>
+                            <td>
+                                Policy engine (eligibility check, rules), auto-approve service, return request processing (create, approve, reject), customer portal API, return reason & photo upload
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 5-6</strong></td>
+                            <td><strong>Refund & Store Credit</strong></td>
+                            <td>
+                                Refund service (partial, full, restocking fee), store credit service (tạo gift card, bonus incentive), Shopify Payments integration
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 6-8</strong></td>
+                            <td><strong>Exchange Flow</strong></td>
+                            <td>
+                                Variant selection, price difference handling (collect / refund), tạo exchange order tự động, inventory management
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 7-8</strong></td>
+                            <td><strong>Notifications</strong></td>
+                            <td>
+                                Email notification system (SendGrid), templates cho mỗi status change, merchant notification settings
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 8-9</strong></td>
+                            <td><strong>Shipping Labels</strong></td>
+                            <td>
+                                EasyPost integration (USPS, FedEx, UPS, DHL), label generation API, tracking number sync
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 9-11</strong></td>
+                            <td><strong>Admin Dashboard</strong></td>
+                            <td>
+                                Returns list page (filter, search, bulk actions), return detail page (timeline, actions), analytics dashboard (BigQuery), settings & policy configuration
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--accent-light);">Tuần 11-12</strong></td>
+                            <td><strong>Polish & Submit</strong></td>
+                            <td>
+                                Onboarding wizard (10-phút setup), app install/uninstall flow, GDPR handlers, end-to-end testing, Shopify App Store review submission
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Tổng Quan Dài Hạn</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: var(--green-dim); color: var(--green);">&#10003;</div>
+                    <h4>Research & Planning <span class="timeline-tag tag tag-done">Hoàn tất</span></h4>
+                    <p>Market research, PRD, architecture design, mockups, user stories, implementation checklist — tất cả đã sẵn sàng</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: var(--red-dim); color: var(--red);">1</div>
+                    <h4>P0 — MVP Launch <span class="timeline-tag tag tag-p0">12 tuần</span></h4>
+                    <p>12 tính năng lõi: portal, refund, store credit, exchange, shipping labels, auto-approve, analytics, notifications</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: var(--orange-dim); color: var(--orange);">2</div>
+                    <h4>P1 — Competitive Advantage <span class="timeline-tag tag tag-p1">+8 tuần</span></h4>
+                    <p>Instant exchange, cross-product exchange, Shop Now flow, fraud detection, QR code returns, SMS, green returns, Shopify Flow</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: var(--blue-dim); color: var(--blue);">3</div>
+                    <h4>P2 — Enterprise & Scale <span class="timeline-tag tag tag-p2">+12 tuần</span></h4>
+                    <p>Multi-warehouse routing, cross-border returns, in-store returns (POS), warranty management, white-label portal, API access</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Pricing Model (Dự Kiến)</h3>
+            <div class="grid-2" style="margin-top: 12px; gap: 12px;">
+                <div style="background: var(--surface2); padding: 20px; border-radius: 10px; text-align: center; border: 1px solid var(--border);">
+                    <div style="font-weight: 800; font-size: 20px; color: var(--green);">Free</div>
+                    <div style="font-size: 24px; font-weight: 800; margin: 8px 0;">$0</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">50 returns/tháng<br>Core features, 5 ngôn ngữ</div>
+                </div>
+                <div style="background: var(--surface2); padding: 20px; border-radius: 10px; text-align: center; border: 1px solid var(--border);">
+                    <div style="font-weight: 800; font-size: 20px; color: var(--blue);">Starter</div>
+                    <div style="font-size: 24px; font-weight: 800; margin: 8px 0;">$9-29</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">150 returns/tháng<br>Shipping labels, branding</div>
+                </div>
+                <div style="background: var(--surface2); padding: 20px; border-radius: 10px; text-align: center; border: 1px solid var(--accent); border-width: 2px;">
+                    <div style="font-weight: 800; font-size: 20px; color: var(--accent-light);">Pro</div>
+                    <div style="font-size: 24px; font-weight: 800; margin: 8px 0;">$99</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">500 returns/tháng<br>Auto-approve, analytics, 20+ ngôn ngữ</div>
+                </div>
+                <div style="background: var(--surface2); padding: 20px; border-radius: 10px; text-align: center; border: 1px solid var(--border);">
+                    <div style="font-weight: 800; font-size: 20px; color: var(--purple);">Enterprise</div>
+                    <div style="font-size: 24px; font-weight: 800; margin: 8px 0;">Custom</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">2000+ returns/tháng<br>API, white-label, SLA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ FOOTER ============ -->
+    <div style="text-align: center; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #34d399, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px;">Avada Returns & Exchanges</div>
+        <div style="font-size: 13px; color: var(--text-muted);">Avada Commerce &bull; Q2 2026 &bull; Giới Thiệu Dự Án</div>
+    </div>
+
+</div>
+</body>
+</html>

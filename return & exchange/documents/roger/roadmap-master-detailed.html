@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avada Return & Exchange — Master Roadmap Chi Tiet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #0a0e1a;
+            --surface: #131831;
+            --surface2: #1a2040;
+            --surface3: #212850;
+            --border: #2a3260;
+            --text: #e8eaf6;
+            --text-dim: #8890b5;
+            --text-muted: #5a6290;
+
+            --red: #ef4444;
+            --red-dim: #ef444415;
+            --orange: #f59e0b;
+            --orange-dim: #f59e0b15;
+            --yellow: #eab308;
+            --yellow-dim: #eab30815;
+            --green: #10b981;
+            --green-dim: #10b98115;
+            --blue: #3b82f6;
+            --blue-dim: #3b82f615;
+            --indigo: #6366f1;
+            --indigo-dim: #6366f115;
+            --purple: #a78bfa;
+            --purple-dim: #a78bfa15;
+            --pink: #ec4899;
+            --pink-dim: #ec489915;
+            --cyan: #06b6d4;
+            --cyan-dim: #06b6d415;
+            --teal: #14b8a6;
+            --teal-dim: #14b8a615;
+            --gold: #fbbf24;
+            --gold-dim: #fbbf2415;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === HERO === */
+        .hero {
+            text-align: center;
+            padding: 60px 24px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--indigo);
+            background: var(--indigo-dim);
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(99,102,241,0.2);
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e8eaf6, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* === STICKY NAV === */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,14,26,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 24px;
+            overflow-x: auto;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .sticky-nav::-webkit-scrollbar { height: 0; }
+        .nav-btn {
+            white-space: nowrap;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .nav-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
+        .nav-btn.active { background: var(--indigo-dim); color: var(--indigo); border-color: rgba(99,102,241,0.3); }
+
+        /* === STATS BAR === */
+        .stats-bar {
+            max-width: 1200px;
+            margin: 24px auto 16px;
+            padding: 0 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .stat-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .stat-chip .val {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        .stat-chip .lbl {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* === PROGRESS === */
+        .progress-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 24px;
+        }
+        .progress-track {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+        }
+        .progress-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        .progress-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            margin-bottom: 6px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .progress-dot.active { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 12px rgba(245,158,11,0.4); }
+        .progress-dot.done { background: var(--green); border-color: var(--green); }
+        .progress-plabel {
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            max-width: 80px;
+        }
+        .progress-line {
+            position: absolute;
+            top: 27px;
+            left: 5%; right: 5%;
+            height: 2px;
+            background: var(--border);
+            z-index: 1;
+        }
+        .progress-line-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 0%;
+            background: linear-gradient(90deg, var(--green), var(--orange));
+            border-radius: 2px;
+        }
+
+        /* === MILESTONE === */
+        .milestone-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+        .milestone {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 56px;
+        }
+        .milestone::before {
+            content: '';
+            position: absolute;
+            left: 21px;
+            top: 40px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--border), transparent);
+        }
+        .milestone:last-child::before { display: none; }
+
+        .milestone-icon {
+            position: absolute;
+            left: 0; top: 0;
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border: 2px solid;
+        }
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .milestone-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+        .milestone-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+        .milestone-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        /* === FEATURE CARDS === */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: 32px 1fr auto;
+            gap: 12px;
+            align-items: start;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .feature-card:hover {
+            border-color: rgba(99,102,241,0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .feature-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-body { min-width: 0; cursor: pointer; }
+        .feature-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-name .expand-icon {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .feature-card.expanded .feature-name .expand-icon {
+            transform: rotate(90deg);
+        }
+        .feature-desc {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 6px;
+            display: none;
+        }
+        .feature-why {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            background: var(--surface2);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border-left: 2px solid;
+            display: none;
+        }
+        .feature-card.expanded .feature-desc,
+        .feature-card.expanded .feature-why {
+            display: block;
+        }
+
+        .ice-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.58rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(251,191,36,0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(251,191,36,0.2);
+            margin-left: 6px;
+            white-space: nowrap;
+            cursor: help;
+        }
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .tag {
+            font-size: 0.58rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .tag-dev { background: var(--blue-dim); color: var(--blue); }
+        .tag-ba { background: var(--purple-dim); color: var(--purple); }
+        .tag-qa { background: var(--orange-dim); color: var(--orange); }
+        .tag-mkt { background: var(--pink-dim); color: var(--pink); }
+        .tag-growth { background: var(--green-dim); color: var(--green); }
+        .tag-cs { background: var(--cyan-dim); color: var(--cyan); }
+        .tag-seo { background: var(--teal-dim); color: var(--teal); }
+        .tag-ai { background: var(--indigo-dim); color: var(--indigo); }
+        .tag-fe { background: var(--pink-dim); color: var(--pink); }
+        .tag-be { background: var(--blue-dim); color: var(--blue); }
+        .tag-infra { background: var(--cyan-dim); color: var(--cyan); }
+
+        /* === STATUS BADGES === */
+        .feature-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            min-width: 130px;
+        }
+        .status-badge {
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: all 0.15s;
+        }
+        .status-badge:hover { opacity: 0.85; transform: scale(1.04); }
+        .status-badge::after {
+            content: ' \25BE';
+            font-size: 0.7em;
+            opacity: 0.6;
+        }
+
+        /* === STATUS DROPDOWN === */
+        .status-dropdown {
+            position: fixed;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            z-index: 9999;
+            min-width: 150px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            display: none;
+        }
+        .status-dropdown.open { display: block; }
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .status-option:hover { background: var(--surface3); color: var(--text); }
+        .status-option .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-option.active { color: var(--text); background: var(--surface3); }
+        .status-option.active::after { content: ' \2713'; margin-left: auto; font-size: 0.8em; }
+        .status-todo { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+        .status-in-progress { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+        .status-waiting-code { background: rgba(167,139,250,0.15); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); }
+        .status-waiting-test { background: rgba(236,72,153,0.15); color: #f472b6; border: 1px solid rgba(236,72,153,0.3); }
+        .status-done { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+
+        .copy-btn {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: var(--surface2);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { background: var(--surface3); color: var(--text); }
+        .copy-btn.copied { background: var(--green-dim); color: var(--green); border-color: rgba(16,185,129,0.3); }
+
+        /* === KPI ROW === */
+        .kpi-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .kpi-pill {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .kpi-pill-value { font-size: 1rem; font-weight: 800; }
+        .kpi-pill-label { font-size: 0.68rem; color: var(--text-dim); }
+
+        /* === INFO BOX === */
+        .info-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 12px;
+        }
+        .info-box h5 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .info-box ul { list-style: none; padding: 0; }
+        .info-box li {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding: 2px 0 2px 14px;
+            position: relative;
+        }
+        .info-box li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 9px;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+        }
+
+        /* === MILESTONE COLOR CLASSES === */
+        .ms-1 .milestone-icon { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+        .ms-1 .milestone-title { color: var(--red); }
+        .ms-1 .milestone-tag { background: var(--red-dim); color: var(--red); }
+        .ms-1 .feature-num { background: var(--red-dim); color: var(--red); }
+        .ms-1 .feature-why { border-left-color: var(--red); }
+        .ms-1 .kpi-pill-value { color: var(--red); }
+        .ms-1 .info-box li::before { background: var(--red); }
+
+        .ms-2 .milestone-icon { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+        .ms-2 .milestone-title { color: var(--orange); }
+        .ms-2 .milestone-tag { background: var(--orange-dim); color: var(--orange); }
+        .ms-2 .feature-num { background: var(--orange-dim); color: var(--orange); }
+        .ms-2 .feature-why { border-left-color: var(--orange); }
+        .ms-2 .kpi-pill-value { color: var(--orange); }
+        .ms-2 .info-box li::before { background: var(--orange); }
+
+        .ms-3 .milestone-icon { background: var(--yellow-dim); border-color: var(--yellow); color: var(--yellow); }
+        .ms-3 .milestone-title { color: var(--yellow); }
+        .ms-3 .milestone-tag { background: var(--yellow-dim); color: var(--yellow); }
+        .ms-3 .feature-num { background: var(--yellow-dim); color: var(--yellow); }
+        .ms-3 .feature-why { border-left-color: var(--yellow); }
+        .ms-3 .kpi-pill-value { color: var(--yellow); }
+        .ms-3 .info-box li::before { background: var(--yellow); }
+
+        .ms-4 .milestone-icon { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+        .ms-4 .milestone-title { color: var(--green); }
+        .ms-4 .milestone-tag { background: var(--green-dim); color: var(--green); }
+        .ms-4 .feature-num { background: var(--green-dim); color: var(--green); }
+        .ms-4 .feature-why { border-left-color: var(--green); }
+        .ms-4 .kpi-pill-value { color: var(--green); }
+        .ms-4 .info-box li::before { background: var(--green); }
+
+        .ms-5 .milestone-icon { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+        .ms-5 .milestone-title { color: var(--blue); }
+        .ms-5 .milestone-tag { background: var(--blue-dim); color: var(--blue); }
+        .ms-5 .feature-num { background: var(--blue-dim); color: var(--blue); }
+        .ms-5 .feature-why { border-left-color: var(--blue); }
+        .ms-5 .kpi-pill-value { color: var(--blue); }
+        .ms-5 .info-box li::before { background: var(--blue); }
+
+        .ms-6 .milestone-icon { background: var(--indigo-dim); border-color: var(--indigo); color: var(--indigo); }
+        .ms-6 .milestone-title { color: var(--indigo); }
+        .ms-6 .milestone-tag { background: var(--indigo-dim); color: var(--indigo); }
+        .ms-6 .feature-num { background: var(--indigo-dim); color: var(--indigo); }
+        .ms-6 .feature-why { border-left-color: var(--indigo); }
+        .ms-6 .kpi-pill-value { color: var(--indigo); }
+        .ms-6 .info-box li::before { background: var(--indigo); }
+
+        .ms-7 .milestone-icon { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+        .ms-7 .milestone-title { color: var(--purple); }
+        .ms-7 .milestone-tag { background: var(--purple-dim); color: var(--purple); }
+        .ms-7 .feature-num { background: var(--purple-dim); color: var(--purple); }
+        .ms-7 .feature-why { border-left-color: var(--purple); }
+        .ms-7 .kpi-pill-value { color: var(--purple); }
+        .ms-7 .info-box li::before { background: var(--purple); }
+
+        .ms-8 .milestone-icon { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+        .ms-8 .milestone-title { color: var(--cyan); }
+        .ms-8 .milestone-tag { background: var(--cyan-dim); color: var(--cyan); }
+        .ms-8 .feature-num { background: var(--cyan-dim); color: var(--cyan); }
+        .ms-8 .feature-why { border-left-color: var(--cyan); }
+        .ms-8 .kpi-pill-value { color: var(--cyan); }
+        .ms-8 .info-box li::before { background: var(--cyan); }
+
+        .ms-9 .milestone-icon { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+        .ms-9 .milestone-title { color: var(--teal); }
+        .ms-9 .milestone-tag { background: var(--teal-dim); color: var(--teal); }
+        .ms-9 .feature-num { background: var(--teal-dim); color: var(--teal); }
+        .ms-9 .feature-why { border-left-color: var(--teal); }
+        .ms-9 .kpi-pill-value { color: var(--teal); }
+        .ms-9 .info-box li::before { background: var(--teal); }
+
+        .ms-10 .milestone-icon { background: var(--pink-dim); border-color: var(--pink); color: var(--pink); }
+        .ms-10 .milestone-title { color: var(--pink); }
+        .ms-10 .milestone-tag { background: var(--pink-dim); color: var(--pink); }
+        .ms-10 .feature-num { background: var(--pink-dim); color: var(--pink); }
+        .ms-10 .feature-why { border-left-color: var(--pink); }
+        .ms-10 .kpi-pill-value { color: var(--pink); }
+        .ms-10 .info-box li::before { background: var(--pink); }
+
+        .ms-11 .milestone-icon { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+        .ms-11 .milestone-title { color: var(--gold); }
+        .ms-11 .milestone-tag { background: var(--gold-dim); color: var(--gold); }
+        .ms-11 .feature-num { background: var(--gold-dim); color: var(--gold); }
+        .ms-11 .feature-why { border-left-color: var(--gold); }
+        .ms-11 .kpi-pill-value { color: var(--gold); }
+        .ms-11 .info-box li::before { background: var(--gold); }
+
+        /* === SUMMARY TABLE === */
+        .summary-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .summary-table th {
+            background: var(--surface2);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .summary-table td {
+            padding: 12px 14px;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            border-bottom: 1px solid rgba(42,50,96,0.4);
+        }
+        .summary-table tr:last-child td { border-bottom: none; }
+        .summary-table tr:hover td { background: var(--surface2); }
+
+        /* === FILTER BAR === */
+        .filter-bar {
+            max-width: 1200px;
+            margin: 0 auto 12px;
+            padding: 0 24px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 6px;
+        }
+        .filter-btn {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: var(--surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { color: var(--text); border-color: rgba(99,102,241,0.4); }
+        .filter-btn.active { background: var(--indigo-dim); color: var(--indigo); border-color: rgba(99,102,241,0.3); }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(16,185,129,0.3);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 30px 24px 50px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+        }
+
+        /* === ANIMATION === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.6rem; }
+            .feature-card { grid-template-columns: 1fr; }
+            .feature-actions { flex-direction: row; align-items: center; }
+            .feature-num { display: none; }
+            .stats-bar { flex-direction: column; }
+            .kpi-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- === HERO === -->
+<div class="hero fade-in">
+    <div class="hero-badge">Master Roadmap v1.0 &mdash; Cap nhat 13/04/2026</div>
+    <h1>Avada Return &amp; Exchange &mdash; Lo trinh Phat trien Tong the</h1>
+    <p>Tu MVP &rarr; Submit &rarr; Publish &rarr; 50 MC &rarr; 5 Reviews &rarr; Built for Shopify &rarr; Trang 2 &rarr; Trang 1 &rarr; Top 10 &rarr; Top 5 &rarr; Top 3 &rarr; #1</p>
+</div>
+
+<!-- === STICKY NAV === -->
+<nav class="sticky-nav" id="stickyNav">
+    <a class="nav-btn active" href="#ms-1">1. MVP</a>
+    <a class="nav-btn" href="#ms-2a">2A. Nang cap</a>
+    <a class="nav-btn" href="#ms-2b">2B. Marketing</a>
+    <a class="nav-btn" href="#ms-3a">3A. Outreach</a>
+    <a class="nav-btn" href="#ms-3b">3B. Iterate</a>
+    <a class="nav-btn" href="#ms-4">4. 5 Reviews</a>
+    <a class="nav-btn" href="#ms-5">5. BfS Badge</a>
+    <a class="nav-btn" href="#ms-6">6. Trang 2</a>
+    <a class="nav-btn" href="#ms-7">7. Trang 1</a>
+    <a class="nav-btn" href="#ms-8">8. Top 10</a>
+    <a class="nav-btn" href="#ms-9">9. Top 5</a>
+    <a class="nav-btn" href="#ms-10">10. Top 3</a>
+    <a class="nav-btn" href="#ms-11">11. #1</a>
+    <a class="nav-btn" href="#summary">Tong hop</a>
+</nav>
+
+<!-- === STATS BAR === -->
+<div class="stats-bar fade-in" id="statsBar">
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--text-muted);" id="statTodo">0</div>
+            <div class="lbl">Chua lam</div>
+        </div>
+    </div>
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--blue);" id="statInProgress">0</div>
+            <div class="lbl">Dang lam</div>
+        </div>
+    </div>
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--purple);" id="statWaitingCode">0</div>
+            <div class="lbl">Cho code</div>
+        </div>
+    </div>
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--pink);" id="statWaitingTest">0</div>
+            <div class="lbl">Cho test</div>
+        </div>
+    </div>
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--green);" id="statDone">0</div>
+            <div class="lbl">Hoan thanh</div>
+        </div>
+    </div>
+    <div class="stat-chip">
+        <div>
+            <div class="val" style="color: var(--indigo);" id="statTotal">0</div>
+            <div class="lbl">Tong tasks</div>
+        </div>
+    </div>
+</div>
+
+<!-- === FILTER === -->
+<div class="filter-bar">
+    <span class="filter-label">Loc:</span>
+    <button class="filter-btn active" data-filter="all">Tat ca</button>
+    <button class="filter-btn" data-filter="todo">Chua lam</button>
+    <button class="filter-btn" data-filter="in-progress">Dang lam</button>
+    <button class="filter-btn" data-filter="waiting-code">Cho code</button>
+    <button class="filter-btn" data-filter="waiting-test">Cho test</button>
+    <button class="filter-btn" data-filter="done">Hoan thanh</button>
+    <span style="flex:1;"></span>
+    <button class="filter-btn" id="exportStatusBtn" style="background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.3);" onclick="exportStatuses()">Copy trang thai</button>
+</div>
+
+<!-- === PROGRESS === -->
+<div class="progress-section fade-in">
+    <div class="progress-track">
+        <div class="progress-line">
+            <div class="progress-line-fill"></div>
+        </div>
+        <div class="progress-node"><a class="progress-dot active" href="#ms-1"></a><div class="progress-plabel">MVP</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-2a"></a><div class="progress-plabel">Nang cap</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-2b"></a><div class="progress-plabel">Marketing</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-3a"></a><div class="progress-plabel">Outreach</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-3b"></a><div class="progress-plabel">Iterate</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-4"></a><div class="progress-plabel">Reviews</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-5"></a><div class="progress-plabel">BfS</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-6"></a><div class="progress-plabel">Trang 2</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-7"></a><div class="progress-plabel">Trang 1</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-8"></a><div class="progress-plabel">Top 10</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-9"></a><div class="progress-plabel">Top 5</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-10"></a><div class="progress-plabel">Top 3</div></div>
+        <div class="progress-node"><a class="progress-dot" href="#ms-11"></a><div class="progress-plabel">#1</div></div>
+    </div>
+</div>
+
+<!-- =========================================================================== -->
+<!-- === MILESTONES === -->
+<!-- =========================================================================== -->
+<div class="milestone-container">
+
+<!-- ==================== MS 1: MVP - SUBMIT APP STORE ==================== -->
+<div class="milestone ms-1 fade-in" id="ms-1">
+    <div class="milestone-icon">1</div>
+    <div class="milestone-header">
+        <span class="milestone-title">MVP &mdash; Submit App Store</span>
+        <span class="milestone-tag">Dang phat trien &bull; Target: Submit</span>
+    </div>
+    <p class="milestone-subtitle">Core features can thiet de submit len Shopify App Store &mdash; return portal, request management, refund/store credit, notifications</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.1</div><div class="feature-body"><div class="feature-name">Return Portal (Customer-facing)</div><span class="ice-badge" title="Impact:10 Confidence:10 Ease:6">ICE 600</span><div class="feature-desc"><strong>No la gi:</strong> Trang self-service cho customer tao return request. Customer nhap order number + email de lookup don hang, chon items muon return (multi-item, tung quantity), chon return reason tu dropdown (8+ predefined reasons), upload anh (toi 3 anh/item, 10MB max), va chon resolution (refund hoac store credit). Trang nay embed tren storefront qua Theme App Extension (Liquid block).<br><br><strong>De lam gi:</strong> Day la core feature so 1 &mdash; khong co return portal = khong co app. Customer can tu phuc vu 24/7 ma khong can email merchant. 67% customers muon self-service return hon la lien he support. Portal giup giam 80% support tickets lien quan den returns.<br><br><strong>Trong nhu the nao:</strong> <em>Order Lookup:</em> form nhap Order # + Email, validate va hien thi eligible items voi anh, ten, gia, quantity. <em>Item Selection:</em> checkbox tung item + quantity picker. <em>Reason Selection:</em> dropdown per item (Size too small/large, Damaged, Not as described, Changed mind, Wrong item, Better price elsewhere, Other). <em>Photo Upload:</em> drag-and-drop zone, preview thumbnails. <em>Resolution Choice:</em> radio buttons "Refund to original payment" hoac "Store Credit (Gift Card)". <em>Confirmation:</em> summary page voi return ID va next steps.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span><span class="tag tag-dev">Extension</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.2</div><div class="feature-body"><div class="feature-name">Return Request Management (Admin)</div><span class="ice-badge" title="Impact:10 Confidence:10 Ease:6">ICE 600</span><div class="feature-desc"><strong>No la gi:</strong> Trang quan ly return requests cho merchant trong Shopify Admin. Bao gom: danh sach returns filterable theo status (Pending Review, Approved, In Transit, Completed, Rejected), full-text search (order number, customer name, email), server-side pagination (20/page), sortable columns. Detail page hien thi: return info, order info, customer info, return items voi anh/reason, activity timeline, internal notes.<br><br><strong>De lam gi:</strong> Merchant can 1 noi tap trung de quan ly moi returns. Khong co management page = merchant phai track qua email/spreadsheet = khong scale duoc. Day la trang merchant dung nhieu nhat &mdash; phai nhanh, de dung, day du thong tin.<br><br><strong>Trong nhu the nao:</strong> <em>List Page:</em> table voi columns Return ID, Order Name, Customer, Status badge, Resolution Type, Date, Items Count. Status tabs o tren (All/Pending/Approved/In Transit/Completed/Rejected). Search bar + date range filter. <em>Detail Page:</em> layout 2 cot &mdash; trai la cards (Order Info, Customer Info, Return Items voi anh + reason + photos), phai la Actions panel + Activity Timeline + Internal Notes. <em>Actions:</em> Approve, Reject, Request More Info, Process Refund, Issue Store Credit, Add Note.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.3</div><div class="feature-body"><div class="feature-name">Refund & Store Credit Processing</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:5">ICE 450</span><div class="feature-desc"><strong>No la gi:</strong> He thong xu ly refund va store credit khi merchant approve return. Refund: tao Shopify refund qua GraphQL API (full/partial amount, restocking fee deduction). Store Credit: tao Shopify Gift Card qua API, gui code cho customer qua email. Ho tro exchange bonus credit (khich le customer chon store credit thay vi refund).<br><br><strong>De lam gi:</strong> Day la buoc cuoi cung cua return flow &mdash; customer muon tien lai hoac credit de mua tiep. Khong co processing = merchant phai lam thu cong tren Shopify Admin, defeat purpose cua app. Idempotent operations de tranh duplicate refunds.<br><br><strong>Trong nhu the nao:</strong> <em>Refund Modal:</em> hien refund amount (pre-calculated), restocking fee deduction (neu bat), partial refund adjustment, confirm button. <em>Store Credit Modal:</em> amount + optional exchange bonus (VD: "+10% bonus = $55 thay vi $50"), confirm &rarr; tao gift card &rarr; gui email voi code. <em>History:</em> tab Refunds/Credits hien toan bo lich su xu ly. <em>Safety:</em> duplicate protection (khong refund 2 lan), amount validation (khong vuot tong don).</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.4</div><div class="feature-body"><div class="feature-name">Return Policy Configuration</div><span class="ice-badge" title="Impact:9 Confidence:10 Ease:7">ICE 630</span><div class="feature-desc"><strong>No la gi:</strong> Trang settings cho merchant cau hinh return policy: return window (1-365 ngay sau fulfillment, default 30), auto-approve toggle (tu dong approve returns hop le), restocking fee (bat/tat + % 1-50%), return address (tu dong lay tu Shopify, co the chinh sua), return conditions (unused, original packaging, tags attached), non-returnable items (chon product/collection qua Resource Picker).<br><br><strong>De lam gi:</strong> Moi store co return policy khac nhau. Settings linh hoat giup merchant customize theo nhu cau ma khong can code. Auto-approve giam workload quan ly hang ngay. Non-returnable items ngan customer return hang khong duoc return (sale items, personalized products).<br><br><strong>Trong nhu the nao:</strong> <em>Policy Page:</em> form voi sections: Basic (return window slider, auto-approve toggle), Fees (restocking fee toggle + percentage input), Conditions (multi-select checkboxes), Exceptions (Resource Picker cho non-returnable products/collections). <em>Return Address:</em> pre-populated tu Shopify, editable fields (name, address, city, state, zip, country). <em>Preview:</em> mini preview ben phai hien thi policy nhu customer se thay tren portal.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.5</div><div class="feature-body"><div class="feature-name">Return Reasons Management</div><span class="ice-badge" title="Impact:8 Confidence:10 Ease:8">ICE 640</span><div class="feature-desc"><strong>No la gi:</strong> Quan ly danh sach return reasons: 8 reasons mac dinh (Size too small, Size too large, Damaged/defective, Not as described, Changed mind, Wrong item received, Better price found, Other). Merchant co the: them custom reasons (toi 20 tong), chinh sua, xoa, sap xep thu tu, toggle "Require photo" per reason, bat/tat tung reason.<br><br><strong>De lam gi:</strong> Return reasons la data quan trong giup merchant hieu tai sao san pham bi return. Custom reasons cho phep tailor theo nganh (VD: fashion can "Color different from photo", electronics can "Does not work as expected"). Require photo cho reasons nhu "Damaged" giup merchant verify truoc khi approve.<br><br><strong>Trong nhu the nao:</strong> <em>Reasons Page:</em> danh sach drag-and-drop de sap xep, moi row co: toggle bat/tat, ten reason (editable), toggle "Require Photo", delete button. Nut "Add Reason" o cuoi. Max 20 reasons. <em>Preview:</em> hien thi dropdown nhu customer se thay tren return portal.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.6</div><div class="feature-body"><div class="feature-name">Email Notifications System</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:6">ICE 486</span><div class="feature-desc"><strong>No la gi:</strong> He thong gui email tu dong cho customer tai cac buoc cua return flow: Return Requested (xac nhan da nhan request), Return Approved, Return Rejected, More Information Needed, Refund Processed, Store Credit Issued. Merchant toggle bat/tat tung loai email. Fixed email templates (khong WYSIWYG editor trong MVP).<br><br><strong>De lam gi:</strong> Customer mong doi duoc cap nhat ve trang thai return. Khong co email = customer khong biet chuyen gi xay ra = lien he support = tang workload. Email notifications la table stakes cho moi return app. 6 email types cover toan bo return lifecycle.<br><br><strong>Trong nhu the nao:</strong> <em>Notifications Settings:</em> 6 cards, moi card co: ten notification, toggle bat/tat, description ngan, preview button. <em>Email Content:</em> plain text voi store name, return ID, status, items returned, next steps. Footer co store name + return portal link. <em>Sent via:</em> SendGrid transactional email. <em>Backend:</em> queue worker (Pub/Sub) de gui email async, khong block main flow.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.7</div><div class="feature-body"><div class="feature-name">Return Status Tracking (Customer)</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> Trang tracking cho customer xem trang thai return cua minh. Multi-step progress bar: Submitted &rarr; Approved &rarr; Shipped &rarr; Received &rarr; Resolved. Customer truy cap bang return ID + email. Hien thi activity timeline chi tiet (ngay, gio, su kien).<br><br><strong>De lam gi:</strong> Customer muon biet return dang o buoc nao ma khong can lien he merchant. Tracking page giam "Where is my return?" support tickets toi 60%. Cung tao cam giac chuyen nghiep, minh bach &mdash; customer tin tuong va quay lai mua hang.<br><br><strong>Trong nhu the nao:</strong> <em>Tracking Page:</em> header voi Return ID + Store logo, progress bar 5 buoc (icon + label + date cho moi buoc da qua), ben duoi la chi tiet items returned + resolution type + tracking number (neu co). <em>Timeline:</em> chronological list moi event (ngay gio, "Return approved by merchant", "Refund of $50 processed"). <em>Access:</em> link trong email notifications + truy cap truc tiep tren return portal.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.8</div><div class="feature-body"><div class="feature-name">Dashboard & QuickStart Onboarding</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> Dashboard overview voi KPI cards: Open Returns, Pending Review, Recently Resolved (7 ngay), Revenue Retained (store credit issued). Recent activity feed (10 events gan nhat). QuickStart wizard 3 buoc: (1) Set return policy, (2) Configure return reasons, (3) Activate portal (Theme App Extension instructions). Setup status banner.<br><br><strong>De lam gi:</strong> Merchant can mot cai nhin tong quan nhanh khi mo app. QuickStart giup merchant setup trong 10 phut &mdash; giam thoi gian tu install den first return. Merchant khong hoan thanh setup trong ngay dau se uninstall.<br><br><strong>Trong nhu the nao:</strong> <em>Dashboard:</em> 4 KPI cards tren cung (Open Returns, Pending Review, Resolved This Week, Revenue Retained), ben duoi la Recent Activity feed dang timeline. <em>QuickStart:</em> banner o tren cung khi chua hoan thanh setup, 3 steps voi checkmarks, progress bar, estimated time "10 minutes". <em>Plan Usage:</em> hien thi so returns da dung / limit cua plan hien tai.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.9</div><div class="feature-body"><div class="feature-name">App Bridge, Polaris, OAuth & Webhooks</div><span class="ice-badge" title="Impact:9 Confidence:10 Ease:6">ICE 540</span><div class="feature-desc"><strong>No la gi:</strong> Core infrastructure: App Bridge v4.x, Polaris v13+, Session Token auth, Shopify OAuth flow hoan chinh. HMAC webhook verification. Webhooks: orders/create, orders/updated, refunds/create, app/uninstalled. GDPR webhooks (stub ban dau). Embedded app layout.<br><br><strong>De lam gi:</strong> Day la nen tang ky thuat bat buoc de app chay tren Shopify. Khong co OAuth = khong cai duoc app. Khong co webhooks = khong nhan duoc events tu Shopify. App Bridge + Polaris dam bao app nhung lien mach trong Shopify Admin.<br><br><strong>Trong nhu the nao:</strong> Khong co UI rieng &mdash; day la infrastructure. Merchant chi thay app chay muot trong Shopify Admin. <em>OAuth:</em> redirect flow voi scope read_orders, write_orders, read_products, write_gift_cards. <em>Webhooks:</em> receiver endpoints xu ly events va respond < 5 seconds, queue heavy processing. <em>Session Token:</em> verify moi request tu frontend.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.10</div><div class="feature-body"><div class="feature-name">Privacy Policy, App Listing & Submit</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:7">ICE 630</span><div class="feature-desc"><strong>No la gi:</strong> Chuan bi day du de submit len Shopify App Store: Privacy Policy + Terms of Service, App Listing hoan chinh (description, screenshots, key benefits, demo video), demo store san sang, bam SUBMIT.<br><br><strong>De lam gi:</strong> Khong co listing = khong co app tren store. Privacy Policy bat buoc theo Shopify Partner Program requirements. Screenshots va description quyet dinh conversion tu view sang install. Demo store cho Shopify reviewer kiem tra.<br><br><strong>Trong nhu the nao:</strong> <em>App Listing:</em> title "Avada Return & Exchange", tagline ngan nhan manh "Free self-service returns", 4-6 screenshots chat luong cao voi annotation, description co structure H2/bullet points/CTA. <em>Privacy Policy:</em> trang rieng cover data collection, storage, GDPR compliance. <em>Demo Store:</em> store voi sample orders, return requests o nhieu trang thai, policy da cau hinh.</div><div class="feature-tags"><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.11</div><div class="feature-body"><div class="feature-name">GDPR Webhooks hoan chinh</div><span class="ice-badge" title="Impact:9 Confidence:10 Ease:8">ICE 720</span><div class="feature-desc"><strong>No la gi:</strong> Implement day du 3 mandatory GDPR webhooks: customers/data_request (export return data cua customer), customers/redact (anonymize customer data trong return requests), shop/redact (xoa toan bo data khi merchant go app sau 48h grace period).<br><br><strong>De lam gi:</strong> Shopify bat buoc xu ly dung de tuan thu GDPR. Neu Shopify review lai hoac co khieu nai &rarr; app bi go. GDPR webhooks phai hoat dong dung tu dau de pass app review, khong chi la stub.<br><br><strong>Trong nhu the nao:</strong> Khong co UI cho merchant. <em>customers/data_request:</em> export JSON chua return requests, items, photos lien quan den email. <em>customers/redact:</em> anonymize email, ten trong return requests. <em>shop/redact:</em> xoa toan bo data shop (returns, policies, settings, audit log) sau 48h. Log tat ca actions cho audit trail.</div><div class="feature-tags"><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="1"><div class="feature-num">1.12</div><div class="feature-body"><div class="feature-name">Pricing Plans & Subscription Billing</div><span class="ice-badge" title="Impact:10 Confidence:10 Ease:6">ICE 600</span><div class="feature-desc"><strong>No la gi:</strong> He thong pricing plans va billing qua Shopify App Subscriptions API: Free plan (50 returns/thang), Pro plan, Enterprise plan. Plan comparison page trong app. Usage tracking (dem so returns/thang). Upgrade prompts khi gan dat limit. Shopify recurring billing integration (AppSubscriptionCreate GraphQL mutation).<br><br><strong>De lam gi:</strong> Khong co billing = khong co revenue khi merchant tang. Free tier limit can duoc enforce tu dau de merchant hieu gia tri cua paid plans. Billing infrastructure can co truoc khi co nhieu merchants, khong the retrofit sau.<br><br><strong>Trong nhu the nao:</strong> <em>Pricing Page:</em> 3 plan cards (Free/Pro/Enterprise) voi feature comparison table. <em>Usage Bar:</em> hien tren dashboard "25/50 returns used this month". <em>Upgrade Modal:</em> khi dat 80% limit, hien upgrade prompt. <em>Billing:</em> Shopify handles payment, app chi goi API. <em>Plan Management:</em> current plan, billing history, cancel/downgrade flow.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">12/12</span><span class="kpi-pill-label">Features target</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">Submit</span><span class="kpi-pill-label">Muc tieu</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 2A: NANG CAP DE DON MERCHANT ==================== -->
+<div class="milestone ms-2 fade-in" id="ms-2a">
+    <div class="milestone-icon">2A</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Nang cap trai nghiem &mdash; Don merchant moi</span>
+        <span class="milestone-tag">Sau khi publish &bull; ~4-6 tuan</span>
+    </div>
+    <p class="milestone-subtitle">Cac tinh nang can phat trien them de giu chan merchant va tao loi the canh tranh</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.1</div><div class="feature-body"><div class="feature-name">Variant Exchange Flow</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:5">ICE 360</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep customer doi sang size/color khac cua cung san pham (variant exchange). Xu ly chenh lech gia tu dong: neu variant moi dat hon &rarr; customer tra them, neu re hon &rarr; refund chenh lech. Tich hop tren return portal voi variant selector.<br><br><strong>De lam gi:</strong> Exchange la resolution #2 sau refund &mdash; 30-40% customers muon doi hang thay vi return. Exchange giu doanh thu cho merchant (khong mat tien refund). Doi thu nhu Loop Returns, ReturnGO deu co exchange flow. Thieu = mat phan khuc merchant lon.<br><br><strong>Trong nhu the nao:</strong> <em>Portal:</em> khi customer chon "Exchange", hien variant picker (size/color dropdown) cua cung product. Hien gia chenh lech: "+$5" hoac "-$3". <em>Admin:</em> exchange card tren return detail page hien: original item &rarr; new item, price difference, status. <em>Backend:</em> tu dong tao draft order cho new item hoac xu ly price adjustment.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.2</div><div class="feature-body"><div class="feature-name">Return Shipping Labels (EasyPost/Shippo)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Tich hop EasyPost hoac Shippo de tu dong tao prepaid return shipping labels. Ho tro carriers: USPS, FedEx, UPS, DHL. Merchant tao label 1-click, gui PDF cho customer qua email hoac hien tren portal. Tracking number tu dong cap nhat.<br><br><strong>De lam gi:</strong> "Ship it yourself" la friction lon nhat trong return process. Prepaid labels giam thoi gian return tu 7-10 ngay xuong 3-5 ngay. Loop Returns, ReturnGO co prepaid labels &mdash; day la competitive feature quan trong.<br><br><strong>Trong nhu the nao:</strong> <em>Admin Detail Page:</em> nut "Generate Label" &rarr; modal chon carrier + service level &rarr; hien gia &rarr; confirm &rarr; tao label. Label PDF luu trong Cloud Storage. <em>Email:</em> gui label PDF cho customer. <em>Portal:</em> customer thay label download link + tracking number. <em>Settings:</em> carrier account credentials (API keys), default service level, auto-label toggle.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.3</div><div class="feature-body"><div class="feature-name">Portal Branding (Logo, Colors, CSS)</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:6">ICE 378</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep merchant tuy chinh giao dien return portal theo thuong hieu: upload logo, chon primary/secondary color, font, custom CSS. Mobile-responsive. Preview real-time.<br><br><strong>De lam gi:</strong> Merchant muon portal trong chuyen nghiep, phu hop voi brand. Return portal mac dinh trong generic = khong tao trust cho customer. Doi thu ban tinh nang nay tu goi $29+/thang. Avada cung cap o tier thap hon = value proposition manh.<br><br><strong>Trong nhu the nao:</strong> <em>Branding Page:</em> upload logo area, color picker cho primary/accent colors, font selector, custom CSS editor. <em>Live Preview:</em> panel ben phai hien portal voi brand settings dang chinh sua. <em>Portal:</em> hien logo merchant o header, mau sac theo brand, footer co store name.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.4</div><div class="feature-body"><div class="feature-name">Customer Blocklist</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:8">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> Danh sach chan customer theo email. Customer bi block khong the tao return request. Simple add/remove interface. Merchant them email thu cong hoac block tu return detail page.<br><br><strong>De lam gi:</strong> Mot so customer lam dung return policy (serial returners). Blocklist giup merchant bao ve doanh thu. Don gian nhung hieu qua &mdash; giam return fraud co ban.<br><br><strong>Trong nhu the nao:</strong> <em>Blocklist Page:</em> table email + date added + added by + notes. Nut "Add Email" modal. <em>Return Detail:</em> nut "Block Customer" trong actions dropdown. <em>Portal:</em> khi blocked customer lookup order &rarr; hien message "Please contact store support".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.5</div><div class="feature-body"><div class="feature-name">Basic Analytics Dashboard</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:6">ICE 384</span><div class="feature-desc"><strong>No la gi:</strong> Trang analytics voi KPI cards: Total Returns (period), Return Rate (% of orders), Average Resolution Time (days), Revenue Retained (store credit + exchanges). Charts: return volume trend (line chart), return reasons breakdown (bar/pie chart), resolution type distribution. Date range filtering.<br><br><strong>De lam gi:</strong> Merchant can data de hieu return patterns va cai thien san pham/service. "Tai sao san pham X bi return nhieu?" la cau hoi merchant hoi thuong xuyen nhat. Analytics giup tra loi bang data, khong phai guess.<br><br><strong>Trong nhu the nao:</strong> <em>Analytics Page:</em> 4 KPI cards tren cung, ben duoi la 2x2 grid charts (Volume Trend, Reasons Breakdown, Resolution Distribution, Top Returned Products table). Date range picker (7d/30d/90d/custom). <em>Backend:</em> BigQuery scheduled queries tong hop data hang ngay.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.6</div><div class="feature-body"><div class="feature-name">Multi-language Portal (5 ngon ngu)</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:5">ICE 280</span><div class="feature-desc"><strong>No la gi:</strong> Ho tro 5 ngon ngu cho return portal: English, French, German, Spanish, Portuguese. Merchant chon ngon ngu mac dinh. Customer co the doi ngon ngu tren portal.<br><br><strong>De lam gi:</strong> 60% merchant Shopify ngoai US/UK. Portal chi co tieng Anh = mat thi truong non-English. Multi-language la yeu cau co ban cho Shopify apps nham global market.<br><br><strong>Trong nhu the nao:</strong> <em>Settings:</em> dropdown "Portal Language" chon ngon ngu mac dinh. <em>Portal:</em> language switcher o header. <em>Tech:</em> i18n framework, translation files JSON per language, lazy-load chi ngon ngu dang dung.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.7</div><div class="feature-body"><div class="feature-name">Merchant Notifications (Slack, Email Alerts)</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> He thong thong bao cho merchant khi co su kien quan trong: new return request, return approved/rejected, refund processed. Kenh: Slack webhook, email digest (real-time hoac daily summary). Merchant chon events nao muon nhan thong bao.<br><br><strong>De lam gi:</strong> Merchant khong ngoi trong app 24/7. Can biet ngay khi co return moi de xu ly nhanh. Slack la kenh pho bien nhat cho SMB merchants. Email digest giup merchant khong bi overwhelmed. Response time nhanh = customer hai long = review tot.<br><br><strong>Trong nhu the nao:</strong> <em>Notification Settings:</em> toggle per event type (New Return, Approved, Rejected, Refund Processed). <em>Channels:</em> Slack webhook URL input + test button, email toggle (real-time vs daily digest). <em>Slack Message:</em> rich format voi return ID, customer name, items, amount, action buttons link ve admin. <em>Email Digest:</em> summary hang ngay luc 9am voi so returns moi, pending review, resolved.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.8</div><div class="feature-body"><div class="feature-name">Bulk Actions (Approve/Reject nhieu returns)</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:7">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep merchant chon nhieu return requests cung luc va thuc hien actions hang loat: bulk approve, bulk reject, bulk add note, bulk export. Checkbox tren list page, "Select All" tren trang hien tai, action dropdown.<br><br><strong>De lam gi:</strong> Khi merchant co 50+ returns/thang, xu ly tung cai mot rat mat thoi gian. Bulk actions giam thoi gian quan ly 5-10x. Day la table stakes feature ma doi thu deu co. Merchant se complain neu phai click tung return de approve.<br><br><strong>Trong nhu the nao:</strong> <em>List Page:</em> checkbox moi row, "Select All" checkbox o header, floating action bar khi co selection ("3 selected &mdash; Approve | Reject | Export"). <em>Confirm Modal:</em> "Approve 5 returns?" voi danh sach return IDs. <em>Progress:</em> progress bar khi xu ly batch. <em>Result:</em> toast "5/5 returns approved successfully".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2a"><div class="feature-num">2A.9</div><div class="feature-body"><div class="feature-name">Rate Limiting & Portal Security</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:7">ICE 567</span><div class="feature-desc"><strong>No la gi:</strong> Bao ve return portal khoi abuse: rate limiting (max 5 return requests/email/ngay, max 10 lookups/IP/phut), CAPTCHA cho form submission, input sanitization, file upload validation (type, size, malware scan basic). Honeypot fields chong bot.<br><br><strong>De lam gi:</strong> Return portal la public-facing endpoint &mdash; bat ky ai cung co the truy cap. Khong co rate limiting = bot spam hang ngan fake return requests. Khong co file validation = upload malware. Security phai co tu dau, khong the patch sau khi bi attack.<br><br><strong>Trong nhu the nao:</strong> <em>Rate Limiting:</em> Redis-based counter per IP va per email. Hien "Too many requests, please try again later" khi vuot limit. <em>CAPTCHA:</em> Google reCAPTCHA v3 (invisible) cho form submission. <em>File Upload:</em> validate file type (jpg/png/gif/webp only), max 10MB, strip EXIF metadata. <em>Input:</em> sanitize tat ca user inputs, prevent XSS/injection.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-infra">Infra</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">1-10</span><span class="kpi-pill-label">MC cai dat</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">&lt; 5%</span><span class="kpi-pill-label">Uninstall rate</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 2B: LAUNCH CAMPAIGN ==================== -->
+<div class="milestone ms-2 fade-in" id="ms-2b">
+    <div class="milestone-icon">2B</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Launch Campaign &mdash; Day installs dau tien</span>
+        <span class="milestone-tag">Song song voi 2A &bull; ongoing</span>
+    </div>
+    <p class="milestone-subtitle">Marketing ra mat + SEO content &mdash; chay song song voi Go Live, khong cho</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="2b"><div class="feature-num">2B.1</div><div class="feature-body"><div class="feature-name">Chien dich ra mat (Launch Campaign)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:8">ICE 576</span><div class="feature-desc"><strong>No la gi:</strong> Chien dich marketing da kenh: Shopify Community, Reddit (r/shopify, r/ecommerce), Facebook groups (Shopify Entrepreneurs), Twitter/X thread, Product Hunt launch. Thong diep chinh: "Free return portal with generous free tier &mdash; Loop Returns alternative".<br><br><strong>De lam gi:</strong> 10-50 installs dau tien khong den tu organic. Launch campaign tao momentum de App Store algorithm nhan dien app. Khong co campaign = app chim trong 8000+ apps.<br><br><strong>Trong nhu the nao:</strong> <em>Shopify Community:</em> bai gioi thieu app voi screenshots. <em>Reddit:</em> thread chia se cau chuyen xay app (indie dev story). <em>Facebook:</em> post hoi feedback. <em>Product Hunt:</em> launch page voi demo GIF. <em>Twitter:</em> thread 5-7 tweets. Tat ca dan ve App Store listing.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-growth">Growth</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2b"><div class="feature-num">2B.2</div><div class="feature-body"><div class="feature-name">Bang so sanh "Most Generous Free Tier"</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:9">ICE 576</span><div class="feature-desc"><strong>No la gi:</strong> Bang so sanh chi tiet giua Avada Return Free voi doi thu: Loop Returns ($155+/mo), ReturnGO ($9.97+/mo), Return Prime ($19.99+/mo), AfterShip Returns. Nhan manh: 50 returns/mo free, self-service portal, auto-approve, store credit, exchange, 5 languages &mdash; tat ca mien phi.<br><br><strong>De lam gi:</strong> Pricing la complaint #1 cua Loop Returns. "Most generous free tier" la hook cuc manh. Bang so sanh giup merchant ra quyet dinh nhanh.<br><br><strong>Trong nhu the nao:</strong> <em>Comparison table:</em> 5 cot (Avada / Loop / ReturnGO / Return Prime / AfterShip), so sanh: gia, returns/month, exchange, store credit, labels, branding. Cot Avada highlight xanh. <em>Infographic:</em> thiet ke cho social sharing. <em>Phan phoi:</em> tat ca kenh marketing + App Store listing.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="2b"><div class="feature-num">2B.3</div><div class="feature-body"><div class="feature-name">Content Marketing SEO (3-5 bai blog)</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:7">ICE 343</span><div class="feature-desc"><strong>No la gi:</strong> 3-5 bai blog chuan SEO: "Best free return app Shopify 2026", "How to set up return policy", "Avada vs Loop Returns comparison". Dang tren Medium, dev.to, Shopify Community.<br><br><strong>De lam gi:</strong> SEO content mat 2-3 thang de rank. Bat dau ngay song song. Moi bai blog rank tot mang ve 50-200 visits/thang mien phi.<br><br><strong>Trong nhu the nao:</strong> Bai dai 1500-2500 tu, co H2/H3, screenshots, bang comparison, CTA "Install Free" cuoi bai. Landing page "Avada vs Loop Returns" rieng.</div><div class="feature-tags"><span class="tag tag-seo">SEO</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">1-10</span><span class="kpi-pill-label">MC cai dat</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">&lt; 5%</span><span class="kpi-pill-label">Uninstall rate</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 3A: OUTREACH & ACQUIRE ==================== -->
+<div class="milestone ms-3 fade-in" id="ms-3a">
+    <div class="milestone-icon">3A</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Outreach &amp; Thu hut merchant</span>
+        <span class="milestone-tag">Traction &bull; ~2 tuan</span>
+    </div>
+    <p class="milestone-subtitle">Hustle thu cong + ASO + Shopify Admin integration &rarr; keo merchant tu 10 len 50</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="3a"><div class="feature-num">3A.1</div><div class="feature-body"><div class="feature-name">Toi uu App Store Listing (ASO)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:9">ICE 648</span><div class="feature-desc"><strong>No la gi:</strong> Toi uu hoa App Store listing: research keywords "return", "exchange", "refund" tren Shopify App Store. Toi uu title, tagline, description, screenshots, key benefits. Cap nhat listing moi 2 tuan dua tren data install/view.<br><br><strong>De lam gi:</strong> App Store search la nguon organic lon nhat. Listing tot tang conversion 20-50%. Doi thu da toi uu rat ky, Avada can listing it nhat ngang bang.<br><br><strong>Trong nhu the nao:</strong> <em>Title:</em> "Avada Return & Exchange &mdash; Free Returns". <em>Tagline:</em> "Self-service returns, exchanges & store credit". <em>Screenshots:</em> 4-6 anh voi annotation. <em>Key Benefits:</em> 4 bullets (Free Portal, Auto-Approve, Store Credit, Easy Setup). A/B testing moi 2 tuan.</div><div class="feature-tags"><span class="tag tag-seo">SEO</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3a"><div class="feature-num">3A.2</div><div class="feature-body"><div class="feature-name">Outreach thu cong 1-on-1</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:8">ICE 448</span><div class="feature-desc"><strong>No la gi:</strong> Tiep can merchant thu cong 1-on-1 qua DM tren Shopify Community, Reddit, Facebook groups. Target: merchant nho (50-600 orders/thang) dang dung Loop Returns Free hoac khong hai long voi app hien tai. 10 DMs/ngay.<br><br><strong>De lam gi:</strong> 50 MC dau tien khong den tu organic. Outreach 1-on-1 co ty le chuyen doi 5-15%, cao hon marketing dai tra. Day la cach nhanh nhat dat moc 50 MC active.<br><br><strong>Trong nhu the nao:</strong> <em>Tracking spreadsheet:</em> ten merchant, store URL, kenh lien he, ngay DM, trang thai. <em>Script:</em> DM ngan gon, ca nhan hoa, khong spam. <em>Follow-up:</em> sau 3 ngay neu chua reply.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3a"><div class="feature-num">3A.3</div><div class="feature-body"><div class="feature-name">Shopify Admin Order Link (Deep Link)</div><span class="ice-badge" title="Impact:8 Confidence:9 Ease:8">ICE 576</span><div class="feature-desc"><strong>No la gi:</strong> Them deep link "View Return" tren Shopify order detail page. Khi merchant xem order trong Shopify Admin, thay link/button dan thang den return request tuong ung trong Avada app. Shopify Admin Links API hoac Order Action extension.<br><br><strong>De lam gi:</strong> Merchant lam viec chu yeu trong Shopify Admin. Phai mo app rieng de xem return = friction. Deep link giup merchant navigate truc tiep tu order &rarr; return trong 1 click. Cai thien workflow hang ngay, giam thoi gian xu ly return.<br><br><strong>Trong nhu the nao:</strong> <em>Order Detail:</em> link "View Return Request" trong More Actions menu hoac sidebar. <em>Click:</em> mo Avada Return app tai return detail page tuong ung. <em>No Return:</em> neu order chua co return, hien "No return request for this order". <em>Tech:</em> Shopify Admin Links API hoac App Extension cho order page.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">30+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">&lt; 10%</span><span class="kpi-pill-label">Churn/thang</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 3B: RETAIN & LEARN ==================== -->
+<div class="milestone ms-3 fade-in" id="ms-3b">
+    <div class="milestone-icon">3B</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Retain &amp; Learn &mdash; Giu chan &amp; hoc hoi</span>
+        <span class="milestone-tag">Traction &bull; ~2 tuan</span>
+    </div>
+    <p class="milestone-subtitle">Feedback loop, email drip, analytics noi bo &rarr; hieu merchant &amp; giam churn</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="3b"><div class="feature-num">3B.1</div><div class="feature-body"><div class="feature-name">Iterate tu feedback 10 MC dau</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:8">ICE 648</span><div class="feature-desc"><strong>No la gi:</strong> Quy trinh thu thap va xu ly feedback co he thong tu 10 merchant dau tien. Phong van qua chat/email/video call, phan tich top 3 pain points, fix ngay feature duoc yeu cau nhieu nhat.<br><br><strong>De lam gi:</strong> 10 MC dau tien la gold mine &mdash; feedback thuc te co gia tri hon moi gia dinh. Iterate nhanh giu chan merchant som, giam churn.<br><br><strong>Trong nhu the nao:</strong> <em>Feedback tracking:</em> Google Sheet voi cot: merchant, ngay, noi dung, priority, trang thai. <em>Quy trinh hang tuan:</em> thu 2 gui email check-in, thu 4 tong hop, thu 6 review priorities. <em>Template 5 cau hoi:</em> What do you like? What frustrates you? What's missing? Would you recommend? Rating 1-10.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3b"><div class="feature-num">3B.2</div><div class="feature-body"><div class="feature-name">Email Drip Campaign tu dong</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Chuoi email tu dong: Day 1 (Welcome + setup guide), Day 3 (Tips toi uu return policy), Day 7 (Advanced features chua dung), Day 14 (Check-in + feedback), Day 30 (Nho review neu active). Giam churn som 30-40%.<br><br><strong>De lam gi:</strong> Day 1-7 quyet dinh merchant giu hay uninstall. Email drip giu merchant engaged. Tang ty le hoan thanh setup tu 30% len 60-70%.<br><br><strong>Trong nhu the nao:</strong> <em>Day 1:</em> 3 buoc setup nhanh + video 2 phut. <em>Day 3:</em> tips return policy. <em>Day 7:</em> features chua dung. <em>Day 14:</em> form feedback 3 cau. <em>Day 30:</em> nho review. Responsive HTML template.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="3b"><div class="feature-num">3B.3</div><div class="feature-body"><div class="feature-name">Dashboard Analytics noi bo</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:5">ICE 280</span><div class="feature-desc"><strong>No la gi:</strong> Dashboard noi bo (chi team xem): install/uninstall rate, feature adoption, active users DAU/WAU, churn cohort analysis, conversion funnel (App Store view &rarr; install &rarr; setup complete &rarr; active). BigQuery data warehouse.<br><br><strong>De lam gi:</strong> Khong co data = doan mo. Dashboard cho phep team data-driven: biet merchant dung gi, bo gi, ket o dau.<br><br><strong>Trong nhu the nao:</strong> <em>Overview:</em> 4 metric cards (Total MC, Active MC, Install rate, Churn rate). <em>Funnel chart.</em> <em>Feature Adoption table.</em> <em>Churn cohort heatmap.</em> Time filters 7d/30d/90d.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-infra">Infra</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">50</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">60%+</span><span class="kpi-pill-label">D7 retention</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 4: 5 REVIEWS ==================== -->
+<div class="milestone ms-4 fade-in" id="ms-4">
+    <div class="milestone-icon">4</div>
+    <div class="milestone-header">
+        <span class="milestone-title">5 Reviews (4.8+ sao)</span>
+        <span class="milestone-tag">Social Proof</span>
+    </div>
+    <p class="milestone-subtitle">Xay dung social proof &mdash; 5 review chat luong cao tao niem tin cho merchant moi</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.1</div><div class="feature-body"><div class="feature-name">Xac dinh & lien he "Happy Merchants"</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:9">ICE 648</span><div class="feature-desc"><strong>No la gi:</strong> Xac dinh merchant hai long nhat (su dung >2 tuan, >10 returns xu ly, login thuong xuyen). Gui email ca nhan hoa (khong template) nho review. Pipeline 15-20 merchants.<br><br><strong>De lam gi:</strong> Ty le thanh cong 20-30% khi outreach ca nhan (vs 2-5% template). Can 15-20 happy merchants de dat 5 reviews. Review la social proof #1 tren App Store.<br><br><strong>Trong nhu the nao:</strong> Query tu analytics loc merchant active > 14 ngay + > 10 returns. Research store, viet email rieng cho tung nguoi. Tracking spreadsheet: sent/opened/replied/reviewed.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-cs">CS</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.2</div><div class="feature-body"><div class="feature-name">Automation Rules Engine (If/Then)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Rule builder cho merchant tao automation: IF [condition] THEN [action]. VD: "If return reason = Damaged AND photo uploaded THEN auto-approve". "If order value > $200 THEN require manager approval". Conditions: return reason, order value, product tag, customer history. Actions: auto-approve, auto-reject, flag for review, add note.<br><br><strong>De lam gi:</strong> Auto-approve don gian chi cover 1 scenario. Rule engine cho merchant customize workflow theo nhu cau rieng. Loop Returns co automation rules o goi cao. Day la tinh nang tao loi the canh tranh lon.<br><br><strong>Trong nhu the nao:</strong> <em>Rules Page:</em> danh sach rules co priority order (drag-and-drop). <em>Rule Builder:</em> visual IF/THEN builder &mdash; dropdown chon condition, operator, value, va action. <em>Test Mode:</em> chay rule tren 10 returns gan nhat de xem ket qua truoc khi bat. <em>Activity Log:</em> ghi nhan "Auto-approved by Rule #3: Damaged items under $50".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.3</div><div class="feature-body"><div class="feature-name">Export CSV (Returns, Refunds, Analytics)</div><span class="ice-badge" title="Impact:7 Confidence:9 Ease:7">ICE 441</span><div class="feature-desc"><strong>No la gi:</strong> Export returns, refunds, store credits ra CSV. Filter theo date range, status, resolution type. CSV cho accounting, tax reporting, phan tich offline.<br><br><strong>De lam gi:</strong> Table stakes &mdash; moi doi thu deu co. Merchant can export de doi soat ke toan. Khong co = merchant phai copy thu cong.<br><br><strong>Trong nhu the nao:</strong> Nut "Export CSV" tren trang Returns va Analytics. Modal chon: date range, status filter, columns. File output: UTF-8 CSV voi header row. Auto-download + toast "Exported 150 returns successfully".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.4</div><div class="feature-body"><div class="feature-name">In-app Review Prompt thong minh</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:6">ICE 378</span><div class="feature-desc"><strong>No la gi:</strong> Review prompt tai dung thoi diem merchant dat milestone (return dau tien xu ly thanh cong, 10 returns hoan thanh). NPS survey (1-10) truoc &mdash; chi route 8-10 den review. "Remind later" + "Don't ask again". Khong spam.<br><br><strong>De lam gi:</strong> In-app prompt co conversion 5-10%, cao hon email. Timing la yeu to quyet dinh. NPS filter dam bao chi happy merchants thay review prompt.<br><br><strong>Trong nhu the nao:</strong> <em>NPS Modal:</em> "How would you rate us?" scale 1-10. Score 1-7: "How can we improve?" + feedback input. Score 8-10: "Leave a Review" CTA. <em>Backend:</em> track review prompt state per merchant. Khong hien lai neu da review/dismissed.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="4"><div class="feature-num">4.5</div><div class="feature-body"><div class="feature-name">Per-Product/Collection Policy Overrides</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep merchant tao return policy rieng cho tung product hoac collection. VD: "Electronics = 14 days", "Clothing = 30 days", "Sale items = non-returnable". Override default policy.<br><br><strong>De lam gi:</strong> Moi nganh co return policy khac nhau. Merchant ban nhieu loai san pham can policy linh hoat. Loop Returns co per-product rules o goi cao. Day la feature tao gia tri lon cho merchant co catalog da dang.<br><br><strong>Trong nhu the nao:</strong> <em>Policy Overrides Page:</em> table overrides (Product/Collection, Return Window, Restocking Fee, Conditions). Nut "Add Override" &rarr; Resource Picker chon product/collection + policy settings. <em>Priority:</em> Product override > Collection override > Default policy.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">5+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.8+</span><span class="kpi-pill-label">Rating</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">50-80</span><span class="kpi-pill-label">MC active</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 5: BUILT FOR SHOPIFY ==================== -->
+<div class="milestone ms-5 fade-in" id="ms-5">
+    <div class="milestone-icon">5</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Built for Shopify Badge</span>
+        <span class="milestone-tag">Trust Signal</span>
+    </div>
+    <p class="milestone-subtitle">Dat huy hieu "Built for Shopify" &mdash; boost ranking, tang conversion rate 20-40%</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.1</div><div class="feature-body"><div class="feature-name">Nop don Built for Shopify</div><span class="ice-badge" title="Impact:10 Confidence:9 Ease:7">ICE 630</span><div class="feature-desc"><strong>No la gi:</strong> Chuan bi va nop don xin huy hieu Built for Shopify: self-audit checklist (App Bridge 4.x, Polaris compliance, mandatory webhooks, session token auth, performance metrics), dien application form, chuan bi documentation ky thuat.<br><br><strong>De lam gi:</strong> Badge = ranking boost + trust signal manh nhat. Hien ngay tren listing, noi bat hon doi thu khong co. Duoc moi tham gia Shopify partner programs.<br><br><strong>Trong nhu the nao:</strong> Internal checklist page dang todo list voi tung requirement. Sau khi approve, badge hien tren App Store listing.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.2</div><div class="feature-body"><div class="feature-name">Performance Optimization (Core Web Vitals)</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:6">ICE 486</span><div class="feature-desc"><strong>No la gi:</strong> Toi uu hieu suat: LCP < 2.5s, INP < 200ms, CLS < 0.1. Code splitting, tree shaking, lazy loading, Redis caching, CDN cho static assets.<br><br><strong>De lam gi:</strong> Shopify do performance &mdash; app cham bi reject Built for Shopify. Toc do anh huong truc tiep den trai nghiem merchant.<br><br><strong>Trong nhu the nao:</strong> Merchant chi cam nhan app nhanh hon. Internal: Lighthouse audit hang tuan, Redis cache hit rate > 90%, auto-alert khi response > 1s.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-qa">QA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.3</div><div class="feature-body"><div class="feature-name">Email Template WYSIWYG Editor</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Editor truc quan cho merchant tuy chinh email notifications: drag-and-drop blocks (text, image, button, divider), brand colors tu dong, preview mobile/desktop, merge tags ({customer_name}, {return_id}, {status}). Custom sender name.<br><br><strong>De lam gi:</strong> MVP chi co fixed templates. Merchant muon email phu hop brand. Loop Returns co email customization o goi cao. WYSIWYG editor la feature tao gia tri lon.<br><br><strong>Trong nhu the nao:</strong> <em>Editor Page:</em> block-based editor voi sidebar components. <em>Preview:</em> toggle mobile/desktop. <em>Merge Tags:</em> sidebar voi click-to-insert. <em>Templates:</em> 6 default templates co the customize.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.4</div><div class="feature-body"><div class="feature-name">Shopify Flow Integration</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:6">ICE 384</span><div class="feature-desc"><strong>No la gi:</strong> Tich hop Shopify Flow triggers va actions. Triggers: return_requested, return_approved, return_completed, refund_processed. Actions: approve return, reject return, add tag. Cho phep merchant build custom workflows trong Shopify Flow.<br><br><strong>De lam gi:</strong> Shopify Flow la automation platform chinh cua Shopify. Tich hop giup merchant ket noi returns voi cac app khac (Slack notification, CRM update, inventory adjustment). Day la yeu cau cho Built for Shopify badge.<br><br><strong>Trong nhu the nao:</strong> Merchant thay Avada Return triggers/actions trong Shopify Flow editor. VD: "When return requested &rarr; Send Slack notification" hoac "When return completed &rarr; Tag customer as returner".</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="5"><div class="feature-num">5.5</div><div class="feature-body"><div class="feature-name">QR Code Box-Free Returns</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:6">ICE 294</span><div class="feature-desc"><strong>No la gi:</strong> QR code return labels cho box-free drop-off tai USPS, FedEx locations. Customer nhan QR code thay vi print label. Scan tai drop-off point, khong can hop/bao bi.<br><br><strong>De lam gi:</strong> 40% customers khong co may in. QR code giam friction return. Loop Returns co QR code returns. Xu huong "box-free" dang tang nhanh.<br><br><strong>Trong nhu the nao:</strong> <em>Portal:</em> customer chon "QR Code Drop-off" &rarr; nhan QR code tren dien thoai. <em>Admin:</em> hien QR code + drop-off location nearest customer. <em>Tracking:</em> tu dong update status khi scan tai location.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">100+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.5+</span><span class="kpi-pill-label">Rating</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">10+</span><span class="kpi-pill-label">Reviews</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 6: TRANG 2 ==================== -->
+<div class="milestone ms-6 fade-in" id="ms-6">
+    <div class="milestone-icon">6</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Len Trang 2 &mdash; Search "Return"</span>
+        <span class="milestone-tag">Visibility</span>
+    </div>
+    <p class="milestone-subtitle">Xuat hien trang 2 khi search "return" (~vi tri 13-24) &mdash; bat dau co organic installs</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.1</div><div class="feature-body"><div class="feature-name">Review Campaign co he thong (Target 20-30)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:7">ICE 504</span><div class="feature-desc"><strong>No la gi:</strong> He thong thu thap review tu dong: NPS survey dinh ky, route 8-10 den review page, email follow-up sau support ticket resolved. Target 2-3 reviews/tuan.<br><br><strong>De lam gi:</strong> 20+ reviews voi 4.7+ = bat dau xuat hien trang 2. Review velocity quan trong hon tong so. Systematic approach dam bao dong chay lien tuc.<br><br><strong>Trong nhu the nao:</strong> NPS widget trong app, review dashboard noi bo, auto-email sequence sau resolve ticket.</div><div class="feature-tags"><span class="tag tag-growth">Growth</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.2</div><div class="feature-body"><div class="feature-name">Cross-Product Exchange (Shop Now)</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:4">ICE 252</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep customer doi sang san pham khac hoan toan (khong chi variant). Customer browse catalog cua store, chon san pham moi, apply return credit. "Shop Now" flow giup customer tim san pham thay the.<br><br><strong>De lam gi:</strong> Cross-product exchange giu 100% doanh thu (thay vi refund mat tien). Loop Returns co "Shop Now" la tinh nang signature. Merchant yeu thich vi no bien return thanh co hoi upsell.<br><br><strong>Trong nhu the nao:</strong> <em>Portal:</em> "Exchange for something else" &rarr; mini storefront browser voi search + filters + product cards. Apply return credit &rarr; pay chenh lech neu co. <em>Admin:</em> exchange tracking voi original item + new item + price diff.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.3</div><div class="feature-body"><div class="feature-name">Instant Exchange (Ship truoc khi nhan return)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:4">ICE 224</span><div class="feature-desc"><strong>No la gi:</strong> Ship san pham thay the cho customer TRUOC khi nhan return item ve. Security deposit (hold credit card) de bao ve merchant. Giam thoi gian customer khong co san pham.<br><br><strong>De lam gi:</strong> Instant exchange la premium feature cua Loop Returns ($155+/mo). Customer khong muon doi 1-2 tuan khong co san pham. Merchant tang customer satisfaction + giu doanh thu. Differentiator lon.<br><br><strong>Trong nhu the nao:</strong> <em>Settings:</em> toggle "Enable Instant Exchange" + security deposit toggle. <em>Portal:</em> customer thay option "Get new item immediately" + security deposit notice. <em>Admin:</em> dual tracking (outbound shipment + return shipment). Auto-release deposit khi nhan return.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.4</div><div class="feature-body"><div class="feature-name">YouTube & Blog SEO Campaign (10+ bai)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:6">ICE 336</span><div class="feature-desc"><strong>No la gi:</strong> 5-10 video YouTube (setup guide, so sanh app, tips) va 10+ bai blog SEO nham long-tail keywords. Backlinks tu Shopify community, guest posts.<br><br><strong>De lam gi:</strong> Content = organic traffic = free installs. Ranking cho "best shopify return app" mang lai hang tram installs/thang. YouTube tao trust.<br><br><strong>Trong nhu the nao:</strong> YouTube channel voi playlist tutorials. Blog tren website. Content calendar 2-3 bai/tuan.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-seo">SEO</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.5</div><div class="feature-body"><div class="feature-name">Green Returns (Keep Item, No Shipping)</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:7">ICE 392</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep merchant cau hinh "keep the item" cho returns co gia tri thap (VD: duoi $20). Customer duoc refund/credit ma khong can gui hang lai. Giam chi phi shipping cho merchant + nhanh cho customer.<br><br><strong>De lam gi:</strong> Chi phi return shipping doi khi lon hon gia tri san pham. "Green returns" la xu huong moi (Amazon da lam). Merchant tiet kiem chi phi + customer hai long + thay doi vi moi truong.<br><br><strong>Trong nhu the nao:</strong> <em>Policy Settings:</em> toggle "Enable Green Returns" + threshold amount ($). <em>Portal:</em> customer thay "Keep your item &mdash; we'll process your refund immediately". <em>Admin:</em> tag "Green Return" tren return request. <em>Analytics:</em> track savings tu green returns.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.6</div><div class="feature-body"><div class="feature-name">In-portal Messaging (Customer &harr; Merchant)</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:5">ICE 245</span><div class="feature-desc"><strong>No la gi:</strong> He thong nhan tin trong portal giua customer va merchant. Thay cho email back-and-forth. Merchant gui tin nhan tu return detail page, customer tra loi tren portal. File attachments ho tro.<br><br><strong>De lam gi:</strong> "Request More Info" hien chi gui email &mdash; customer co the khong nhan hoac mat email. In-portal messaging tao conversation thread lien tuc, de theo doi hon. Tang customer satisfaction.<br><br><strong>Trong nhu the nao:</strong> <em>Admin:</em> chat section tren return detail page. <em>Portal:</em> customer thay messages tab voi conversation thread. Email notification khi co tin moi. Real-time updates.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="6"><div class="feature-num">6.7</div><div class="feature-body"><div class="feature-name">Migration Tool (Import tu doi thu)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:4">ICE 224</span><div class="feature-desc"><strong>No la gi:</strong> Import du lieu tu Loop Returns, ReturnGO, Return Prime qua CSV upload. Auto-mapping fields. Wizard 3 buoc: chon app nguon, upload CSV, preview & import. Ho tro import: return history, policy configs, return reasons.<br><br><strong>De lam gi:</strong> O giai doan 200+ MC, bat dau co merchant muon switch tu doi thu. Migration tool giam switching cost xuong gan bang 0. Khi da co 200+ MC lam social proof, merchant san sang switch &mdash; migration tool la push cuoi cung.<br><br><strong>Trong nhu the nao:</strong> <em>Migration Page:</em> chon app nguon (voi logo: Loop Returns, ReturnGO, Return Prime, AfterShip), upload CSV, preview mapping table, nut Import voi progress bar. <em>Ket qua:</em> "Imported 45 return requests, 3 policies". <em>Validation:</em> preview data truoc khi import, highlight loi/thieu data. <em>Rollback:</em> undo import trong 24h.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">200+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">20+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.7+</span><span class="kpi-pill-label">Rating</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 7: TRANG 1 ==================== -->
+<div class="milestone ms-7 fade-in" id="ms-7">
+    <div class="milestone-icon">7</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Len Trang 1 &mdash; Search "Return"</span>
+        <span class="milestone-tag">Breakthrough</span>
+    </div>
+    <p class="milestone-subtitle">Vao top 12 ket qua &mdash; buoc ngoat lon, phan lon install den tu trang 1</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.1</div><div class="feature-body"><div class="feature-name">Tich hop Helpdesk (Gorgias, Zendesk, Freshdesk)</div><span class="ice-badge" title="Impact:9 Confidence:8 Ease:5">ICE 360</span><div class="feature-desc"><strong>No la gi:</strong> Tich hop 2-way voi 3 helpdesk lon nhat: Gorgias (#1 Shopify helpdesk), Zendesk, Freshdesk. Hien thi return info trong ticket sidebar. Tu dong tao ticket khi co return request. Deep link tu ticket den return detail.<br><br><strong>De lam gi:</strong> Merchant lon dung helpdesk de quan ly CS. Khong co integration = agent phai switch tab lien tuc. Gorgias integration la #1 feature request tu merchant. Loop Returns co Gorgias integration.<br><br><strong>Trong nhu the nao:</strong> <em>Integrations Page:</em> cards Gorgias/Zendesk/Freshdesk voi "Connect" button (OAuth). <em>Gorgias Sidebar:</em> widget hien return history cua customer, current return status, quick actions (approve/reject). <em>Auto-ticket:</em> tao ticket tu dong khi return trang thai "Pending Review".</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.2</div><div class="feature-body"><div class="feature-name">Tich hop Klaviyo & Mailchimp</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:5">ICE 320</span><div class="feature-desc"><strong>No la gi:</strong> Sync return data sang Klaviyo/Mailchimp: tag customers by return status, trigger flows khi return completed (VD: "Sorry about your experience" win-back email), segment "high return rate customers".<br><br><strong>De lam gi:</strong> Merchant dung Klaviyo cho email marketing. Tich hop giup merchant re-engage customers post-return. Customer vua return = at risk cua churn. Win-back email tang retention.<br><br><strong>Trong nhu the nao:</strong> <em>Integration Settings:</em> OAuth connect, sync settings (which events trigger), field mapping. <em>Klaviyo:</em> custom properties (return_count, last_return_date, return_reasons), segment "Returned 2+ times". <em>Flows:</em> merchant build "Post-Return Win-Back" flow trong Klaviyo voi data tu Avada.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.3</div><div class="feature-body"><div class="feature-name">Referral Program cho chinh Avada Return</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:6">ICE 336</span><div class="feature-desc"><strong>No la gi:</strong> Merchant gioi thieu merchant khac cai Avada Return &rarr; nhan 1 thang Pro mien phi. Tracking link unique, referral dashboard, auto-apply reward.<br><br><strong>De lam gi:</strong> Word-of-mouth giam CAC. Merchant recommend cho merchant khac tao trust cao. Viral loop tu nhien.<br><br><strong>Trong nhu the nao:</strong> Referral tab trong app voi banner, unique link, share buttons, referral dashboard (invites/installs/rewards).</div><div class="feature-tags"><span class="tag tag-growth">Growth</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.4</div><div class="feature-body"><div class="feature-name">AI Return Fraud Detection</div><span class="ice-badge" title="Impact:8 Confidence:6 Ease:3">ICE 144</span><div class="feature-desc"><strong>No la gi:</strong> AI-powered fraud detection: serial returner identification, bracketing detection (mua nhieu size tra lai tat ca tru 1), wardrobing detection (mua mac 1 lan roi tra), suspicious pattern flagging. Fraud score per return request (0-100).<br><br><strong>De lam gi:</strong> Return fraud cost merchants billions/year. Khong doi thu nao co AI fraud detection thuc su. Day la differentiator lon nhat. Merchant mat hang ngan do/thang vi return abuse.<br><br><strong>Trong nhu the nao:</strong> <em>Fraud Dashboard:</em> risk overview (green/yellow/red), flagged returns list. <em>Return Detail:</em> fraud score gauge + explain reasons. <em>Auto-Actions:</em> threshold settings (auto-reject high risk, flag medium risk). <em>Customer Profiles:</em> return history + fraud score per customer.</div><div class="feature-tags"><span class="tag tag-ai">AI</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="7"><div class="feature-num">7.5</div><div class="feature-body"><div class="feature-name">SMS Notifications (Twilio)</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:5">ICE 245</span><div class="feature-desc"><strong>No la gi:</strong> SMS notifications cho customer ve return status. Tich hop Twilio. Merchant bat/tat per notification type. Customer opt-in tren portal.<br><br><strong>De lam gi:</strong> SMS co open rate 98% (vs email 20%). Customer nhan cap nhat ngay lap tuc. Premium feature tao value cho paid plans.<br><br><strong>Trong nhu the nao:</strong> <em>Settings:</em> Twilio credentials, toggle per notification type. <em>Portal:</em> customer opt-in phone number. <em>Messages:</em> ngan gon (160 chars), link den tracking page.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">500+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">50+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.8+</span><span class="kpi-pill-label">Rating</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 8: TOP 10 ==================== -->
+<div class="milestone ms-8 fade-in" id="ms-8">
+    <div class="milestone-icon">8</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Top 10 &mdash; Return Category</span>
+        <span class="milestone-tag">Competitor Zone</span>
+    </div>
+    <p class="milestone-subtitle">Vao top 10 &mdash; canh tranh truc tiep voi ten tuoi lon, organic install tang manh</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.1</div><div class="feature-body"><div class="feature-name">Case Studies & Community Building</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:7">ICE 448</span><div class="feature-desc"><strong>No la gi:</strong> 5-10 case studies merchant thanh cong (giam return rate X%, tiet kiem $Y/thang, tang customer satisfaction Z%). Discord/Slack community cho merchants. Monthly webinar.<br><br><strong>De lam gi:</strong> Case studies la social proof manh nhat. Community tao retention + word-of-mouth. Brand authority.<br><br><strong>Trong nhu the nao:</strong> Case study page tren website. Discord server voi channels #general, #tips, #feature-requests. Monthly webinar "Return Management Masterclass".</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.2</div><div class="feature-body"><div class="feature-name">Toi uu Infrastructure cho Scale</div><span class="ice-badge" title="Impact:9 Confidence:9 Ease:5">ICE 405</span><div class="feature-desc"><strong>No la gi:</strong> Nang cap backend cho 1000+ merchants: Redis caching layer, Cloud Tasks queue, database optimization, auto-scaling. Target: moi API < 500ms.<br><br><strong>De lam gi:</strong> App cham khi scale = churn = bad reviews. Infrastructure phai di truoc growth 3-6 thang.<br><br><strong>Trong nhu the nao:</strong> Merchant chi cam nhan nhanh hon. Internal: Redis cache hit > 90%, Cloud Tasks monitor, auto-alert khi response > 1s.</div><div class="feature-tags"><span class="tag tag-infra">Infra</span><span class="tag tag-dev">Dev</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.3</div><div class="feature-body"><div class="feature-name">AI Product Improvement Insights</div><span class="ice-badge" title="Impact:8 Confidence:6 Ease:4">ICE 192</span><div class="feature-desc"><strong>No la gi:</strong> AI phan tich return data de goi y cai thien san pham: "Product X has 40% return rate due to 'Size too small' &mdash; consider updating size chart", "Product Y returns spike after photos changed". Actionable recommendations.<br><br><strong>De lam gi:</strong> Return data la gold mine nhung merchant khong biet khai thac. AI bien data thanh insights cu the. Khong doi thu nao co. Merchant giam return rate = tiet kiem tien = happy = review 5 sao.<br><br><strong>Trong nhu the nao:</strong> <em>Insights Page:</em> AI-generated cards voi: product name, issue identified, suggested action, predicted impact. <em>Weekly Digest Email:</em> top 3 insights gui cho merchant hang tuan. <em>Product Detail:</em> return analytics per product voi AI recommendations.</div><div class="feature-tags"><span class="tag tag-ai">AI</span><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="8"><div class="feature-num">8.4</div><div class="feature-body"><div class="feature-name">Warranty Management Module</div><span class="ice-badge" title="Impact:7 Confidence:7 Ease:4">ICE 196</span><div class="feature-desc"><strong>No la gi:</strong> Module quan ly warranty: merchant dinh nghia warranty period per product, customer tao warranty claim (khac voi return), track warranty repairs/replacements, serial number tracking.<br><br><strong>De lam gi:</strong> Warranty = post-return lifecycle. Merchant ban electronics, appliances can warranty tracking. Mo rong app tu "return" thanh "post-purchase experience". Tang TAM (Total Addressable Market).<br><br><strong>Trong nhu the nao:</strong> <em>Warranty Settings:</em> per product/collection warranty period. <em>Portal:</em> customer chon "Warranty Claim" ngoai "Return Request". <em>Admin:</em> warranty claims list rieng, tracking repair status (Submitted &rarr; Under Review &rarr; Repair In Progress &rarr; Shipped Back &rarr; Resolved).</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">1K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">100+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$10K+</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 9: TOP 5 ==================== -->
+<div class="milestone ms-9 fade-in" id="ms-9">
+    <div class="milestone-icon">9</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Top 5 &mdash; Serious Contender</span>
+        <span class="milestone-tag">Scale</span>
+    </div>
+    <p class="milestone-subtitle">Top 5 &mdash; thuong hieu duoc nhan dien, organic install chiem 70%+ tong install</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.1</div><div class="feature-body"><div class="feature-name">Strategic Partnerships (3PL, Agencies)</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:7">ICE 392</span><div class="feature-desc"><strong>No la gi:</strong> Partnerships voi: 3PL providers (ShipBob, FBA), Shopify Plus agencies, logistics companies. Co-marketing campaigns, mutual integrations.<br><br><strong>De lam gi:</strong> Partnerships = distribution channels moi. Agency recommend = high-quality installs. Integration partners tao ecosystem lock-in.<br><br><strong>Trong nhu the nao:</strong> Partner Program page, in-app integrations, co-branded content, partner dashboard noi bo.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.2</div><div class="feature-body"><div class="feature-name">Enterprise Features (Multi-currency, Team Roles)</div><span class="ice-badge" title="Impact:8 Confidence:8 Ease:4">ICE 256</span><div class="feature-desc"><strong>No la gi:</strong> Tinh nang cho merchant lon: da tien te (auto-convert refund amounts), team roles & permissions, activity audit logs, white-label portal, multi-warehouse routing.<br><br><strong>De lam gi:</strong> Enterprise merchants ($99+/thang) = high LTV. Multi-currency bat buoc cho shops quoc te. Team roles can cho shops nhieu nhan vien.<br><br><strong>Trong nhu the nao:</strong> Team Settings, Currency Settings, Audit Log timeline, multi-warehouse selector khi generate label.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-fe">Frontend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.3</div><div class="feature-body"><div class="feature-name">Public REST API & Webhooks</div><span class="ice-badge" title="Impact:7 Confidence:8 Ease:4">ICE 224</span><div class="feature-desc"><strong>No la gi:</strong> API public cho developers: CRUD returns, policies, webhooks events real-time. API keys management, rate limiting, sandbox environment, interactive docs (Swagger/OpenAPI).<br><br><strong>De lam gi:</strong> Enterprise can tich hop vao he thong rieng (ERP, WMS). API tao developer ecosystem. Moi integration tang switching cost + giam churn.<br><br><strong>Trong nhu the nao:</strong> Developer Portal voi docs, code examples, sandbox. In-app API Keys page. Webhook Settings voi test button + delivery logs.</div><div class="feature-tags"><span class="tag tag-be">Backend</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.4</div><div class="feature-body"><div class="feature-name">AI Copilot cho Return Management</div><span class="ice-badge" title="Impact:9 Confidence:5 Ease:3">ICE 135</span><div class="feature-desc"><strong>No la gi:</strong> AI chatbot trong app: "Why is Product X return rate so high?", "Suggest return policy for holiday season", "Predict returns for next month", "Draft response to customer complaint". Tu dong phan tich data va dua ra actionable insights.<br><br><strong>De lam gi:</strong> AI copilot = wow factor. Demo video viral potential. Giai quyet van de merchant khong biet cach toi uu return management. Competitor gap it nhat 2 nam.<br><br><strong>Trong nhu the nao:</strong> Chat widget goc phai duoi. Merchant type cau hoi &rarr; AI tra loi voi data tu store. Action buttons trong response. Pre-built prompts: "Analyze return trends", "Optimize return policy", "Reduce return rate".</div><div class="feature-tags"><span class="tag tag-ai">AI</span><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="9"><div class="feature-num">9.5</div><div class="feature-body"><div class="feature-name">Return Prevention Widgets (Product Page)</div><span class="ice-badge" title="Impact:8 Confidence:6 Ease:4">ICE 192</span><div class="feature-desc"><strong>No la gi:</strong> Widgets embed tren product page de giam return: Size Guide popup (dua tren return data), FAQ block (top questions about product), Return Policy snippet, "Customers who bought this also kept" recommendations. Theme App Extension.<br><br><strong>De lam gi:</strong> Giam return rate la gia tri lon nhat app co the mang lai. Prevention > cure. Widgets tren product page anh huong quyet dinh mua hang. Kiem chi phi return cho merchant.<br><br><strong>Trong nhu the nao:</strong> <em>Theme Extension:</em> widgets embed tren product page. <em>Size Guide:</em> popup hien thi size chart + "Based on returns, customers suggest sizing up". <em>FAQ Block:</em> tu dong generate tu return reasons data. <em>Analytics:</em> track widget engagement + impact on return rate.</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-dev">Extension</span><span class="tag tag-ai">AI</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">3K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">300+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$30K+</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 10: TOP 3 ==================== -->
+<div class="milestone ms-10 fade-in" id="ms-10">
+    <div class="milestone-icon">10</div>
+    <div class="milestone-header">
+        <span class="milestone-title">Top 3 &mdash; Market Leader</span>
+        <span class="milestone-tag">Dominance</span>
+    </div>
+    <p class="milestone-subtitle">Top 3 &mdash; thay the doi thu cu, tro thanh lua chon mac dinh cho merchant moi</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.1</div><div class="feature-body"><div class="feature-name">Chien dich Migration tu Loop Returns</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:6">ICE 336</span><div class="feature-desc"><strong>No la gi:</strong> Marketing nham vao Loop Returns users: migration tool 1-click, bang so sanh gia chi tiet, case studies "Switched from Loop &mdash; saved $X/month". Calculator tool: nhap revenue &rarr; hien savings.<br><br><strong>De lam gi:</strong> Loop Returns $155+/mo la pain point lon. Avada gia re hon nhieu = strongest pitch. Migration tool giam friction chuyen doi.<br><br><strong>Trong nhu the nao:</strong> Landing page "Switch from Loop Returns" voi calculator, comparison table, testimonials, "Migrate Now" button. SEO blog "Loop Returns Alternative".</div><div class="feature-tags"><span class="tag tag-growth">Growth</span><span class="tag tag-dev">Dev</span><span class="tag tag-mkt">Marketing</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.2</div><div class="feature-body"><div class="feature-name">Thought Leadership & Brand Authority</div><span class="ice-badge" title="Impact:7 Confidence:6 Ease:7">ICE 294</span><div class="feature-desc"><strong>No la gi:</strong> Annual Report "State of Returns 2027", speaker slots tai Shopify events, guest posts, podcast appearances. Media kit cho journalists.<br><br><strong>De lam gi:</strong> Brand authority = merchant trust = organic installs. Thought leadership dat Avada la tieng noi uy tin trong nganh returns.<br><br><strong>Trong nhu the nao:</strong> Annual report PDF (data-driven, downloadable). Speaker bios page. Content hub. Social proof "As seen in..." section.</div><div class="feature-tags"><span class="tag tag-mkt">Marketing</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.3</div><div class="feature-body"><div class="feature-name">In-Store Returns (POS Integration)</div><span class="ice-badge" title="Impact:8 Confidence:6 Ease:3">ICE 144</span><div class="feature-desc"><strong>No la gi:</strong> Tich hop Shopify POS cho in-store returns. Customer mang san pham den store, staff scan barcode, xu ly return ngay tai quay. Sync voi online return system. Unified return history.<br><br><strong>De lam gi:</strong> Omnichannel returns la tuong lai. Merchant co ca online + offline can 1 system thong nhat. Khong doi thu nao lam tot POS integration cho returns.<br><br><strong>Trong nhu the nao:</strong> POS Extension: staff interface de xu ly return. Barcode scanner integration. Sync status real-time voi admin dashboard. Unified customer return history (online + in-store).</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="10"><div class="feature-num">10.4</div><div class="feature-body"><div class="feature-name">Return-to-Donate Program</div><span class="ice-badge" title="Impact:6 Confidence:7 Ease:6">ICE 252</span><div class="feature-desc"><strong>No la gi:</strong> Cho phep customer quyen gop san pham return thay vi gui lai. Tich hop charity partners. Customer chon "Donate" tren portal &rarr; nhan tax receipt &rarr; merchant nhan store credit. Win-win-win.<br><br><strong>De lam gi:</strong> ESG/sustainability la xu huong lon. "Return-to-donate" la PR story manh. Merchant tiet kiem chi phi shipping + customer hai long + charity duoc do. Brand image tot hon.<br><br><strong>Trong nhu the nao:</strong> <em>Settings:</em> enable donate option + chon charity partner. <em>Portal:</em> customer thay "Donate this item" option. <em>Admin:</em> donation tracking + tax receipt generation. <em>Impact Dashboard:</em> "X items donated, Y saved from landfill".</div><div class="feature-tags"><span class="tag tag-fe">Frontend</span><span class="tag tag-be">Backend</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">5K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">500+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$50K+</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+<!-- ==================== MS 11: #1 ==================== -->
+<div class="milestone ms-11 fade-in" id="ms-11">
+    <div class="milestone-icon">#1</div>
+    <div class="milestone-header">
+        <span class="milestone-title">#1 &mdash; Return App tren Shopify</span>
+        <span class="milestone-tag">The Goal</span>
+    </div>
+    <p class="milestone-subtitle">Vi tri #1 &mdash; thong linh category, brand name = category name, self-reinforcing growth loop</p>
+
+    <div class="feature-grid">
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.1</div><div class="feature-body"><div class="feature-name">Innovation Velocity duy tri</div><span class="ice-badge" title="Impact:9 Confidence:7 Ease:5">ICE 315</span><div class="feature-desc"><strong>No la gi:</strong> Ship feature moi hang tuan, 30% resource R&D, AI-first approach. Changelog public, "Coming Soon" roadmap. A/B test voi 10% users truoc rollout.<br><br><strong>De lam gi:</strong> Khi la #1, moi nguoi copy. Innovation velocity la competitive advantage dai han. Complacency = mat vi tri.<br><br><strong>Trong nhu the nao:</strong> Sprint board 1 tuan, release notes public moi tuan, "What's New" page trong app, R&D lab cho experimental features.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-ai">AI</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.2</div><div class="feature-body"><div class="feature-name">Revenue Diversification & Scale Team</div><span class="ice-badge" title="Impact:8 Confidence:7 Ease:5">ICE 280</span><div class="feature-desc"><strong>No la gi:</strong> Da dang nguon thu (SaaS + premium add-ons + consulting + white-label licensing) va mo rong team tu 5 len 15-20 nguoi.<br><br><strong>De lam gi:</strong> Da nguon thu = ben vung. Team lon hon = ship nhanh hon = giu #1 lau hon.<br><br><strong>Trong nhu the nao:</strong> Revenue Dashboard noi bo, team structure (Product 5, AI/ML 2, Growth 2, CS 3, Sales 2, Design 1), "Avada Expert Services" consulting arm.</div><div class="feature-tags"><span class="tag tag-ba">BA</span><span class="tag tag-growth">Growth</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.3</div><div class="feature-body"><div class="feature-name">Post-Purchase Experience Platform</div><span class="ice-badge" title="Impact:10 Confidence:6 Ease:2">ICE 120</span><div class="feature-desc"><strong>No la gi:</strong> Mo rong tu "return app" thanh "post-purchase experience platform": returns + exchanges + warranty + order tracking + customer feedback + loyalty program. All-in-one post-purchase suite.<br><br><strong>De lam gi:</strong> Platform = moat cuoi cung. Khi merchants invest vao ecosystem &rarr; switching cost cuc cao. Khong chi app &mdash; la nen tang post-purchase experience. TAM tang 10x.<br><br><strong>Trong nhu the nao:</strong> Unified dashboard cho tat ca post-purchase modules. Plugin marketplace cho add-ons. Partner portal. Academy voi courses va certifications.</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-ba">BA</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+
+        <div class="feature-card" data-status="todo" data-ms="11"><div class="feature-num">11.4</div><div class="feature-body"><div class="feature-name">Multi-Platform Expansion</div><span class="ice-badge" title="Impact:9 Confidence:6 Ease:2">ICE 108</span><div class="feature-desc"><strong>No la gi:</strong> Mo rong sang WooCommerce, BigCommerce, Wix. Shared backend, platform-specific frontends. Tang TAM 5-10x.<br><br><strong>De lam gi:</strong> Shopify = 30% e-commerce. Multi-platform = 100% market. Chi khi Shopify da #1 solid.<br><br><strong>Trong nhu the nao:</strong> WooCommerce Plugin + BigCommerce App + Wix App. Unified Dashboard cho multi-store. "The only return app that works everywhere".</div><div class="feature-tags"><span class="tag tag-dev">Dev</span><span class="tag tag-infra">Infra</span></div></div><div class="feature-actions"><span class="status-badge status-todo">Chua lam</span><button class="copy-btn" onclick="copyTask(this)">Copy task</button></div></div>
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-pill"><span class="kpi-pill-value">10K+</span><span class="kpi-pill-label">MC active</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">1K+</span><span class="kpi-pill-label">Reviews</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">4.9+</span><span class="kpi-pill-label">Rating</span></div>
+        <div class="kpi-pill"><span class="kpi-pill-value">$100K+</span><span class="kpi-pill-label">MRR</span></div>
+    </div>
+</div>
+
+</div><!-- end milestone-container -->
+
+<!-- === SUMMARY TABLE === -->
+<div class="summary-section fade-in" id="summary">
+    <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--indigo); margin-bottom: 8px;">Tong hop</div>
+        <h2 style="font-size: 1.4rem; font-weight: 800;">Bang tong hop Milestone</h2>
+    </div>
+
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Milestone</th>
+                <th>Tasks</th>
+                <th>MC Active</th>
+                <th>Reviews</th>
+                <th>Rating</th>
+                <th>MRR</th>
+                <th>Focus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td style="color:var(--red);font-weight:800;">1</td><td style="color:var(--red);">MVP & Submit</td><td>10</td><td style="font-weight:800;color:var(--red);">0</td><td>0</td><td>&mdash;</td><td>$0</td><td>Portal, Requests, Refund, Store Credit, Policy, Notifications</td></tr>
+            <tr><td style="color:var(--orange);font-weight:800;">2A</td><td>Nang cap trai nghiem</td><td>7</td><td style="font-weight:800;color:var(--orange);">1-10</td><td>0</td><td>&mdash;</td><td>$0</td><td>GDPR, Exchange, Labels, Branding, Blocklist, Analytics</td></tr>
+            <tr><td style="color:var(--orange);font-weight:800;">2B</td><td>Launch Marketing</td><td>3</td><td style="font-weight:800;color:var(--orange);">1-10</td><td>0</td><td>&mdash;</td><td>$0</td><td>Campaign, SEO, Comparison</td></tr>
+            <tr><td style="color:var(--yellow);font-weight:800;">3A</td><td>Outreach & Growth</td><td>3</td><td style="font-weight:800;color:var(--yellow);">50</td><td>0-3</td><td>&mdash;</td><td>$200</td><td>ASO, Manual Outreach, Migration</td></tr>
+            <tr><td style="color:var(--yellow);font-weight:800;">3B</td><td>Feedback & Iterate</td><td>3</td><td style="font-weight:800;color:var(--yellow);">50</td><td>0-3</td><td>&mdash;</td><td>$200</td><td>Feedback, Email Drip, Analytics</td></tr>
+            <tr><td style="color:var(--green);font-weight:800;">4</td><td>5 Reviews</td><td>5</td><td style="font-weight:800;color:var(--green);">50-80</td><td style="font-weight:700;color:var(--green);">5+</td><td>4.8+</td><td>$500</td><td>Review hacking, Automation Rules, CSV Export</td></tr>
+            <tr><td style="color:var(--blue);font-weight:800;">5</td><td>Built for Shopify</td><td>5</td><td style="font-weight:800;color:var(--blue);">100+</td><td>10+</td><td>4.5+</td><td>$1K</td><td>Performance, Email Editor, Shopify Flow, QR Code</td></tr>
+            <tr><td style="color:var(--indigo);font-weight:800;">6</td><td>Trang 2</td><td>6</td><td style="font-weight:800;color:var(--indigo);">200+</td><td>20+</td><td>4.7+</td><td>$2K</td><td>Shop Now, Instant Exchange, Green Returns, Messaging</td></tr>
+            <tr><td style="color:var(--purple);font-weight:800;">7</td><td>Trang 1</td><td>5</td><td style="font-weight:800;color:var(--purple);">500+</td><td>50+</td><td>4.8+</td><td>$5K</td><td>Helpdesk, Klaviyo, AI Fraud, SMS, Referral</td></tr>
+            <tr><td style="color:var(--cyan);font-weight:800;">8</td><td>Top 10</td><td>4</td><td style="font-weight:800;color:var(--cyan);">1K+</td><td>100+</td><td>4.8+</td><td>$10K</td><td>Case Studies, Scale, AI Insights, Warranty</td></tr>
+            <tr><td style="color:var(--teal);font-weight:800;">9</td><td>Top 5</td><td>5</td><td style="font-weight:800;color:var(--teal);">3K+</td><td>300+</td><td>4.8+</td><td>$30K</td><td>Enterprise, API, AI Copilot, Prevention Widgets</td></tr>
+            <tr><td style="color:var(--pink);font-weight:800;">10</td><td>Top 3</td><td>4</td><td style="font-weight:800;color:var(--pink);">5K+</td><td>500+</td><td>4.9+</td><td>$50K</td><td>Migration, POS, Donate, Brand Authority</td></tr>
+            <tr><td style="color:var(--gold);font-weight:800;font-size:1rem;">&#9733;</td><td style="color:var(--gold);font-weight:800;">#1 Return App</td><td>4</td><td style="font-weight:800;color:var(--gold);">10K+</td><td style="font-weight:700;color:var(--gold);">1K+</td><td style="color:var(--gold);">4.9+</td><td style="color:var(--gold);font-weight:700;">$100K+</td><td>Platform, Multi-platform</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- === FOOTER === -->
+<div class="footer">
+    <p>Avada Return & Exchange Master Roadmap v1.0 &mdash; Cap nhat 13/04/2026</p>
+    <p style="margin-top: 4px;">Built by Roger & Team | 64 tasks | 13 milestones | Muc tieu: #1 Return App on Shopify</p>
+</div>
+
+<!-- === TOAST === -->
+<div class="toast" id="toast">Da copy task!</div>
+
+<script>
+    // === STATUS CONFIG ===
+    const STATUS_MAP = {
+        'todo':            { label: 'Chua lam',     css: 'status-todo',           dot: '#94a3b8' },
+        'in-progress':     { label: 'Dang lam',     css: 'status-in-progress',    dot: '#60a5fa' },
+        'waiting-code':    { label: 'Cho code',      css: 'status-waiting-code',   dot: '#c4b5fd' },
+        'waiting-test':    { label: 'Cho test',      css: 'status-waiting-test',   dot: '#f472b6' },
+        'done':            { label: 'Hoan thanh',   css: 'status-done',           dot: '#34d399' }
+    };
+
+    // === LOAD SAVED STATUSES FROM LOCALSTORAGE ===
+    function loadStatuses() {
+        try {
+            const saved = JSON.parse(localStorage.getItem('return-roadmap-statuses') || '{}');
+            document.querySelectorAll('.feature-card').forEach(card => {
+                const id = getCardId(card);
+                if (saved[id]) {
+                    applyStatus(card, saved[id], false);
+                }
+            });
+        } catch(e) {}
+    }
+
+    function saveStatuses() {
+        const data = {};
+        document.querySelectorAll('.feature-card').forEach(card => {
+            data[getCardId(card)] = card.dataset.status;
+        });
+        localStorage.setItem('return-roadmap-statuses', JSON.stringify(data));
+    }
+
+    function getCardId(card) {
+        return card.querySelector('.feature-num')?.textContent?.trim() || '';
+    }
+
+    // === APPLY STATUS TO CARD ===
+    function applyStatus(card, newStatus, save = true) {
+        const info = STATUS_MAP[newStatus];
+        if (!info) return;
+
+        card.dataset.status = newStatus;
+
+        const badge = card.querySelector('.status-badge');
+        Object.values(STATUS_MAP).forEach(s => badge.classList.remove(s.css));
+        badge.classList.add(info.css);
+        badge.childNodes[0].textContent = info.label;
+
+        if (save) {
+            saveStatuses();
+            updateStats();
+            showToast('Doi thanh "' + info.label + '"');
+        }
+    }
+
+    // === CREATE DROPDOWN ===
+    function createDropdown(badge) {
+        document.querySelectorAll('.status-dropdown').forEach(d => d.remove());
+
+        const card = badge.closest('.feature-card');
+        const currentStatus = card.dataset.status;
+        const dropdown = document.createElement('div');
+        dropdown.className = 'status-dropdown open';
+
+        Object.entries(STATUS_MAP).forEach(([key, val]) => {
+            const opt = document.createElement('div');
+            opt.className = 'status-option' + (key === currentStatus ? ' active' : '');
+            opt.innerHTML = '<span class="dot" style="background:' + val.dot + ';"></span>' + val.label;
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyStatus(card, key);
+                dropdown.remove();
+
+                const activeFilter = document.querySelector('.filter-btn.active');
+                if (activeFilter && activeFilter.dataset.filter !== 'all') {
+                    activeFilter.click();
+                }
+            });
+            dropdown.appendChild(opt);
+        });
+
+        document.body.appendChild(dropdown);
+        const rect = badge.getBoundingClientRect();
+        let top = rect.bottom + 4;
+        let left = rect.right - dropdown.offsetWidth;
+        if (top + dropdown.offsetHeight > window.innerHeight) {
+            top = rect.top - dropdown.offsetHeight - 4;
+        }
+        if (left < 8) left = 8;
+        dropdown.style.top = top + 'px';
+        dropdown.style.left = left + 'px';
+
+        setTimeout(() => {
+            const close = (e) => {
+                if (!dropdown.contains(e.target) && e.target !== badge) {
+                    dropdown.remove();
+                    document.removeEventListener('click', close);
+                }
+            };
+            document.addEventListener('click', close);
+        }, 10);
+    }
+
+    // === ATTACH CLICK TO ALL STATUS BADGES ===
+    document.querySelectorAll('.status-badge').forEach(badge => {
+        badge.addEventListener('click', (e) => {
+            e.stopPropagation();
+            createDropdown(badge);
+        });
+    });
+
+    // === COPY TASK ===
+    function copyTask(btn) {
+        const card = btn.closest('.feature-card');
+        const num = card.querySelector('.feature-num')?.textContent || '';
+        const name = card.querySelector('.feature-name')?.textContent || '';
+        const desc = card.querySelector('.feature-desc')?.textContent || '';
+        const why = card.querySelector('.feature-why')?.textContent || '';
+        const statusKey = card.dataset.status;
+        const statusLabel = STATUS_MAP[statusKey]?.label || statusKey;
+        const tags = [...card.querySelectorAll('.tag')].map(t => t.textContent).join(', ');
+
+        const text = '[' + num + '] ' + name + '\nTrang thai: ' + statusLabel + '\nMo ta: ' + desc + (why ? '\nLy do: ' + why : '') + '\nTags: ' + tags;
+
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Da copy!';
+            btn.classList.add('copied');
+            showToast('Da copy task ' + num + '!');
+            setTimeout(() => { btn.textContent = 'Copy task'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // === UPDATE STATS ===
+    function updateStats() {
+        const cards = document.querySelectorAll('.feature-card');
+        let done = 0, inProgress = 0, waitingCode = 0, waitingTest = 0, todo = 0;
+        cards.forEach(c => {
+            const s = c.dataset.status;
+            if (s === 'done') done++;
+            else if (s === 'in-progress') inProgress++;
+            else if (s === 'waiting-code') waitingCode++;
+            else if (s === 'waiting-test') waitingTest++;
+            else todo++;
+        });
+        document.getElementById('statTodo').textContent = todo;
+        document.getElementById('statInProgress').textContent = inProgress;
+        document.getElementById('statWaitingCode').textContent = waitingCode;
+        document.getElementById('statWaitingTest').textContent = waitingTest;
+        document.getElementById('statDone').textContent = done;
+        document.getElementById('statTotal').textContent = cards.length;
+    }
+
+    // === FILTER ===
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.feature-card').forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = '';
+                } else {
+                    card.style.display = card.dataset.status === filter ? '' : 'none';
+                }
+            });
+        });
+    });
+
+    // === STICKY NAV SCROLL SPY ===
+    const milestones = document.querySelectorAll('.milestone[id]');
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+    milestones.forEach(m => observer.observe(m));
+
+    const summaryEl = document.getElementById('summary');
+    if (summaryEl) observer.observe(summaryEl);
+
+    // === FADE IN ===
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+                fadeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => {
+        el.style.animationPlayState = 'paused';
+        fadeObserver.observe(el);
+    });
+
+    // === EXPORT STATUSES ===
+    function exportStatuses() {
+        const data = {};
+        document.querySelectorAll('.feature-card').forEach(card => {
+            const id = getCardId(card);
+            if (id) data[id] = card.dataset.status;
+        });
+        const text = JSON.stringify(data, null, 2);
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('exportStatusBtn');
+            btn.textContent = 'Da copy!';
+            btn.style.background = 'rgba(16,185,129,0.15)';
+            btn.style.color = '#34d399';
+            btn.style.borderColor = 'rgba(16,185,129,0.3)';
+            showToast('Da copy trang thai! Gui cho Claude de update.');
+            setTimeout(() => {
+                btn.textContent = 'Copy trang thai';
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+            }, 3000);
+        });
+    }
+
+    // === EXPAND/COLLAPSE FEATURE DETAILS ===
+    document.querySelectorAll('.feature-card .feature-body').forEach(body => {
+        body.addEventListener('click', (e) => {
+            if (e.target.closest('.copy-btn') || e.target.closest('.status-badge')) return;
+            body.closest('.feature-card').classList.toggle('expanded');
+        });
+    });
+
+    // Add expand icons to feature names that have descriptions
+    document.querySelectorAll('.feature-card .feature-name').forEach(name => {
+        if (!name.querySelector('.expand-icon')) {
+            const icon = document.createElement('span');
+            icon.className = 'expand-icon';
+            icon.textContent = '\u25B6';
+            name.insertBefore(icon, name.firstChild);
+        }
+    });
+
+    // === INIT ===
+    loadStatuses();
+    updateStats();
+</script>
+
+</body>
+</html>
