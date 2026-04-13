@@ -15,6 +15,7 @@
 | 1.0 | 01/04/2026 | Roger | A | Tạo mới PRD MVP |
 | 2.0 | 07/04/2026 | Roger | M | Viết lại — phiên bản submit-first |
 | 3.0 | 08/04/2026 | Roger | M | Restore full MVP scope — MVP là bản gốc, Submit rút gọn từ đây |
+| 4.0 | 13/04/2026 | Roger | M | Dashboard: thêm Quickstart (3-step), Helpdesk, 4 metric cards, portal link, date range filter |
 
 > A = Added, M = Modified, D = Deleted
 
@@ -98,7 +99,8 @@ App gồm 2 phần:
 | 10 | **Merchant edit orders từ admin** | | Thêm sau submit |
 | 11 | **Email notifications** (merchant + customer) | | Thêm sau submit |
 | 12 | **Edit history / Audit trail** | | Thêm sau submit |
-| 13 | **Onboarding wizard** (2-step checklist) | ✅ | First-time experience |
+| 13 | **Quickstart** (3-step checklist nhúng trong Dashboard) | ✅ | First-time experience |
+| 13b | **Helpdesk** (live chat card nhúng trong Dashboard) | ✅ | Support access |
 | 14 | **Usage tracking + Billing** (Free/Starter/Growth) | | Submit FREE, billing sau |
 | 15 | **GDPR webhooks** | ✅ | BẮT BUỘC |
 | 16 | **App uninstall cleanup** | ✅ | BẮT BUỘC |
@@ -132,16 +134,517 @@ App gồm 2 phần:
 
 ### 3.4. UI Flow
 
-#### Flow A: Customer Self-Service
+---
+
+#### LUỒNG TỔNG QUAN — TẤT CẢ ENTRY POINTS
 
 ```
-Order Status Page → [Widget "Edit Your Order"] → click
-    ↓
-Edit Portal (App Proxy page) → chọn loại edit:
-├── [Change Address] → Form → Preview → Confirm → Success
-├── [Swap Variant] → Picker → Price diff → Confirm → Success
-├── [Change Qty] → +/- → Price diff → Confirm → Success
-└── [Cancel Order] → Reason → Confirm → Success
+╔═══════════════════════════════════════════════════════════════════════╗
+║                        CUSTOMER JOURNEY                              ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║  ┌──────────────┐    ┌──────────────┐    ┌────────────────────────┐  ║
+║  │ Shopify gửi  │───>│ Khách click  │───>│ ORDER STATUS PAGE      │  ║
+║  │ email xác    │    │ "View your   │    │ (trang Shopify native) │  ║
+║  │ nhận đơn hàng│    │  order"      │    │                        │  ║
+║  └──────────────┘    └──────────────┘    │  ┌──────────────────┐  │  ║
+║                                          │  │ WIDGET CỦA APP   │  │  ║
+║                                          │  │ "Edit Your Order" │  │  ║
+║                                          │  └────────┬─────────┘  │  ║
+║                                          └───────────┼────────────┘  ║
+║                                                      │               ║
+║                                                      ▼               ║
+║                                          ┌────────────────────────┐  ║
+║                                          │ EDIT PORTAL            │  ║
+║                                          │ (App Proxy page)       │  ║
+║                                          │                        │  ║
+║                                          │ ┌──────┐ ┌──────────┐ │  ║
+║                                          │ │Sửa   │ │Đổi variant│ │  ║
+║                                          │ │địa chỉ│ │Đổi số lượng│ │  ║
+║                                          │ └──────┘ └──────────┘ │  ║
+║                                          │ ┌──────────────────┐  │  ║
+║                                          │ │  Hủy đơn hàng    │  │  ║
+║                                          │ └──────────────────┘  │  ║
+║                                          └────────────────────────┘  ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║                        MERCHANT JOURNEY                              ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║  ┌──────────────┐    ┌──────────────┐    ┌────────────────────────┐  ║
+║  │ Shopify App  │───>│ Cài app      │───>│ DASHBOARD              │  ║
+║  │ Store        │    │ (OAuth)      │    │ Set up guide + Metrics │  ║
+║  └──────────────┘    └──────────────┘    │                        │  ║
+║                                          │  ├─> Settings           │  ║
+║                                          │  ├─> Orders (MVP)       │  ║
+║                                          │  └─> Theme Editor       │  ║
+║                                          └────────────────────────┘  ║
+╚═══════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+#### FLOW A: CUSTOMER — SỬA ĐƠN HÀNG (Chi tiết từng click)
+
+```
+BƯỚC 1: Khách nhận email
+═══════════════════════
+┌─────────────────────────────────┐
+│  📧 Shopify Order Confirmation  │
+│                                 │
+│  "Your order #1234 is confirmed"│
+│                                 │
+│  [View your order]  ◄── CLICK   │
+└────────────┬────────────────────┘
+             │
+             ▼
+BƯỚC 2: Order Status Page (Shopify native + widget app)
+═══════════════════════════════════════════════════════
+┌────────────────────────────────────────────────┐
+│  Order #1234 confirmed                         │
+│  Thank you John!                               │
+│                                                │
+│  ┌────── WIDGET CỦA APP (Theme Extension) ──┐ │
+│  │                                           │ │
+│  │  ✏️ Need to make changes?                 │ │
+│  │  You can edit within ⏱ 1h 45m             │ │
+│  │                                           │ │
+│  │  [Edit Your Order]  ◄── CLICK             │ │
+│  │                                           │ │
+│  └───────────────────────────────────────────┘ │
+│                                                │
+│  📦 Shipping to: John, 123 Main St...         │
+│  🗺️ [Map tracking...]                         │
+└────────────┬───────────────────────────────────┘
+             │
+             ▼
+BƯỚC 3: Edit Portal (App Proxy page — trang của app)
+════════════════════════════════════════════════════
+┌────────────────────────────────────────────────┐
+│  Edit Order #1234                 ⏱ 1h 45m    │
+│                                                │
+│  ┌── SHIPPING ADDRESS ────────────────────┐   │
+│  │  📍 John Doe                           │   │
+│  │  123 Main Street, New York, NY 10001   │   │
+│  │                              [Change] ◄── CLICK để sửa địa chỉ
+│  └────────────────────────────────────────┘   │
+│                                                │
+│  ┌── ORDER ITEMS ─────────────────────────┐   │
+│  │  🖼 T-Shirt (M, Black)     $29.99     │   │
+│  │     Qty: [-] [1] [+] ◄── CLICK +/-    │   │
+│  │                        [Swap] ◄── CLICK để đổi variant
+│  │                                        │   │
+│  │  🖼 Jeans (32, Blue)       $49.99     │   │
+│  │     Qty: [-] [1] [+]         [Swap]   │   │
+│  └────────────────────────────────────────┘   │
+│                                                │
+│  Total: $79.98                                │
+│                                                │
+│  [Cancel Order] ◄── CLICK     [Review Changes] ◄── CLICK
+│       │                              │         │
+└───────┼──────────────────────────────┼─────────┘
+        │                              │
+        ▼                              ▼
+   Đi tới FLOW D                  Đi tới BƯỚC 6
+   (Hủy đơn)                     (Review & Confirm)
+```
+
+**Bước 3a: Click [Change] → Sửa địa chỉ (inline form)**
+```
+┌── SHIPPING ADDRESS ── (đang sửa) ────────────┐
+│  📍 Edit Shipping Address                      │
+│                                                │
+│  First Name: [John        ] Last: [Doe       ] │
+│  Address:    [123 Main Street               ]  │
+│  Address 2:  [                              ]  │
+│  City:       [New York    ] State: [NY     ▼]  │
+│  Zip:        [10001       ] Country: [US   ▼]  │
+│  Phone:      [+1 555-0123                   ]  │
+│                                                │
+│  [Cancel]              [Save Address] ◄── CLICK│
+└────────────────────────────────────────────────┘
+             │
+             ▼
+  Quay lại Edit Portal với địa chỉ mới hiển thị
+  Price summary cập nhật (thuế có thể thay đổi)
+```
+
+**Bước 3b: Click [Swap] → Đổi variant (modal/drawer)**
+```
+BƯỚC 4: Swap Variant
+═════════════════════
+┌────────────────────────────────────────────────┐
+│  Swap: T-Shirt                                 │
+│  Current: M, Black — $29.99                    │
+│                                                │
+│  Size:   [S] [M●] [L] [XL]  ◄── CLICK chọn   │
+│  Color:  [Black●] [White] [Red]  ◄── CLICK    │
+│                                                │
+│  ⚠️ Red / XL — Out of stock (disabled)        │
+│                                                │
+│  New: L, White — $34.99                        │
+│  Price diff: +$5.00                            │
+│                                                │
+│  [Cancel]              [Apply Change] ◄── CLICK│
+└────────────────────────────────────────────────┘
+             │
+             ▼
+  Quay lại Edit Portal
+  Line item cập nhật: "T-Shirt (L, White) $34.99"
+  Price summary cập nhật: +$5.00
+```
+
+**Bước 3c: Click [+] hoặc [-] → Đổi số lượng (inline)**
+```
+BƯỚC 5: Change Quantity
+═══════════════════════
+  Qty: [-] [1] [+]  ◄── Click [+]
+         │
+         ▼
+  Qty: [-] [2] [+]    ← Cập nhật ngay, giá tổng thay đổi
+                         Price summary: +$49.99
+
+  Nếu click [-] xuống 0:
+  → Hiện confirm: "Remove this item? (Suggest cancel if last item)"
+```
+
+```
+BƯỚC 6: Review & Confirm (sau khi thay đổi xong, click [Review Changes])
+═════════════════════════════════════════════════════════════════════════
+┌────────────────────────────────────────────────┐
+│  Review Your Changes                           │
+│                                                │
+│  📍 Address changed                            │
+│     123 Main St → 456 Oak Ave, Brooklyn        │
+│                                                │
+│  🔄 T-Shirt swapped                            │
+│     M, Black → L, White (+$5.00)               │
+│                                                │
+│  📦 Jeans quantity changed                      │
+│     x1 → x2 (+$49.99)                          │
+│                                                │
+│  ┌─────────────────────────────────────────┐   │
+│  │  Original total:    $79.98              │   │
+│  │  Changes:           +$54.99             │   │
+│  │  Tax adjustment:    +$4.40              │   │
+│  │  ─────────────────────────────          │   │
+│  │  New total:         $139.37             │   │
+│  │  ⚠️ Additional charge: +$59.39         │   │
+│  │  Payment: Visa ending 4242             │   │
+│  └─────────────────────────────────────────┘   │
+│                                                │
+│  [Go Back] ◄── quay Edit Portal                │
+│                   [Confirm Changes] ◄── CLICK  │
+└────────────────────────┬───────────────────────┘
+                         │
+                         ▼
+BƯỚC 7: Success
+═══════════════
+┌────────────────────────────────────────────────┐
+│                                                │
+│  ✅ Order Updated Successfully!                 │
+│                                                │
+│  Order #1234 has been updated.                 │
+│  A confirmation email has been sent.           │
+│                                                │
+│  Changes applied:                              │
+│  • Address updated                             │
+│  • T-Shirt: M Black → L White                  │
+│  • Jeans: x1 → x2                              │
+│  • Additional charge: $59.39                   │
+│                                                │
+│  [View Updated Order] ◄── quay lại OSP         │
+│                                                │
+└────────────────────────────────────────────────┘
+```
+
+---
+
+#### FLOW B: CUSTOMER — HỦY ĐƠN HÀNG (Chi tiết từng click)
+
+```
+Từ Edit Portal, click [Cancel Order]
+            │
+            ▼
+BƯỚC 1: Chọn lý do
+═══════════════════
+┌────────────────────────────────────────────────┐
+│  Cancel Order #1234                            │
+│                                                │
+│  Why do you want to cancel?                    │
+│                                                │
+│  ( ) I ordered the wrong item     ◄── CLICK   │
+│  ( ) Found a better price elsewhere            │
+│  ( ) I no longer need this                     │
+│  ( ) Shipping takes too long                   │
+│  ( ) Other: [_______________]                  │
+│                                                │
+│  [Back to Edit] ◄──          [Continue] ◄──    │
+└──────────────────────────────────┬─────────────┘
+                                   │
+                                   ▼
+BƯỚC 2: Xác nhận hủy
+═════════════════════
+┌────────────────────────────────────────────────┐
+│  Are you sure?                                 │
+│  This action cannot be undone.                 │
+│                                                │
+│  ┌─────────────────────────────────────────┐   │
+│  │  Refund amount:    $79.98               │   │
+│  │  Payment method:   Visa ending 4242     │   │
+│  │  Refund timeline:  5-10 business days   │   │
+│  └─────────────────────────────────────────┘   │
+│                                                │
+│  [Keep My Order] ◄── quay lại Edit Portal      │
+│                     [Cancel Order] ◄── CLICK   │
+│                     (nút đỏ, destructive)      │
+└──────────────────────────────────┬─────────────┘
+                                   │
+                                   ▼
+BƯỚC 3: Hủy thành công
+═══════════════════════
+┌────────────────────────────────────────────────┐
+│                                                │
+│  ❌ Order #1234 Cancelled                       │
+│                                                │
+│  Your order has been cancelled.                │
+│  Refund of $79.98 will be processed            │
+│  within 5-10 business days.                    │
+│                                                │
+│  [Continue Shopping] ◄── link về store          │
+│                                                │
+└────────────────────────────────────────────────┘
+```
+
+---
+
+#### FLOW C: MERCHANT — CÀI ĐẶT APP LẦN ĐẦU (Chi tiết từng click)
+
+```
+BƯỚC 1: Cài app
+════════════════
+Shopify App Store → Tìm "Avada Order Editing" → [Install] ◄── CLICK
+    │
+    ▼
+BƯỚC 2: OAuth
+═════════════
+┌────────────────────────────────────────────────┐
+│  Avada Order Editing wants to access:          │
+│                                                │
+│  ✓ View and manage orders                      │
+│  ✓ View products                               │
+│  ✓ Manage inventory                            │
+│                                                │
+│  [Install app] ◄── CLICK                       │
+└────────────────────────┬───────────────────────┘
+                         │
+                         ▼
+BƯỚC 3: Dashboard (lần đầu — Set up guide expanded)
+════════════════════════════════════════════════════
+┌────────────────────────────────────────────────────────────┐
+│  Avada Order Editing                                       │
+│  [Dashboard●]  [Orders]  [Settings]                        │
+│                                                            │
+│  Hi [Shop Name]                                            │
+│  Welcome to Avada Order Editing                            │
+│                                                            │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐        │
+│  │ Edits 0 │ │ Cancel 0│ │  0/50   │ │ $0 saved│        │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘        │
+│                                                            │
+│  ┌─ Set up guide ──────────────────────────── ^ ✕ ─┐      │
+│  │  0 of 4 tasks complete [░░░░░░░░░░░░░░]         │      │
+│  │                                                  │      │
+│  │  ┌────────────────────────────────────────────┐  │      │
+│  │  │ ☐ Configure order editing feature          │  │      │
+│  │  │   Choose which changes customers can make  │  │      │
+│  │  │   [Configure Now] ◄── CLICK                │  │      │
+│  │  └────────────────────────────────────────────┘  │      │
+│  │  ☐ Select plan                                   │      │
+│  │  ☐ Add order editing widget                      │      │
+│  │  ☐ Test an order edit                            │      │
+│  └──────────────────────────────────────────────────┘      │
+│                                                            │
+│  Recent Activity: No activity yet                          │
+│                                                            │
+│  ┌── Helpdesk ──────────────────────────────────────┐      │
+│  │  Our support team is ready to help.              │      │
+│  │  [Chat with us] ◄── CLICK mở live chat           │      │
+│  └──────────────────────────────────────────────────┘      │
+└────────────────────────────────────────────────────────────┘
+                         │
+        Click [Configure Now]
+                         │
+                         ▼
+BƯỚC 4: Settings page
+═════════════════════
+┌────────────────────────────────────────────────────────────┐
+│  Settings                                      [Save]      │
+│                                                            │
+│  Edit Time Window                                          │
+│  Allow edits for: [2 hours ▼] ◄── CHỌN thời gian          │
+│                                                            │
+│  Allowed Edit Types                                        │
+│  ☑ Edit shipping address  ◄── BẬT/TẮT                    │
+│  ☑ Swap product variants  ◄── BẬT/TẮT                    │
+│  ☑ Change quantity        ◄── BẬT/TẮT                    │
+│  ☑ Cancel order           ◄── BẬT/TẮT                    │
+│                                                            │
+│  Widget Display                                            │
+│  ☑ Show on Order Status Page                              │
+│  Primary color: [#2D9D78] ◄── CHỌN màu                   │
+│                                                            │
+│  [Save] ◄── CLICK                                          │
+│  → Toast: "Settings saved successfully" ✅                  │
+│  → Set up guide Step 1 auto-check ✅                        │
+└────────────────────────────────────────────────────────────┘
+                         │
+        Click sidebar [Dashboard] quay lại
+                         │
+                         ▼
+BƯỚC 5: Set up guide — Step 2 "Select plan"
+═══════════════════════════════════════════
+(Bản Submit: Free only → auto-check ngay)
+→ Set up guide Step 2 auto-check ✅
+→ Progress bar: 2 of 4 complete
+                         │
+        Click step 3 "Add order editing widget"
+                         │
+                         ▼
+BƯỚC 6: Theme Editor (Shopify native)
+═════════════════════════════════════
+Click [Open Theme Editor] trong Set up guide
+    │
+    ▼
+┌────────────────────────────────────────────────────────────┐
+│  Shopify Theme Customizer                                  │
+│                                                            │
+│  Sections → Order Status Page                              │
+│  → [+ Add block] ◄── CLICK                                │
+│  → Tìm "Avada Order Editing Widget" ◄── CLICK             │
+│  → [Save] ◄── CLICK                                       │
+│                                                            │
+│  → Set up guide Step 3 auto-check ✅                        │
+│  → Progress bar: 3 of 4 complete                           │
+└────────────────────────────────────────────────────────────┘
+                         │
+        Quay lại app Dashboard
+                         │
+                         ▼
+BƯỚC 7: Test an order edit
+══════════════════════════
+Click [Create Test Order] trong Set up guide
+    │
+    ▼
+  Merchant tạo 1 test order trên dev store
+  → Mở email confirmation → click "View your order"
+  → Thấy widget → thử edit
+  → Quay lại Dashboard → thấy activity mới
+  → Set up guide Step 4 auto-check ✅
+  → Progress bar: 4 of 4 complete 🎉
+  → Banner: "You're all set!" → auto-hide
+```
+
+---
+
+#### FLOW D: MERCHANT — SỬ DỤNG HÀNG NGÀY (Sau khi setup xong)
+
+```
+BƯỚC 1: Mở app
+═══════════════
+Shopify Admin sidebar → Apps → Avada Order Editing
+    │
+    ▼
+BƯỚC 2: Dashboard
+═════════════════
+┌────────────────────────────────────────────────────────────┐
+│  Hi [Shop Name]                                            │
+│                                                            │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐        │
+│  │ Edits   │ │ Cancels │ │ Remaining│ │ Saved   │        │
+│  │  12     │ │   2     │ │ 38/50   │ │ $470    │        │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘        │
+│                                                            │
+│  ┌── Support tickets avoided: 148 ── Orders canceled: 5 ─┐│
+│                                                            │
+│  Recent Activity                              [View all]   │
+│  #1234 — 📍 Address changed — 2m ago          [Address]   │
+│  #1230 — 🔄 Variant swapped — 15m ago         [Swap]     │
+│  #1228 — ❌ Cancelled — 1h ago                 [Cancel]   │
+│                                                            │
+│  [View all] ◄── CLICK → Orders page (MVP)                 │
+│                                                            │
+│  ┌── Helpdesk ─────────────────────────────────────────┐  │
+│  │  [Chat with us] ◄── CLICK mở live chat              │  │
+│  └─────────────────────────────────────────────────────┘  │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+#### FLOW TỔNG HỢP — MỘT TRANG NHÌN TẤT CẢ
+
+```
+                    ┌──────────────┐
+                    │ SHOPIFY APP  │
+                    │ STORE        │
+                    └──────┬───────┘
+                           │ Install
+                           ▼
+                    ┌──────────────┐
+                    │ OAuth Screen │
+                    └──────┬───────┘
+                           │ Authorize
+                           ▼
+              ┌────────────────────────────┐
+              │      ADMIN DASHBOARD       │
+              │  (Metrics + Set up guide   │
+              │   + Activity + Helpdesk)   │
+              └─────┬──────────┬───────────┘
+                    │          │
+           ┌────────┘          └────────┐
+           ▼                            ▼
+    ┌──────────────┐            ┌──────────────┐
+    │  SETTINGS    │            │  ORDERS LIST │
+    │  (Time window│            │  (MVP)       │
+    │   Edit types │            └──────┬───────┘
+    │   Widget)    │                   │
+    └──────────────┘                   ▼
+                                ┌──────────────┐
+                                │ ORDER DETAIL │
+                                │ + Edit History│
+                                │ (MVP)        │
+                                └──────────────┘
+
+
+═══════════════════════════════════════════════════
+
+    CUSTOMER SIDE (bên khách hàng):
+
+    ┌───────────┐     ┌──────────────────┐     ┌──────────────┐
+    │  Shopify  │────>│  ORDER STATUS    │────>│  EDIT PORTAL │
+    │  Email    │     │  PAGE + Widget   │     │  (App Proxy) │
+    └───────────┘     └──────────────────┘     └──────┬───────┘
+                                                      │
+                              ┌────────────┬──────────┼──────────┐
+                              │            │          │          │
+                              ▼            ▼          ▼          ▼
+                        ┌──────────┐ ┌──────────┐ ┌──────┐ ┌────────┐
+                        │  Sửa     │ │  Đổi     │ │ Đổi  │ │  Hủy   │
+                        │  Địa chỉ │ │  Variant │ │ Qty  │ │  Đơn   │
+                        └────┬─────┘ └────┬─────┘ └──┬───┘ └───┬────┘
+                             │            │          │         │
+                             └────────────┼──────────┘         │
+                                          ▼                    ▼
+                                   ┌──────────────┐    ┌──────────────┐
+                                   │  REVIEW &    │    │  Chọn lý do  │
+                                   │  CONFIRM     │    │  → Xác nhận  │
+                                   └──────┬───────┘    └──────┬───────┘
+                                          │                   │
+                                          ▼                   ▼
+                                   ┌──────────────┐    ┌──────────────┐
+                                   │  SUCCESS     │    │  HỦY THÀNH   │
+                                   │  Đơn đã sửa  │    │  CÔNG + Refund│
+                                   └──────────────┘    └──────────────┘
 ```
 
 **Màn hình 1: Widget trên Order Status Page**
@@ -252,21 +755,49 @@ Mở app → Dashboard (metrics + charts + recent activity)
 **Màn hình 7: Admin Dashboard**
 
 ```
-┌─────────────────────────────────────────┐
-│  Avada Order Editing                     │
-│  Dashboard   Settings                    │
-│                                          │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐   │
-│  │ Edits   │ │ Cancels │ │ Edits   │   │
-│  │ Today   │ │ Today   │ │ Left    │   │
-│  │   12    │ │    2    │ │  38/50  │   │
-│  └─────────┘ └─────────┘ └─────────┘   │
-│                                          │
-│  Recent Activity                         │
-│  #1234 — Address changed — 2m ago       │
-│  #1230 — Variant swapped — 15m ago      │
-│  #1228 — Cancelled — 1h ago             │
-└─────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│  Hi [Shop Name]                                           │
+│  Welcome to Avada Order Editing                           │
+│                                                           │
+│  📅 Last 30 days                                          │
+│                                                           │
+│  ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────┐│
+│  │ Total      │ │ Total      │ │ Edits      │ │ Est.   ││
+│  │ Edits      │ │ Cancels    │ │ Remaining  │ │ Saved  ││
+│  │            │ │            │ │            │ │        ││
+│  │    47      │ │     5      │ │   38/50    │ │ $470   ││
+│  └────────────┘ └────────────┘ └────────────┘ └────────┘│
+│                                                           │
+│  ┌───────────────────────────────────────────── ··· ^─┐  │
+│  │  Quickstart                      2 / 3 completed   │  │
+│  │                                                    │  │
+│  │  ✅ Configure edit settings                        │  │
+│  │  ✅ Enable widget on your store                    │  │
+│  │  ☐  Test an order edit                             │  │
+│  └────────────────────────────────────────────────────┘  │
+│                                                           │
+│  Edit portal link                                         │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │  Order Status Page  Widget enabled ✅       [📋]  │  │
+│  └────────────────────────────────────────────────────┘  │
+│                                                           │
+│  Recent Activity                                          │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │  #1234 — 📍 Address changed        — 2m ago       │  │
+│  │  #1230 — 🔄 Variant swapped        — 15m ago      │  │
+│  │  #1228 — ❌ Cancelled               — 1h ago       │  │
+│  │  #1225 — 📦 Quantity changed        — 3h ago       │  │
+│  │                                                    │  │
+│  │                           [View all activity →]    │  │
+│  └────────────────────────────────────────────────────┘  │
+│                                                           │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │  Helpdesk                                          │  │
+│  │  Our support team is ready to help with our        │  │
+│  │  in-app live chat.                                 │  │
+│  │  [💬 Chat with us]                                 │  │
+│  └────────────────────────────────────────────────────┘  │
+└───────────────────────────────────────────────────────────┘
 ```
 
 **Màn hình 8: Admin Settings**
@@ -290,24 +821,82 @@ Mở app → Dashboard (metrics + charts + recent activity)
 └─────────────────────────────────────────┘
 ```
 
-**Màn hình 9: Onboarding (First-time)**
+**Màn hình 9: Set up guide (nhúng trong Dashboard)**
+
+Set up guide là card nằm ngay trong Dashboard, theo mô hình accordion -- chỉ 1 step expanded tại 1 thời điểm. Có progress bar trực quan.
 
 ```
-┌─────────────────────────────────────────┐
-│  Welcome to Avada Order Editing! 👋     │
-│                                          │
-│  Get started in 2 steps:                │
-│                                          │
-│  ☑ Step 1: Configure edit settings      │
-│    [Go to Settings]                     │
-│                                          │
-│  ☐ Step 2: Enable widget on your store  │
-│    [Enable Widget]                      │
-│    (Opens Theme Editor)                 │
-│                                          │
-│  Need help? [View Setup Guide]          │
-└─────────────────────────────────────────┘
+┌────────────────────────────────────────── ^ ✕─┐
+│  Set up guide                                  │
+│  Use this personalized guide to get Order      │
+│  Editing up and running.                       │
+│                                                │
+│  2 of 4 tasks complete  [████████░░░░░░░]      │
+│                                                │
+│  ┌──────────────────────────────────────────┐  │
+│  │ ✅ Configure order editing feature       │  │
+│  │                                          │  │
+│  │    Choose which order changes customers  │  │
+│  │    are allowed to make, such as quantity │  │
+│  │    updates, item swaps, address changes. │  │
+│  │                                          │  │
+│  │    [Configure Now]        [Preview img]  │  │
+│  └──────────────────────────────────────────┘  │
+│                                                │
+│  ✅ Select plan                                │
+│                                                │
+│  ☐  Add order editing widget                   │
+│                                                │
+│  ☐  Test an order edit                         │
+└────────────────────────────────────────────────┘
 ```
+
+| Element | Mô tả |
+|---------|-------|
+| Title | "Set up guide" |
+| Subtitle | "Use this personalized guide to get Order Editing up and running." |
+| Progress bar | "X of 4 tasks complete" + visual bar |
+| `^` button | Collapse/expand toàn bộ card |
+| `✕` button | Dismiss — ẩn vĩnh viễn, lưu `onboardingDismissed: true` |
+| **Step 1: Configure order editing feature** | Auto-check khi merchant lưu Settings lần đầu. Expanded: mô tả + preview image + "Configure Now" button → link Settings |
+| **Step 2: Select plan** | Auto-check khi merchant chọn plan (Submit: auto-check vì Free). Expanded: mô tả + "View Plans" button |
+| **Step 3: Add order editing widget** | Auto-check khi theme extension block activated. Expanded: mô tả + preview widget image + "Open Theme Editor" button |
+| **Step 4: Test an order edit** | Auto-check khi có 1+ record trong orderEdits. Expanded: mô tả + "Create Test Order" button |
+| Accordion | Click step → expand step đó, collapse các step khác |
+| Khi 4/4 completed | Hiện banner "You're all set!" → auto-hide sau |
+| Dismiss (✕) | Lưu `onboardingDismissed: true` → không hiện lại |
+
+**Hành vi:**
+- Set up guide hiện **phía trên** Recent Activity, **phía dưới** secondary metrics
+- Mới cài app → card expanded, step 1 mở rộng mặc định
+- Click step → accordion: mở step đó, đóng step khác
+- Step completed có icon ✅ (filled green circle + checkmark)
+- Step chưa completed có icon ☐ (dashed circle)
+- Đã hoàn thành 4/4 hoặc dismiss (✕) → card ẩn
+- Merchant quay lại sau khi dismiss → không hiện lại (trừ khi reinstall)
+
+---
+
+**Màn hình 10: Helpdesk (nhúng trong Dashboard)**
+
+Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
+
+```
+┌────────────────────────────────────────────┐
+│  Helpdesk                                  │
+│  Our support team is ready to help with    │
+│  our in-app live chat.                     │
+│  [Chat with us]                            │
+└────────────────────────────────────────────┘
+```
+
+| Element | Mô tả |
+|---------|-------|
+| Title | "Helpdesk" |
+| Description | "Our support team is ready to help with our in-app live chat." |
+| Button | "Chat with us" → mở Crisp/Tidio/Intercom chat widget (tùy team chọn) |
+| Vị trí | Luôn ở cuối Dashboard, sau Recent Activity |
+| Hiển thị | Luôn hiện (không dismiss được) |
 
 ### 3.5. Interaction with Shopify
 
@@ -393,11 +982,23 @@ Mở app → Dashboard (metrics + charts + recent activity)
 
 | Item | Data Type | Required | Default | Mô tả | Validate |
 |------|-----------|----------|---------|-------|----------|
-| Edits today | Metric | Y | 0 | Count | — |
-| Cancels today | Metric | Y | 0 | Count | — |
-| Edits remaining | Metric | Y | 50 | X/50 free plan | — |
-| Recent activity | List | Y | — | 10 items | Order #, type, time |
-| Onboarding checklist | Card | N | — | Hiện cho new merchants | Ẩn khi hoàn tất |
+| Welcome header | Text | Y | "Hi [Shop Name]" | Greeting + app name | — |
+| Date range filter | Select | Y | "Last 30 days" | Lọc metrics theo khoảng thời gian | — |
+| Total Edits | Metric | Y | 0 | Tổng lượt sửa trong khoảng thời gian | — |
+| Total Cancels | Metric | Y | 0 | Tổng lượt hủy trong khoảng thời gian | — |
+| Edits Remaining | Metric | Y | 50 | X/50 free plan (tháng hiện tại) | — |
+| Est. Saved | Metric | Y | $0 | Ước tính tiết kiệm = edits × $10/ticket | — |
+| Quickstart card | Card | N | Expanded | 3-step checklist, hiện cho new merchants | Ẩn khi 3/3 hoặc dismiss |
+| Quickstart step 1 | Checkbox | Y | unchecked | "Configure edit settings" → link Settings | Auto-check khi settings saved |
+| Quickstart step 2 | Checkbox | Y | unchecked | "Enable widget on your store" → link Theme Editor | Auto-check khi widget active |
+| Quickstart step 3 | Checkbox | Y | unchecked | "Test an order edit" → link tạo test order | Auto-check khi có 1+ orderEdit |
+| Quickstart `···` | Menu | Y | — | "Dismiss quickstart" | Lưu onboardingDismissed |
+| Quickstart `^` | Toggle | Y | Expanded | Collapse/expand | — |
+| Edit portal link | Card | Y | — | Trạng thái widget: "Widget enabled ✅" hoặc "Widget not enabled ⚠️" | — |
+| Recent activity | List | Y | — | 10 items, mỗi item: order #, icon loại, mô tả, thời gian | — |
+| View all activity | Link | Y | — | Đi đến Orders page (MVP) | — |
+| Helpdesk card | Card | Y | — | Luôn hiện ở cuối dashboard | — |
+| Helpdesk button | Button | Y | "Chat with us" | Mở live chat widget (Crisp/Tidio/Intercom) | — |
 
 ### 4.4. Admin — Settings
 
@@ -434,11 +1035,25 @@ Mở app → Dashboard (metrics + charts + recent activity)
 
 ### Functional — Merchant Admin
 
-☐ Dashboard: edits today, cancels today, edits remaining (X/50)
-☐ Recent activity list (10 items)
+☐ Dashboard: welcome header "Hi [Shop Name]"
+☐ Dashboard: date range filter (Last 30 days default)
+☐ Dashboard: 4 metric cards — Total Edits, Total Cancels, Edits Remaining (X/50), Est. Saved ($)
+☐ Dashboard: Edit portal link — hiện trạng thái widget (enabled/not enabled)
+☐ Dashboard: recent activity list (10 items) với icon theo loại edit + "View all activity" link
+☐ Dashboard: Set up guide card hiện khi chưa hoàn thành 4 bước
+☐ Set up guide: progress bar "X of 4 tasks complete" cập nhật đúng
+☐ Set up guide: accordion — click step expand, collapse step khác
+☐ Step 1 "Configure order editing feature" → auto-check khi settings saved, expanded có mô tả + preview + CTA
+☐ Step 2 "Select plan" → auto-check khi plan đã chọn (Free = auto-check)
+☐ Step 3 "Add order editing widget" → auto-check khi theme extension active, expanded có preview widget
+☐ Step 4 "Test an order edit" → auto-check khi có 1+ order edit record
+☐ Set up guide: dismiss (✕) → ẩn vĩnh viễn, lưu onboardingDismissed
+☐ Set up guide: collapse/expand (▲) toàn bộ card hoạt động
+☐ Set up guide: khi 4/4 → hiện "You're all set!" → auto-hide sau
+☐ Helpdesk card luôn hiện ở cuối dashboard
+☐ Helpdesk "Chat with us" → mở live chat widget
 ☐ Settings: configure time window, edit types, widget display
 ☐ Settings save → toast "Settings saved"
-☐ Onboarding checklist cho new merchant (2 steps: settings + enable widget)
 ☐ App load < 3 giây
 
 ### Shopify App Store — BẮT BUỘC pass review
@@ -524,6 +1139,6 @@ Mở app → Dashboard (metrics + charts + recent activity)
 
 ---
 
-**Version**: 2.0
-**Updated**: 2026-04-07
+**Version**: 4.0
+**Updated**: 2026-04-13
 **Status**: Submit-First PRD

@@ -412,6 +412,118 @@
             </div>
         </div>
 
+        <!-- Secondary Metrics Row -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div class="card" style="margin-bottom: 0;">
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 8px;">
+                    <span style="font-size: 13px; color: var(--gray-600);">Support tickets avoided</span>
+                    <span title="Estimated number of support tickets saved by customer self-service edits. Based on industry average: ~60% of edits would have been a support ticket." style="cursor: help; font-size: 13px; color: var(--gray-400);">ⓘ</span>
+                </div>
+                <div style="font-size: 24px; font-weight: 700; color: var(--gray-900);">148</div>
+            </div>
+            <div class="card" style="margin-bottom: 0;">
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 8px;">
+                    <span style="font-size: 13px; color: var(--gray-600);">Orders canceled</span>
+                    <span title="Total orders canceled by customers through the self-service cancellation flow this month." style="cursor: help; font-size: 13px; color: var(--gray-400);">ⓘ</span>
+                </div>
+                <div style="font-size: 24px; font-weight: 700; color: var(--gray-900);">5</div>
+            </div>
+        </div>
+
+        <!-- Set up guide -->
+        <div class="card" id="quickstart-card" style="padding: 24px;">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <h3 style="font-size: 18px; font-weight: 600;">Set up guide</h3>
+                <div style="display: flex; align-items: center; gap: 2px;">
+                    <button onclick="toggleQuickstart()" id="quickstart-toggle" title="Collapse" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 14px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">▲</button>
+                    <button onclick="dismissQuickstart()" title="Dismiss" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 16px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">✕</button>
+                </div>
+            </div>
+            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Use this personalized guide to get Order Editing up and running.</p>
+
+            <!-- Progress bar -->
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <span style="font-size: 13px; color: var(--gray-600); white-space: nowrap;" id="quickstart-progress-text">2 of 4 tasks complete</span>
+                <div style="flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
+                    <div id="quickstart-progress-bar" style="width: 50%; height: 100%; background: var(--gray-900); border-radius: 3px; transition: width 0.3s;"></div>
+                </div>
+            </div>
+
+            <div id="quickstart-body">
+                <!-- Step 1: Configure (completed + expanded) -->
+                <div class="qs-step" data-step="1" onclick="expandStep(1)" style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 4px; cursor: pointer; background: var(--gray-50);">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; flex-shrink: 0;">✓</div>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--gray-900);">Configure order editing feature</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="1" style="margin-top: 12px; padding-left: 36px; display: flex; gap: 20px; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Choose which order changes customers are allowed to make, such as quantity updates, item swaps, address shipping changes.</p>
+                            <button class="btn" onclick="event.stopPropagation(); showScreen('admin-settings')" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Configure Now</button>
+                        </div>
+                        <div style="width: 160px; height: 100px; background: var(--gray-100); border-radius: var(--radius-md); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
+                            <div style="text-align: center; padding: 8px;">
+                                <div style="font-size: 10px; color: var(--gray-400); margin-bottom: 4px;">Settings Preview</div>
+                                <div style="display: flex; flex-direction: column; gap: 3px; align-items: flex-start; padding-left: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Address</span></div>
+                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Variant</span></div>
+                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Quantity</span></div>
+                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Cancel</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Select plan (completed, collapsed) -->
+                <div class="qs-step" data-step="2" onclick="expandStep(2)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 4px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; flex-shrink: 0;">✓</div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-900);">Select plan</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="2" style="margin-top: 12px; padding-left: 36px; display: none;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Choose a pricing plan that fits your store. Start free with 50 edits/month.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">View Plans</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Add order editing widget (not completed, collapsed) -->
+                <div class="qs-step" data-step="3" onclick="expandStep(3)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 4px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Add order editing widget</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="3" style="margin-top: 12px; padding-left: 36px; display: none;">
+                        <div style="display: flex; gap: 20px; align-items: flex-start;">
+                            <div style="flex: 1;">
+                                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Enable the "Edit Order" widget on your Order Status Page so customers can self-edit after checkout.</p>
+                                <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Open Theme Editor</button>
+                            </div>
+                            <div style="width: 160px; height: 100px; background: var(--gray-100); border-radius: var(--radius-md); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 9px; color: var(--gray-400); margin-bottom: 4px;">Order Status Page</div>
+                                    <div style="background: var(--primary-bg); border: 1px solid var(--primary); border-radius: 4px; padding: 6px 10px; font-size: 9px; color: var(--primary); font-weight: 600;">✏️ Edit Your Order</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Test an order edit (not completed, collapsed) -->
+                <div class="qs-step" data-step="4" onclick="expandStep(4)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Test an order edit</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="4" style="margin-top: 12px; padding-left: 36px; display: none;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Place a test order on your store and try editing it to see the full customer experience.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Create Test Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Recent Activity -->
         <div class="card">
             <div class="card-header">
@@ -460,6 +572,17 @@
                     <span class="badge badge-default">Merchant</span>
                 </li>
             </ul>
+        </div>
+
+        <!-- Helpdesk -->
+        <div class="card" style="background: var(--gray-50); border: 1px solid var(--gray-200);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="flex: 1;">
+                    <h3 class="card-title" style="margin-bottom: 4px;">Helpdesk</h3>
+                    <p style="font-size: 13px; color: var(--gray-600); margin: 0;">Our support team is ready to help with our in-app live chat.</p>
+                </div>
+                <button class="btn" style="white-space: nowrap; gap: 6px;">💬 Chat with us</button>
+            </div>
         </div>
     </div>
 </div>
@@ -1108,6 +1231,56 @@
     // Toggle element visibility
     function toggleElement(id) {
         document.getElementById(id).classList.toggle('hidden');
+    }
+
+    // Set up guide: collapse/expand entire card
+    function toggleQuickstart() {
+        var body = document.getElementById('quickstart-body');
+        var btn = document.getElementById('quickstart-toggle');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            btn.textContent = '▲';
+            btn.title = 'Collapse';
+        } else {
+            body.style.display = 'none';
+            btn.textContent = '▼';
+            btn.title = 'Expand';
+        }
+    }
+
+    // Set up guide: dismiss
+    function dismissQuickstart() {
+        document.getElementById('quickstart-card').style.display = 'none';
+    }
+
+    // Set up guide: expand a single step (accordion)
+    function expandStep(stepNum) {
+        document.querySelectorAll('.qs-step').forEach(function(step) {
+            var num = step.getAttribute('data-step');
+            var detail = step.querySelector('.qs-step-detail');
+            if (num == stepNum) {
+                // Toggle this step
+                if (detail.style.display === 'none' || !detail.style.display) {
+                    detail.style.display = 'block';
+                    step.style.background = 'var(--gray-50)';
+                    step.style.border = '1px solid var(--gray-200)';
+                    step.style.padding = '16px';
+                } else {
+                    detail.style.display = 'none';
+                    step.style.background = 'transparent';
+                    step.style.border = '1px solid transparent';
+                    step.style.padding = '12px 16px';
+                }
+            } else {
+                // Collapse other steps
+                if (detail) {
+                    detail.style.display = 'none';
+                    step.style.background = 'transparent';
+                    step.style.border = '1px solid transparent';
+                    step.style.padding = '12px 16px';
+                }
+            }
+        });
     }
 
     // Modal
