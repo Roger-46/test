@@ -44,7 +44,7 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 ### Default Field Values
 | Field | Giá trị mặc định |
 |-------|-----------------|
-| Title prefix | **[BD][OE]** (bắt buộc, thêm trước title) |
+| Title prefix | **[BD][OM]** (bắt buộc, thêm trước title) |
 | Issue Type | Sub-task |
 | Assignee | haidx |
 | Assignees | haidx (`customfield_10700`) |
@@ -92,7 +92,7 @@ const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
     parent: { key: 'SB-10372' },
-    summary: '[BD][OE] {TITLE}',
+    summary: '[BD][OM] {TITLE}',
     issuetype: { name: 'Sub-task' },
     priority: { name: 'Low' },
     customfield_10900: [{ name: 'sonnv' }],   // Reviewer: Sơn Nguyễn
@@ -162,7 +162,7 @@ Link: http://space.avada.net/browse/{KEY}
 
 ### Mode 1 (Roger)
 Roger đang trao đổi về "Edit Time Window Settings" → nói "tạo task"
-→ Tạo Sub-task "[BD][OE] Edit Time Window Settings" trong SB-10372
+→ Tạo Sub-task "[BD][OM] Edit Time Window Settings" trong SB-10372
 
 ### Mode 2 (Dev)
 Roger nói "tạo task jira cho dev với title: Order Edit Engine"
