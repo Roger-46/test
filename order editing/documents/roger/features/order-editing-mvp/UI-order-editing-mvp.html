@@ -321,9 +321,9 @@
         <a class="sidebar-item active" onclick="showScreen('admin-dashboard')">
             <span class="sidebar-item-icon">&#127968;</span> Dashboard
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-orders')">
-            <span class="sidebar-item-icon">&#128230;</span> Orders
-            <span class="sidebar-item-badge">247</span>
+        <a class="sidebar-item" onclick="showScreen('admin-edits')">
+            <span class="sidebar-item-icon">&#128221;</span> Activity
+            <span class="sidebar-item-badge">10</span>
         </a>
         <a class="sidebar-item" onclick="showScreen('admin-settings')">
             <span class="sidebar-item-icon">&#9881;</span> Settings
@@ -369,207 +369,138 @@
 <div id="admin-dashboard" class="screen">
     <div class="page page-wide">
         <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+        </div>
+
+        <!-- Greeting Banner -->
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <h1 class="page-title">Order Editing</h1>
-                <p class="page-subtitle">Manage customer order edits and cancellations</p>
-            </div>
-            <div class="btn-group">
-                <button class="btn">Export</button>
+                <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">Hi Croc Hoang</h2>
+                <p style="font-size: 13px; color: var(--gray-500);">Overview of your order editing activity</p>
             </div>
         </div>
 
-        <!-- Metrics -->
-        <div class="metrics-grid">
+        <!-- Date Filter -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px; background: var(--gray-900); color: white; border-color: var(--gray-900);" onclick="setDateFilter(this,'today')">Today</button>
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px;" onclick="setDateFilter(this,'7d')">Last 7 days</button>
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px;" onclick="setDateFilter(this,'30d')">Last 30 days</button>
+        </div>
+
+        <!-- 3 Metrics -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
             <div class="metric-card">
-                <div class="metric-label">Today's Edits</div>
-                <div class="metric-value">12</div>
+                <div class="metric-label">Total Edits</div>
+                <div class="metric-value" id="mvp-metric-edits">12</div>
                 <div class="metric-change up">+3 vs yesterday</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">This Month</div>
-                <div class="metric-value">247</div>
-                <div class="metric-change up">+18% vs last month</div>
-            </div>
-            <div class="metric-card">
                 <div class="metric-label">Cancellations</div>
-                <div class="metric-value">5</div>
-                <div class="metric-change down">-2.0% rate</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Support Tickets Saved</div>
-                <div class="metric-value">~148</div>
-                <div class="metric-change up">Est. $1,184 saved</div>
+                <div class="metric-value" id="mvp-metric-cancels">5</div>
+                <div class="metric-change down">2.0% rate</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Edits Remaining</div>
                 <div class="metric-value">38/50</div>
                 <div class="metric-change">Free plan</div>
             </div>
-            <div class="metric-card">
-                <div class="metric-label">Revenue Impact</div>
-                <div class="metric-value">-$245</div>
-                <div class="metric-change">Net refunds this month</div>
-            </div>
         </div>
 
-        <!-- Secondary Metrics Row -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
-            <div class="card" style="margin-bottom: 0;">
-                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 8px;">
-                    <span style="font-size: 13px; color: var(--gray-600);">Support tickets avoided</span>
-                    <span title="Estimated number of support tickets saved by customer self-service edits. Based on industry average: ~60% of edits would have been a support ticket." style="cursor: help; font-size: 13px; color: var(--gray-400);">ⓘ</span>
-                </div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--gray-900);">148</div>
-            </div>
-            <div class="card" style="margin-bottom: 0;">
-                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 8px;">
-                    <span style="font-size: 13px; color: var(--gray-600);">Orders canceled</span>
-                    <span title="Total orders canceled by customers through the self-service cancellation flow this month." style="cursor: help; font-size: 13px; color: var(--gray-400);">ⓘ</span>
-                </div>
-                <div style="font-size: 24px; font-weight: 700; color: var(--gray-900);">5</div>
-            </div>
-        </div>
-
-        <!-- Set up guide -->
+        <!-- Quickstart -->
         <div class="card" id="quickstart-card" style="padding: 24px;">
-            <!-- Header -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
-                <h3 style="font-size: 18px; font-weight: 600;">Set up guide</h3>
+                <h3 style="font-size: 18px; font-weight: 600;">Quickstart</h3>
                 <div style="display: flex; align-items: center; gap: 2px;">
                     <button onclick="toggleQuickstart()" id="quickstart-toggle" title="Collapse" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 14px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">▲</button>
                     <button onclick="dismissQuickstart()" title="Dismiss" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 16px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">✕</button>
                 </div>
             </div>
-            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Use this personalized guide to get Order Editing up and running.</p>
-
-            <!-- Progress bar -->
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                <span style="font-size: 13px; color: var(--gray-600); white-space: nowrap;" id="quickstart-progress-text">2 of 4 tasks complete</span>
+                <span style="font-size: 13px; color: var(--gray-600); white-space: nowrap;" id="quickstart-progress-text">0 of 3 tasks complete</span>
                 <div style="flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
-                    <div id="quickstart-progress-bar" style="width: 50%; height: 100%; background: var(--gray-900); border-radius: 3px; transition: width 0.3s;"></div>
+                    <div id="quickstart-progress-bar" style="width: 0%; height: 100%; background: var(--gray-900); border-radius: 3px; transition: width 0.3s;"></div>
                 </div>
             </div>
-
             <div id="quickstart-body">
-                <!-- Step 1: Configure (completed + expanded) -->
+                <!-- Step 1: Configure -->
                 <div class="qs-step" data-step="1" onclick="expandStep(1)" style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 4px; cursor: pointer; background: var(--gray-50);">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; flex-shrink: 0;">✓</div>
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
                         <span style="font-size: 14px; font-weight: 600; color: var(--gray-900);">Configure order editing feature</span>
                     </div>
-                    <div class="qs-step-detail" data-detail="1" style="margin-top: 12px; padding-left: 36px; display: flex; gap: 20px; align-items: flex-start;">
-                        <div style="flex: 1;">
-                            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Choose which order changes customers are allowed to make, such as quantity updates, item swaps, address shipping changes.</p>
-                            <button class="btn" onclick="event.stopPropagation(); showScreen('admin-settings')" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Configure Now</button>
-                        </div>
-                        <div style="width: 160px; height: 100px; background: var(--gray-100); border-radius: var(--radius-md); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
-                            <div style="text-align: center; padding: 8px;">
-                                <div style="font-size: 10px; color: var(--gray-400); margin-bottom: 4px;">Settings Preview</div>
-                                <div style="display: flex; flex-direction: column; gap: 3px; align-items: flex-start; padding-left: 8px;">
-                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Address</span></div>
-                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Variant</span></div>
-                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Quantity</span></div>
-                                    <div style="display: flex; align-items: center; gap: 4px;"><span style="font-size: 10px;">☑</span><span style="font-size: 9px; color: var(--gray-500);">Cancel</span></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="qs-step-detail" data-detail="1" style="margin-top: 12px; padding-left: 36px;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Set up edit types, time window, and widget display.</p>
+                        <button class="btn" onclick="event.stopPropagation(); showScreen('admin-settings')" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Configure Now</button>
                     </div>
                 </div>
-
-                <!-- Step 2: Select plan (completed, collapsed) -->
+                <!-- Step 2: Enable app -->
                 <div class="qs-step" data-step="2" onclick="expandStep(2)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 4px; cursor: pointer;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; flex-shrink: 0;">✓</div>
-                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-900);">Select plan</span>
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Enable app</span>
                     </div>
                     <div class="qs-step-detail" data-detail="2" style="margin-top: 12px; padding-left: 36px; display: none;">
-                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Choose a pricing plan that fits your store. Start free with 50 edits/month.</p>
-                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">View Plans</button>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Activate the app to start using features.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Enable app</button>
+                        <button class="btn-plain" onclick="event.stopPropagation();" style="margin-left: 8px;">Refresh status</button>
                     </div>
                 </div>
-
-                <!-- Step 3: Add order editing widget (not completed, collapsed) -->
-                <div class="qs-step" data-step="3" onclick="expandStep(3)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 4px; cursor: pointer;">
+                <!-- Step 3: Add widget -->
+                <div class="qs-step" data-step="3" onclick="expandStep(3)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; cursor: pointer;">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
                         <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Add order editing widget</span>
                     </div>
                     <div class="qs-step-detail" data-detail="3" style="margin-top: 12px; padding-left: 36px; display: none;">
-                        <div style="display: flex; gap: 20px; align-items: flex-start;">
-                            <div style="flex: 1;">
-                                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Enable the "Edit Order" widget on your Order Status Page so customers can self-edit after checkout.</p>
-                                <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Open Theme Editor</button>
-                            </div>
-                            <div style="width: 160px; height: 100px; background: var(--gray-100); border-radius: var(--radius-md); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <div style="text-align: center;">
-                                    <div style="font-size: 9px; color: var(--gray-400); margin-bottom: 4px;">Order Status Page</div>
-                                    <div style="background: var(--primary-bg); border: 1px solid var(--primary); border-radius: 4px; padding: 6px 10px; font-size: 9px; color: var(--primary); font-weight: 600;">✏️ Edit Your Order</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 4: Test an order edit (not completed, collapsed) -->
-                <div class="qs-step" data-step="4" onclick="expandStep(4)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; cursor: pointer;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
-                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Test an order edit</span>
-                    </div>
-                    <div class="qs-step-detail" data-detail="4" style="margin-top: 12px; padding-left: 36px; display: none;">
-                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Place a test order on your store and try editing it to see the full customer experience.</p>
-                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Create Test Order</button>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Add the edit widget to your Order Status Page.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Open Theme Editor</button>
+                        <button class="btn-plain" onclick="event.stopPropagation();" style="margin-left: 8px;">Refresh status</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Activity -->
+        <!-- Recent Activity (preview — 5 items max) -->
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Recent Activity</h3>
-                <button class="btn-plain" onclick="showScreen('admin-orders')">View all</button>
+                <a style="font-size:13px; color:var(--blue); cursor:pointer; text-decoration:none;" onclick="showScreen('admin-edits')">View all activity →</a>
             </div>
             <ul class="activity-list">
                 <li class="activity-item">
                     <div class="activity-icon address">📍</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#1234</strong> — Address changed by customer</div>
-                        <div class="activity-time">john@example.com • 2 minutes ago</div>
+                        <div class="activity-title"><strong>#1234</strong> — John Doe — Address changed</div>
+                        <div class="activity-time">2 minutes ago</div>
                     </div>
-                    <span class="badge badge-info">Address</span>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon edit">🔄</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#1230</strong> — Variant swapped: T-Shirt M→L</div>
-                        <div class="activity-time">sarah@shop.com • 15 minutes ago</div>
+                        <div class="activity-title"><strong>#1230</strong> — Sarah Chen — Variant swapped</div>
+                        <div class="activity-time">15 minutes ago</div>
                     </div>
-                    <span class="badge badge-info">Swap</span>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon cancel">✕</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#1228</strong> — Order cancelled, $89.99 refunded</div>
-                        <div class="activity-time">mike@test.com • 1 hour ago</div>
+                        <div class="activity-title"><strong>#1228</strong> — Mike Rodriguez — Order cancelled</div>
+                        <div class="activity-time">1 hour ago</div>
                     </div>
-                    <span class="badge badge-critical">Cancel</span>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon edit">📦</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#1225</strong> — Quantity changed: Jeans x1→x2 (+$49.99)</div>
-                        <div class="activity-time">alex@buyer.com • 2 hours ago</div>
+                        <div class="activity-title"><strong>#1225</strong> — Alex Thompson — Quantity changed</div>
+                        <div class="activity-time">2 hours ago</div>
                     </div>
-                    <span class="badge badge-info">Quantity</span>
                 </li>
                 <li class="activity-item">
-                    <div class="activity-icon address">📍</div>
+                    <div class="activity-icon edit" style="font-size:14px;">📝</div>
                     <div class="activity-content">
-                        <div class="activity-title"><strong>#1220</strong> — Address changed by merchant</div>
-                        <div class="activity-time">Store owner • 3 hours ago</div>
+                        <div class="activity-title"><strong>#1222</strong> — David Kim — Note updated</div>
+                        <div class="activity-time">3 hours ago</div>
                     </div>
-                    <span class="badge badge-default">Merchant</span>
                 </li>
             </ul>
         </div>
@@ -587,98 +518,103 @@
     </div>
 </div>
 
-<!-- ============ SCREEN: ADMIN ORDERS ============ -->
-<div id="admin-orders" class="screen hidden">
+<!-- ============ SCREEN: ADMIN EDITS ============ -->
+<div id="admin-edits" class="screen hidden">
     <div class="page page-wide">
         <div class="page-header">
             <div>
-                <h1 class="page-title">Orders</h1>
-                <p class="page-subtitle">View and manage editable orders</p>
+                <h1 class="page-title">Activity</h1>
+                <p class="page-subtitle">All order changes made by customers</p>
             </div>
         </div>
 
         <div class="card">
-            <div class="filters">
-                <div class="filter-search">
-                    <input type="text" class="form-input" placeholder="Search by order # or customer name..." />
-                </div>
-                <select class="form-input form-select" style="width: 160px;">
-                    <option>All Orders</option>
-                    <option>Editable</option>
-                    <option>Edited</option>
-                    <option>Cancelled</option>
-                    <option>Expired</option>
-                </select>
+            <div class="card-header">
+                <span style="font-size:12px; color:var(--gray-500);" id="edits-counter">Showing 1-5 of 10</span>
             </div>
 
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order</th>
-                            <th>Customer</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Edit Window</th>
-                            <th>Edits</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>#1234</strong></td>
-                            <td>John Doe</td>
-                            <td>Apr 1, 2026</td>
-                            <td><span class="badge badge-success">Editable</span></td>
-                            <td>1h 45m remaining</td>
-                            <td>1/5</td>
-                            <td><button class="btn" style="height:28px; font-size:12px; padding:4px 12px;">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#1230</strong></td>
-                            <td>Sarah Chen</td>
-                            <td>Apr 1, 2026</td>
-                            <td><span class="badge badge-info">Edited</span></td>
-                            <td>45m remaining</td>
-                            <td>2/5</td>
-                            <td><button class="btn" style="height:28px; font-size:12px; padding:4px 12px;">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#1228</strong></td>
-                            <td>Mike Rodriguez</td>
-                            <td>Mar 31, 2026</td>
-                            <td><span class="badge badge-critical">Cancelled</span></td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td><span style="color: var(--gray-400); font-size:12px;">—</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#1225</strong></td>
-                            <td>Alex Thompson</td>
-                            <td>Mar 31, 2026</td>
-                            <td><span class="badge badge-info">Edited</span></td>
-                            <td><span class="badge badge-default">Expired</span></td>
-                            <td>1/5</td>
-                            <td><span style="color: var(--gray-400); font-size:12px;">—</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#1220</strong></td>
-                            <td>Jessica Park</td>
-                            <td>Mar 30, 2026</td>
-                            <td><span class="badge badge-success">Editable</span></td>
-                            <td>Until fulfillment</td>
-                            <td>0/5</td>
-                            <td><button class="btn" style="height:28px; font-size:12px; padding:4px 12px;">Edit</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <button>←</button>
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>→</button>
+            <!-- Page 1 -->
+            <ul class="activity-list" id="edits-page-1">
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1234</strong> — John Doe</div>
+                        <div class="activity-time">2 minutes ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-address')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1230</strong> — Sarah Chen</div>
+                        <div class="activity-time">15 minutes ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-swap')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1228</strong> — Mike Rodriguez</div>
+                        <div class="activity-time">1 hour ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-cancel')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1225</strong> — Alex Thompson</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-qty')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1222</strong> — David Kim</div>
+                        <div class="activity-time">3 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-note')">View details</button>
+                </li>
+            </ul>
+
+            <!-- Page 2 -->
+            <ul class="activity-list hidden" id="edits-page-2">
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1220</strong> — Jessica Park</div>
+                        <div class="activity-time">4 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-tags')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1218</strong> — Emma Wilson</div>
+                        <div class="activity-time">5 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-multi')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1215</strong> — Ryan Lee</div>
+                        <div class="activity-time">6 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-address2')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1210</strong> — Lisa Nguyen</div>
+                        <div class="activity-time">8 hours ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-swap2')">View details</button>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-content">
+                        <div class="activity-title"><strong>#1205</strong> — Tom Baker</div>
+                        <div class="activity-time">1 day ago</div>
+                    </div>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 12px; white-space:nowrap;" onclick="openModal('edit-detail-modal-multi2')">View details</button>
+                </li>
+            </ul>
+
+            <!-- Pagination -->
+            <div class="pagination" style="margin-top:12px;">
+                <button onclick="switchEditsPage(1)" id="edits-pg1" class="active">1</button>
+                <button onclick="switchEditsPage(2)" id="edits-pg2">2</button>
             </div>
         </div>
     </div>
@@ -724,7 +660,10 @@
                 <label class="checkbox-item"><input type="checkbox" checked /> Swap product variants (size, color, etc.)</label>
                 <label class="checkbox-item"><input type="checkbox" checked /> Change quantity</label>
                 <label class="checkbox-item"><input type="checkbox" checked /> Cancel order</label>
+                <label class="checkbox-item"><input type="checkbox" checked /> Edit order note</label>
+                <label class="checkbox-item"><input type="checkbox" checked /> Edit order tags</label>
             </div>
+            <p style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">Note & Tags: when enabled, customers can also add/edit notes and tags on their orders.</p>
         </div>
 
         <!-- Notifications -->
@@ -760,61 +699,131 @@
     </div>
 </div>
 
-<!-- ============ SCREEN: STOREFRONT — WIDGET ============ -->
-<div id="sf-widget" class="screen hidden">
-    <div class="sf-container">
-        <div class="banner banner-info" style="margin-bottom: 20px;">
-            <span class="banner-icon">ℹ️</span>
-            <div class="banner-content">
-                <div class="banner-title">Storefront Preview</div>
-                This is how the widget appears on the Order Status Page / Thank You Page.
+<!-- ============ SCREEN: STOREFRONT — ORDER STATUS PAGE (New Customer Accounts) ============ -->
+<div id="sf-widget" class="screen hidden" style="background: #f6f6f7;">
+
+    <!-- Search Bar -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 20px 24px 0;">
+        <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8c9196;">
+            🔍 Search products
+        </div>
+    </div>
+
+    <!-- Order Header -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 24px 24px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-size: 18px; color: #333; cursor: pointer;">←</span>
+                    <h1 style="font-size: 22px; font-weight: 600; color: #333;">Order #1234</h1>
+                </div>
+                <div style="font-size: 13px; color: #737373; padding-left: 26px;">Confirmed Apr 14</div>
+            </div>
+            <button style="background: #fff; border: 1px solid #333; border-radius: 6px; padding: 6px 16px; font-size: 13px; font-weight: 500; cursor: pointer; color: #333;">Buy again</button>
+        </div>
+    </div>
+
+    <!-- 2-Column Layout -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 340px; gap: 24px;">
+
+        <!-- LEFT COLUMN -->
+        <div>
+            <!-- Confirmed Status -->
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+                    <span style="color: #2D9D78; font-size: 18px; margin-top: 1px;">✓</span>
+                    <div>
+                        <div style="font-size: 15px; font-weight: 600; color: #333;">Confirmed</div>
+                        <div style="font-size: 13px; color: #737373;">We're preparing these items for shipping.</div>
+                        <div style="font-size: 12px; color: #999; margin-top: 2px;">Apr 14</div>
+                    </div>
+                </div>
+                <button style="background: #fff; border: 1px solid #333; border-radius: 6px; padding: 6px 14px; font-size: 13px; cursor: pointer; color: #333; margin-left: 28px;">Track order with Shop</button>
+            </div>
+
+            <!-- ⭐ APP WIDGET — Edit Your Order -->
+            <div style="background: #fff; border: 2px solid var(--primary); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 16px; background: linear-gradient(135deg, var(--primary-bg) 0%, #fff 100%);">
+                <div style="font-size: 22px; margin-bottom: 6px;">✏️</div>
+                <div style="font-size: 15px; font-weight: 600; color: #333; margin-bottom: 4px;">Need to make changes?</div>
+                <div style="font-size: 13px; color: #737373; margin-bottom: 10px;">You can edit your order before it ships.</div>
+                <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--yellow); background: var(--yellow-bg); padding: 4px 10px; border-radius: 12px; margin-bottom: 12px;">⏱ 1h 45m remaining</div>
+                <br>
+                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-edit-portal')" style="border-radius: 8px;">Edit Your Order</button>
+            </div>
+
+            <!-- Customer Information -->
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 13px;">
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Contact information</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>john@example.com</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Payment</div>
+                        <div style="color: #737373; line-height: 1.6;">Bogus •••• 1<br>$91.98 USD<br><span style="font-size: 12px; color: #999;">Apr 14</span></div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Shipping address</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Billing address</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Shipping method</div>
+                        <div style="color: #737373;">Standard</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Order Status Page mock -->
-        <div class="card" style="border: 1px solid var(--gray-200);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h3 style="font-size: 18px;">Order #1234</h3>
-                <span class="badge badge-warning">Unfulfilled</span>
-            </div>
-
-            <!-- Edit Widget -->
-            <div class="sf-widget">
-                <div class="sf-widget-icon">✏️</div>
-                <div class="sf-widget-title">Need to make changes?</div>
-                <div class="sf-widget-desc">You can edit your order before it ships.</div>
-                <div class="sf-widget-timer">⏱ 1h 45m remaining</div>
-                <br>
-                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-edit-portal')">Edit Your Order</button>
-            </div>
-
-            <!-- Order items -->
-            <div style="margin-top: 20px;">
-                <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--gray-600);">Items</h4>
-                <div class="sf-item">
-                    <div class="sf-item-img">👕</div>
-                    <div class="sf-item-info">
-                        <div class="sf-item-name">Classic T-Shirt</div>
-                        <div class="sf-item-variant">Size: M / Color: Black</div>
+        <!-- RIGHT COLUMN — Order Summary -->
+        <div>
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px; position: sticky; top: 80px;">
+                <!-- Item 1 -->
+                <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #f0f0f0;">
+                    <div style="width: 52px; height: 52px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fafafa; font-size: 20px; position: relative; flex-shrink: 0;">
+                        👕
+                        <span style="position: absolute; top: -6px; right: -6px; background: #2563eb; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</span>
                     </div>
-                    <div class="sf-item-price">$29.99</div>
-                </div>
-                <div class="sf-item">
-                    <div class="sf-item-img">👖</div>
-                    <div class="sf-item-info">
-                        <div class="sf-item-name">Slim Fit Jeans</div>
-                        <div class="sf-item-variant">Size: 32 / Color: Blue</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #333;">Classic T-Shirt</div>
+                        <div style="font-size: 12px; color: #737373;">M / Black</div>
                     </div>
-                    <div class="sf-item-price">$49.99</div>
+                    <div style="font-size: 14px; font-weight: 500; color: #333;">$29.99</div>
+                </div>
+                <!-- Item 2 -->
+                <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 12px; border-bottom: 1px solid #f0f0f0;">
+                    <div style="width: 52px; height: 52px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fafafa; font-size: 20px; position: relative; flex-shrink: 0;">
+                        👖
+                        <span style="position: absolute; top: -6px; right: -6px; background: #2563eb; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</span>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #333;">Slim Fit Jeans</div>
+                        <div style="font-size: 12px; color: #737373;">32 / Blue</div>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 500; color: #333;">$49.99</div>
+                </div>
+
+                <!-- Totals -->
+                <div style="font-size: 13px; color: #333;">
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Subtotal</span><span>$79.98</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Shipping</span><span>$5.00</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Tax</span><span>$7.00</span></div>
+                </div>
+                <div style="border-top: 1px solid #e1e3e5; margin-top: 12px; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline;">
+                    <span style="font-size: 14px; font-weight: 600; color: #333;">Total</span>
+                    <span><span style="font-size: 11px; color: #737373;">USD</span> <span style="font-size: 18px; font-weight: 600; color: #333;">$91.98</span></span>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="sf-summary">
-                <div class="sf-summary-row"><span>Subtotal</span><span>$79.98</span></div>
-                <div class="sf-summary-row"><span>Shipping</span><span>$5.00</span></div>
-                <div class="sf-summary-row"><span>Tax</span><span>$7.00</span></div>
-                <div class="sf-summary-row total"><span>Total</span><span>$91.98</span></div>
-            </div>
+    <!-- Footer -->
+    <div style="border-top: 1px solid #e1e3e5; padding: 20px 0; text-align: center; background: #f6f6f7;">
+        <div style="font-size: 12px; color: #8c9196;">
+            🌐 United States · <a href="#" style="color: #2C6ECB; text-decoration: none;">Refund policy</a> · <a href="#" style="color: #2C6ECB; text-decoration: none;">Privacy policy</a> · <a href="#" style="color: #2C6ECB; text-decoration: none;">Cancellation policy</a>
         </div>
     </div>
 </div>
@@ -901,7 +910,7 @@
                         <span>1</span>
                         <button>+</button>
                     </div>
-                    <button class="btn" style="height:28px; font-size:12px; padding:4px 10px;" onclick="showScreen('sf-swap')">Swap</button>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 10px;" onclick="showScreen('sf-swap')">Variant</button>
                 </div>
             </div>
 
@@ -918,8 +927,24 @@
                         <span>1</span>
                         <button>+</button>
                     </div>
-                    <button class="btn" style="height:28px; font-size:12px; padding:4px 10px;">Swap</button>
+                    <button class="btn" style="height:28px; font-size:12px; padding:4px 10px;">Variant</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Order Note -->
+        <div class="card" style="margin-top: 16px;">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">📝 Order Note</h4>
+            <textarea style="width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font); height: 56px; resize: vertical;" placeholder="Add a note to your order (e.g. gift wrap, delivery instructions)...">Please gift wrap this order</textarea>
+        </div>
+
+        <!-- Order Tags -->
+        <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">🏷️ Tags</h4>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                <span style="display: inline-flex; align-items: center; gap: 4px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 14px; padding: 4px 10px; font-size: 12px;">gift <button style="background: none; border: none; cursor: pointer; font-size: 13px; color: var(--gray-400); padding: 0 2px;">×</button></span>
+                <span style="display: inline-flex; align-items: center; gap: 4px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 14px; padding: 4px 10px; font-size: 12px;">rush <button style="background: none; border: none; cursor: pointer; font-size: 13px; color: var(--gray-400); padding: 0 2px;">×</button></span>
+                <input type="text" style="width: 100px; height: 26px; font-size: 12px; border: 1px solid var(--gray-300); border-radius: 14px; padding: 4px 10px; outline: none;" placeholder="Add tag..." />
             </div>
         </div>
 
@@ -1205,6 +1230,456 @@
     </div>
 </div>
 
+
+<!-- ============ EDIT DETAIL MODALS ============ -->
+
+<!-- 1. Address Change — #1234 -->
+<div id="edit-detail-modal-address" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-address')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1234 — Address changed</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-address')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">John Doe (john@example.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">2 minutes ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            John Doe<br>456 Oak Avenue<br>Brooklyn, NY 11201<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-address')">Close</button></div>
+    </div>
+</div>
+
+<!-- 2. Variant Swap — #1230 -->
+<div id="edit-detail-modal-swap" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-swap')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1230 — Variant swapped</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-swap')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Sarah Chen (sarah@shop.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">15 minutes ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🔄 Classic T-Shirt</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Size: <strong>M</strong><br>Color: <strong>Black</strong><br>Price: $29.99
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Size: <strong>L</strong><br>Color: <strong>Black</strong><br>Price: $29.99
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                    <span>Price difference</span><span style="font-weight:600;">$0.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-swap')">Close</button></div>
+    </div>
+</div>
+
+<!-- 3. Cancel — #1228 -->
+<div id="edit-detail-modal-cancel" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-cancel')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1228 — Order cancelled</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-cancel')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Mike Rodriguez (mike@test.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">1 hour ago</span>
+            </div>
+            <div style="background:var(--red-bg); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">❌ Order Cancelled</div>
+                <div style="font-size:13px; line-height:2;">
+                    <div style="display:flex; justify-content:space-between;"><span>Reason:</span><span style="font-weight:500;">Changed my mind</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Refund amount:</span><span style="font-weight:600; color:var(--red);">$89.99</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Refund status:</span><span style="font-weight:500;">Processed</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Items restocked:</span><span style="font-weight:500;">Yes</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-cancel')">Close</button></div>
+    </div>
+</div>
+
+<!-- 4. Quantity Change — #1225 -->
+<div id="edit-detail-modal-qty" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-qty')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1225 — Quantity changed</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-qty')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Alex Thompson (alex@buyer.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">2 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📦 Slim Fit Jeans</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Quantity: <strong>1</strong><br>Subtotal: $49.99
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Quantity: <strong>2</strong><br>Subtotal: $99.98
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                    <span>Additional charge</span><span style="font-weight:600; color:var(--blue);">+$49.99</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-qty')">Close</button></div>
+    </div>
+</div>
+
+<!-- 5. Note Updated — #1222 -->
+<div id="edit-detail-modal-note" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-note')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1222 — Note updated</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-note')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">David Kim (david@email.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">3 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📝 Order Note</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through; font-style:italic;">
+                            Please gift wrap this order
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm); font-style:italic;">
+                            Please gift wrap with blue ribbon. Leave at front door if no one home.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-note')">Close</button></div>
+    </div>
+</div>
+
+<!-- 6. Tags Updated — #1220 -->
+<div id="edit-detail-modal-tags" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-tags')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1220 — Tags updated</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-tags')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Jessica Park (jessica@mail.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">4 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🏷 Order Tags</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="padding:10px; background:var(--red-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; text-decoration:line-through; margin:2px;">VIP</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px;">VIP</span>
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--primary); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px; color:var(--primary); font-weight:500;">rush</span>
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--primary); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px; color:var(--primary); font-weight:500;">fragile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-tags')">Close</button></div>
+    </div>
+</div>
+
+<!-- 7. Multiple Changes — #1218 (Address + Variant + Quantity + Note) -->
+<div id="edit-detail-modal-multi" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-multi')">
+    <div class="modal" style="max-width: 580px;">
+        <div class="modal-header">
+            <h3>Order #1218 — Multiple changes</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-multi')">×</button>
+        </div>
+        <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Emma Wilson (emma@store.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">5 hours ago</span>
+            </div>
+            <div style="font-size:12px; color:var(--gray-500); margin-bottom:16px; padding:8px 12px; background:var(--yellow-bg); border-radius:var(--radius-sm);">
+                4 changes made in this edit
+            </div>
+
+            <!-- Change 1: Address -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Emma Wilson<br>55 Market St<br>Chicago, IL 60601<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Emma Wilson<br>200 Lake Shore Dr, Unit 12<br>Chicago, IL 60611<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change 2: Variant Swap -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🔄 Running Shoes</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Size: <strong>8</strong><br>Color: <strong>White</strong><br>Price: $120.00
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Size: <strong>9</strong><br>Color: <strong>Black</strong><br>Price: $120.00
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change 3: Quantity -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📦 Sports Socks (3-pack)</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Quantity: <strong>1</strong><br>Subtotal: $14.99
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Quantity: <strong>3</strong><br>Subtotal: $44.97
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change 4: Note -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📝 Order Note</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); font-style:italic; color:var(--gray-400);">
+                            (empty)
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm); font-style:italic;">
+                            Birthday gift — please wrap nicely!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div style="background:var(--blue-bg); border-radius:var(--radius-md); padding:12px 16px; font-size:13px;">
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>Original total</span><span>$134.99</span></div>
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>New total</span><span style="font-weight:600;">$164.97</span></div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0 0; border-top:1px solid rgba(0,0,0,0.1); margin-top:4px;"><span style="font-weight:600;">Additional charge</span><span style="font-weight:700; color:var(--blue);">+$29.98</span></div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-multi')">Close</button></div>
+    </div>
+</div>
+
+<!-- 8. Address Change — #1215 -->
+<div id="edit-detail-modal-address2" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-address2')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1215 — Address changed</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-address2')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Ryan Lee (ryan@company.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">6 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Ryan Lee<br>500 5th Ave<br>New York, NY 10110<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Ryan Lee<br>1 World Trade Center, Floor 85<br>New York, NY 10007<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-address2')">Close</button></div>
+    </div>
+</div>
+
+<!-- 9. Variant Swap — #1210 -->
+<div id="edit-detail-modal-swap2" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-swap2')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1210 — Variant swapped</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-swap2')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Lisa Nguyen (lisa@gmail.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">8 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🔄 Summer Dress</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Size: <strong>S</strong><br>Color: <strong>Red</strong><br>Price: $59.99
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Size: <strong>M</strong><br>Color: <strong>Blue</strong><br>Price: $64.99
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                    <span>Additional charge</span><span style="font-weight:600; color:var(--blue);">+$5.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-swap2')">Close</button></div>
+    </div>
+</div>
+
+<!-- 10. Multiple Changes — #1205 (Quantity + Tags) -->
+<div id="edit-detail-modal-multi2" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-multi2')">
+    <div class="modal" style="max-width: 580px;">
+        <div class="modal-header">
+            <h3>Order #1205 — Multiple changes</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-multi2')">×</button>
+        </div>
+        <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Tom Baker (tom@shop.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">1 day ago</span>
+            </div>
+            <div style="font-size:12px; color:var(--gray-500); margin-bottom:16px; padding:8px 12px; background:var(--yellow-bg); border-radius:var(--radius-sm);">
+                2 changes made in this edit
+            </div>
+
+            <!-- Change 1: Quantity -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📦 Wireless Headphones</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Quantity: <strong>2</strong><br>Subtotal: $159.98
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Quantity: <strong>1</strong><br>Subtotal: $79.99
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                    <span>Refund</span><span style="font-weight:600; color:var(--red);">-$79.99</span>
+                </div>
+            </div>
+
+            <!-- Change 2: Tags -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🏷 Order Tags</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="padding:10px; background:var(--red-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; text-decoration:line-through; margin:2px;">wholesale</span>
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; text-decoration:line-through; margin:2px;">bulk</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px;">personal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div style="background:var(--blue-bg); border-radius:var(--radius-md); padding:12px 16px; font-size:13px;">
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>Original total</span><span>$159.98</span></div>
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>New total</span><span style="font-weight:600;">$79.99</span></div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0 0; border-top:1px solid rgba(0,0,0,0.1); margin-top:4px;"><span style="font-weight:600;">Refund</span><span style="font-weight:700; color:var(--red);">-$79.99</span></div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-multi2')">Close</button></div>
+    </div>
+</div>
+
 </div><!-- end main-content -->
 
 <!-- ============ TOAST ============ -->
@@ -1212,6 +1687,15 @@
 
 <!-- ============ JAVASCRIPT ============ -->
 <script>
+    // Edits page pagination
+    function switchEditsPage(page) {
+        document.getElementById('edits-page-1').classList.toggle('hidden', page !== 1);
+        document.getElementById('edits-page-2').classList.toggle('hidden', page !== 2);
+        document.getElementById('edits-pg1').classList.toggle('active', page === 1);
+        document.getElementById('edits-pg2').classList.toggle('active', page === 2);
+        document.getElementById('edits-counter').textContent = page === 1 ? 'Showing 1-5 of 10' : 'Showing 6-10 of 10';
+    }
+
     // Screen switching
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
@@ -1297,6 +1781,35 @@
         document.getElementById('toast-msg').textContent = msg;
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Date filter
+    function setDateFilter(btn, range) {
+        btn.parentElement.querySelectorAll('.btn').forEach(b => { b.style.background = ''; b.style.color = ''; b.style.borderColor = ''; });
+        btn.style.background = 'var(--gray-900)'; btn.style.color = 'white'; btn.style.borderColor = 'var(--gray-900)';
+        const data = {today:{e:'12',c:'5'},'7d':{e:'87',c:'14'},'30d':{e:'247',c:'38'}};
+        document.getElementById('mvp-metric-edits').textContent = data[range].e;
+        document.getElementById('mvp-metric-cancels').textContent = data[range].c;
+    }
+
+    // Quickstart
+    function expandStep(n) {
+        document.querySelectorAll('.qs-step-detail').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.qs-step').forEach(s => { s.style.border = '1px solid transparent'; s.style.background = ''; });
+        const detail = document.querySelector('[data-detail="'+n+'"]');
+        const step = document.querySelector('.qs-step[data-step="'+n+'"]');
+        if (detail) detail.style.display = '';
+        if (step) { step.style.border = '1px solid var(--gray-200)'; step.style.background = 'var(--gray-50)'; }
+    }
+    function toggleQuickstart() {
+        const body = document.getElementById('quickstart-body');
+        const btn = document.getElementById('quickstart-toggle');
+        if (body.style.display === 'none') { body.style.display = ''; btn.textContent = '▲'; }
+        else { body.style.display = 'none'; btn.textContent = '▼'; }
+    }
+    function dismissQuickstart() {
+        document.getElementById('quickstart-card').style.display = 'none';
+        showToast('Quickstart dismissed');
     }
 
     // Init: show dashboard

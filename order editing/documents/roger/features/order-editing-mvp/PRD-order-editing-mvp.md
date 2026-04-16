@@ -52,24 +52,28 @@
 | **Customer** | Khách mua hàng trên Shopify store | Tự sửa lỗi đơn hàng mà không cần email support |
 | **Merchant** | Chủ cửa hàng Shopify, 50-2.000 đơn/tháng | Giảm ticket hỗ trợ, cấu hình quyền chỉnh sửa |
 
-### User Stories (MVP Full — 14 stories)
+### User Stories (MVP Full — 16 stories)
 
-| ID | User Story | Priority | Submit? |
-|----|-----------|----------|---------|
-| US-01 | Là **customer**, tôi muốn **chỉnh sửa địa chỉ giao hàng** sau khi đặt hàng, để gói hàng đến đúng nơi. | P0 | ✅ |
-| US-02 | Là **customer**, tôi muốn **đổi biến thể sản phẩm** (size, color), để nhận đúng sản phẩm. | P0 | ✅ |
-| US-03 | Là **customer**, tôi muốn **thay đổi số lượng** sản phẩm trước khi giao. | P0 | ✅ |
-| US-04 | Là **customer**, tôi muốn **hủy đơn hàng** trong khung thời gian cho phép. | P0 | ✅ |
-| US-05 | Là **customer**, tôi muốn **xem chênh lệch giá** trước khi xác nhận thay đổi. | P0 | ✅ |
-| US-06 | Là **customer**, tôi muốn **truy cập chỉnh sửa từ Order Status Page + Thank You Page**. | P0 | ✅ (chỉ OSP) |
-| US-07 | Là **merchant**, tôi muốn **cấu hình loại chỉnh sửa cho phép + khung thời gian**. | P0 | ✅ |
-| US-08 | Là **merchant**, tôi muốn **xem dashboard** edits/cancels + revenue saved + analytics. | P0 | ✅ (basic) |
-| US-09 | Là **merchant**, tôi muốn **xem danh sách orders** editable với filters/search. | P0 | |
-| US-10 | Là **merchant**, tôi muốn **chỉnh sửa đơn hàng từ admin** (giống customer nhưng nhanh hơn). | P0 | |
-| US-11 | Là **merchant**, tôi muốn **nhận email notification** khi customer edit/cancel đơn. | P0 | |
-| US-12 | Là **customer**, tôi muốn **nhận email xác nhận** khi edit thành công. | P0 | |
-| US-13 | Là **merchant**, tôi muốn **cấu hình widget** (text, color, vị trí). | P0 | ✅ (basic) |
-| US-14 | Là **merchant**, tôi muốn **xem edit history/audit trail** cho mỗi order. | P0 | |
+| ID | User Story | Priority |
+|----|-----------|----------|
+| US-01 | Là **customer**, tôi muốn **chỉnh sửa địa chỉ giao hàng** sau khi đặt hàng, để gói hàng đến đúng nơi. | P0 |
+| US-02 | Là **customer**, tôi muốn **đổi biến thể sản phẩm** (size, color), để nhận đúng sản phẩm. | P0 |
+| US-03 | Là **customer**, tôi muốn **thay đổi số lượng** sản phẩm trước khi giao. | P0 |
+| US-04 | Là **customer**, tôi muốn **hủy đơn hàng** trong khung thời gian cho phép. | P0 |
+| US-05 | Là **customer**, tôi muốn **xem chênh lệch giá** trước khi xác nhận thay đổi. | P0 |
+| US-06 | Là **customer**, tôi muốn **truy cập chỉnh sửa từ Order Status Page + Thank You Page**. | P0 |
+| US-07 | Là **merchant**, tôi muốn **cấu hình loại chỉnh sửa cho phép + khung thời gian**. | P0 |
+| US-08 | Là **merchant**, tôi muốn **xem dashboard** edits/cancels + revenue saved + analytics. | P0 |
+| US-09 | Là **merchant**, tôi muốn **xem danh sách orders** editable với filters/search. | P0 |
+| US-10 | Là **merchant**, tôi muốn **chỉnh sửa đơn hàng từ admin** (swap, qty, address, add/remove items, cancel). | P0 |
+| US-11 | Là **merchant**, tôi muốn **nhận email notification** khi customer edit/cancel đơn. | P0 |
+| US-12 | Là **customer**, tôi muốn **nhận email xác nhận** khi edit thành công. | P0 |
+| US-13 | Là **merchant**, tôi muốn **cấu hình widget** (text, color, vị trí). | P0 |
+| US-14 | Là **merchant**, tôi muốn **xem edit history/audit trail** cho mỗi order. | P0 |
+| US-15 | Là **customer/merchant**, tôi muốn **thêm/sửa order note**, để ghi chú yêu cầu đặc biệt cho đơn hàng. | P0 |
+| US-16 | Là **customer/merchant**, tôi muốn **thêm/sửa order tags**, để phân loại và quản lý đơn hàng dễ hơn. | P0 |
+
+> **US-15, US-16**: Cả customer và merchant đều có thể chỉnh sửa. Merchant có toggle bật/tắt quyền này cho customer trong Settings.
 
 ---
 
@@ -85,25 +89,26 @@ App gồm 2 phần:
 
 **TRONG scope (MVP Full):**
 
-| # | Feature | Submit? | Lý do |
-|---|---------|---------|-------|
-| 1 | **Customer edit address** | ✅ | Core value — use case #1 |
-| 2 | **Customer swap variant** | ✅ | Core value — use case #2 |
-| 3 | **Customer change quantity** | ✅ | Core value — đi kèm swap |
-| 4 | **Customer cancel order + auto refund/restock** | ✅ | Core value — giảm friction |
-| 5 | **Widget Order Status Page** | ✅ | Entry point cho customer |
-| 6 | **Widget Thank You Page** | | Thêm sau submit |
-| 7 | **Admin Dashboard** (full: metrics + charts + recent activity) | ✅ basic | Charts thêm sau |
-| 8 | **Admin Orders list** (filters, search, edit status) | | Thêm sau submit |
-| 9 | **Admin Settings** (time window, edit types, notifications, widget) | ✅ basic | Full settings sau |
-| 10 | **Merchant edit orders từ admin** | | Thêm sau submit |
-| 11 | **Email notifications** (merchant + customer) | | Thêm sau submit |
-| 12 | **Edit history / Audit trail** | | Thêm sau submit |
-| 13 | **Quickstart** (3-step checklist nhúng trong Dashboard) | ✅ | First-time experience |
-| 13b | **Helpdesk** (live chat card nhúng trong Dashboard) | ✅ | Support access |
-| 14 | **Usage tracking + Billing** (Free/Starter/Growth) | | Submit FREE, billing sau |
-| 15 | **GDPR webhooks** | ✅ | BẮT BUỘC |
-| 16 | **App uninstall cleanup** | ✅ | BẮT BUỘC |
+| # | Feature | Lý do |
+|---|---------|-------|
+| 1 | **Customer edit address** | Core value — use case #1 |
+| 2 | **Customer swap variant** | Core value — use case #2 |
+| 3 | **Customer change quantity** | Core value — đi kèm swap |
+| 4 | **Customer cancel order + auto refund/restock** | Core value — giảm friction |
+| 5 | **Widget Order Status Page + Thank You Page** | Entry point cho customer |
+| 6 | **Order note** (customer + merchant) | Ghi chú đặc biệt cho đơn hàng. MC có toggle bật/tắt cho KH |
+| 7 | **Order tags** (customer + merchant) | Phân loại đơn hàng. MC có toggle bật/tắt cho KH |
+| 8 | **Admin Dashboard** (greeting, date filter, 3 metrics, quickstart, recent activity, helpdesk) | Trang chính merchant |
+| 9 | **Admin Orders list** (filters, search, edit) | Quản lý đơn hàng |
+| 10 | **Merchant edit orders từ admin** (swap, qty, address, add/remove, note, tags, cancel) | Full edit modal |
+| 11 | **Admin Settings** (time window, edit types, note/tags toggle, notifications, widget) | Cấu hình app |
+| 12 | **Email notifications** (merchant + customer) | Thông báo edit/cancel |
+| 13 | **Edit history / Audit trail** | Theo dõi ai edit gì, lúc nào |
+| 14 | **Quickstart** (3-step: configure → enable app → add widget) | First-time experience |
+| 15 | **Helpdesk** (live chat card trong Dashboard) | Support access |
+| 16 | **GDPR webhooks** | BẮT BUỘC |
+| 17 | **App uninstall cleanup** | BẮT BUỘC |
+| 18 | **Transaction safety / idempotency** | Tránh duplicate charge |
 | 17 | **Transaction safety / idempotency** | ✅ | Tránh duplicate charge |
 
 **NGOÀI scope (P1 — phát triển sau MVP):**

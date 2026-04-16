@@ -87,6 +87,7 @@ App gồm 2 phần:
 | 8 | **GDPR webhooks** (3 endpoints) | BẮT BUỘC — lý do reject #1 nếu thiếu |
 | 9 | **App uninstall cleanup** | BẮT BUỘC — lý do reject #3 nếu thiếu |
 | 10 | **Simple onboarding** (2-step checklist) | Shopify reviewer check first-time experience |
+| 11 | **Shopify Order Timeline note** (staffNote) | Merchant biết ai sửa gì ngay trong Shopify Admin — không cần mở app |
 
 **NGOÀI scope (thêm sau khi publish qua app update):**
 
@@ -314,12 +315,22 @@ Mở app → Dashboard (metrics + recent activity)
 **Order Editing API (GraphQL):**
 - `orderEditBegin` → `orderEditAddVariant` / `orderEditSetQuantity` → `orderEditCommit`
 - Shopify auto handles refund/charge khi commit
+- **`staffNote`**: Truyền kèm khi `orderEditCommit` — Shopify tự ghi vào Order Timeline trong Admin
+
+**Staffnote format theo edit type:**
+
+| Edit Type | staffNote content |
+|-----------|-------------------|
+| Swap variant | `[Avada Order Editing] Customer swapped: {Product Name} {Old Variant} → {New Variant}` |
+| Change qty | `[Avada Order Editing] Customer changed quantity: {Product Name} {Old Qty} → {New Qty}` |
 
 **Address Update (REST):**
 - `PUT /admin/api/2024-07/orders/{id}.json` → update shipping address
+- Ghi thêm **order note** sau khi update: `[Avada Order Editing] Customer changed shipping address`
 
 **Order Cancel (GraphQL):**
 - `orderCancel` mutation → cancel + refund + restock
+- Shopify tự ghi vào Timeline khi cancel. App ghi thêm note: `[Avada Order Editing] Customer cancelled order. Reason: {reason}`
 
 **Webhooks nhận:**
 - `orders/edited`, `orders/cancelled`, `orders/updated`
@@ -509,6 +520,15 @@ Mở app → Dashboard (metrics + recent activity)
 - [ ] Onboarding checklist cho new merchant (2 steps: settings + enable widget)
 - [ ] Onboarding ẩn sau khi hoàn tất
 - [ ] App load < 3 giây
+
+### Functional — Shopify Order Timeline (staffNote)
+
+- [ ] Khi customer **swap variant** → `orderEditCommit` truyền `staffNote` ghi rõ product + variant cũ → mới
+- [ ] Khi customer **change quantity** → `orderEditCommit` truyền `staffNote` ghi rõ product + qty cũ → mới
+- [ ] Khi customer **edit address** → ghi order note: `[Avada Order Editing] Customer changed shipping address`
+- [ ] Khi customer **cancel order** → ghi order note: `[Avada Order Editing] Customer cancelled order. Reason: {reason}`
+- [ ] Tất cả staffNote có prefix `[Avada Order Editing]` để merchant phân biệt nguồn chỉnh sửa
+- [ ] staffNote hiển thị đúng trong Shopify Admin → Orders → Order detail → Timeline
 
 ### Shopify App Store — BẮT BUỘC pass review
 

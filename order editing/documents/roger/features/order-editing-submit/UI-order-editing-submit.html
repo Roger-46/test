@@ -407,6 +407,42 @@
         .sf-tab.active { color: var(--p-interactive); border-bottom-color: var(--p-interactive); font-weight: 500; }
 
         .hidden { display: none !important; }
+
+        /* === DATE FILTER === */
+        .date-filter-btn { font-size: 12px; padding: 5px 12px; border-radius: 16px; font-weight: 500; }
+        .date-filter-btn.active { background: var(--p-text); color: white; border-color: var(--p-text); }
+
+        /* === SETUP GUIDE === */
+        .setup-guide { background: var(--p-surface); border: 1px solid var(--p-border); border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+        .setup-guide-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .setup-guide-header h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .setup-guide-header p { font-size: 13px; color: var(--p-text-subdued); margin-bottom: 10px; }
+        .setup-guide-actions { display: flex; gap: 8px; flex-shrink: 0; }
+        .setup-guide-actions button { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--p-icon); padding: 4px; border-radius: 6px; }
+        .setup-guide-actions button:hover { background: var(--p-surface-highlight); }
+        .setup-progress { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--p-text-subdued); }
+        .setup-progress-bar { width: 120px; height: 6px; background: var(--p-border); border-radius: 3px; overflow: hidden; }
+        .setup-progress-fill { height: 100%; background: var(--p-action-primary); border-radius: 3px; transition: width 0.3s; }
+        .setup-guide-body { border-top: 1px solid var(--p-border); }
+        .setup-guide.collapsed .setup-guide-body { display: none; }
+
+        .setup-step { border-bottom: 1px solid var(--p-border-subdued); cursor: pointer; transition: background 0.15s; }
+        .setup-step:last-child { border-bottom: none; }
+        .setup-step:hover { background: var(--p-surface-subdued); }
+        .setup-step-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; }
+        .setup-step-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--p-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: transparent; transition: all 0.2s; }
+        .setup-step.done .setup-step-check { background: var(--p-action-primary); border-color: var(--p-action-primary); color: white; }
+        .setup-step-info { flex: 1; }
+        .setup-step-title { font-size: 13px; font-weight: 500; }
+        .setup-step.done .setup-step-title { color: var(--p-text-subdued); text-decoration: line-through; }
+        .setup-step-chevron { font-size: 12px; color: var(--p-icon); transition: transform 0.2s; }
+        .setup-step.expanded .setup-step-chevron { transform: rotate(90deg); }
+
+        .setup-step-detail { display: none; padding: 0 20px 16px 54px; }
+        .setup-step.expanded .setup-step-detail { display: block; }
+        .setup-step-desc { font-size: 13px; color: var(--p-text-subdued); margin-bottom: 12px; line-height: 1.6; }
+        .setup-step-detail .btn { font-size: 13px; }
+        .setup-step-img { width: 200px; border-radius: 8px; border: 1px solid var(--p-border); float: right; margin-left: 16px; }
     </style>
 </head>
 <body>
@@ -494,31 +530,34 @@
 <div id="page-dashboard" class="page-screen">
     <div class="page-header-bar">
         <div><h1>Dashboard</h1></div>
-        <div class="btn-group">
-            <button class="btn">&#128194; Export</button>
-        </div>
     </div>
     <div class="page-body page-body-wide">
-        <div class="metrics-row">
+
+        <!-- Greeting Banner -->
+        <div class="p-card" style="margin-bottom: 20px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">Hi Croc Hoang</h2>
+                <p style="font-size: 13px; color: var(--p-text-subdued);">Overview of your order editing activity</p>
+            </div>
+        </div>
+
+        <!-- Date Filter + Metrics -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <button class="btn date-filter-btn active" onclick="setDateFilter(this, 'today')">Today</button>
+            <button class="btn date-filter-btn" onclick="setDateFilter(this, '7d')">Last 7 days</button>
+            <button class="btn date-filter-btn" onclick="setDateFilter(this, '30d')">Last 30 days</button>
+        </div>
+
+        <div class="metrics-row" style="grid-template-columns: repeat(3, 1fr);">
             <div class="metric-box">
-                <div class="metric-label">Today's Edits</div>
-                <div class="metric-val">12</div>
+                <div class="metric-label">Total Edits</div>
+                <div class="metric-val" id="metric-edits">12</div>
                 <div class="metric-sub up">+3 vs yesterday</div>
             </div>
             <div class="metric-box">
-                <div class="metric-label">This Month</div>
-                <div class="metric-val">247</div>
-                <div class="metric-sub up">+18% vs last month</div>
-            </div>
-            <div class="metric-box">
                 <div class="metric-label">Cancellations</div>
-                <div class="metric-val">5</div>
+                <div class="metric-val" id="metric-cancels">5</div>
                 <div class="metric-sub down">2.0% rate</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-label">Support Saved</div>
-                <div class="metric-val">~148</div>
-                <div class="metric-sub up">Est. $1,184 saved</div>
             </div>
             <div class="metric-box">
                 <div class="metric-label">Edits Remaining</div>
@@ -526,6 +565,72 @@
                 <div class="metric-sub">Free plan</div>
             </div>
         </div>
+
+        <!-- Setup Guide -->
+        <div class="setup-guide" id="setupGuide">
+            <div class="setup-guide-header">
+                <div>
+                    <h3>Quickstart</h3>
+                    <div class="setup-progress">
+                        <span id="setupProgressText">0 of 3 tasks complete</span>
+                        <div class="setup-progress-bar"><div class="setup-progress-fill" id="setupProgressFill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <div class="setup-guide-actions">
+                    <button onclick="toggleSetupGuide()" title="Collapse">&#9650;</button>
+                    <button onclick="dismissSetupGuide()" title="Dismiss">&times;</button>
+                </div>
+            </div>
+            <div class="setup-guide-body">
+                <!-- Step 1: Configure -->
+                <div class="setup-step expanded" data-step="1" onclick="toggleSetupStep(this)">
+                    <div class="setup-step-header">
+                        <div class="setup-step-check">&#10003;</div>
+                        <div class="setup-step-info">
+                            <div class="setup-step-title">Configure order editing feature</div>
+                        </div>
+                        <span class="setup-step-chevron">&#9654;</span>
+                    </div>
+                    <div class="setup-step-detail">
+                        <div class="setup-step-desc">Set up edit types, time window, and widget display.</div>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); showPage('settings')">Configure Now</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Enable app -->
+                <div class="setup-step" data-step="2" onclick="toggleSetupStep(this)">
+                    <div class="setup-step-header">
+                        <div class="setup-step-check">&#10003;</div>
+                        <div class="setup-step-info">
+                            <div class="setup-step-title">Enable app</div>
+                        </div>
+                        <span class="setup-step-chevron">&#9654;</span>
+                    </div>
+                    <div class="setup-step-detail">
+                        <div class="setup-step-desc">Activate the app to start using features.</div>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); markStepDone(2); showToast('App enabled successfully!')">Enable app</button>
+                        <button class="btn-plain" onclick="event.stopPropagation();" style="margin-left: 8px;">Refresh status</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Add Widget -->
+                <div class="setup-step" data-step="3" onclick="toggleSetupStep(this)">
+                    <div class="setup-step-header">
+                        <div class="setup-step-check">&#10003;</div>
+                        <div class="setup-step-info">
+                            <div class="setup-step-title">Add order editing widget to your store</div>
+                        </div>
+                        <span class="setup-step-chevron">&#9654;</span>
+                    </div>
+                    <div class="setup-step-detail">
+                        <div class="setup-step-desc">Add the edit widget to your Order Status Page.</div>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); showToast('Opening Theme Editor...')">Add Widget</button>
+                        <button class="btn-plain" onclick="event.stopPropagation(); showToast('Checking widget status...')" style="margin-left: 8px;">Refresh status</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="p-card">
             <div class="p-card-header">
@@ -1042,6 +1147,48 @@ function showToast(msg) {
     document.getElementById('toast-msg').textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Date filter
+function setDateFilter(btn, range) {
+    document.querySelectorAll('.date-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const data = {today: {edits:'12',cancels:'5'}, '7d': {edits:'87',cancels:'14'}, '30d': {edits:'247',cancels:'38'}};
+    const d = data[range];
+    document.getElementById('metric-edits').textContent = d.edits;
+    document.getElementById('metric-cancels').textContent = d.cancels;
+}
+
+// Setup Guide
+function toggleSetupStep(el) {
+    const wasExpanded = el.classList.contains('expanded');
+    document.querySelectorAll('.setup-step').forEach(s => s.classList.remove('expanded'));
+    if (!wasExpanded) el.classList.add('expanded');
+}
+
+function toggleSetupGuide() {
+    const guide = document.getElementById('setupGuide');
+    guide.classList.toggle('collapsed');
+    const btn = guide.querySelector('.setup-guide-actions button');
+    btn.innerHTML = guide.classList.contains('collapsed') ? '&#9660;' : '&#9650;';
+}
+
+function dismissSetupGuide() {
+    document.getElementById('setupGuide').style.display = 'none';
+    showToast('Setup guide dismissed. You can find it again in Settings.');
+}
+
+function markStepDone(stepNum) {
+    const step = document.querySelector(`.setup-step[data-step="${stepNum}"]`);
+    if (step) step.classList.add('done');
+    updateSetupProgress();
+}
+
+function updateSetupProgress() {
+    const total = document.querySelectorAll('.setup-step').length;
+    const done = document.querySelectorAll('.setup-step.done').length;
+    document.getElementById('setupProgressText').textContent = done + ' of ' + total + ' tasks complete';
+    document.getElementById('setupProgressFill').style.width = (done / total * 100) + '%';
 }
 
 showPage('dashboard');
