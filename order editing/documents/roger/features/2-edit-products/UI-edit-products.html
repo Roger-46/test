@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Mockup — Edit Products (Deferred Feature)</title>
+    <style>
+        :root {
+            --primary: #2D9D78;
+            --primary-hover: #247F62;
+            --primary-bg: #E3F5EF;
+            --blue: #4A90E2;
+            --blue-bg: #E8F0FE;
+            --red: #D72C0D;
+            --red-bg: #FFF4F4;
+            --red-hover: #BC1F0D;
+            --yellow: #B98900;
+            --yellow-bg: #FFF8E5;
+            --gray-50: #FAFAFA;
+            --gray-100: #F6F6F7;
+            --gray-200: #E4E5E7;
+            --gray-300: #D2D5D8;
+            --gray-400: #AEB4B9;
+            --gray-500: #8C9196;
+            --gray-600: #6D7175;
+            --gray-700: #5C5F62;
+            --gray-800: #44474A;
+            --gray-900: #1A1C1E;
+            --white: #FFFFFF;
+            --font: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, sans-serif;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--gray-100); color: var(--gray-900); font-size: 14px; line-height: 1.5; padding: 24px; }
+
+        .section-label { font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; margin: 40px 0 12px; }
+        .section-label:first-child { margin-top: 0; }
+        h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .subtitle { font-size: 14px; color: var(--gray-500); margin-bottom: 32px; }
+        .status-badge { display: inline-block; background: var(--yellow-bg); color: var(--yellow); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; margin-left: 8px; }
+
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; margin-bottom: 16px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-900); font-family: var(--font); height: 36px; }
+        .btn:hover { background: var(--gray-50); }
+        .btn-primary { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-group { display: flex; gap: 8px; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--gray-800); }
+        .form-input { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); height: 36px; }
+        .form-select { appearance: auto; }
+        .checkbox-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; font-size: 14px; cursor: pointer; }
+        .checkbox-item input { width: 18px; height: 18px; accent-color: var(--primary); }
+
+        .sf-qty { display: flex; align-items: center; gap: 0; }
+        .sf-qty button { width: 28px; height: 28px; border: 1px solid var(--gray-300); background: var(--white); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        .sf-qty button:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+        .sf-qty button:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+        .sf-qty span { width: 32px; height: 28px; border-top: 1px solid var(--gray-300); border-bottom: 1px solid var(--gray-300); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; }
+
+        .sf-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); }
+        .sf-item-img { width: 48px; height: 48px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 22px; background: var(--white); flex-shrink: 0; }
+        .sf-item-name { font-size: 14px; font-weight: 500; }
+        .sf-item-variant { font-size: 12px; color: var(--gray-500); }
+
+        .change-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray-200); }
+        .change-item:last-child { border-bottom: none; }
+        .change-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+        .change-label { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+        .change-old { font-size: 13px; color: var(--red); text-decoration: line-through; }
+        .change-new { font-size: 13px; color: var(--primary); font-weight: 500; }
+
+        .divider { height: 1px; background: var(--gray-200); margin: 24px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Edit Products <span class="status-badge">Deferred</span></h1>
+    <div class="subtitle">Feature tách riêng — sẽ thêm vào MVP sau khi app approved trên Shopify App Store</div>
+
+    <!-- ============ SECTION 1: EDIT PORTAL — EDIT PRODUCTS ACCORDION ============ -->
+    <div class="section-label">1. Edit Portal — "Edit products" accordion</div>
+    <div class="card">
+        <p style="font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">Vị trí: trong Edit Portal, giữa "Edit shipping address" và "Add order note"</p>
+
+        <!-- Edit products accordion -->
+        <div style="border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; cursor: pointer; background: var(--white);" onclick="toggleSection('edit-products-detail')">
+                <span style="font-size: 16px;">🛍</span>
+                <span style="font-size: 14px; color: #333; font-weight: 500;">Edit products</span>
+                <span style="margin-left: auto; color: #b0b0b0; font-size: 12px;" id="edit-products-chevron">▼</span>
+            </div>
+            <div id="edit-products-detail" style="padding: 0 20px 16px 20px; border-top: 1px solid #f0f0f0;">
+                <!-- Item 1 -->
+                <div style="padding: 12px; background: #fafafa; border-radius: 8px; margin-bottom: 8px; margin-top: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 48px; height: 48px; border: 1px solid #e1e3e5; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: #fff; font-size: 18px;">👕</div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 13px; font-weight: 500;">Classic T-Shirt</div>
+                            <div style="font-size: 12px; color: #737373;">M / Black · $29.99</div>
+                            <div style="font-size: 11px; color: #0d9668; margin-top: 2px;">12 in stock</div>
+                        </div>
+                        <div class="sf-qty">
+                            <button onclick="updateQty('item1', -1)">−</button>
+                            <span id="item1-qty">1</span>
+                            <button onclick="updateQty('item1', 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; padding-left: 60px;">
+                        <button style="font-size: 12px; color: #2C6ECB; background: none; border: none; cursor: pointer; text-decoration: underline;" onclick="document.getElementById('swap-section').scrollIntoView({behavior:'smooth'})">Change variant →</button>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div style="padding: 12px; background: #fafafa; border-radius: 8px; margin-bottom: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 48px; height: 48px; border: 1px solid #e1e3e5; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: #fff; font-size: 18px;">👖</div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 13px; font-weight: 500;">Slim Fit Jeans</div>
+                            <div style="font-size: 12px; color: #737373;">32 / Blue · $49.99</div>
+                            <div style="font-size: 11px; color: #b98900; margin-top: 2px;">Only 3 left</div>
+                        </div>
+                        <div class="sf-qty">
+                            <button onclick="updateQty('item2', -1)">−</button>
+                            <span id="item2-qty">1</span>
+                            <button onclick="updateQty('item2', 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; padding-left: 60px;">
+                        <button style="font-size: 12px; color: #2C6ECB; background: none; border: none; cursor: pointer; text-decoration: underline;" onclick="document.getElementById('swap-section').scrollIntoView({behavior:'smooth'})">Change variant →</button>
+                    </div>
+                </div>
+                <!-- Price diff preview -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; font-size: 13px;">
+                    <span style="color: #555;">Price difference</span>
+                    <span id="price-diff" style="font-weight: 600; color: #0d9668;">$0.00</span>
+                </div>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 2: SWAP VARIANT SCREEN ============ -->
+    <div class="section-label" id="swap-section">2. Swap Variant Screen</div>
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 18px;">Swap: Classic T-Shirt</h3>
+            <button class="btn">← Back</button>
+        </div>
+
+        <div class="sf-item" style="margin-bottom: 20px; background: var(--gray-50);">
+            <div class="sf-item-img">👕</div>
+            <div style="flex: 1;">
+                <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 2px;">Current selection</div>
+                <div class="sf-item-name">Classic T-Shirt</div>
+                <div class="sf-item-variant">Size: M / Color: Black — $29.99</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Size</label>
+            <select class="form-input form-select">
+                <option>S</option>
+                <option selected>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option disabled>XXL (Out of stock)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Color</label>
+            <select class="form-input form-select">
+                <option selected>Black</option>
+                <option>White</option>
+                <option>Red</option>
+                <option>Navy</option>
+                <option disabled>Green (Out of stock)</option>
+            </select>
+        </div>
+
+        <div style="background: var(--primary-bg); border-radius: var(--radius-md); padding: 16px; margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span style="font-size: 13px; color: var(--gray-600);">New selection:</span>
+                <span style="font-weight: 500;">L, Black — $29.99</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="font-size: 13px; color: var(--gray-600);">Price difference:</span>
+                <span style="font-weight: 600; color: var(--primary);">$0.00</span>
+            </div>
+        </div>
+
+        <div class="btn-group" style="margin-top: 20px; justify-content: flex-end;">
+            <button class="btn">Cancel</button>
+            <button class="btn btn-primary">Apply Change</button>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 3: REVIEW CHANGES — PRODUCT ITEMS ============ -->
+    <div class="section-label">3. Review Changes — Product-related items</div>
+    <div class="card">
+        <p style="font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">Phần này hiển thị trong màn Review Changes, cùng với address/note changes</p>
+        <div class="change-item">
+            <span class="change-icon">🔄</span>
+            <div>
+                <div class="change-label">T-Shirt — Variant Swap</div>
+                <div><span class="change-old">M, Black — $29.99</span></div>
+                <div><span class="change-new">L, White — $34.99 (+$5.00)</span></div>
+            </div>
+        </div>
+        <div class="change-item">
+            <span class="change-icon">📦</span>
+            <div>
+                <div class="change-label">Jeans — Quantity</div>
+                <div><span class="change-old">×1 — $49.99</span></div>
+                <div><span class="change-new">×2 — $99.98 (+$49.99)</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 4: SETTINGS CHECKBOXES ============ -->
+    <div class="section-label">4. Settings — Allowed Edit Types</div>
+    <div class="card">
+        <p style="font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">Thêm vào phần "Allowed Edit Types" trong Settings page</p>
+        <div>
+            <label class="checkbox-item"><input type="checkbox" checked /> Swap product variants (size, color, etc.)</label>
+            <label class="checkbox-item"><input type="checkbox" checked /> Change quantity</label>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 5: ACTIVITY — PRODUCTS BADGE ============ -->
+    <div class="section-label">5. Activity Page — Products badge</div>
+    <div class="card">
+        <p style="font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">Badge "Products" hiển thị trong trang Activity khi customer swap variant hoặc change quantity</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500;"><span style="color: var(--blue);">#1230</span> — Sarah Chen</div>
+                <div style="font-size: 12px; color: var(--gray-500);">sarah@shop.com · 15 minutes ago</div>
+            </div>
+            <span style="display: inline-block; padding: 2px 10px; font-size: 12px; font-weight: 500; border-radius: 12px; background: var(--blue-bg); color: var(--blue);">Products</span>
+            <button class="btn" style="height:28px; font-size:12px; padding:4px 12px;">View details</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0;">
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500;"><span style="color: var(--blue);">#1218</span> — Emma Wilson</div>
+                <div style="font-size: 12px; color: var(--gray-500);">emma@store.com · 5 hours ago</div>
+            </div>
+            <span style="display: inline-block; padding: 2px 10px; font-size: 12px; font-weight: 500; border-radius: 12px; background: var(--blue-bg); color: var(--blue);">Address</span>
+            <span style="display: inline-block; padding: 2px 10px; font-size: 12px; font-weight: 500; border-radius: 12px; background: var(--blue-bg); color: var(--blue);">Products</span>
+            <span style="display: inline-block; padding: 2px 10px; font-size: 12px; font-weight: 500; border-radius: 12px; background: var(--gray-100); color: var(--gray-600);">Note</span>
+            <button class="btn" style="height:28px; font-size:12px; padding:4px 12px;">View details</button>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 6: VIEW DETAIL MODALS ============ -->
+    <div class="section-label">6. View Details Modal — Variant Swap</div>
+    <div class="card">
+        <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:14px; font-weight:500;">Sarah Chen (sarah@shop.com)</span>
+            <span style="font-size:12px; color:var(--gray-500);">15 minutes ago</span>
+        </div>
+        <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🔄 Classic T-Shirt</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div>
+                    <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                    <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                        Size: <strong>M</strong><br>Color: <strong>Black</strong><br>Price: $29.99
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                    <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                        Size: <strong>L</strong><br>Color: <strong>Black</strong><br>Price: $29.99
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                <span>Price difference</span><span style="font-weight:600;">$0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-label">7. View Details Modal — Quantity Change</div>
+    <div class="card">
+        <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:14px; font-weight:500;">Alex Thompson (alex@buyer.com)</span>
+            <span style="font-size:12px; color:var(--gray-500);">2 hours ago</span>
+        </div>
+        <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📦 Slim Fit Jeans</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div>
+                    <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                    <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                        Quantity: <strong>1</strong><br>Subtotal: $49.99
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                    <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                        Quantity: <strong>2</strong><br>Subtotal: $99.98
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:12px; padding:8px 12px; background:var(--white); border-radius:var(--radius-sm); font-size:13px; display:flex; justify-content:space-between;">
+                <span>Additional charge</span><span style="font-weight:600; color:var(--blue);">+$49.99</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Toggle section
+    function toggleSection(id) {
+        var el = document.getElementById(id);
+        var chevron = document.getElementById(id.replace('detail','chevron').replace('edit-products-detail','edit-products-chevron'));
+        if (el.style.display === 'none') {
+            el.style.display = 'block';
+            if (chevron) chevron.textContent = '▼';
+        } else {
+            el.style.display = 'none';
+            if (chevron) chevron.textContent = '▶';
+        }
+    }
+
+    // Qty update + price diff
+    var itemPrices = { item1: 29.99, item2: 49.99 };
+    var itemMaxQty = { item1: 12, item2: 3 };
+    function updateQty(itemId, delta) {
+        var el = document.getElementById(itemId + '-qty');
+        var current = parseInt(el.textContent);
+        var next = current + delta;
+        if (next < 1 || next > itemMaxQty[itemId]) return;
+        el.textContent = next;
+        calcPriceDiff();
+    }
+    function calcPriceDiff() {
+        var q1 = parseInt(document.getElementById('item1-qty').textContent);
+        var q2 = parseInt(document.getElementById('item2-qty').textContent);
+        var original = itemPrices.item1 + itemPrices.item2;
+        var newTotal = (itemPrices.item1 * q1) + (itemPrices.item2 * q2);
+        var diff = newTotal - original;
+        var el = document.getElementById('price-diff');
+        if (diff > 0) {
+            el.textContent = '+$' + diff.toFixed(2);
+            el.style.color = '#2C6ECB';
+        } else if (diff < 0) {
+            el.textContent = '-$' + Math.abs(diff).toFixed(2);
+            el.style.color = '#D72C0D';
+        } else {
+            el.textContent = '$0.00';
+            el.style.color = '#0d9668';
+        }
+    }
+</script>
+</body>
+</html>

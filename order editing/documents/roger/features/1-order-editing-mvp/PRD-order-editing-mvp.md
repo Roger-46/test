@@ -16,6 +16,7 @@
 | 2.0 | 07/04/2026 | Roger | M | Viết lại — phiên bản submit-first |
 | 3.0 | 08/04/2026 | Roger | M | Restore full MVP scope — MVP là bản gốc, Submit rút gọn từ đây |
 | 4.0 | 13/04/2026 | Roger | M | Dashboard: thêm Quickstart (3-step), Helpdesk, 4 metric cards, portal link, date range filter |
+| 5.0 | 17/04/2026 | Roger | M | Sync PRD theo UI: inline edit trên OSP (bỏ Edit Portal riêng), Dashboard 3 metrics, Quickstart 3 steps, Orders→Activity, Settings thêm max edits/notifications, bỏ tags storefront, bỏ widget/color settings |
 
 > A = Added, M = Modified, D = Deleted
 
@@ -57,18 +58,18 @@
 | ID | User Story | Priority |
 |----|-----------|----------|
 | US-01 | Là **customer**, tôi muốn **chỉnh sửa địa chỉ giao hàng** sau khi đặt hàng, để gói hàng đến đúng nơi. | P0 |
-| US-02 | Là **customer**, tôi muốn **đổi biến thể sản phẩm** (size, color), để nhận đúng sản phẩm. | P0 |
-| US-03 | Là **customer**, tôi muốn **thay đổi số lượng** sản phẩm trước khi giao. | P0 |
+| ~~US-02~~ | ~~Đổi biến thể sản phẩm~~ | **Deferred** → [edit-products](../edit-products/PRD-edit-products.md) |
+| ~~US-03~~ | ~~Thay đổi số lượng~~ | **Deferred** → [edit-products](../edit-products/PRD-edit-products.md) |
 | US-04 | Là **customer**, tôi muốn **hủy đơn hàng** trong khung thời gian cho phép. | P0 |
 | US-05 | Là **customer**, tôi muốn **xem chênh lệch giá** trước khi xác nhận thay đổi. | P0 |
 | US-06 | Là **customer**, tôi muốn **truy cập chỉnh sửa từ Order Status Page + Thank You Page**. | P0 |
 | US-07 | Là **merchant**, tôi muốn **cấu hình loại chỉnh sửa cho phép + khung thời gian**. | P0 |
 | US-08 | Là **merchant**, tôi muốn **xem dashboard** edits/cancels + revenue saved + analytics. | P0 |
-| US-09 | Là **merchant**, tôi muốn **xem danh sách orders** editable với filters/search. | P0 |
+| US-09 | Là **merchant**, tôi muốn **xem lịch sử activity** (edit/cancel) với chi tiết thay đổi. | P0 |
 | US-10 | Là **merchant**, tôi muốn **chỉnh sửa đơn hàng từ admin** (swap, qty, address, add/remove items, cancel). | P0 |
 | US-11 | Là **merchant**, tôi muốn **nhận email notification** khi customer edit/cancel đơn. | P0 |
 | US-12 | Là **customer**, tôi muốn **nhận email xác nhận** khi edit thành công. | P0 |
-| US-13 | Là **merchant**, tôi muốn **cấu hình widget** (text, color, vị trí). | P0 |
+| ~~US-13~~ | ~~Cấu hình widget (text, color, vị trí)~~ | **Deferred** → P1 |
 | US-14 | Là **merchant**, tôi muốn **xem edit history/audit trail** cho mỗi order. | P0 |
 | US-15 | Là **customer/merchant**, tôi muốn **thêm/sửa order note**, để ghi chú yêu cầu đặc biệt cho đơn hàng. | P0 |
 | US-16 | Là **customer/merchant**, tôi muốn **thêm/sửa order tags**, để phân loại và quản lý đơn hàng dễ hơn. | P0 |
@@ -92,8 +93,8 @@ App gồm 2 phần:
 | # | Feature | Lý do |
 |---|---------|-------|
 | 1 | **Customer edit address** | Core value — use case #1 |
-| 2 | **Customer swap variant** | Core value — use case #2 |
-| 3 | **Customer change quantity** | Core value — đi kèm swap |
+| ~~2~~ | ~~Customer swap variant~~ | **Deferred** → [edit-products](../edit-products/PRD-edit-products.md) |
+| ~~3~~ | ~~Customer change quantity~~ | **Deferred** → [edit-products](../edit-products/PRD-edit-products.md) |
 | 4 | **Customer cancel order + auto refund/restock** | Core value — giảm friction |
 | 5 | **Widget Order Status Page + Thank You Page** | Entry point cho customer |
 | 6 | **Order note** (customer + merchant) | Ghi chú đặc biệt cho đơn hàng. MC có toggle bật/tắt cho KH |
@@ -667,8 +668,14 @@ BƯỚC 2: Dashboard
 | Hành động | Kết quả |
 |-----------|---------|
 | Click "Edit Your Order" | Mở Edit Portal page (App Proxy) |
-| Hết time window | Widget ẩn hoặc hiện "Edit window expired" |
+| Hết time window | Widget ẩn |
 | Order đã fulfilled | Widget ẩn |
+| Order đã cancelled | Widget ẩn |
+
+> **Quy tắc hiển thị widget:** Chỉ hiện khi **cả 3 điều kiện** thỏa đồng thời:
+> 1. Order chưa cancelled
+> 2. Order chưa fulfilled
+> 3. Còn trong time window (chưa hết hạn edit)
 
 **Màn hình 2: Edit Portal**
 
@@ -954,7 +961,7 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 
 ### 4.1. Storefront — Edit Widget (Theme App Extension)
 
-> Hiện khi: order chưa fulfilled AND trong time window
+> Hiện khi: order chưa cancelled AND chưa fulfilled AND còn trong time window
 
 | Item | Data Type | Required | Default | Mô tả | Validate |
 |------|-----------|----------|---------|-------|----------|
@@ -972,7 +979,28 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 | Order number | Text | Y | — | #XXXX | — |
 | Timer | Badge | Y | — | Countdown | Redirect khi hết |
 | Address section | Card | Y | — | Current address + Change | Hiện nếu allowAddressEdit |
-| Address form | Form | N | — | Name, Addr, City, State, Zip, Country, Phone | Required per country |
+| Address form | Form | N | — | Chi tiết bên dưới | Hiện nếu allowAddressEdit |
+
+**Address Form — Field Requirements:**
+
+| Field | Type | Required | Max length | Validate | Ghi chú |
+|-------|------|----------|------------|----------|---------|
+| Full name | Text | **Y** | 100 | Không để trống, trim whitespace | First + Last name gộp |
+| Company | Text | N | 100 | — | Hiện label "(optional)" |
+| Address | Text | **Y** | 200 | Không để trống | Địa chỉ dòng 1 (số nhà, tên đường) |
+| Apartment, suite, etc. | Text | N | 100 | — | Hiện label "(optional)" |
+| City | Text | **Y** | 100 | Không để trống | — |
+| State / Province | Text hoặc Select | Tùy country | 100 | Nếu country có danh sách states → Select dropdown. Nếu không → Text tự nhập | US, CA, AU → dropdown. Các nước khác → text |
+| ZIP / Postal code | Text | Tùy country | 20 | Format theo country: US = 5 hoặc 9 số (XXXXX hoặc XXXXX-XXXX), CA = A1A 1A1, UK = postcode format. Nước không dùng ZIP → không bắt buộc | Chỉ validate format, không validate tồn tại |
+| Country | Select | **Y** | — | Dropdown danh sách countries. Khi đổi country → reset State + ZIP validation | Pre-select country hiện tại của order |
+| Phone | Tel | N | 20 | Nếu nhập: chỉ cho phép số, +, -, (, ), khoảng trắng. Tối thiểu 7 số | Hiện label "(optional)". Giữ format quốc tế |
+
+**Validation behavior:**
+- Validate **on blur** (khi rời field) — không validate realtime khi đang gõ
+- Hiện error message ngay dưới field bị lỗi (màu đỏ `#D72C0D`)
+- Button "Save address" **disabled** khi có field required trống hoặc có lỗi validation
+- Khi đổi **Country**: tự động cập nhật State dropdown (nếu có) + thay đổi ZIP format validation
+- Không cho submit nếu address **giống hệt** address hiện tại (button disabled, hiện note "No changes detected")
 | Items list | List | Y | — | Product + variant + price | — |
 | Qty controls | Stepper | N | Current qty | [-] [qty] [+] | Min 1, Max stock |
 | Swap button | Button | N | — | Per line item | Hiện nếu allowItemSwap |
@@ -1011,10 +1039,10 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 
 | Item | Data Type | Required | Default | Mô tả | Validate |
 |------|-----------|----------|---------|-------|----------|
-| Time window | Select | Y | 2 hours | 30m/1h/2h/4h/12h/24h/Until fulfillment | — |
+| Time window | Select | Y | 2 hours | 30m/1h/2h/4h/12h/24h/2d/3d/7d/14d/30d/Until fulfillment | — |
 | Allow address edit | Checkbox | Y | true | — | — |
-| Allow variant swap | Checkbox | Y | true | — | — |
-| Allow qty change | Checkbox | Y | true | — | — |
+| ~~Allow variant swap~~ | ~~Checkbox~~ | — | — | **Deferred** → edit-products | — |
+| ~~Allow qty change~~ | ~~Checkbox~~ | — | — | **Deferred** → edit-products | — |
 | Allow cancel | Checkbox | Y | true | — | — |
 | Show widget | Checkbox | Y | true | Order Status Page | — |
 | Primary color | Color | N | #2D9D78 | Widget color | Valid hex |
@@ -1027,7 +1055,7 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 
 ☐ Customer truy cập edit portal từ Order Status Page widget
 ☐ Widget hiển thị countdown timer
-☐ Widget ẩn khi hết time window hoặc order fulfilled
+☐ Widget ẩn khi: order cancelled, order fulfilled, hoặc hết time window (bất kỳ 1 trong 3 → ẩn)
 ☐ Customer edit shipping address (name, address, city, state, zip, country, phone)
 ☐ Customer swap variant trong cùng product
 ☐ Variant hết hàng = disabled + "Out of stock"

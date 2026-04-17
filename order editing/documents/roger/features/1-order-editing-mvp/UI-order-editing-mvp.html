@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Mockup — Avada Order Editing MVP</title>
+    <style>
+        /* === BASE STYLES === */
+        :root {
+            --primary: #2D9D78;
+            --primary-hover: #247F62;
+            --primary-bg: #E3F5EF;
+            --blue: #4A90E2;
+            --blue-bg: #E8F0FE;
+            --red: #D72C0D;
+            --red-bg: #FFF4F4;
+            --red-hover: #BC1F0D;
+            --yellow: #B98900;
+            --yellow-bg: #FFF8E5;
+            --gray-50: #FAFAFA;
+            --gray-100: #F6F6F7;
+            --gray-200: #E4E5E7;
+            --gray-300: #D2D5D8;
+            --gray-400: #AEB4B9;
+            --gray-500: #8C9196;
+            --gray-600: #6D7175;
+            --gray-700: #5C5F62;
+            --gray-800: #44474A;
+            --gray-900: #1A1C1E;
+            --white: #FFFFFF;
+            --font: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, sans-serif;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 2px 8px rgba(0,0,0,0.12);
+            --shadow-modal: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--gray-100); color: var(--gray-900); font-size: 14px; line-height: 1.5; }
+
+        /* === SHOPIFY TOPBAR === */
+        .shopify-topbar { height: 56px; background: #1A1C1D; display: flex; align-items: center; padding: 0 16px; gap: 12px; position: fixed; top: 0; left: 0; right: 0; z-index: 200; }
+        .shopify-topbar-logo { display: flex; align-items: center; }
+        .shopify-topbar-logo svg { width: 24px; height: 24px; }
+        .shopify-topbar-search { flex: 1; max-width: 580px; margin: 0 auto; background: #303030; border: 1px solid #505050; border-radius: 8px; padding: 7px 12px; color: #999; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .shopify-topbar-right { display: flex; align-items: center; gap: 12px; }
+        .shopify-topbar-avatar { width: 28px; height: 28px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600; }
+        .shopify-topbar-store { color: #ccc; font-size: 13px; font-weight: 500; }
+
+        /* === SIDEBAR === */
+        .sidebar { width: 240px; position: fixed; top: 56px; left: 0; bottom: 0; background: var(--white); border-right: 1px solid var(--gray-200); overflow-y: auto; z-index: 100; }
+        .sidebar-header { padding: 16px 16px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--gray-200); }
+        .sidebar-app-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+        .sidebar-app-name { font-size: 14px; font-weight: 600; }
+        .sidebar-app-sub { font-size: 11px; color: var(--gray-500); }
+        .sidebar-nav { padding: 8px 0; }
+        .sidebar-section { padding: 8px 16px 4px; font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+        .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 13.5px; color: var(--gray-600); cursor: pointer; border-left: 3px solid transparent; transition: all 0.1s; text-decoration: none; }
+        .sidebar-item:hover { background: var(--gray-50); color: var(--gray-900); }
+        .sidebar-item.active { background: #F4F5FA; color: #2C6ECB; font-weight: 600; border-left-color: #2C6ECB; }
+        .sidebar-item-icon { font-size: 16px; width: 20px; text-align: center; }
+        .sidebar-item-badge { margin-left: auto; background: var(--gray-200); color: var(--gray-600); font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
+        .sidebar-divider { height: 1px; background: var(--gray-200); margin: 8px 16px; }
+
+        /* === MAIN CONTENT (offset by sidebar + topbar) === */
+        .main-content { margin-left: 240px; margin-top: 56px; min-height: calc(100vh - 56px); }
+
+        /* === OLD NAV (hidden, kept for compatibility) === */
+        .nav { display: none; }
+        .nav-section { display: none; }
+        .nav-section-label { display: none; }
+        .nav-btn { display: none; }
+        .nav-divider { display: none; }
+
+        /* === LAYOUT === */
+        .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+        .page-wide { max-width: 1200px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .page-title { font-size: 24px; font-weight: 600; }
+        .page-subtitle { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
+
+        /* === CARD === */
+        .card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; margin-bottom: 16px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-size: 16px; font-weight: 600; }
+        .card-section { padding: 16px 0; border-top: 1px solid var(--gray-200); }
+        .card-section:first-child { border-top: none; padding-top: 0; }
+
+        /* === METRICS === */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .metric-card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 16px; text-align: center; }
+        .metric-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
+        .metric-value { font-size: 28px; font-weight: 700; color: var(--gray-900); }
+        .metric-change { font-size: 12px; margin-top: 4px; }
+        .metric-change.up { color: var(--primary); }
+        .metric-change.down { color: var(--red); }
+
+        /* === BUTTONS === */
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-900); font-family: var(--font); transition: all 0.15s; height: 36px; }
+        .btn:hover { background: var(--gray-50); }
+        .btn-primary { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-destructive { background: var(--red); color: var(--white); border-color: var(--red); }
+        .btn-destructive:hover { background: var(--red-hover); }
+        .btn-plain { border: none; background: none; color: var(--blue); padding: 4px 8px; height: auto; }
+        .btn-plain:hover { text-decoration: underline; }
+        .btn-group { display: flex; gap: 8px; }
+        .btn-lg { height: 44px; padding: 10px 24px; font-size: 15px; }
+
+        /* === FORM === */
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--gray-800); }
+        .form-input { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); height: 36px; }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .form-select { appearance: none; background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%238C9196' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") right 12px center no-repeat; padding-right: 32px; }
+
+        /* === CHECKBOX === */
+        .checkbox-group { display: flex; flex-direction: column; gap: 12px; }
+        .checkbox-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+
+        /* === TABLE === */
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--gray-200); background: var(--gray-50); }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); }
+        tr:hover td { background: var(--gray-50); }
+        tr:last-child td { border-bottom: none; }
+
+        /* === BADGE === */
+        .badge { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 500; }
+        .badge-success { background: var(--primary-bg); color: #1a6b4f; }
+        .badge-info { background: var(--blue-bg); color: #2563a8; }
+        .badge-warning { background: var(--yellow-bg); color: #7d5e00; }
+        .badge-critical { background: var(--red-bg); color: #a51b08; }
+        .badge-default { background: var(--gray-100); color: var(--gray-600); }
+
+        /* === BANNER === */
+        .banner { padding: 12px 16px; border-radius: var(--radius-md); display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+        .banner-info { background: var(--blue-bg); border: 1px solid #B8D4F7; }
+        .banner-warning { background: var(--yellow-bg); border: 1px solid #E3C87A; }
+        .banner-critical { background: var(--red-bg); border: 1px solid #F5B8B8; }
+        .banner-success { background: var(--primary-bg); border: 1px solid #A3D9C5; }
+        .banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+        .banner-content { flex: 1; }
+        .banner-title { font-weight: 600; margin-bottom: 2px; }
+
+        /* === MODAL === */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: var(--white); border-radius: var(--radius-lg); width: 90%; max-width: 520px; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-modal); }
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); padding: 4px; }
+        .modal-body { padding: 20px; }
+        .modal-footer { padding: 16px 20px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 8px; }
+
+        /* === ACTIVITY LIST === */
+        .activity-list { list-style: none; }
+        .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+        .activity-icon.edit { background: var(--blue-bg); }
+        .activity-icon.cancel { background: var(--red-bg); }
+        .activity-icon.address { background: var(--primary-bg); }
+        .activity-content { flex: 1; }
+        .activity-title { font-size: 13px; font-weight: 500; }
+        .activity-time { font-size: 12px; color: var(--gray-500); }
+
+        /* === STOREFRONT STYLES === */
+        .sf-container { max-width: 600px; margin: 0 auto; padding: 24px; }
+        .sf-widget { border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 20px; text-align: center; background: linear-gradient(135deg, var(--primary-bg) 0%, var(--white) 100%); }
+        .sf-widget-icon { font-size: 24px; margin-bottom: 8px; }
+        .sf-widget-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .sf-widget-desc { font-size: 13px; color: var(--gray-600); margin-bottom: 12px; }
+        .sf-widget-timer { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--yellow); background: var(--yellow-bg); padding: 4px 10px; border-radius: 12px; margin-bottom: 12px; }
+
+        .sf-order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .sf-order-number { font-size: 20px; font-weight: 600; }
+
+        .sf-item { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 8px; align-items: center; }
+        .sf-item-img { width: 60px; height: 60px; background: var(--gray-100); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: 20px; flex-shrink: 0; }
+        .sf-item-info { flex: 1; }
+        .sf-item-name { font-weight: 500; font-size: 14px; }
+        .sf-item-variant { font-size: 12px; color: var(--gray-500); }
+        .sf-item-price { font-weight: 600; font-size: 14px; }
+        .sf-item-actions { display: flex; gap: 8px; align-items: center; }
+
+        .sf-qty { display: flex; align-items: center; gap: 0; }
+        .sf-qty button { width: 28px; height: 28px; border: 1px solid var(--gray-300); background: var(--white); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        .sf-qty button:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+        .sf-qty button:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+        .sf-qty span { width: 32px; height: 28px; border-top: 1px solid var(--gray-300); border-bottom: 1px solid var(--gray-300); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; }
+
+        .sf-address-card { border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; }
+        .sf-address-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .sf-address-card-header h4 { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .sf-address-text { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+
+        .sf-summary { background: var(--gray-50); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; }
+        .sf-summary-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+        .sf-summary-row.total { font-weight: 600; font-size: 15px; border-top: 1px solid var(--gray-200); margin-top: 8px; padding-top: 8px; }
+        .sf-summary-row.diff { color: var(--primary); font-weight: 600; }
+        .sf-summary-row.diff.charge { color: var(--red); }
+
+        .sf-success { text-align: center; padding: 48px 24px; }
+        .sf-success-icon { font-size: 48px; margin-bottom: 16px; }
+        .sf-success h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .sf-success p { color: var(--gray-500); font-size: 14px; margin-bottom: 24px; }
+
+        /* === VARIANT PICKER === */
+        .variant-group { margin-bottom: 16px; }
+        .variant-group-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .variant-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .variant-opt { padding: 6px 14px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; background: var(--white); transition: all 0.15s; }
+        .variant-opt:hover { border-color: var(--primary); }
+        .variant-opt.selected { border-color: var(--primary); background: var(--primary-bg); color: #1a6b4f; font-weight: 500; }
+        .variant-opt.oos { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+
+        /* === REVIEW CHANGES === */
+        .change-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+        .change-item:last-child { border-bottom: none; }
+        .change-icon { font-size: 16px; }
+        .change-detail { flex: 1; }
+        .change-label { font-size: 12px; color: var(--gray-500); }
+        .change-value { font-size: 13px; }
+        .change-old { color: var(--red); text-decoration: line-through; }
+        .change-new { color: var(--primary); font-weight: 500; }
+
+        /* === TABS (Admin) === */
+        .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
+        .admin-tab { padding: 10px 16px; border: none; background: none; cursor: pointer; font-size: 14px; color: var(--gray-600); font-family: var(--font); border-bottom: 2px solid transparent; }
+        .admin-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+
+        /* === STATUS FILTER === */
+        .filters { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+        .filter-search { flex: 1; max-width: 320px; }
+
+        /* === PAGINATION === */
+        .pagination { display: flex; justify-content: center; gap: 4px; margin-top: 16px; }
+        .pagination button { padding: 6px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 13px; }
+        .pagination button.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+
+        /* === EMPTY STATE === */
+        .empty-state { text-align: center; padding: 48px 24px; }
+        .empty-state-icon { font-size: 48px; margin-bottom: 12px; color: var(--gray-300); }
+        .empty-state h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .empty-state p { color: var(--gray-500); font-size: 14px; margin-bottom: 16px; }
+
+        /* === SKELETON === */
+        .skeleton { background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: var(--radius-sm); }
+        .skeleton-text { height: 14px; margin-bottom: 8px; }
+        .skeleton-title { height: 20px; width: 60%; margin-bottom: 12px; }
+        .skeleton-card { height: 80px; margin-bottom: 12px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* === TOAST === */
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--gray-900); color: var(--white); padding: 10px 20px; border-radius: var(--radius-md); font-size: 14px; display: none; z-index: 2000; box-shadow: var(--shadow-modal); }
+        .toast.show { display: flex; align-items: center; gap: 8px; }
+
+        /* === HIDE === */
+        .hidden { display: none !important; }
+
+        /* === COLLAPSIBLE CARD === */
+        .collapse-cards-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .collapse-trigger { flex: 1; min-width: 180px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 14px 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: all 0.15s; box-shadow: var(--shadow-card); }
+        .collapse-trigger:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); }
+        .collapse-trigger.active { border-color: var(--primary); background: var(--primary-bg); }
+        .collapse-trigger-left { display: flex; align-items: center; gap: 10px; }
+        .collapse-trigger-icon { font-size: 18px; }
+        .collapse-trigger-label { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+        .collapse-trigger-status { font-size: 11px; color: var(--gray-500); }
+        .collapse-trigger-chevron { font-size: 12px; color: var(--gray-400); transition: transform 0.2s; }
+        .collapse-trigger.active .collapse-trigger-chevron { transform: rotate(180deg); }
+
+        .collapse-panel { display: none; margin-bottom: 16px; }
+        .collapse-panel.open { display: block; }
+
+        /* === TOGGLE SWITCH === */
+        .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0; }
+        .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--gray-300); border-radius: 24px; transition: 0.2s; }
+        .toggle-slider::before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background: var(--white); border-radius: 50%; transition: 0.2s; }
+        .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+        /* === COLOR PICKER SIMPLE === */
+        .color-preview { display: inline-flex; align-items: center; gap: 8px; }
+        .color-swatch { width: 24px; height: 24px; border-radius: var(--radius-sm); border: 1px solid var(--gray-300); }
+    </style>
+</head>
+<body>
+
+<!-- ============ SHOPIFY TOPBAR ============ -->
+<div class="shopify-topbar">
+    <div class="shopify-topbar-logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15.34 3.38c-.06-.02-.12-.01-.17.03a.2.2 0 0 0-.08.14s-.47 2.25-1.13 3.5c-.67-1.93-1.86-3.65-1.86-3.65a.2.2 0 0 0-.17-.09.2.2 0 0 0-.17.08L7.81 9.15a.2.2 0 0 0 0 .22l1.78 2.81L7.18 16a.2.2 0 0 0 .17.31h2.44a.2.2 0 0 0 .17-.1l2.05-3.57 2.04 3.57a.2.2 0 0 0 .17.1h2.44a.2.2 0 0 0 .17-.31l-2.41-3.82 1.78-2.81a.2.2 0 0 0 0-.22L15.4 3.4a.2.2 0 0 0-.06-.02z" fill="#95BF47"/></svg>
+    </div>
+    <div class="shopify-topbar-search">&#128269; Search</div>
+    <div class="shopify-topbar-right">
+        <span style="color:#999;font-size:18px;">&#128276;</span>
+        <span class="shopify-topbar-store">My Dev Store</span>
+        <div class="shopify-topbar-avatar">M</div>
+    </div>
+</div>
+
+<!-- ============ SIDEBAR ============ -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-app-icon">A</div>
+        <div>
+            <div class="sidebar-app-name">Avada Order Editing</div>
+            <div class="sidebar-app-sub">by Avada</div>
+        </div>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-item active" onclick="showScreen('admin-dashboard')">
+            <span class="sidebar-item-icon">&#127968;</span> Dashboard
+        </a>
+        <a class="sidebar-item" onclick="showScreen('admin-edits')">
+            <span class="sidebar-item-icon">&#128221;</span> Activity
+            <span class="sidebar-item-badge">10</span>
+        </a>
+        <a class="sidebar-item" onclick="showScreen('admin-settings')">
+            <span class="sidebar-item-icon">&#9881;</span> Settings
+        </a>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">Customer View</div>
+        <a class="sidebar-item" onclick="showScreen('sf-widget')">
+            <span class="sidebar-item-icon">&#128396;</span> Order Status Page
+        </a>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">UI Specs</div>
+        <a class="sidebar-item" onclick="showScreen('spec-countdown')">
+            <span class="sidebar-item-icon">⏱</span> Countdown Timer
+        </a>
+        <a class="sidebar-item" onclick="showScreen('spec-address')">
+            <span class="sidebar-item-icon">📍</span> Address Form
+        </a>
+    </nav>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<div class="main-content">
+
+<!-- ============ SCREEN: ADMIN DASHBOARD ============ -->
+<div id="admin-dashboard" class="screen">
+    <div class="page page-wide">
+        <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+        </div>
+
+        <!-- Greeting Banner -->
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">Hi Croc Hoang</h2>
+                <p style="font-size: 13px; color: var(--gray-500);">Overview of your order editing activity</p>
+            </div>
+        </div>
+
+        <!-- Date Filter -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px; background: var(--gray-900); color: white; border-color: var(--gray-900);" onclick="setDateFilter(this,'today')">Today</button>
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px;" onclick="setDateFilter(this,'7d')">Last 7 days</button>
+            <button class="btn" style="font-size: 12px; padding: 5px 12px; border-radius: 16px;" onclick="setDateFilter(this,'30d')">Last 30 days</button>
+        </div>
+
+        <!-- 3 Metrics -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="metric-card">
+                <div class="metric-label">Total Edits</div>
+                <div class="metric-value" id="mvp-metric-edits">12</div>
+                <div class="metric-change up">+3 vs yesterday</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Cancellations</div>
+                <div class="metric-value" id="mvp-metric-cancels">5</div>
+                <div class="metric-change down">2.0% rate</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Edits Remaining</div>
+                <div class="metric-value">38/50</div>
+                <div class="metric-change">Free plan</div>
+            </div>
+        </div>
+
+        <!-- Quickstart -->
+        <div class="card" id="quickstart-card" style="padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <h3 style="font-size: 18px; font-weight: 600;">Quickstart</h3>
+                <div style="display: flex; align-items: center; gap: 2px;">
+                    <button onclick="toggleQuickstart()" id="quickstart-toggle" title="Collapse" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 14px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">▲</button>
+                    <button onclick="dismissQuickstart()" title="Dismiss" style="width: 32px; height: 32px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 16px; color: var(--gray-500); display: flex; align-items: center; justify-content: center;">✕</button>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <span style="font-size: 13px; color: var(--gray-600); white-space: nowrap;" id="quickstart-progress-text">0 of 3 tasks complete</span>
+                <div style="flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden;">
+                    <div id="quickstart-progress-bar" style="width: 0%; height: 100%; background: var(--gray-900); border-radius: 3px; transition: width 0.3s;"></div>
+                </div>
+            </div>
+            <div id="quickstart-body">
+                <!-- Step 1: Configure -->
+                <div class="qs-step" data-step="1" onclick="expandStep(1)" style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 4px; cursor: pointer; background: var(--gray-50);">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--gray-900);">Configure order editing feature</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="1" style="margin-top: 12px; padding-left: 36px;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Set up edit types, time window, and widget display.</p>
+                        <button class="btn" onclick="event.stopPropagation(); showScreen('admin-settings')" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Configure Now</button>
+                    </div>
+                </div>
+                <!-- Step 2: Enable app -->
+                <div class="qs-step" data-step="2" onclick="expandStep(2)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 4px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Enable app</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="2" style="margin-top: 12px; padding-left: 36px; display: none;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Activate the app to start using features.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Enable app</button>
+                        <button class="btn-plain" onclick="event.stopPropagation();" style="margin-left: 8px;">Refresh status</button>
+                    </div>
+                </div>
+                <!-- Step 3: Add widget -->
+                <div class="qs-step" data-step="3" onclick="expandStep(3)" style="border: 1px solid transparent; border-radius: var(--radius-md); padding: 12px 16px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px dashed var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: var(--gray-700);">Add order editing widget</span>
+                    </div>
+                    <div class="qs-step-detail" data-detail="3" style="margin-top: 12px; padding-left: 36px; display: none;">
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">Add the edit widget to your Order Status Page.</p>
+                        <button class="btn" onclick="event.stopPropagation();" style="background: var(--gray-900); color: white; border-color: var(--gray-900); font-size: 13px; padding: 6px 14px; height: 32px; border-radius: 6px;">Open Theme Editor</button>
+                        <button class="btn-plain" onclick="event.stopPropagation();" style="margin-left: 8px;">Refresh status</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpdesk -->
+        <div class="card" style="background: var(--gray-50); border: 1px solid var(--gray-200);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="flex: 1;">
+                    <h3 class="card-title" style="margin-bottom: 4px;">Helpdesk</h3>
+                    <p style="font-size: 13px; color: var(--gray-600); margin: 0;">Our support team is ready to help with our in-app live chat.</p>
+                </div>
+                <button class="btn" style="white-space: nowrap; gap: 6px;">💬 Chat with us</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: ADMIN EDITS ============ -->
+<div id="admin-edits" class="screen hidden">
+    <div class="page page-wide">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Activity</h1>
+                <p class="page-subtitle">All order changes made by customers</p>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 0;">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Changes</th>
+                            <th>Date</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <!-- Page 1 -->
+                    <tbody id="activity-page-1">
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1234</a></td>
+                            <td>John Doe<br><span style="font-size:12px; color:var(--gray-500);">john@example.com</span></td>
+                            <td><span class="badge badge-info">Address</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2 min ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-address')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1230</a></td>
+                            <td>Sarah Chen<br><span style="font-size:12px; color:var(--gray-500);">sarah@shop.com</span></td>
+                            <td><span class="badge badge-info">Address</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">15 min ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-address')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1228</a></td>
+                            <td>Mike Rodriguez<br><span style="font-size:12px; color:var(--gray-500);">mike@test.com</span></td>
+                            <td><span class="badge badge-critical">Cancel</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">1 hour ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-cancel')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1225</a></td>
+                            <td>Alex Thompson<br><span style="font-size:12px; color:var(--gray-500);">alex@buyer.com</span></td>
+                            <td><span class="badge badge-default">Note</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2 hours ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-note')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1222</a></td>
+                            <td>David Kim<br><span style="font-size:12px; color:var(--gray-500);">david@email.com</span></td>
+                            <td><span class="badge badge-info">Address</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">3 hours ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-address2')">View →</a></td>
+                        </tr>
+                    </tbody>
+                    <!-- Page 2: multiple types per edit -->
+                    <tbody id="activity-page-2" class="hidden">
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1215</a></td>
+                            <td>Ryan Lee<br><span style="font-size:12px; color:var(--gray-500);">ryan@company.com</span></td>
+                            <td><span class="badge badge-info" style="margin-right:3px;">Address</span><span class="badge badge-default">Note</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">6 hours ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-multi')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1210</a></td>
+                            <td>Lisa Nguyen<br><span style="font-size:12px; color:var(--gray-500);">lisa@gmail.com</span></td>
+                            <td><span class="badge badge-info">Address</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">8 hours ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-address')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1205</a></td>
+                            <td>Tom Baker<br><span style="font-size:12px; color:var(--gray-500);">tom@shop.com</span></td>
+                            <td><span class="badge badge-info" style="margin-right:3px;">Address</span><span class="badge badge-default">Note</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">1 day ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-multi')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1200</a></td>
+                            <td>Amy Zhang<br><span style="font-size:12px; color:var(--gray-500);">amy@brand.com</span></td>
+                            <td><span class="badge badge-critical">Cancel</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">1 day ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-cancel')">View →</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1195</a></td>
+                            <td>Chris Martin<br><span style="font-size:12px; color:var(--gray-500);">chris@store.com</span></td>
+                            <td><span class="badge badge-info" style="margin-right:3px;">Address</span><span class="badge badge-default">Note</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2 days ago</td>
+                            <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-multi')">View →</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" style="padding: 12px 16px;">
+                <button class="active" onclick="switchActivityPage(1, this)">1</button>
+                <button onclick="switchActivityPage(2, this)">2</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: ADMIN SETTINGS ============ -->
+<div id="admin-settings" class="screen hidden">
+    <div class="page">
+        <div class="page-header">
+            <h1 class="page-title">Settings</h1>
+            <div class="btn-group">
+                <button class="btn">Discard</button>
+                <button class="btn btn-primary" onclick="showToast('Settings saved successfully')">Save</button>
+            </div>
+        </div>
+
+        <!-- Time Window -->
+        <div class="card">
+            <h3 class="card-title" style="margin-bottom:16px">Edit Time Window</h3>
+            <div class="form-group">
+                <label class="form-label">Allow edits for</label>
+                <select class="form-input form-select" style="width: 240px;">
+                    <option>30 minutes</option>
+                    <option>1 hour</option>
+                    <option selected>2 hours</option>
+                    <option>4 hours</option>
+                    <option>12 hours</option>
+                    <option>24 hours</option>
+                    <option>Until fulfillment</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Maximum edits per order</label>
+                <input type="number" class="form-input" value="5" min="1" max="20" style="width: 100px;" />
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title" style="margin-bottom:16px">Allowed Edit Types</h3>
+            <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">Choose what customers can modify on their orders.</p>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" checked /> Edit shipping address</label>
+                <label class="checkbox-item"><input type="checkbox" checked /> Cancel order</label>
+                <label class="checkbox-item"><input type="checkbox" checked /> Edit order note</label>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card">
+            <h3 class="card-title" style="margin-bottom:16px">Notifications</h3>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" checked /> Email me when a customer edits an order</label>
+                <label class="checkbox-item"><input type="checkbox" checked /> Email me when a customer cancels an order</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: STOREFRONT — ORDER STATUS PAGE (New Customer Accounts) ============ -->
+<div id="sf-widget" class="screen hidden" style="background: #f6f6f7;">
+
+    <!-- Search Bar -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 20px 24px 0;">
+        <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8c9196;">
+            🔍 Search products
+        </div>
+    </div>
+
+    <!-- Order Header -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 24px 24px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-size: 18px; color: #333; cursor: pointer;">←</span>
+                    <h1 style="font-size: 22px; font-weight: 600; color: #333;">Order #1234</h1>
+                </div>
+                <div style="font-size: 13px; color: #737373; padding-left: 26px;">Confirmed Apr 14</div>
+            </div>
+            <button style="background: #fff; border: 1px solid #333; border-radius: 6px; padding: 6px 16px; font-size: 13px; font-weight: 500; cursor: pointer; color: #333;">Buy again</button>
+        </div>
+    </div>
+
+    <!-- 2-Column Layout -->
+    <div style="max-width: 960px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 340px; gap: 24px;">
+
+        <!-- LEFT COLUMN -->
+        <div>
+            <!-- Confirmed Status -->
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+                    <span style="color: #2D9D78; font-size: 18px; margin-top: 1px;">✓</span>
+                    <div>
+                        <div style="font-size: 15px; font-weight: 600; color: #333;">Confirmed</div>
+                        <div style="font-size: 13px; color: #737373;">We're preparing these items for shipping.</div>
+                        <div style="font-size: 12px; color: #999; margin-top: 2px;">Apr 14</div>
+                    </div>
+                </div>
+                <button style="background: #fff; border: 1px solid #333; border-radius: 6px; padding: 6px 14px; font-size: 13px; cursor: pointer; color: #333; margin-left: 28px;">Track order with Shop</button>
+            </div>
+
+            <!-- ⭐ APP EXTENSION — Edit Your Order (inline, giống AE) -->
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+                <!-- Header -->
+                <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0;">
+                    <div style="font-size: 16px; font-weight: 600; color: #333;">Edit your order</div>
+                    <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #b98900; background: #fff8e5; padding: 4px 10px; border-radius: 12px; border: 1px solid #e3c87a;">⏱ 1h 45m remaining</div>
+                </div>
+
+                <!-- Edit Options (click to expand) -->
+                <div class="sf-edit-menu">
+                    <!-- Option 1: Edit shipping address -->
+                    <div class="sf-edit-option" onclick="toggleSfOption(this)">
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; cursor: pointer;">
+                            <span style="font-size: 16px;">📍</span>
+                            <span style="font-size: 14px; color: #333; font-weight: 500;">Edit shipping address</span>
+                            <span style="margin-left: auto; color: #b0b0b0; font-size: 12px; transition: transform 0.2s;" class="sf-chevron">▶</span>
+                        </div>
+                        <div class="sf-edit-detail" style="display: none; padding: 0 20px 16px 46px;">
+                            <div class="form-group"><label class="form-label">Full name</label><input type="text" class="form-input" value="John Doe" /></div>
+                            <div class="form-group"><label class="form-label">Company (optional)</label><input type="text" class="form-input" value="" placeholder="Company name" /></div>
+                            <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-input" value="123 Main Street" /></div>
+                            <div class="form-group"><label class="form-label">Apartment, suite, etc. (optional)</label><input type="text" class="form-input" value="Apt 4B" /></div>
+                            <div class="form-row">
+                                <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" value="New York" /></div>
+                                <div class="form-group"><label class="form-label">State</label><input type="text" class="form-input" value="NY" /></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group"><label class="form-label">ZIP code</label><input type="text" class="form-input" value="10001" /></div>
+                                <div class="form-group"><label class="form-label">Country</label><select class="form-input form-select"><option selected>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option></select></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" value="+1 (555) 123-4567" /></div>
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); showToast('Address updated')">Save address</button>
+                        </div>
+                    </div>
+
+
+                    <div style="height: 1px; background: #f0f0f0;"></div>
+
+                    <!-- Option 4: Add a note -->
+                    <div class="sf-edit-option" onclick="toggleSfOption(this)">
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; cursor: pointer;">
+                            <span style="font-size: 16px;">📝</span>
+                            <span style="font-size: 14px; color: #333; font-weight: 500;">Add order note</span>
+                            <span style="margin-left: auto; color: #b0b0b0; font-size: 12px;" class="sf-chevron">▶</span>
+                        </div>
+                        <div class="sf-edit-detail" style="display: none; padding: 0 20px 16px 46px;">
+                            <textarea style="width: 100%; padding: 8px 10px; border: 1px solid #d5dae2; border-radius: 6px; font-size: 13px; font-family: inherit; height: 60px; resize: vertical;" placeholder="Add a note (e.g. gift wrap, delivery instructions)..."></textarea>
+                            <button class="btn btn-primary" style="margin-top: 8px;" onclick="event.stopPropagation(); showToast('Note saved')">Save note</button>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px; background: #f0f0f0;"></div>
+
+                    <!-- Option 5: Cancel order -->
+                    <div class="sf-edit-option" onclick="toggleSfOption(this)">
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; cursor: pointer;">
+                            <span style="font-size: 16px;">❌</span>
+                            <span style="font-size: 14px; color: #D72C0D; font-weight: 500;">Cancel this order</span>
+                            <span style="margin-left: auto; color: #b0b0b0; font-size: 12px;" class="sf-chevron">▶</span>
+                        </div>
+                        <div class="sf-edit-detail" style="display: none; padding: 0 20px 16px 46px;">
+                            <div style="font-size: 13px; color: #555; margin-bottom: 8px;">This action cannot be undone. You will receive a full refund of <strong>$91.98</strong>.</div>
+                            <div class="form-group">
+                                <label class="form-label">Reason (optional)</label>
+                                <select class="form-input form-select" style="max-width: 300px;" onchange="var t=this.parentElement.querySelector('.other-reason-text');if(t){t.style.display=this.value==='Other'?'block':'none';}"><option>Select a reason...</option><option>Ordered wrong item</option><option>Changed my mind</option><option>Item no longer needed</option><option>Shipping takes too long</option><option>Duplicate order</option><option>Found cheaper elsewhere</option><option value="Other">Other</option></select><textarea class="other-reason-text form-input" style="display:none;margin-top:8px;height:60px;resize:vertical;max-width:300px;" placeholder="Please tell us your reason..."></textarea>
+                            </div>
+                            <button class="btn btn-destructive" onclick="event.stopPropagation(); showScreen('sf-success')">Cancel order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 13px;">
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Contact information</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>john@example.com</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Payment</div>
+                        <div style="color: #737373; line-height: 1.6;">Bogus •••• 1<br>$91.98 USD<br><span style="font-size: 12px; color: #999;">Apr 14</span></div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Shipping address</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Billing address</div>
+                        <div style="color: #737373; line-height: 1.6;">John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: #333; margin-bottom: 8px;">Shipping method</div>
+                        <div style="color: #737373;">Standard</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN — Order Summary -->
+        <div>
+            <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 20px; position: sticky; top: 80px;">
+                <!-- Item 1 -->
+                <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #f0f0f0;">
+                    <div style="width: 52px; height: 52px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fafafa; font-size: 20px; position: relative; flex-shrink: 0;">
+                        👕
+                        <span style="position: absolute; top: -6px; right: -6px; background: #2563eb; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</span>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #333;">Classic T-Shirt</div>
+                        <div style="font-size: 12px; color: #737373;">M / Black</div>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 500; color: #333;">$29.99</div>
+                </div>
+                <!-- Item 2 -->
+                <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 12px; border-bottom: 1px solid #f0f0f0;">
+                    <div style="width: 52px; height: 52px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fafafa; font-size: 20px; position: relative; flex-shrink: 0;">
+                        👖
+                        <span style="position: absolute; top: -6px; right: -6px; background: #2563eb; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</span>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #333;">Slim Fit Jeans</div>
+                        <div style="font-size: 12px; color: #737373;">32 / Blue</div>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 500; color: #333;">$49.99</div>
+                </div>
+
+                <!-- Totals -->
+                <div style="font-size: 13px; color: #333;">
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Subtotal</span><span>$79.98</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Shipping</span><span>$5.00</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Tax</span><span>$7.00</span></div>
+                </div>
+                <div style="border-top: 1px solid #e1e3e5; margin-top: 12px; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline;">
+                    <span style="font-size: 14px; font-weight: 600; color: #333;">Total</span>
+                    <span><span style="font-size: 11px; color: #737373;">USD</span> <span style="font-size: 18px; font-weight: 600; color: #333;">$91.98</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="border-top: 1px solid #e1e3e5; padding: 20px 0; text-align: center; background: #f6f6f7;">
+        <div style="font-size: 12px; color: #8c9196;">
+            🌐 United States · <a href="#" style="color: #2C6ECB; text-decoration: none;">Refund policy</a> · <a href="#" style="color: #2C6ECB; text-decoration: none;">Privacy policy</a> · <a href="#" style="color: #2C6ECB; text-decoration: none;">Cancellation policy</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: STOREFRONT — EDIT PORTAL (REMOVED — now inline in Order Status Page) ============ -->
+<div id="sf-edit-portal" class="screen hidden" style="display:none !important;">
+
+    <!-- Branded Header -->
+    <div style="background: #fff; border-bottom: 1px solid #e1e3e5; padding: 0;">
+        <div style="max-width: 680px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">A</div>
+                <span style="font-size: 15px; font-weight: 600; color: #333;">Edit Order</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #b98900; background: #fff8e5; padding: 4px 10px; border-radius: 12px; border: 1px solid #e3c87a;">⏱ 1h 45m</div>
+                <span style="font-size: 13px; color: #737373;">#1234</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="max-width: 680px; margin: 0 auto; padding: 24px;">
+
+        <!-- Order Summary Banner -->
+        <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 18px;">📦</span>
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500; color: #333;">2 items · $91.98</div>
+                <div style="font-size: 12px; color: #737373;">Placed Apr 14, 2026 · John Doe</div>
+            </div>
+        </div>
+
+        <!-- Unified Edit Card -->
+        <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+
+            <!-- Section: Shipping Address -->
+            <div style="padding: 20px; border-bottom: 1px solid #f0f0f0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div style="font-size: 13px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.3px;">Shipping Address</div>
+                    <button class="btn-plain" onclick="toggleElement('address-form')" style="font-size: 13px;">Edit</button>
+                </div>
+                <div style="font-size: 13px; color: #555; line-height: 1.6;" id="address-display">
+                    John Doe · 123 Main Street, Apt 4B · New York, NY 10001 · US
+                </div>
+                <div id="address-form" class="hidden" style="margin-top: 12px;">
+                    <div class="form-group"><label class="form-label">Full name</label><input type="text" class="form-input" value="John Doe" /></div>
+                    <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-input" value="123 Main Street, Apt 4B" /></div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" value="New York" /></div>
+                        <div class="form-group"><label class="form-label">State</label><input type="text" class="form-input" value="NY" /></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">ZIP</label><input type="text" class="form-input" value="10001" /></div>
+                        <div class="form-group"><label class="form-label">Country</label><select class="form-input form-select"><option selected>United States</option><option>Canada</option></select></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" value="+1 (555) 123-4567" /></div>
+                    <div class="btn-group"><button class="btn" onclick="toggleElement('address-form')">Cancel</button><button class="btn btn-primary" onclick="toggleElement('address-form'); showToast('Address updated')">Save</button></div>
+                </div>
+            </div>
+
+            <!-- Section: Items -->
+            <div style="padding: 20px; border-bottom: 1px solid #f0f0f0;">
+                <div style="font-size: 13px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 12px;">Items</div>
+
+                <!-- Item 1 -->
+                <div style="display: flex; gap: 12px; padding: 12px; background: #fafafa; border-radius: 8px; margin-bottom: 8px; align-items: center;">
+                    <div style="width: 56px; height: 56px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fff; font-size: 22px; flex-shrink: 0;">👕</div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 14px; font-weight: 500; color: #333;">Classic T-Shirt</div>
+                        <div style="font-size: 12px; color: #737373; margin-top: 2px;">M / Black</div>
+                        <div style="font-size: 14px; font-weight: 600; color: #333; margin-top: 4px;">$29.99</div>
+                    </div>
+                    <div style="font-size: 13px; color: #737373;">×1</div>
+                </div>
+
+                <!-- Item 2 -->
+                <div style="display: flex; gap: 12px; padding: 12px; background: #fafafa; border-radius: 8px; align-items: center;">
+                    <div style="width: 56px; height: 56px; border: 1px solid #e1e3e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fff; font-size: 22px; flex-shrink: 0;">👖</div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 14px; font-weight: 500; color: #333;">Slim Fit Jeans</div>
+                        <div style="font-size: 12px; color: #737373; margin-top: 2px;">32 / Blue</div>
+                        <div style="font-size: 14px; font-weight: 600; color: #333; margin-top: 4px;">$49.99</div>
+                    </div>
+                    <div style="font-size: 13px; color: #737373;">×1</div>
+                </div>
+            </div>
+
+            <!-- Section: Note & Tags (compact) -->
+            <div style="padding: 20px; border-bottom: 1px solid #f0f0f0;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 6px;">Note</div>
+                        <textarea style="width: 100%; padding: 8px 10px; border: 1px solid #d5dae2; border-radius: 6px; font-size: 13px; font-family: inherit; height: 48px; resize: vertical; color: #333;" placeholder="Add a note...">Please gift wrap this order</textarea>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 6px;">Tags</div>
+                        <div style="display: flex; gap: 4px; flex-wrap: wrap; align-items: center;">
+                            <span style="display: inline-flex; align-items: center; gap: 3px; background: #f0f1f2; border-radius: 12px; padding: 4px 8px; font-size: 11px; color: #555;">gift <span style="cursor: pointer; color: #aaa; font-size: 12px;">×</span></span>
+                            <span style="display: inline-flex; align-items: center; gap: 3px; background: #f0f1f2; border-radius: 12px; padding: 4px 8px; font-size: 11px; color: #555;">rush <span style="cursor: pointer; color: #aaa; font-size: 12px;">×</span></span>
+                            <input type="text" style="width: 70px; height: 24px; font-size: 11px; border: 1px dashed #ccc; border-radius: 12px; padding: 3px 8px; outline: none; color: #555;" placeholder="Add..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Price Summary -->
+            <div style="padding: 20px; background: #fafafa;">
+                <div style="font-size: 13px; color: #555;">
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Subtotal</span><span>$79.98</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Shipping</span><span>$5.00</span></div>
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0;"><span>Tax</span><span>$7.00</span></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0 0; border-top: 1px solid #e1e3e5; margin-top: 8px; font-size: 16px; font-weight: 600; color: #333;">
+                    <span>Total</span><span>$91.98</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <button style="background: none; border: none; color: #D72C0D; font-size: 13px; cursor: pointer; font-weight: 500; text-decoration: underline;" onclick="openModal('cancel-modal')">Cancel this order</button>
+            <button class="btn btn-primary btn-lg" onclick="showScreen('sf-review')" style="border-radius: 8px; min-width: 180px; justify-content: center;">Review Changes</button>
+        </div>
+
+        <!-- Powered by -->
+        <div style="text-align: center; margin-top: 24px; font-size: 11px; color: #b0b0b0;">
+            Powered by Avada Order Editing
+        </div>
+    </div>
+</div>
+
+
+<!-- ============ SCREEN: STOREFRONT — REVIEW CHANGES ============ -->
+<div id="sf-review" class="screen hidden">
+    <div class="sf-container">
+        <div class="card">
+            <h3 style="font-size: 18px; margin-bottom: 20px;">Review Your Changes</h3>
+
+            <div style="margin-bottom: 20px;">
+                <div class="change-item">
+                    <span class="change-icon">📍</span>
+                    <div class="change-detail">
+                        <div class="change-label">Shipping Address</div>
+                        <div class="change-value">
+                            <span class="change-old">123 Main Street, NYC 10001</span><br>
+                            <span class="change-new">456 Oak Avenue, Brooklyn 11201</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sf-summary">
+                <div class="sf-summary-row"><span>Original total</span><span>$91.98</span></div>
+                <div class="sf-summary-row"><span>New total</span><span>$141.97</span></div>
+                <div class="sf-summary-row diff charge"><span>Additional charge</span><span>+$49.99</span></div>
+            </div>
+
+            <div class="banner banner-warning" style="margin-top: 16px;">
+                <span class="banner-icon">⚠️</span>
+                <div class="banner-content">
+                    You will be charged <strong>$49.99</strong> to your original payment method.
+                </div>
+            </div>
+
+            <div class="btn-group" style="margin-top: 16px; justify-content: flex-end;">
+                <button class="btn" onclick="showScreen('sf-edit-portal')">Go Back</button>
+                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-success')">Confirm Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: STOREFRONT — CANCEL ORDER ============ -->
+<div id="sf-cancel" class="screen hidden">
+    <div class="sf-container">
+        <div class="card" style="text-align: center; padding: 32px;">
+            <h3 style="font-size: 18px; margin-bottom: 8px;">Cancel Order #1234?</h3>
+            <p style="color: var(--gray-500); margin-bottom: 20px;">This action cannot be undone.</p>
+
+            <div class="banner banner-info" style="text-align: left;">
+                <span class="banner-icon">💰</span>
+                <div class="banner-content">
+                    You will receive a full refund of <strong>$91.98</strong> to your original payment method within 5-10 business days.
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px; text-align: left;">
+                <label class="form-label">Reason for cancellation (optional)</label>
+                <select class="form-input form-select" onchange="var t=this.parentElement.querySelector('.other-reason-text');if(t){t.style.display=this.value==='Other'?'block':'none';}">
+                    <option value="">Select a reason...</option>
+                    <option>Ordered wrong item</option>
+                    <option>Changed my mind</option>
+                    <option>Item no longer needed</option>
+                    <option>Shipping takes too long</option>
+                    <option>Duplicate order</option>
+                    <option>Found cheaper elsewhere</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="btn-group" style="margin-top: 24px; justify-content: center;">
+                <button class="btn btn-lg" onclick="showScreen('sf-edit-portal')">Keep Order</button>
+                <button class="btn btn-destructive btn-lg" onclick="showScreen('sf-success')">Cancel Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: STOREFRONT — SUCCESS ============ -->
+<div id="sf-success" class="screen hidden">
+    <div class="sf-container">
+        <div class="card">
+            <div class="sf-success">
+                <div class="sf-success-icon">✅</div>
+                <h2>Order Updated Successfully!</h2>
+                <p>Order #1234 has been updated.<br>A confirmation email has been sent to john@example.com.</p>
+                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-widget')">View Updated Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: EMPTY STATE ============ -->
+<div id="state-empty" class="screen hidden">
+    <div class="page page-wide">
+        <div class="page-header">
+            <h1 class="page-title">Orders</h1>
+        </div>
+        <div class="card">
+            <div class="empty-state">
+                <div class="empty-state-icon">📦</div>
+                <h3>No editable orders</h3>
+                <p>Orders will appear here when customers can edit them.<br>Make sure your edit time window is configured in Settings.</p>
+                <button class="btn btn-primary" onclick="showScreen('admin-settings')">Go to Settings</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: LOADING STATE ============ -->
+<div id="state-loading" class="screen hidden">
+    <div class="page page-wide">
+        <div class="page-header">
+            <div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text" style="width: 40%;"></div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+            <div class="metric-card"><div class="skeleton" style="height: 60px;"></div></div>
+        </div>
+        <div class="card">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: EXPIRED STATE (widget ẩn hoàn toàn) ============ -->
+<div id="state-expired" class="screen hidden">
+    <div class="sf-container">
+        <div class="card" style="border: 1px solid var(--gray-200);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 18px;">Order #1234</h3>
+                <span class="badge badge-warning">Unfulfilled</span>
+            </div>
+
+            <!-- Widget ẩn hoàn toàn khi hết hạn — khách chỉ thấy order info bình thường -->
+            <div style="border: 2px dashed var(--gray-300); border-radius: var(--radius-md); padding: 32px; text-align: center; background: var(--gray-50);">
+                <div style="font-size: 13px; color: var(--gray-500); font-style: italic;">Widget "Edit your order" ẩn hoàn toàn</div>
+                <div style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">Khách không thấy tùy chọn chỉnh sửa khi hết hạn</div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="sf-item">
+                    <div class="sf-item-img">👕</div>
+                    <div class="sf-item-info">
+                        <div class="sf-item-name">Classic T-Shirt</div>
+                        <div class="sf-item-variant">Size: M / Color: Black</div>
+                    </div>
+                    <div class="sf-item-price">$29.99</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN: SPEC — COUNTDOWN TIMER ============ -->
+<div id="spec-countdown" class="screen hidden">
+    <div class="page page-wide">
+        <div class="page-header">
+            <h1 class="page-title">Countdown Timer — Display Rules</h1>
+        </div>
+        <p style="color: var(--gray-600); margin: -16px 0 24px;">Quy tắc hiển thị thời gian còn lại cho phép chỉnh sửa đơn hàng trên storefront widget.</p>
+
+        <!-- 1. Format Rules -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">1. Quy tắc format thời gian</div>
+            </div>
+            <p style="margin-bottom: 12px; font-size: 13px; color: var(--gray-600);">Hiển thị <strong style="color: var(--gray-800);">tối đa 2 đơn vị thời gian lớn nhất</strong>, làm tròn xuống. Không hiển thị giây.</p>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Thời gian còn lại</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Format</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Ví dụ</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>>= 7 ngày</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">{W}w {D}d</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">2w 3d, 1w 1d</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Nếu D = 0 → chỉ "2w"</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>1 — 6 ngày</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">{D}d {H}h</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">5d 12h, 2d 3h</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Nếu H = 0 → chỉ "2d"</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>1 — 23 giờ</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">{H}h {M}m</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">23h 45m, 1h 30m</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Nếu M = 0 → chỉ "2h"</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>1 — 59 phút</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">{M}m</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">45m, 10m</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Không hiện giây</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>&lt; 1 phút</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">&lt;1m</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">&lt;1m</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Hiện "&lt;1m" thay vì giây</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>Until fulfillment</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">—</code></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-size: 12px;">Không hiện timer badge</td></tr>
+                    <tr><td style="padding: 8px 12px;"><strong>Hết hạn</strong></td><td style="padding: 8px 12px;"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">—</code></td><td style="padding: 8px 12px;">—</td><td style="padding: 8px 12px; color: var(--gray-500); font-size: 12px;">Widget ẩn hoàn toàn</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Visual States -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">2. Ba trạng thái hiển thị</div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Trạng thái</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Điều kiện</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Màu sắc</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Animation</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Preview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--yellow-bg);color:var(--yellow);">NORMAL</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Còn <strong>&gt; 10 phút</strong></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-size: 12px;">Text: <code style="background:var(--gray-100);padding:1px 4px;border-radius:3px;font-size:11px;">#B98900</code><br>BG: <code style="background:var(--gray-100);padding:1px 4px;border-radius:3px;font-size:11px;">#FFF8E5</code></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1h 45m remaining</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:#FFF4F4;color:#D72C0D;">URGENT</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Còn <strong>&lt;= 10 phút</strong></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-size: 12px;">Text: <code style="background:var(--gray-100);padding:1px 4px;border-radius:3px;font-size:11px;">#D72C0D</code><br>BG: <code style="background:var(--gray-100);padding:1px 4px;border-radius:3px;font-size:11px;">#FFF4F4</code></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>Pulse</strong> (nhấp nháy 1.5s)</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#D72C0D;background:#FFF4F4;padding:4px 10px;border-radius:12px;border:1px solid #f0b8b8;animation:pulse 1.5s ease-in-out infinite;">⏱ 5m remaining</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--gray-100);color:var(--gray-500);">EXPIRED</span></td>
+                        <td style="padding: 8px 12px;">Hết thời gian</td>
+                        <td style="padding: 8px 12px; font-size: 12px; color: var(--gray-500);" colspan="3">Widget ẩn hoàn toàn — khách không thấy gì trên trang</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="background: #F0F7FF; border: 1px solid #B4D5FE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #1A3A5C; margin-top: 16px;">
+                <strong style="color: #0B5FD4;">Ngưỡng Urgent (10 phút):</strong> Badge đổi màu đỏ + nhấp nháy nhẹ để thu hút sự chú ý trước khi hết hạn.
+            </div>
+        </div>
+
+        <!-- 3. All Cases Demo -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">3. Tất cả trường hợp hiển thị</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; font-size: 13px;">
+                <div style="padding: 8px 12px; background: var(--gray-100); font-weight: 600; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Setting / Thời điểm</div>
+                <div style="padding: 8px 12px; background: var(--gray-100); font-weight: 600; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Badge</div>
+                <div style="padding: 8px 12px; background: var(--gray-100); font-weight: 600; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Ghi chú</div>
+
+                <!-- 30m -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">30 phút (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 30m remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Chỉ hiện phút</div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">30 phút (còn 8m)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#D72C0D;background:#FFF4F4;padding:4px 10px;border-radius:12px;border:1px solid #f0b8b8;animation:pulse 1.5s ease-in-out infinite;">⏱ 8m remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Urgent khi &lt;= 10m</div>
+
+                <!-- 1h -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">1 giờ (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1h remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">1 giờ (còn 45m)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 45m remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">1 giờ (còn 5m)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#D72C0D;background:#FFF4F4;padding:4px 10px;border-radius:12px;border:1px solid #f0b8b8;animation:pulse 1.5s ease-in-out infinite;">⏱ 5m remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Urgent + pulse</div>
+
+                <!-- 2h -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">2 giờ (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 2h remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">2 giờ (còn 1h 45m)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1h 45m remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">2 đơn vị: giờ + phút</div>
+
+                <!-- 24h -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">24 giờ (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1d remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">24h = 1 day</div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">24 giờ (còn 18h)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 18h remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Dưới 1d → hiện giờ</div>
+
+                <!-- 2d -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">2 ngày (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 2d remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">2 ngày (còn 1d 12h)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1d 12h remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">2 đơn vị: ngày + giờ</div>
+
+                <!-- 7d -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">7 ngày (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1w remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">7d = 1 week</div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">7 ngày (còn 5d 8h)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 5d 8h remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <!-- 14d -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">14 ngày (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 2w remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">14d = 2 weeks</div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">14 ngày (còn 1w 3d)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 1w 3d remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">2 đơn vị: tuần + ngày</div>
+
+                <!-- 30d -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">30 ngày (vừa đặt)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 4w 2d remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">30d = 4w 2d</div>
+
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);">30 ngày (còn 2w 5d)</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#B98900;background:#FFF8E5;padding:4px 10px;border-radius:12px;border:1px solid #e3c87a;">⏱ 2w 5d remaining</span></div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);"></div>
+
+                <!-- Until fulfillment -->
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Until fulfillment</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500); font-style: italic;">Không hiện timer badge</div>
+                <div style="padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Widget hiện bình thường, không có countdown</div>
+
+                <!-- Expired -->
+                <div style="padding: 10px 12px; font-weight: 600;">Hết hạn</div>
+                <div style="padding: 10px 12px; color: var(--gray-500); font-style: italic;">Widget ẩn hoàn toàn</div>
+                <div style="padding: 10px 12px; color: var(--gray-500);">Khách không thấy widget</div>
+            </div>
+        </div>
+
+        <!-- 4. Widget Previews -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">4. Preview trên widget</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- A. Normal -->
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-700);">A. Normal — còn nhiều thời gian</div>
+                    <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden;">
+                        <div style="padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-size: 15px; font-weight: 600; color: #333;">Edit your order</div>
+                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#B98900;background:#FFF8E5;padding:3px 8px;border-radius:10px;border:1px solid #e3c87a;">⏱ 1d 12h remaining</span>
+                        </div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📍 Edit shipping address <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">🛍️ Edit products <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📝 Add order note <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; font-size: 13px; color: #D72C0D; display: flex; align-items: center; gap: 8px;">✖ Cancel this order <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                    </div>
+                </div>
+                <!-- B. Urgent -->
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-700);">B. Urgent — sắp hết hạn</div>
+                    <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden;">
+                        <div style="padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-size: 15px; font-weight: 600; color: #333;">Edit your order</div>
+                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#D72C0D;background:#FFF4F4;padding:3px 8px;border-radius:10px;border:1px solid #f0b8b8;animation:pulse 1.5s ease-in-out infinite;">⏱ 3m remaining</span>
+                        </div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📍 Edit shipping address <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">🛍️ Edit products <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📝 Add order note <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; font-size: 13px; color: #D72C0D; display: flex; align-items: center; gap: 8px;">✖ Cancel this order <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                    </div>
+                </div>
+                <!-- C. Expired -->
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-700);">C. Expired — ẩn widget</div>
+                    <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden;">
+                        <div style="padding: 32px; text-align: center; color: #8C9196;">
+                            <div style="font-size: 13px; font-style: italic;">Widget ẩn hoàn toàn — khách không thấy gì</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- D. Until fulfilled -->
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-700);">D. Until fulfillment — không có timer</div>
+                    <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden;">
+                        <div style="padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-size: 15px; font-weight: 600; color: #333;">Edit your order</div>
+                        </div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📍 Edit shipping address <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">🛍️ Edit products <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px;">📝 Add order note <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                        <div style="padding: 12px 18px; font-size: 13px; color: #D72C0D; display: flex; align-items: center; gap: 8px;">✖ Cancel this order <span style="margin-left:auto;color:#ccc;font-size:11px;">▶</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Edge Cases -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">5. Edge cases</div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Tình huống</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Hiển thị</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Hành vi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Mở trang khi timer = 0</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Widget ẩn</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Widget ẩn hoàn toàn, không cho edit</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Timer hết <strong>khi đang edit</strong></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#D72C0D;background:#FFF4F4;padding:3px 8px;border-radius:10px;border:1px solid #f0b8b8;">⏱ &lt;1m remaining</span></td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Cho hoàn thành edit đang mở, không cho bắt đầu edit mới</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Timer hết sau khi submit</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Edit đã submit vẫn được xử lý (grace period)</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Order đã fulfilled</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Widget ẩn</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không hiện timer, không hiện widget</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Order đã cancelled</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Widget ẩn</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không hiện timer</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Merchant đổi time window</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Order cũ giữ nguyên. Chỉ order mới áp dụng setting mới.</td></tr>
+                    <tr><td style="padding: 8px 12px;">Tab bị ẩn / browser minimize</td><td style="padding: 8px 12px;">—</td><td style="padding: 8px 12px;">Khi quay lại, sync lại từ server. Không dựa vào client timer.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 6. Technical Notes -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">6. Technical notes</div>
+            </div>
+            <div style="background: #F0F7FF; border: 1px solid #B4D5FE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #1A3A5C;">
+                <strong style="color: #0B5FD4;">Update interval:</strong> Timer cập nhật mỗi <code style="background:#e8f0fe;padding:2px 4px;border-radius:3px;">60 giây</code>. Sync lại từ server khi tab được focus trở lại (visibilitychange event).
+            </div>
+            <div style="background: var(--yellow-bg); border: 1px solid #e3c87a; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #664400; margin-top: 12px;">
+                <strong>Settings:</strong> Time window options: <code style="background:#fff3d0;padding:2px 4px;border-radius:3px;">30m / 1h / 2h / 4h / 12h / 24h / 2d / 3d / 7d / 14d / 30d / Until fulfillment</code>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============ SCREEN: SPEC — ADDRESS FORM ============ -->
+<div id="spec-address" class="screen hidden">
+    <div class="page page-wide">
+        <div class="page-header">
+            <h1 class="page-title">Address Form — Field Requirements</h1>
+        </div>
+        <p style="color: var(--gray-600); margin: -16px 0 24px;">Validation rules cho form chỉnh sửa shipping address trên storefront.</p>
+
+        <!-- 1. Field Requirements -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">1. Field Requirements</div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Field</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Type</th>
+                        <th style="padding: 8px 12px; text-align: center; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Required</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Max</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Validation</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Error message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Full name</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">100</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không để trống, trim whitespace</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"Full name is required"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Company <span style="color: var(--gray-400); font-size: 11px;">(optional)</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">100</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Không validate</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-400);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Address</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">200</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không để trống</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"Address is required"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Apartment, suite, etc. <span style="color: var(--gray-400); font-size: 11px;">(optional)</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">100</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-500);">Không validate</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-400);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">City</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">100</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không để trống</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"City is required"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">State / Province</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text / Select</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #B98900; font-size: 11px; font-weight: 600;">Tùy country</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">100</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Country có states → <strong>Select + required</strong><br>Không có → <strong>Text, optional</strong></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"State is required"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">ZIP / Postal code</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #B98900; font-size: 11px; font-weight: 600;">Tùy country</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">20</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Format theo country (xem bảng bên dưới)<br>Nước không dùng ZIP → ẩn field</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"Enter a valid ZIP code"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Country</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Select</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Dropdown. Khi đổi → reset State + ZIP</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: #D72C0D; font-size: 12px;">"Country is required"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px;">Phone <span style="color: var(--gray-400); font-size: 11px;">(optional)</span></td>
+                        <td style="padding: 8px 12px;">Tel</td>
+                        <td style="padding: 8px 12px; text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px;">20</td>
+                        <td style="padding: 8px 12px;">Nếu nhập: chỉ cho số, +, -, (, ), space.<br>Tối thiểu 7 chữ số</td>
+                        <td style="padding: 8px 12px; color: #D72C0D; font-size: 12px;">"Enter a valid phone number"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Country-specific rules -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">2. Quy tắc theo Country</div>
+            </div>
+            <p style="margin-bottom: 12px; font-size: 13px; color: var(--gray-600);">Khi đổi Country, form tự động thay đổi label, validation, và hiển thị field phù hợp.</p>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Country</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">State label</th>
+                        <th style="padding: 8px 12px; text-align: center; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">State required</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">State type</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">ZIP label</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">ZIP format</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">United States</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">State</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Select (50 states)</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">ZIP code</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">XXXXX</code> hoặc <code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">XXXXX-XXXX</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Canada</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Province</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Select (13 provinces)</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Postal code</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">A1A 1A1</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">United Kingdom</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">County</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Text (optional)</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Postcode</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">SW1A 1AA</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Australia</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">State/Territory</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center;"><span style="color: #D72C0D; font-weight: 700;">*</span></td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Select (8 states)</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Postcode</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">XXXX</code> (4 số)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">Germany</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-400);">Ẩn field</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Postleitzahl</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">XXXXX</code> (5 số)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 600;">France</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-400);">Ẩn field</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Code postal</td>
+                        <td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">XXXXX</code> (5 số)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 12px;">Các nước khác</td>
+                        <td style="padding: 8px 12px;">State/Province/Region</td>
+                        <td style="padding: 8px 12px; text-align: center; color: var(--gray-400);">—</td>
+                        <td style="padding: 8px 12px;">Text (optional)</td>
+                        <td style="padding: 8px 12px;">Postal code</td>
+                        <td style="padding: 8px 12px; color: var(--gray-500);">Không validate format</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="background: #F0F7FF; border: 1px solid #B4D5FE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #1A3A5C; margin-top: 16px;">
+                <strong style="color: #0B5FD4;">Data source:</strong> Sử dụng Shopify countries API (<code style="background:#e8f0fe;padding:2px 4px;border-radius:3px;">/admin/api/2024-07/countries.json</code>) để lấy danh sách countries + provinces. Đảm bảo đồng bộ với Shopify.
+            </div>
+        </div>
+
+        <!-- 3. Validation Behavior -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">3. Validation behavior</div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: var(--gray-100);">
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Khi nào</th>
+                        <th style="padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--gray-600); border-bottom: 2px solid var(--gray-200);">Hành vi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">On blur (rời field)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Validate field vừa rời. Hiện error message ngay dưới field nếu lỗi.</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Đang gõ</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);"><strong>Không validate</strong> — chờ user rời field. Nếu field đang có lỗi → xóa error khi user gõ lại.</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Click Save address</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Validate tất cả fields. Focus vào field lỗi đầu tiên. Scroll tới nếu ngoài viewport.</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Đổi Country</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Reset State dropdown/text + xóa ZIP value + cập nhật labels + xóa errors cũ.</td></tr>
+                    <tr><td style="padding: 8px 12px; font-weight: 500;">Không thay đổi gì</td><td style="padding: 8px 12px;">Button "Save address" <strong>disabled</strong>. Hiện note: <span style="color: var(--gray-500); font-style: italic;">"No changes detected"</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. Error State Preview -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">4. Error state preview</div>
+            </div>
+            <div style="max-width: 420px;">
+                <div style="background: #fff; border: 1px solid #e1e3e5; border-radius: 12px; overflow: hidden; padding: 20px;">
+                    <div style="font-size: 15px; font-weight: 600; color: #333; margin-bottom: 16px;">Edit shipping address</div>
+
+                    <!-- Full name - error -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Full name <span style="color: #D72C0D;">*</span></label>
+                        <input type="text" value="" placeholder="Full name" style="width: 100%; padding: 8px 12px; border: 1px solid #D72C0D; border-radius: 6px; font-size: 14px; outline: none; background: #FFF4F4;" />
+                        <div style="font-size: 12px; color: #D72C0D; margin-top: 4px;">Full name is required</div>
+                    </div>
+
+                    <!-- Company - ok -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Company <span style="color: #aaa; font-size: 11px;">(optional)</span></label>
+                        <input type="text" value="" placeholder="Company name" style="width: 100%; padding: 8px 12px; border: 1px solid #D2D5D8; border-radius: 6px; font-size: 14px;" />
+                    </div>
+
+                    <!-- Address - error -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Address <span style="color: #D72C0D;">*</span></label>
+                        <input type="text" value="" placeholder="Address" style="width: 100%; padding: 8px 12px; border: 1px solid #D72C0D; border-radius: 6px; font-size: 14px; outline: none; background: #FFF4F4;" />
+                        <div style="font-size: 12px; color: #D72C0D; margin-top: 4px;">Address is required</div>
+                    </div>
+
+                    <!-- Apartment - ok -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Apartment, suite, etc. <span style="color: #aaa; font-size: 11px;">(optional)</span></label>
+                        <input type="text" value="" style="width: 100%; padding: 8px 12px; border: 1px solid #D2D5D8; border-radius: 6px; font-size: 14px;" />
+                    </div>
+
+                    <!-- City + State -->
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">City <span style="color: #D72C0D;">*</span></label>
+                            <input type="text" value="New York" style="width: 100%; padding: 8px 12px; border: 1px solid #D2D5D8; border-radius: 6px; font-size: 14px;" />
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">State <span style="color: #D72C0D;">*</span></label>
+                            <select style="width: 100%; padding: 8px 12px; border: 1px solid #D2D5D8; border-radius: 6px; font-size: 14px; background: #fff;"><option>NY</option></select>
+                        </div>
+                    </div>
+
+                    <!-- ZIP + Country -->
+                    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">ZIP code <span style="color: #D72C0D;">*</span></label>
+                            <input type="text" value="ABC" style="width: 100%; padding: 8px 12px; border: 1px solid #D72C0D; border-radius: 6px; font-size: 14px; outline: none; background: #FFF4F4;" />
+                            <div style="font-size: 12px; color: #D72C0D; margin-top: 4px;">Enter a valid ZIP code</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Country <span style="color: #D72C0D;">*</span></label>
+                            <select style="width: 100%; padding: 8px 12px; border: 1px solid #D2D5D8; border-radius: 6px; font-size: 14px; background: #fff;"><option>United States</option></select>
+                        </div>
+                    </div>
+
+                    <!-- Phone - error -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 4px;">Phone <span style="color: #aaa; font-size: 11px;">(optional)</span></label>
+                        <input type="tel" value="abc" style="width: 100%; padding: 8px 12px; border: 1px solid #D72C0D; border-radius: 6px; font-size: 14px; outline: none; background: #FFF4F4;" />
+                        <div style="font-size: 12px; color: #D72C0D; margin-top: 4px;">Enter a valid phone number</div>
+                    </div>
+
+                    <!-- Save button - disabled -->
+                    <button style="width: 100%; padding: 10px; border: none; border-radius: 6px; background: #B0D5C8; color: #fff; font-size: 14px; font-weight: 600; cursor: not-allowed; opacity: 0.6;">Save address</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============ CANCEL MODAL ============ -->
+<div id="cancel-modal" class="modal-overlay" onclick="if(event.target===this) closeModal('cancel-modal')">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Cancel Order #1234?</h3>
+            <button class="modal-close" onclick="closeModal('cancel-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <p style="margin-bottom: 16px;">This action cannot be undone. You will receive a full refund of <strong>$91.98</strong>.</p>
+            <div class="form-group">
+                <label class="form-label">Reason (optional)</label>
+                <select class="form-input form-select" onchange="var t=this.parentElement.querySelector('.other-reason-text');if(t){t.style.display=this.value==='Other'?'block':'none';}">
+                    <option value="">Select a reason...</option>
+                    <option>Ordered wrong item</option>
+                    <option>Changed my mind</option>
+                    <option>Item no longer needed</option>
+                    <option>Shipping takes too long</option>
+                    <option>Duplicate order</option>
+                    <option>Found cheaper elsewhere</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea class="other-reason-text form-input" style="display:none;margin-top:8px;height:60px;resize:vertical;" placeholder="Please tell us your reason..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeModal('cancel-modal')">Keep Order</button>
+            <button class="btn btn-destructive" onclick="closeModal('cancel-modal'); showScreen('sf-success')">Cancel Order</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============ EDIT DETAIL MODALS ============ -->
+
+<!-- 1. Address Change — #1234 -->
+<div id="edit-detail-modal-address" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-address')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1234 — Address changed</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-address')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">John Doe (john@example.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">2 minutes ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            John Doe<br>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            John Doe<br>456 Oak Avenue<br>Brooklyn, NY 11201<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-address')">Close</button></div>
+    </div>
+</div>
+
+<!-- 3. Cancel — #1228 -->
+<div id="edit-detail-modal-cancel" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-cancel')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1228 — Order cancelled</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-cancel')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Mike Rodriguez (mike@test.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">1 hour ago</span>
+            </div>
+            <div style="background:var(--red-bg); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">❌ Order Cancelled</div>
+                <div style="font-size:13px; line-height:2;">
+                    <div style="display:flex; justify-content:space-between;"><span>Reason:</span><span style="font-weight:500;">Changed my mind</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Refund amount:</span><span style="font-weight:600; color:var(--red);">$89.99</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Refund status:</span><span style="font-weight:500;">Processed</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Items restocked:</span><span style="font-weight:500;">Yes</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-cancel')">Close</button></div>
+    </div>
+</div>
+
+<!-- 5. Note Updated — #1222 -->
+<div id="edit-detail-modal-note" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-note')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1222 — Note updated</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-note')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">David Kim (david@email.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">3 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📝 Order Note</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through; font-style:italic;">
+                            Please gift wrap this order
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm); font-style:italic;">
+                            Please gift wrap with blue ribbon. Leave at front door if no one home.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-note')">Close</button></div>
+    </div>
+</div>
+
+<!-- 6. Tags Updated — #1220 -->
+<div id="edit-detail-modal-tags" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-tags')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1220 — Tags updated</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-tags')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Jessica Park (jessica@mail.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">4 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">🏷 Order Tags</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="padding:10px; background:var(--red-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; text-decoration:line-through; margin:2px;">VIP</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--gray-300); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px;">VIP</span>
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--primary); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px; color:var(--primary); font-weight:500;">rush</span>
+                            <span style="display:inline-block; background:var(--white); border:1px solid var(--primary); border-radius:12px; padding:2px 10px; font-size:12px; margin:2px; color:var(--primary); font-weight:500;">fragile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-tags')">Close</button></div>
+    </div>
+</div>
+
+<!-- 7. Multiple Changes — #1218 (Address + Variant + Quantity + Note) -->
+<div id="edit-detail-modal-multi" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-multi')">
+    <div class="modal" style="max-width: 580px;">
+        <div class="modal-header">
+            <h3>Order #1218 — Multiple changes</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-multi')">×</button>
+        </div>
+        <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Emma Wilson (emma@store.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">5 hours ago</span>
+            </div>
+            <div style="font-size:12px; color:var(--gray-500); margin-bottom:16px; padding:8px 12px; background:var(--yellow-bg); border-radius:var(--radius-sm);">
+                2 changes made in this edit
+            </div>
+
+            <!-- Change 1: Address -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Emma Wilson<br>55 Market St<br>Chicago, IL 60601<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Emma Wilson<br>200 Lake Shore Dr, Unit 12<br>Chicago, IL 60611<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change 2: Note -->
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📝 Order Note</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); font-style:italic; color:var(--gray-400);">
+                            (empty)
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm); font-style:italic;">
+                            Birthday gift — please wrap nicely!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div style="background:var(--blue-bg); border-radius:var(--radius-md); padding:12px 16px; font-size:13px;">
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>Original total</span><span>$134.99</span></div>
+                <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>New total</span><span style="font-weight:600;">$164.97</span></div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0 0; border-top:1px solid rgba(0,0,0,0.1); margin-top:4px;"><span style="font-weight:600;">Additional charge</span><span style="font-weight:700; color:var(--blue);">+$29.98</span></div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-multi')">Close</button></div>
+    </div>
+</div>
+
+<!-- 8. Address Change — #1215 -->
+<div id="edit-detail-modal-address2" class="modal-overlay" onclick="if(event.target===this) closeModal('edit-detail-modal-address2')">
+    <div class="modal" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3>Order #1215 — Address changed</h3>
+            <button class="modal-close" onclick="closeModal('edit-detail-modal-address2')">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:500;">Ryan Lee (ryan@company.com)</span>
+                <span style="font-size:12px; color:var(--gray-500);">6 hours ago</span>
+            </div>
+            <div style="background:var(--gray-50); border-radius:var(--radius-md); padding:16px;">
+                <div style="font-size:13px; font-weight:600; margin-bottom:12px;">📍 Shipping Address</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--red); text-transform:uppercase; margin-bottom:6px;">Before</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--red-bg); border-radius:var(--radius-sm); text-decoration:line-through;">
+                            Ryan Lee<br>500 5th Ave<br>New York, NY 10110<br>United States
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">After</div>
+                        <div style="font-size:13px; line-height:1.6; padding:10px; background:var(--primary-bg); border-radius:var(--radius-sm);">
+                            Ryan Lee<br>1 World Trade Center, Floor 85<br>New York, NY 10007<br>United States
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('edit-detail-modal-address2')">Close</button></div>
+    </div>
+</div>
+
+
+
+</div><!-- end main-content -->
+
+<!-- ============ TOAST ============ -->
+<div id="toast" class="toast">✅ <span id="toast-msg"></span></div>
+
+<!-- ============ JAVASCRIPT ============ -->
+<script>
+    // Edits page pagination
+    function switchEditsPage(page) {
+        document.getElementById('edits-page-1').classList.toggle('hidden', page !== 1);
+        document.getElementById('edits-page-2').classList.toggle('hidden', page !== 2);
+        document.getElementById('edits-pg1').classList.toggle('active', page === 1);
+        document.getElementById('edits-pg2').classList.toggle('active', page === 2);
+        document.getElementById('edits-counter').textContent = page === 1 ? 'Showing 1-5 of 10' : 'Showing 6-10 of 10';
+    }
+
+    // Screen switching
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+
+        // Update sidebar active state
+        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.sidebar-item').forEach(b => {
+            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+                b.classList.add('active');
+            }
+        });
+
+        window.scrollTo(0, 0);
+    }
+
+    // Toggle element visibility
+    function toggleElement(id) {
+        document.getElementById(id).classList.toggle('hidden');
+    }
+
+    // Set up guide: collapse/expand entire card
+    function toggleQuickstart() {
+        var body = document.getElementById('quickstart-body');
+        var btn = document.getElementById('quickstart-toggle');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            btn.textContent = '▲';
+            btn.title = 'Collapse';
+        } else {
+            body.style.display = 'none';
+            btn.textContent = '▼';
+            btn.title = 'Expand';
+        }
+    }
+
+    // Set up guide: dismiss
+    function dismissQuickstart() {
+        document.getElementById('quickstart-card').style.display = 'none';
+    }
+
+    // Set up guide: expand a single step (accordion)
+    function expandStep(stepNum) {
+        document.querySelectorAll('.qs-step').forEach(function(step) {
+            var num = step.getAttribute('data-step');
+            var detail = step.querySelector('.qs-step-detail');
+            if (num == stepNum) {
+                // Toggle this step
+                if (detail.style.display === 'none' || !detail.style.display) {
+                    detail.style.display = 'block';
+                    step.style.background = 'var(--gray-50)';
+                    step.style.border = '1px solid var(--gray-200)';
+                    step.style.padding = '16px';
+                } else {
+                    detail.style.display = 'none';
+                    step.style.background = 'transparent';
+                    step.style.border = '1px solid transparent';
+                    step.style.padding = '12px 16px';
+                }
+            } else {
+                // Collapse other steps
+                if (detail) {
+                    detail.style.display = 'none';
+                    step.style.background = 'transparent';
+                    step.style.border = '1px solid transparent';
+                    step.style.padding = '12px 16px';
+                }
+            }
+        });
+    }
+
+    // Modal
+    function openModal(id) {
+        document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+
+    // Toast
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Date filter
+    function setDateFilter(btn, range) {
+        btn.parentElement.querySelectorAll('.btn').forEach(b => { b.style.background = ''; b.style.color = ''; b.style.borderColor = ''; });
+        btn.style.background = 'var(--gray-900)'; btn.style.color = 'white'; btn.style.borderColor = 'var(--gray-900)';
+        const data = {today:{e:'12',c:'5'},'7d':{e:'87',c:'14'},'30d':{e:'247',c:'38'}};
+        document.getElementById('mvp-metric-edits').textContent = data[range].e;
+        document.getElementById('mvp-metric-cancels').textContent = data[range].c;
+    }
+
+    // Quickstart
+    function expandStep(n) {
+        document.querySelectorAll('.qs-step-detail').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.qs-step').forEach(s => { s.style.border = '1px solid transparent'; s.style.background = ''; });
+        const detail = document.querySelector('[data-detail="'+n+'"]');
+        const step = document.querySelector('.qs-step[data-step="'+n+'"]');
+        if (detail) detail.style.display = '';
+        if (step) { step.style.border = '1px solid var(--gray-200)'; step.style.background = 'var(--gray-50)'; }
+    }
+    function toggleQuickstart() {
+        const body = document.getElementById('quickstart-body');
+        const btn = document.getElementById('quickstart-toggle');
+        if (body.style.display === 'none') { body.style.display = ''; btn.textContent = '▲'; }
+        else { body.style.display = 'none'; btn.textContent = '▼'; }
+    }
+    function dismissQuickstart() {
+        document.getElementById('quickstart-card').style.display = 'none';
+        showToast('Quickstart dismissed');
+    }
+
+    // Activity page switch
+    function switchActivityPage(page, btn) {
+        document.getElementById('activity-page-1').classList.toggle('hidden', page !== 1);
+        document.getElementById('activity-page-2').classList.toggle('hidden', page !== 2);
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    // Storefront edit option toggle
+    function toggleSfOption(el) {
+        const detail = el.querySelector('.sf-edit-detail');
+        const chevron = el.querySelector('.sf-chevron');
+        const isOpen = detail.style.display !== 'none';
+        // Close all
+        document.querySelectorAll('.sf-edit-option .sf-edit-detail').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.sf-edit-option .sf-chevron').forEach(c => c.style.transform = '');
+        // Open clicked if was closed
+        if (!isOpen) {
+            detail.style.display = '';
+            chevron.style.transform = 'rotate(90deg)';
+        }
+    }
+    // Prevent clicks inside edit detail from closing the panel
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.sf-edit-detail').forEach(function(d) {
+            d.addEventListener('click', function(e) { e.stopPropagation(); });
+        });
+    });
+
+    // Init: show dashboard
+    showScreen('admin-dashboard');
+</script>
+
+</body>
+</html>
