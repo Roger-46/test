@@ -36,7 +36,7 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 ### Default Field Values
 | Field | Giá trị mặc định |
 |-------|-----------------|
-| Title prefix | **[BD][AFF]** (bắt buộc, thêm trước title) |
+| Title prefix | **[BD][R&E]** (bắt buộc, thêm trước title) |
 | Issue Type | Sub-task |
 | Assignee | haidx |
 | Reviewer | Sơn Nguyễn (`customfield_10900`: `sonnv`) |
@@ -52,7 +52,7 @@ const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
     parent: { key: 'SB-9350' },
-    summary: '[BD][AFF] {TITLE}',
+    summary: '[BD][R&E] {TITLE}',
     issuetype: { name: 'Sub-task' },
     priority: { name: 'Low' },
     customfield_10900: [{ name: 'sonnv' }],   // Reviewer: Sơn Nguyễn
@@ -68,7 +68,7 @@ const body = JSON.stringify({
 ### Default Field Values
 | Field | Giá trị mặc định |
 |-------|-----------------|
-| Title prefix | **[DEV][AFF]** (bắt buộc, thêm trước title) |
+| Title prefix | **[DEV][R&E]** (bắt buộc, thêm trước title) |
 | Issue Type | Task |
 | Assignee | cuongnh01 |
 | Reviewer | tunght (`customfield_10900`) |
@@ -84,7 +84,7 @@ const body = JSON.stringify({
 const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
-    summary: '[DEV][AFF] {TITLE}',
+    summary: '[DEV][R&E] {TITLE}',
     issuetype: { name: 'Task' },
     priority: { name: 'Low' },
     customfield_10900: [{ name: 'tunght' }],   // Reviewer: tunght
@@ -113,12 +113,12 @@ Link: http://space.avada.net/browse/{KEY}
 ## Ví dụ
 
 ### Mode 1 (Roger)
-Roger đang trao đổi về "Forgot Password" → nói "tạo task"
-→ Tạo Sub-task "[BD][AFF] Forgot Password" trong SB-9350
+Roger đang trao đổi về "Return Portal" → nói "tạo task"
+→ Tạo Sub-task "[BD][R&E] Return Portal" trong SB-9350
 
 ### Mode 2 (Dev)
-Roger nói "tạo task jira cho dev với title: Settings page store name"
-→ Tạo Task "[DEV][AFF] Settings page store name", assign cuongnh01, reviewer tunght, Sprint 51
+Roger nói "tạo task jira cho dev với title: Settings page return window"
+→ Tạo Task "[DEV][R&E] Settings page return window", assign cuongnh01, reviewer tunght, Sprint 51
 
 ## Lưu ý
 - **Không mở browser** — chỉ dùng REST API
