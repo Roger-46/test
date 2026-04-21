@@ -157,9 +157,9 @@ The first 100 characters of app descriptions (visible in search results) reveal 
 | **Avada EasyReturns** | 17 | Short, memorable, implies simplicity | Misses "exchange" keyword |
 | **Avada Returns & Exchange Pro** | 30 | Adds "Pro" quality signal | "Pro" adds no search value |
 
-**Recommendation**: **"Avada Returns & Exchanges"** (27 characters)
+**Recommendation**: **"Avada Return & Exchange"** (25 characters)
 
-This follows the established market pattern that merchants recognize, includes both primary keywords ("returns" and "exchanges"), and leads with the Avada brand name for ecosystem recognition. The plural "Exchanges" matches how 9 of 11 top competitors format their title.
+This follows the Avada brand convention (singular form, matching "Avada Order Editing"), includes both primary keywords ("return" and "exchange"), and leads with the Avada brand name for ecosystem recognition. Consistent brand naming across the Avada app ecosystem is prioritized over matching competitor pluralization.
 
 ### App Card Subtitle (62 characters max)
 

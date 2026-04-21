@@ -1,4 +1,4 @@
-# Memory Index - Roger & Order Editing Project
+# Memory Index - Roger & Return & Exchange Project
 
 ## User
 - [user_profile.md](user_profile.md) - Roger is a Vietnamese BA, team of 3 devs + 1 tester
@@ -18,7 +18,7 @@
 - [feedback_feature_folder_numbering.md](feedback_feature_folder_numbering.md) - Feature folders must have numbered prefix
 
 ## Project
-- [project_order_editing.md](project_order_editing.md) - Order Editing app, new project, same tech stack
+- [project_order_editing.md](project_order_editing.md) - Return & Exchange app, new project, same tech stack
 
 ## Daily Log
 - **Location**: `.claude/memory/daily-log/{DD-M-YYYY}.md`

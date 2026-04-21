@@ -1,11 +1,11 @@
 # 09 - Product Requirements Document (PRD): Avada Return & Exchange
 
-**Product Name:** Avada Returns & Exchanges
+**Product Name:** Avada Return & Exchange
 **Version:** 2.0 (Lean MVP)
 **Author:** Roger (BA) + Research Team
 **Date:** 2026-04-10
 **Status:** Draft
-**App Store Name:** Avada Returns & Exchanges
+**App Store Name:** Avada Return & Exchange
 **App Store Subtitle:** Automate returns, exchanges & refunds. 50 free returns/mo
 
 ---
@@ -30,7 +30,7 @@
 
 ## 1. Executive Summary
 
-Avada Returns & Exchanges is a Shopify app that enables merchants to manage product returns, issue refunds and store credit, and provide customers with a self-service return portal -- all without requiring manual email communication or Shopify native workarounds.
+Avada Return & Exchange is a Shopify app that enables merchants to manage product returns, issue refunds and store credit, and provide customers with a self-service return portal -- all without requiring manual email communication or Shopify native workarounds.
 
 The returns management software market is valued at $1.93 billion (2026) and growing at 12.9% CAGR. Online return rates have reached 24.5% in 2025, with fashion/apparel stores facing 30-40% return rates. Despite 122+ apps in the Shopify App Store Returns & Exchanges category, a massive pricing gap exists between "free but useless" plans (3-6 returns/month) and "powerful but unaffordable" solutions ($155-$340/month). No current app offers a genuinely useful free tier combined with affordable paid plans that include store credit, auto-approve, and basic automation.
 
@@ -103,7 +103,7 @@ There is a clear whitespace in the market for an affordable, full-featured retur
 
 ## 3. Solution Description
 
-Avada Returns & Exchanges is a Shopify embedded app that provides:
+Avada Return & Exchange is a Shopify embedded app that provides:
 
 **For Merchants (Admin App):**
 - A dashboard showing key return metrics at a glance
@@ -868,7 +868,7 @@ Avada enters the market in the **Budget tier with Mid-Range capabilities** -- of
 
 ### Positioning Statement
 
-**For Shopify merchants who process returns** and are frustrated with either the limitations of Shopify's native returns or the high cost of dedicated return apps, **Avada Returns & Exchanges** provides a self-service return portal and admin management dashboard **that works out of the box on a free plan** with store credit, return tracking, and transparent pricing. **Unlike** AfterShip, Loop, and Return Prime, **Avada** offers 5x-50x more free returns than competitors, includes store credit on the free plan (competitors charge $20-$60/month for this), and sets up in under 10 minutes without sales calls or week-long onboarding.
+**For Shopify merchants who process returns** and are frustrated with either the limitations of Shopify's native returns or the high cost of dedicated return apps, **Avada Return & Exchange** provides a self-service return portal and admin management dashboard **that works out of the box on a free plan** with store credit, return tracking, and transparent pricing. **Unlike** AfterShip, Loop, and Return Prime, **Avada** offers 5x-50x more free returns than competitors, includes store credit on the free plan (competitors charge $20-$60/month for this), and sets up in under 10 minutes without sales calls or week-long onboarding.
 
 ---
 
@@ -1079,7 +1079,7 @@ Full technical diagrams are available in `08-diagrams.md`. Below is a summary of
 ### Post-Launch Growth (Weeks 1-12)
 
 **Channel 1: Shopify App Store Organic (Primary)**
-- Optimized title: "Avada Returns & Exchanges"
+- Optimized title: "Avada Return & Exchange"
 - Optimized subtitle: "Automate returns, exchanges & refunds. 50 free returns/mo"
 - Target keywords: returns, exchange, refund, return label, store credit, return portal, return automation
 - Install velocity from Avada ecosystem cross-promotion drives ranking improvement

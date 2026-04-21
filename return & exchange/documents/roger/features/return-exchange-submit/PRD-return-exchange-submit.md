@@ -136,7 +136,7 @@ Success Page -> Return ID + warehouse address + tracking link
 
 ```
 +---------------------------------------------+
-|  Avada Returns & Exchanges                   |
+|  Avada Return & Exchange                     |
 |                                              |
 |  Start a Return                              |
 |                                              |
@@ -285,10 +285,10 @@ Mo app -> Dashboard (welcome + link returns + edits left counter)
 
 ```
 +---------------------------------------------+
-|  Avada Returns & Exchanges                   |
+|  Avada Return & Exchange                     |
 |  Dashboard   Returns   Settings              |
 |                                              |
-|  Welcome to Avada Returns & Exchanges!       |
+|  Welcome to Avada Return & Exchange!         |
 |                                              |
 |  Manage your store's return requests         |
 |  easily from one place.                      |
@@ -456,7 +456,7 @@ Mo app -> Dashboard (welcome + link returns + edits left counter)
 
 ```
 +---------------------------------------------+
-|  Welcome to Avada Returns & Exchanges!       |
+|  Welcome to Avada Return & Exchange!         |
 |                                              |
 |  Get started in 2 steps:                     |
 |                                              |
@@ -606,7 +606,7 @@ Mo app -> Dashboard (welcome + link returns + edits left counter)
 
 | Item | Data Type | Required | Default | Mo ta | Validate |
 |------|-----------|----------|---------|-------|----------|
-| Welcome title | Text | Y | — | "Welcome to Avada Returns & Exchanges!" | — |
+| Welcome title | Text | Y | — | "Welcome to Avada Return & Exchange!" | — |
 | Welcome description | Text | Y | — | "Manage your store's return requests easily" | — |
 | Returns left counter | Card | Y | 5 | "Returns left: X/5 this month" | Reset dau thang |
 | View Returns link | Button | Y | — | Link sang Return Requests page | — |
@@ -670,7 +670,7 @@ Mo app -> Dashboard (welcome + link returns + edits left counter)
 
 | Item | Data Type | Required | Default | Mo ta | Validate |
 |------|-----------|----------|---------|-------|----------|
-| Welcome title | Text | Y | — | "Welcome to Avada Returns & Exchanges!" | — |
+| Welcome title | Text | Y | — | "Welcome to Avada Return & Exchange!" | — |
 | Step 1 | Checklist | Y | unchecked | "Configure return settings" -> link Settings | Auto-check khi settings saved |
 | Step 2 | Checklist | Y | unchecked | "Check your return portal" -> mo storefront | Auto-check khi merchant visits portal |
 | Setup guide link | Link | N | — | Link toi help docs | — |

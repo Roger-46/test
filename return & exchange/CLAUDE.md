@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this Shopify Order Editing application.
+This file provides guidance to Claude Code when working with this Shopify Return & Exchange application.
 
 ## Tech Stack
 

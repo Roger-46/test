@@ -482,7 +482,7 @@
 
 ```
 +------------------------------------------------------------------+
-| Avada Returns & Exchanges                    [Plan: Free] [?Help]|
+| Avada Return & Exchange                      [Plan: Free] [?Help]|
 +------------------------------------------------------------------+
 |                                                                  |
 |  Welcome back, Greg!                              April 9, 2026  |
@@ -1179,7 +1179,7 @@
 
 ```
 +------------------------------------------------------------------+
-|  Avada Returns & Exchanges                                        |
+|  Avada Return & Exchange                                          |
 |                                                                  |
 |  [NAV]                                                           |
 |  +-- Dashboard (Screen 8)                                        |

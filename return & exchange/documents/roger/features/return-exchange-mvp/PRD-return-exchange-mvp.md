@@ -393,7 +393,7 @@ Mo app → Dashboard (metrics + recent returns)
 
 ```
 ┌──────────────────────────────────────────┐
-│  Avada Returns & Exchanges               │
+│  Avada Return & Exchange                 │
 │  Dashboard   Returns   Settings          │
 │                                          │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ │
@@ -574,7 +574,7 @@ Mo app → Dashboard (metrics + recent returns)
 
 ```
 ┌──────────────────────────────────────────┐
-│  Welcome to Avada Returns & Exchanges!   │
+│  Welcome to Avada Return & Exchange!     │
 │                                          │
 │  Get started in 5 steps (~10 minutes):  │
 │                                          │

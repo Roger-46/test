@@ -1,6 +1,6 @@
 ---
 name: Roger - BA Profile
-description: Roger is a Vietnamese BA working on Affily Shopify affiliate app, prefers Vietnamese communication, leads a team of 3 devs + 1 tester
+description: Roger is a Vietnamese BA working on the Return & Exchange Shopify app, prefers Vietnamese communication, leads a team of 3 devs + 1 tester
 type: user
 ---
 
