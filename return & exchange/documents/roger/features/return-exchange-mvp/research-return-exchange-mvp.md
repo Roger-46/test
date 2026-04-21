@@ -1,4 +1,4 @@
-# Research: Avada Return & Exchange MVP
+# Research: Avada Returns & Exchanges MVP
 
 ## 1. Tổng Quan Thị Trường
 

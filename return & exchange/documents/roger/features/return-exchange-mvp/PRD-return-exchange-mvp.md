@@ -1,4 +1,4 @@
-# Avada Return & Exchange -- PRD MVP (Full)
+# Avada Returns & Exchanges -- PRD MVP (Full)
 
 **Link task Jira:** (TBD)
 
@@ -393,7 +393,7 @@ Mo app → Dashboard (metrics + recent returns)
 
 ```
 ┌──────────────────────────────────────────┐
-│  Avada Return & Exchange                 │
+│  Avada Returns & Exchanges                 │
 │  Dashboard   Returns   Settings          │
 │                                          │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ │
@@ -574,7 +574,7 @@ Mo app → Dashboard (metrics + recent returns)
 
 ```
 ┌──────────────────────────────────────────┐
-│  Welcome to Avada Return & Exchange!     │
+│  Welcome to Avada Returns & Exchanges!     │
 │                                          │
 │  Get started in 5 steps (~10 minutes):  │
 │                                          │

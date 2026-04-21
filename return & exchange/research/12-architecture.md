@@ -1,8 +1,8 @@
-# 12 - Technical Architecture: Avada Return & Exchange
+# 12 - Technical Architecture: Avada Returns & Exchanges
 
 ## Overview
 
-This document details the technical architecture for the Avada Return & Exchange app, aligned with the tech stack defined in CLAUDE.md (Node.js, Firebase Functions, Firestore, React/Polaris v12+, BigQuery) and the system diagrams from file 08.
+This document details the technical architecture for the Avada Returns & Exchanges app, aligned with the tech stack defined in CLAUDE.md (Node.js, Firebase Functions, Firestore, React/Polaris v12+, BigQuery) and the system diagrams from file 08.
 
 ---
 

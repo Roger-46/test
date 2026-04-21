@@ -1,4 +1,4 @@
-# 05 - Competitor Analysis: Avada Return & Exchange
+# 05 - Competitor Analysis: Avada Returns & Exchanges
 
 ## 1. Competitive Landscape Overview
 

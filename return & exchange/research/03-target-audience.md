@@ -1,4 +1,4 @@
-# 03 - Target Audience: Avada Return & Exchange
+# 03 - Target Audience: Avada Returns & Exchanges
 
 ## 1. Market Segmentation Overview
 
@@ -75,7 +75,7 @@ The Shopify merchant ecosystem can be segmented into four tiers based on store s
 - Will upgrade to paid if free tier delivers clear value and he can see ROI
 - Shares recommendations in merchant communities and Slack groups
 
-**This is the PRIMARY target customer for Avada Return & Exchange.**
+**This is the PRIMARY target customer for Avada Returns & Exchanges.**
 
 ---
 

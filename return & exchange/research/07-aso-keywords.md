@@ -1,4 +1,4 @@
-# 07 - ASO & Keywords Strategy: Avada Return & Exchange
+# 07 - ASO & Keywords Strategy: Avada Returns & Exchanges
 
 ## 1. Shopify App Store Search Landscape
 
@@ -152,14 +152,14 @@ The first 100 characters of app descriptions (visible in search results) reveal 
 | Option | Characters | Strengths | Weaknesses |
 |--------|-----------|-----------|------------|
 | **Avada Returns & Exchanges** | 27 | Brand + primary keywords, follows market pattern | Generic pattern, less memorable |
-| **Avada Return & Exchange** | 25 | Slightly shorter, singular form | Less keyword coverage (singular vs. plural) |
+| **Avada Returns & Exchanges** | 25 | Slightly shorter, singular form | Less keyword coverage (singular vs. plural) |
 | **Avada Returns: Smart Exchange** | 31 | Emphasizes exchange + smart/AI angle | Over character limit |
 | **Avada EasyReturns** | 17 | Short, memorable, implies simplicity | Misses "exchange" keyword |
 | **Avada Returns & Exchange Pro** | 30 | Adds "Pro" quality signal | "Pro" adds no search value |
 
-**Recommendation**: **"Avada Return & Exchange"** (25 characters)
+**Recommendation**: **"Avada Returns & Exchanges"** (27 characters)
 
-This follows the Avada brand convention (singular form, matching "Avada Order Editing"), includes both primary keywords ("return" and "exchange"), and leads with the Avada brand name for ecosystem recognition. Consistent brand naming across the Avada app ecosystem is prioritized over matching competitor pluralization.
+This follows the dominant market pattern used by 10 of 11 top competitors (AfterShip, Loop, ReturnGO, ParcelWILL, etc.), matching the standard `[Brand Name] Returns & Exchanges` format. The plural form covers both singular and plural search queries, includes both primary keywords ("returns" and "exchanges"), and leads with the Avada brand name for ecosystem recognition. Matching competitor pluralization maximizes keyword coverage in search results.
 
 ### App Card Subtitle (62 characters max)
 

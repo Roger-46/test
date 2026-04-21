@@ -1,4 +1,4 @@
-# 02 - Feature Matrix: Avada Return & Exchange
+# 02 - Feature Matrix: Avada Returns & Exchanges
 
 ## 1. Complete Feature List with Priority
 
@@ -219,7 +219,7 @@ These features represent genuine innovation opportunities that no current Shopif
 
 ## 5. Proposed Pricing Strategy
 
-Based on competitive analysis, the optimal pricing structure for Avada Return & Exchange:
+Based on competitive analysis, the optimal pricing structure for Avada Returns & Exchanges:
 
 | Plan | Price | Returns/Month | Key Feature Unlocks |
 |------|-------|--------------|-------------------|

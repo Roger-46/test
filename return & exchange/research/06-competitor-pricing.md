@@ -1,4 +1,4 @@
-# 06 - Competitor Pricing Analysis: Avada Return & Exchange
+# 06 - Competitor Pricing Analysis: Avada Returns & Exchanges
 
 ## 1. Detailed Pricing Tiers for Each Competitor
 

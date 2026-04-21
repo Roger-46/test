@@ -1,4 +1,4 @@
-# 04 - Opportunity Scoring: Avada Return & Exchange
+# 04 - Opportunity Scoring: Avada Returns & Exchanges
 
 ## 1. Feature Opportunity Scoring Matrix
 

@@ -1,4 +1,4 @@
-# 13 - Implementation Checklist: Avada Return & Exchange
+# 13 - Implementation Checklist: Avada Returns & Exchanges
 
 ## Overview
 

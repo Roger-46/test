@@ -1,4 +1,4 @@
-# 10 - Screen Descriptions & Wireframes: Avada Return & Exchange
+# 10 - Screen Descriptions & Wireframes: Avada Returns & Exchanges
 
 **Version:** 1.0 (MVP)
 **Date:** 2026-04-09
@@ -482,7 +482,7 @@
 
 ```
 +------------------------------------------------------------------+
-| Avada Return & Exchange                      [Plan: Free] [?Help]|
+| Avada Returns & Exchanges                      [Plan: Free] [?Help]|
 +------------------------------------------------------------------+
 |                                                                  |
 |  Welcome back, Greg!                              April 9, 2026  |
@@ -1179,7 +1179,7 @@
 
 ```
 +------------------------------------------------------------------+
-|  Avada Return & Exchange                                          |
+|  Avada Returns & Exchanges                                          |
 |                                                                  |
 |  [NAV]                                                           |
 |  +-- Dashboard (Screen 8)                                        |

@@ -1,4 +1,4 @@
-# 11 - User Stories & Test Cases: Avada Return & Exchange
+# 11 - User Stories & Test Cases: Avada Returns & Exchanges
 
 ## Overview
 
@@ -48,7 +48,7 @@ This document defines user stories with acceptance criteria and comprehensive te
 > As a **Store Owner**, I want to embed the return portal on my storefront via theme extension so that customers can access it directly.
 
 **Acceptance Criteria:**
-- Given I have installed the Avada Return & Exchange app
+- Given I have installed the Avada Returns & Exchanges app
 - When I activate the theme app extension in my Shopify theme editor
 - Then the return portal is accessible at a dedicated page on my storefront
 

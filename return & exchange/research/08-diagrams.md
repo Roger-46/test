@@ -1,4 +1,4 @@
-# 08 - Technical Diagrams: Avada Return & Exchange
+# 08 - Technical Diagrams: Avada Returns & Exchanges
 
 ## 1. System Architecture Diagram
 
@@ -816,7 +816,7 @@ flowchart TB
 
 ## Summary
 
-This document contains 8 comprehensive technical diagrams covering the full architecture and user flows for the Avada Return & Exchange app:
+This document contains 8 comprehensive technical diagrams covering the full architecture and user flows for the Avada Returns & Exchanges app:
 
 | # | Diagram | Purpose |
 |---|---------|---------|
