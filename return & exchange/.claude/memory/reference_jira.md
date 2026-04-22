@@ -1,6 +1,6 @@
 ---
 name: Jira Integration
-description: Jira REST API config - project SB, credentials, sub-task template, parent SB-9350, title prefix [BD][AFF]
+description: Jira REST API config - project SB, credentials, sub-task template, parent SB-9350, title prefix [BD][R&E]
 type: reference
 ---
 
@@ -11,7 +11,7 @@ type: reference
 - **Auth header**: `-u "haidx:Avada@123"`
 - **Project ID**: 10500
 - **Project Name**: Solar Board
-- **Title Prefix**: `[BD][AFF]` (bat buoc cho moi Jira task)
+- **Title Prefix**: `[BD][R&E]` (bat buoc cho moi Jira task)
 
 **3 TRIGGER:**
 

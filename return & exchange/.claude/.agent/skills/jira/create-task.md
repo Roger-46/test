@@ -17,6 +17,7 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 ## Config
 
 ### Parent Task (cập nhật theo tháng) — chỉ dùng cho Mode 1
+- **Tháng 4/2026**: `SB-10372`
 - **Tháng 3/2026**: `SB-9350` (Issue ID: `21880`)
 - Khi Roger thông báo đổi task cha → cập nhật tại đây
 
@@ -51,14 +52,19 @@ Khi Roger nói **"tạo task jira cho dev"** (hoặc tương tự: "tạo task d
 const body = JSON.stringify({
   fields: {
     project: { key: 'SB' },
-    parent: { key: 'SB-9350' },
+    parent: { key: 'SB-10372' },
     summary: '[BD][R&E] {TITLE}',
     issuetype: { name: 'Sub-task' },
     priority: { name: 'Low' },
+    customfield_10700: [{ name: 'haidx' }],   // Assignee: haidx (Roger)
     customfield_10900: [{ name: 'sonnv' }],   // Reviewer: Sơn Nguyễn
-    customfield_11000: { value: 'Roger' }      // Product Owner
+    customfield_11000: { id: '10800' }         // Product Owner: Roger
   }
 });
+
+// Sau khi tạo xong → PUT assignee chính:
+// PUT /rest/api/2/issue/{KEY}/assignee
+// Body: { "name": "haidx" }
 ```
 
 ---
@@ -114,7 +120,7 @@ Link: http://space.avada.net/browse/{KEY}
 
 ### Mode 1 (Roger)
 Roger đang trao đổi về "Return Portal" → nói "tạo task"
-→ Tạo Sub-task "[BD][R&E] Return Portal" trong SB-9350
+→ Tạo Sub-task "[BD][R&E] Return Portal" trong SB-10372
 
 ### Mode 2 (Dev)
 Roger nói "tạo task jira cho dev với title: Settings page return window"

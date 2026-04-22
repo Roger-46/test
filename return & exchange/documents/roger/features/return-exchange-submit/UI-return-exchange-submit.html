@@ -3,241 +3,863 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Mockup — Avada Returns & Exchanges Submit Version</title>
+    <title>UI Mockup — Avada Returns & Exchanges Submit Version (Polaris v12)</title>
     <style>
-        /* === BASE STYLES === */
+        /* Design system: Shopify Polaris v12 tokens */
         :root {
+            /* === COLOR TOKENS === */
             --primary: #2D9D78;
             --primary-hover: #247F62;
             --primary-bg: #E3F5EF;
-            --blue: #4A90E2;
-            --blue-bg: #E8F0FE;
+            --blue: #2C6ECB;
+            --blue-hover: #1F5199;
+            --blue-bg: #EBF5FA;
             --red: #D72C0D;
-            --red-bg: #FFF4F4;
-            --red-hover: #BC1F0D;
+            --red-hover: #B3200C;
+            --red-bg: #FFD1D1;
+            --red-bg-soft: #FFF4F4;
             --yellow: #B98900;
-            --yellow-bg: #FFF8E5;
-            --gray-50: #FAFAFA;
-            --gray-100: #F6F6F7;
+            --yellow-bg: #FFEA8A;
+            --yellow-bg-soft: #FFF8E5;
+            --green-bg: #AEE9D1;
+
+            --gray-900: #202223;
+            --gray-700: #4A4A4F;
+            --gray-500: #6D7175;
+            --gray-400: #babec3;
+            --gray-300: #E1E3E5;
             --gray-200: #E4E5E7;
-            --gray-300: #D2D5D8;
-            --gray-400: #AEB4B9;
-            --gray-500: #8C9196;
-            --gray-600: #6D7175;
-            --gray-700: #5C5F62;
-            --gray-800: #44474A;
-            --gray-900: #1A1C1E;
+            --gray-100: #F1F2F3;
+            --gray-50: #FAFBFB;
             --white: #FFFFFF;
+
+            /* === SPACING TOKENS (Polaris 100..800) === */
+            --space-100: 4px;
+            --space-200: 8px;
+            --space-300: 12px;
+            --space-400: 16px;
+            --space-500: 20px;
+            --space-600: 24px;
+            --space-800: 32px;
+
+            /* === RADIUS TOKENS === */
+            --radius-100: 4px;
+            --radius-200: 8px;   /* button, input */
+            --radius-300: 12px;  /* card, modal, banner */
+
+            /* === TYPOGRAPHY === */
             --font: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, sans-serif;
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-hover: 0 2px 8px rgba(0,0,0,0.12);
-            --shadow-modal: 0 8px 32px rgba(0,0,0,0.2);
+
+            /* === SHADOW === */
+            --shadow-card: 0 1px 0 rgba(0,0,0,0.05);
+            --shadow-modal: 0 26px 80px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,0.2);
+
+            /* === BUTTON HEIGHTS === */
+            --btn-slim: 28px;
+            --btn-medium: 40px;
+            --btn-large: 44px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font); background: var(--gray-100); color: var(--gray-900); font-size: 14px; line-height: 1.5; }
+        html { -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font);
+            background: var(--gray-100);
+            color: var(--gray-900);
+            font-size: 14px;
+            line-height: 1.43;
+        }
+
+        /* === TYPOGRAPHY HELPERS === */
+        .t-heading-xl { font-size: 32px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+        .t-heading-lg { font-size: 24px; font-weight: 600; line-height: 1.3; }
+        .t-heading-md { font-size: 18px; font-weight: 600; line-height: 1.4; }
+        .t-heading-sm { font-size: 14px; font-weight: 600; line-height: 1.43; }
+        .t-body-md    { font-size: 14px; line-height: 1.43; }
+        .t-body-sm    { font-size: 13px; line-height: 1.4; }
+        .t-label      { font-size: 13px; font-weight: 500; line-height: 1.3; }
+        .t-subdued    { color: var(--gray-500); }
+        .t-secondary  { color: var(--gray-700); }
 
         /* === SHOPIFY TOPBAR === */
-        .shopify-topbar { height: 56px; background: #1A1C1D; display: flex; align-items: center; padding: 0 16px; gap: 12px; position: fixed; top: 0; left: 0; right: 0; z-index: 200; }
-        .shopify-topbar-logo { display: flex; align-items: center; }
+        .shopify-topbar {
+            height: 56px;
+            background: #1A1C1D;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--space-400);
+            gap: var(--space-300);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+        }
         .shopify-topbar-logo svg { width: 24px; height: 24px; }
-        .shopify-topbar-search { flex: 1; max-width: 580px; margin: 0 auto; background: #303030; border: 1px solid #505050; border-radius: 8px; padding: 7px 12px; color: #999; font-size: 13px; display: flex; align-items: center; gap: 8px; }
-        .shopify-topbar-right { display: flex; align-items: center; gap: 12px; }
-        .shopify-topbar-avatar { width: 28px; height: 28px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600; }
+        .shopify-topbar-search {
+            flex: 1;
+            max-width: 580px;
+            margin: 0 auto;
+            background: #303030;
+            border: 1px solid #505050;
+            border-radius: var(--radius-200);
+            padding: 0 var(--space-300);
+            height: 32px;
+            color: #999;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: var(--space-200);
+        }
+        .shopify-topbar-right { display: flex; align-items: center; gap: var(--space-300); }
+        .shopify-topbar-avatar {
+            width: 28px; height: 28px;
+            border-radius: var(--radius-100);
+            background: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white);
+            font-size: 12px; font-weight: 600;
+        }
         .shopify-topbar-store { color: #ccc; font-size: 13px; font-weight: 500; }
 
         /* === SIDEBAR === */
-        .sidebar { width: 240px; position: fixed; top: 56px; left: 0; bottom: 0; background: var(--white); border-right: 1px solid var(--gray-200); overflow-y: auto; z-index: 100; }
-        .sidebar-header { padding: 16px 16px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--gray-200); }
-        .sidebar-app-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700; flex-shrink: 0; }
-        .sidebar-app-name { font-size: 14px; font-weight: 600; }
-        .sidebar-app-sub { font-size: 11px; color: var(--gray-500); }
-        .sidebar-nav { padding: 8px 0; }
-        .sidebar-section { padding: 8px 16px 4px; font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 13.5px; color: var(--gray-600); cursor: pointer; border-left: 3px solid transparent; transition: all 0.1s; text-decoration: none; }
-        .sidebar-item:hover { background: var(--gray-50); color: var(--gray-900); }
-        .sidebar-item.active { background: #F4F5FA; color: #2C6ECB; font-weight: 600; border-left-color: #2C6ECB; }
-        .sidebar-item-icon { font-size: 16px; width: 20px; text-align: center; }
-        .sidebar-item-badge { margin-left: auto; background: var(--gray-200); color: var(--gray-600); font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
-        .sidebar-item-badge.attention { background: var(--yellow-bg); color: var(--yellow); }
-        .sidebar-divider { height: 1px; background: var(--gray-200); margin: 8px 16px; }
+        .sidebar {
+            width: 240px;
+            position: fixed;
+            top: 56px; left: 0; bottom: 0;
+            background: var(--white);
+            border-right: 1px solid var(--gray-300);
+            overflow-y: auto;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: var(--space-400);
+            display: flex;
+            align-items: center;
+            gap: var(--space-300);
+            border-bottom: 1px solid var(--gray-300);
+        }
+        .sidebar-app-icon {
+            width: 32px; height: 32px;
+            border-radius: var(--radius-200);
+            background: linear-gradient(135deg, #2D9D78, #3DB88E);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white);
+            font-size: 16px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .sidebar-app-name { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+        .sidebar-app-sub  { font-size: 12px; color: var(--gray-500); }
+        .sidebar-nav { padding: var(--space-200) 0; }
+        .sidebar-section {
+            padding: var(--space-300) var(--space-400) var(--space-100);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-300);
+            padding: 0 var(--space-400);
+            height: 36px;
+            font-size: 13px;
+            color: var(--gray-700);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.1s;
+            text-decoration: none;
+        }
+        .sidebar-item:hover { background: var(--gray-100); color: var(--gray-900); }
+        .sidebar-item.active {
+            background: var(--blue-bg);
+            color: var(--blue);
+            font-weight: 600;
+            border-left-color: var(--blue);
+        }
+        .sidebar-item-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar-item-badge {
+            margin-left: auto;
+            background: var(--yellow-bg);
+            color: #7d5e00;
+            font-size: 11px; font-weight: 600;
+            padding: 0 var(--space-200);
+            height: 18px;
+            line-height: 18px;
+            border-radius: 9px;
+        }
+        .sidebar-divider {
+            height: 1px;
+            background: var(--gray-300);
+            margin: var(--space-200) var(--space-400);
+        }
 
         /* === MAIN CONTENT === */
-        .main-content { margin-left: 240px; margin-top: 56px; min-height: calc(100vh - 56px); }
+        .main-content {
+            margin-left: 240px;
+            margin-top: 56px;
+            min-height: calc(100vh - 56px);
+        }
 
-        /* === LAYOUT === */
-        .page { max-width: 960px; margin: 0 auto; padding: 24px; }
-        .page-wide { max-width: 1200px; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .page-title { font-size: 24px; font-weight: 600; }
-        .page-subtitle { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
+        /* === LAYOUT (Polaris Page + Layout) === */
+        .layout {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: var(--space-600);
+        }
+        .layout-wide { max-width: 1200px; }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--space-400);
+            margin-bottom: var(--space-600);
+        }
+        .page-title {
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            color: var(--gray-900);
+        }
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-top: var(--space-100);
+        }
+        .page-back {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-100);
+            font-size: 13px;
+            color: var(--blue);
+            cursor: pointer;
+            margin-bottom: var(--space-200);
+            text-decoration: none;
+        }
+        .page-back:hover { text-decoration: underline; }
+
+        /* Layout section (full width) */
+        .layout-section { margin-bottom: var(--space-400); }
+        .layout-section:last-child { margin-bottom: 0; }
+
+        /* BlockStack vertical spacing patterns */
+        .stack-100 > * + * { margin-top: var(--space-100); }
+        .stack-200 > * + * { margin-top: var(--space-200); }
+        .stack-300 > * + * { margin-top: var(--space-300); }
+        .stack-400 > * + * { margin-top: var(--space-400); }
+        .stack-500 > * + * { margin-top: var(--space-500); }
+        .stack-600 > * + * { margin-top: var(--space-600); }
+
+        /* InlineStack */
+        .inline-stack { display: flex; align-items: center; flex-wrap: wrap; }
+        .inline-stack-200 { gap: var(--space-200); }
+        .inline-stack-300 { gap: var(--space-300); }
+        .inline-stack-400 { gap: var(--space-400); }
+        .inline-stack-between { justify-content: space-between; }
+        .inline-stack-end { justify-content: flex-end; }
 
         /* === CARD === */
-        .card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; margin-bottom: 16px; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .card-title { font-size: 16px; font-weight: 600; }
-        .card-section { padding: 16px 0; border-top: 1px solid var(--gray-200); }
-        .card-section:first-child { border-top: none; padding-top: 0; }
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-300);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--gray-300);
+            padding: var(--space-400);
+        }
+        .card + .card { margin-top: var(--space-400); }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-300);
+            margin-bottom: var(--space-400);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--gray-900);
+        }
 
         /* === BUTTONS === */
-        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-900); font-family: var(--font); transition: all 0.15s; height: 36px; }
-        .btn:hover { background: var(--gray-50); }
-        .btn-primary { background: var(--primary); color: var(--white); border-color: var(--primary); }
-        .btn-primary:hover { background: var(--primary-hover); }
-        .btn-destructive { background: var(--red); color: var(--white); border-color: var(--red); }
-        .btn-destructive:hover { background: var(--red-hover); }
-        .btn-plain { border: none; background: none; color: var(--blue); padding: 4px 8px; height: auto; }
-        .btn-plain:hover { text-decoration: underline; }
-        .btn-group { display: flex; gap: 8px; }
-        .btn-lg { height: 44px; padding: 10px 24px; font-size: 15px; }
-        .btn-sm { height: 28px; font-size: 12px; padding: 4px 12px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-200);
+            padding: 0 var(--space-400);
+            height: var(--btn-medium);
+            border-radius: var(--radius-200);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--gray-400);
+            background: var(--white);
+            color: var(--gray-900);
+            font-family: var(--font);
+            transition: all 0.15s;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .btn:hover { background: var(--gray-50); border-color: var(--gray-500); }
+        .btn:focus { outline: none; box-shadow: 0 0 0 2px var(--blue-bg); border-color: var(--blue); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+
+        .btn-critical {
+            background: var(--red);
+            color: var(--white);
+            border-color: var(--red);
+        }
+        .btn-critical:hover { background: var(--red-hover); border-color: var(--red-hover); }
+
+        .btn-plain {
+            border: none;
+            background: none;
+            color: var(--blue);
+            padding: 0;
+            height: auto;
+            font-weight: 500;
+        }
+        .btn-plain:hover { text-decoration: underline; background: none; }
+
+        .btn-plain-critical { color: var(--red); }
+
+        .btn-lg { height: var(--btn-large); padding: 0 var(--space-600); font-size: 15px; }
+        .btn-sm { height: var(--btn-slim); padding: 0 var(--space-300); font-size: 12px; }
+
+        .btn-block { width: 100%; }
+
+        .btn-group { display: inline-flex; gap: var(--space-200); flex-wrap: wrap; }
 
         /* === FORM === */
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--gray-800); }
-        .form-input { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); height: 36px; }
-        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .form-select { appearance: none; background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%238C9196' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") right 12px center no-repeat; padding-right: 32px; }
-        .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); resize: vertical; min-height: 80px; }
-        .form-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
+        .form-group { }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: var(--space-100);
+            color: var(--gray-900);
+            line-height: 1.3;
+        }
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0 var(--space-300);
+            border: 1px solid var(--gray-400);
+            border-radius: var(--radius-200);
+            font-size: 14px;
+            font-family: var(--font);
+            height: var(--btn-medium);
+            color: var(--gray-900);
+            background: var(--white);
+        }
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-bg);
+        }
+        .form-select {
+            appearance: none;
+            background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%236D7175' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") right var(--space-300) center no-repeat;
+            padding-right: var(--space-800);
+        }
+        .form-textarea {
+            width: 100%;
+            padding: var(--space-200) var(--space-300);
+            border: 1px solid var(--gray-400);
+            border-radius: var(--radius-200);
+            font-size: 14px;
+            font-family: var(--font);
+            resize: vertical;
+            min-height: 88px;
+            line-height: 1.43;
+            color: var(--gray-900);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-300);
+        }
+        .form-help {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: var(--space-100);
+        }
 
         /* === CHECKBOX === */
-        .checkbox-group { display: flex; flex-direction: column; gap: 12px; }
-        .checkbox-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+        .checkbox-item {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-200);
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--gray-900);
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px; height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
 
         /* === TABLE === */
-        .table-wrapper { overflow-x: auto; }
+        .table-wrapper {
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-200);
+            overflow: hidden;
+        }
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--gray-200); background: var(--gray-50); }
-        td { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); }
-        tr:hover td { background: var(--gray-50); }
+        th {
+            text-align: left;
+            padding: var(--space-300) var(--space-400);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid var(--gray-300);
+            background: var(--gray-50);
+        }
+        td {
+            padding: var(--space-300) var(--space-400);
+            border-bottom: 1px solid var(--gray-300);
+            font-size: 14px;
+            color: var(--gray-900);
+            vertical-align: middle;
+        }
         tr:last-child td { border-bottom: none; }
+        tr.row-clickable { cursor: pointer; }
+        tr.row-clickable:hover td { background: var(--gray-50); }
 
         /* === BADGE === */
-        .badge { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 500; }
-        .badge-success { background: var(--primary-bg); color: #1a6b4f; }
-        .badge-info { background: var(--blue-bg); color: #2563a8; }
-        .badge-warning { background: var(--yellow-bg); color: #7d5e00; }
-        .badge-critical { background: var(--red-bg); color: #a51b08; }
-        .badge-default { background: var(--gray-100); color: var(--gray-600); }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 var(--space-200);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1;
+        }
+        .badge-default  { background: var(--gray-200); color: var(--gray-900); }
+        .badge-success  { background: var(--green-bg); color: #0C5132; }
+        .badge-info     { background: var(--gray-200); color: var(--gray-900); }
+        .badge-warning  { background: var(--yellow-bg); color: #5C4813; }
+        .badge-critical { background: var(--red-bg); color: #8E1900; }
+        .badge-attention { background: #FFE3B3; color: #5C4813; }
 
         /* === BANNER === */
-        .banner { padding: 12px 16px; border-radius: var(--radius-md); display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
-        .banner-info { background: var(--blue-bg); border: 1px solid #B8D4F7; }
-        .banner-warning { background: var(--yellow-bg); border: 1px solid #E3C87A; }
-        .banner-critical { background: var(--red-bg); border: 1px solid #F5B8B8; }
-        .banner-success { background: var(--primary-bg); border: 1px solid #A3D9C5; }
-        .banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-        .banner-content { flex: 1; }
-        .banner-title { font-weight: 600; margin-bottom: 2px; }
+        .banner {
+            padding: var(--space-400);
+            border-radius: var(--radius-300);
+            display: flex;
+            gap: var(--space-300);
+            align-items: flex-start;
+            border-left: 4px solid var(--blue);
+            background: var(--blue-bg);
+        }
+        .banner-info     { border-left-color: var(--blue);    background: var(--blue-bg); }
+        .banner-success  { border-left-color: var(--primary); background: var(--primary-bg); }
+        .banner-warning  { border-left-color: var(--yellow);  background: var(--yellow-bg-soft); }
+        .banner-critical { border-left-color: var(--red);     background: var(--red-bg-soft); }
+        .banner-icon { font-size: 20px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+        .banner-content { flex: 1; font-size: 14px; color: var(--gray-900); }
+        .banner-title { font-weight: 600; margin-bottom: var(--space-100); font-size: 14px; }
 
         /* === MODAL === */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
         .modal-overlay.open { display: flex; }
-        .modal { background: var(--white); border-radius: var(--radius-lg); width: 90%; max-width: 520px; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-modal); }
-        .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { font-size: 18px; font-weight: 600; }
-        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); padding: 4px; }
-        .modal-body { padding: 20px; }
-        .modal-footer { padding: 16px 20px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 8px; }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-300);
+            width: 90%;
+            max-width: 520px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-modal);
+        }
+        .modal-header {
+            padding: var(--space-400);
+            border-bottom: 1px solid var(--gray-300);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 600; color: var(--gray-900); }
+        .modal-close {
+            width: var(--btn-medium); height: var(--btn-medium);
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--gray-500);
+            border-radius: var(--radius-200);
+        }
+        .modal-close:hover { background: var(--gray-100); }
+        .modal-body { padding: var(--space-400); }
+        .modal-footer {
+            padding: var(--space-400);
+            border-top: 1px solid var(--gray-300);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-200);
+        }
 
         /* === ACTIVITY LIST === */
         .activity-list { list-style: none; }
-        .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
-        .activity-item:last-child { border-bottom: none; }
-        .activity-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-        .activity-icon.return { background: var(--blue-bg); }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-300);
+            padding: var(--space-300) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .activity-item:first-child { padding-top: 0; }
+        .activity-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .activity-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .activity-icon.return  { background: var(--blue-bg); }
         .activity-icon.approve { background: var(--primary-bg); }
-        .activity-icon.refund { background: var(--yellow-bg); }
-        .activity-icon.reject { background: var(--red-bg); }
+        .activity-icon.refund  { background: var(--yellow-bg-soft); }
+        .activity-icon.reject  { background: var(--red-bg-soft); }
         .activity-content { flex: 1; }
-        .activity-title { font-size: 13px; font-weight: 500; }
-        .activity-time { font-size: 12px; color: var(--gray-500); }
+        .activity-title { font-size: 13px; font-weight: 500; color: var(--gray-900); }
+        .activity-time  { font-size: 12px; color: var(--gray-500); margin-top: var(--space-100); }
 
         /* === TIMELINE === */
-        .timeline { padding-left: 20px; border-left: 2px solid var(--gray-200); }
-        .timeline-item { position: relative; padding: 0 0 20px 20px; }
+        .timeline {
+            padding-left: var(--space-500);
+            border-left: 2px solid var(--gray-300);
+        }
+        .timeline-item {
+            position: relative;
+            padding: 0 0 var(--space-500) var(--space-500);
+        }
         .timeline-item:last-child { padding-bottom: 0; }
-        .timeline-dot { position: absolute; left: -27px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--gray-300); border: 2px solid var(--white); }
+        .timeline-dot {
+            position: absolute;
+            left: -28px; top: 2px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--gray-400);
+            border: 2px solid var(--white);
+        }
         .timeline-item.active .timeline-dot { background: var(--primary); }
         .timeline-item.current .timeline-dot { background: var(--blue); }
-        .timeline-date { font-size: 12px; color: var(--gray-500); margin-bottom: 2px; }
-        .timeline-text { font-size: 13px; }
+        .timeline-date { font-size: 12px; color: var(--gray-500); margin-bottom: var(--space-100); }
+        .timeline-text { font-size: 13px; color: var(--gray-900); }
 
         /* === STOREFRONT STYLES === */
-        .sf-container { max-width: 600px; margin: 0 auto; padding: 24px; }
-        .sf-header { text-align: center; margin-bottom: 24px; }
-        .sf-header-logo { font-size: 24px; margin-bottom: 4px; }
-        .sf-header-title { font-size: 18px; font-weight: 600; color: var(--gray-900); letter-spacing: 1px; }
-        .sf-back { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--blue); cursor: pointer; margin-bottom: 16px; }
+        .sf-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: var(--space-600);
+        }
+        .sf-header { text-align: center; margin-bottom: var(--space-600); }
+        .sf-header-logo { font-size: 28px; margin-bottom: var(--space-100); }
+        .sf-header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            letter-spacing: 1px;
+        }
+        .sf-back {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-100);
+            font-size: 13px;
+            color: var(--blue);
+            cursor: pointer;
+            margin-bottom: var(--space-400);
+        }
         .sf-back:hover { text-decoration: underline; }
 
-        .sf-item { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 8px; align-items: center; }
-        .sf-item.disabled { opacity: 0.5; }
-        .sf-item-img { width: 60px; height: 60px; background: var(--gray-100); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: 20px; flex-shrink: 0; }
+        .sf-item {
+            display: flex;
+            gap: var(--space-300);
+            padding: var(--space-300);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-300);
+            align-items: center;
+        }
+        .sf-item + .sf-item { margin-top: var(--space-200); }
+        .sf-item.selected { border-color: var(--primary); background: var(--primary-bg); }
+        .sf-item.disabled { opacity: 0.6; background: var(--gray-50); }
+        .sf-item-img {
+            width: 64px; height: 64px;
+            background: var(--gray-100);
+            border-radius: var(--radius-200);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray-400);
+            font-size: 24px;
+            flex-shrink: 0;
+        }
         .sf-item-info { flex: 1; }
-        .sf-item-name { font-weight: 500; font-size: 14px; }
-        .sf-item-variant { font-size: 12px; color: var(--gray-500); }
-        .sf-item-price { font-weight: 600; font-size: 14px; }
-        .sf-item-actions { display: flex; gap: 8px; align-items: center; }
-        .sf-item-check { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+        .sf-item-name { font-weight: 500; font-size: 14px; color: var(--gray-900); }
+        .sf-item-variant { font-size: 12px; color: var(--gray-500); margin-top: var(--space-100); }
+        .sf-item-price { font-weight: 600; font-size: 14px; color: var(--gray-900); }
+        .sf-item-check {
+            width: 20px; height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
 
-        .sf-summary { background: var(--gray-50); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; }
-        .sf-summary-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
-        .sf-summary-row.total { font-weight: 600; font-size: 15px; border-top: 1px solid var(--gray-200); margin-top: 8px; padding-top: 8px; }
+        .sf-qty-select {
+            appearance: none;
+            height: var(--btn-slim);
+            width: 64px;
+            border: 1px solid var(--gray-400);
+            border-radius: var(--radius-200);
+            padding: 0 var(--space-500) 0 var(--space-200);
+            font-size: 12px;
+            background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%236D7175' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") right var(--space-200) center no-repeat;
+        }
 
-        .sf-success { text-align: center; padding: 48px 24px; }
-        .sf-success-icon { font-size: 48px; margin-bottom: 16px; }
-        .sf-success h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
-        .sf-success p { color: var(--gray-500); font-size: 14px; margin-bottom: 24px; }
+        .sf-summary {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-200);
+            padding: var(--space-400);
+        }
+        .sf-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-100) 0;
+            font-size: 13px;
+            gap: var(--space-300);
+        }
+        .sf-summary-row.total {
+            font-weight: 600;
+            font-size: 15px;
+            border-top: 1px solid var(--gray-300);
+            margin-top: var(--space-200);
+            padding-top: var(--space-300);
+        }
 
-        .sf-footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--gray-200); font-size: 12px; color: var(--gray-400); }
+        .sf-success { text-align: center; padding: var(--space-800) var(--space-600); }
+        .sf-success-icon {
+            width: 64px; height: 64px;
+            margin: 0 auto var(--space-400);
+            border-radius: 50%;
+            background: var(--primary-bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            color: var(--primary);
+        }
+        .sf-success h2 { font-size: 22px; font-weight: 600; margin-bottom: var(--space-200); color: var(--gray-900); }
+        .sf-success p { color: var(--gray-500); font-size: 14px; }
+
+        .sf-footer {
+            text-align: center;
+            margin-top: var(--space-600);
+            padding-top: var(--space-400);
+            border-top: 1px solid var(--gray-300);
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .sf-address-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-200);
+            padding: var(--space-400);
+        }
 
         /* === TABS === */
-        .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
-        .admin-tab { padding: 10px 16px; border: none; background: none; cursor: pointer; font-size: 14px; color: var(--gray-600); font-family: var(--font); border-bottom: 2px solid transparent; }
-        .admin-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+        .admin-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--gray-300);
+            margin-bottom: var(--space-400);
+            flex-wrap: wrap;
+        }
+        .admin-tab {
+            padding: var(--space-300) var(--space-400);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--gray-700);
+            font-family: var(--font);
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            line-height: 1;
+        }
+        .admin-tab:hover { color: var(--gray-900); }
+        .admin-tab.active {
+            color: var(--gray-900);
+            border-bottom-color: var(--gray-900);
+            font-weight: 600;
+        }
 
         /* === FILTERS === */
-        .filters { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
-        .filter-search { flex: 1; max-width: 320px; }
+        .filters {
+            display: flex;
+            gap: var(--space-300);
+            margin-bottom: var(--space-400);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-search { flex: 1; max-width: 360px; min-width: 240px; }
 
         /* === PAGINATION === */
-        .pagination { display: flex; justify-content: center; gap: 4px; margin-top: 16px; }
-        .pagination button { padding: 6px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); background: var(--white); cursor: pointer; font-size: 13px; }
-        .pagination button.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-100);
+            margin-top: var(--space-400);
+        }
+        .pagination button {
+            min-width: var(--btn-medium);
+            height: var(--btn-medium);
+            padding: 0 var(--space-300);
+            border: 1px solid var(--gray-400);
+            border-radius: var(--radius-200);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 13px;
+            font-family: var(--font);
+            color: var(--gray-900);
+        }
+        .pagination button:hover { background: var(--gray-50); }
+        .pagination button.active {
+            background: var(--gray-900);
+            color: var(--white);
+            border-color: var(--gray-900);
+        }
 
         /* === USAGE BAR === */
-        .usage-bar-container { margin-bottom: 24px; }
-        .usage-bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-        .usage-bar { height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden; }
-        .usage-bar-fill { height: 100%; border-radius: 4px; background: var(--primary); transition: width 0.5s; }
-        .usage-bar-fill.warning { background: var(--yellow); }
+        .usage-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: var(--space-200);
+            color: var(--gray-900);
+        }
+        .usage-bar {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .usage-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--primary);
+            transition: width 0.5s;
+        }
+        .usage-bar-fill.warning  { background: var(--yellow); }
         .usage-bar-fill.critical { background: var(--red); }
 
         /* === TWO COLUMN LAYOUT === */
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-400);
+        }
 
         /* === ONBOARDING CHECKLIST === */
-        .checklist-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
-        .checklist-item:last-child { border-bottom: none; }
-        .checklist-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--gray-300); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
-        .checklist-dot.done { background: var(--primary); border-color: var(--primary); color: var(--white); }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-300);
+            padding: var(--space-300) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .checklist-item:first-child { padding-top: 0; }
+        .checklist-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .checklist-dot {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-400);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .checklist-dot.done {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
         .checklist-info { flex: 1; }
-        .checklist-title { font-size: 14px; font-weight: 500; }
-        .checklist-desc { font-size: 12px; color: var(--gray-500); }
+        .checklist-title { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+        .checklist-desc  { font-size: 13px; color: var(--gray-500); margin-top: var(--space-100); }
+
+        /* === KEY-VALUE LIST === */
+        .kv-list { display: grid; gap: var(--space-200); }
+        .kv-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: var(--space-300);
+            font-size: 13px;
+            align-items: baseline;
+        }
+        .kv-key { color: var(--gray-500); }
+        .kv-value { color: var(--gray-900); }
+
+        /* === STATUS BLOCK (tracking) === */
+        .status-block {
+            background: var(--primary-bg);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius-300);
+            padding: var(--space-400);
+        }
+        .status-block-title { font-size: 15px; font-weight: 600; color: #0C5132; }
+        .status-block-desc  { font-size: 13px; color: #1A6B4F; margin-top: var(--space-100); }
 
         /* === HIDDEN === */
         .hidden { display: none !important; }
 
         /* === TOAST === */
-        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--gray-900); color: var(--white); padding: 10px 20px; border-radius: var(--radius-md); font-size: 14px; display: none; z-index: 2000; box-shadow: var(--shadow-modal); }
-        .toast.show { display: flex; align-items: center; gap: 8px; }
+        .toast {
+            position: fixed;
+            bottom: var(--space-600);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: var(--white);
+            padding: var(--space-300) var(--space-500);
+            border-radius: var(--radius-200);
+            font-size: 14px;
+            display: none;
+            z-index: 2000;
+            box-shadow: var(--shadow-modal);
+        }
+        .toast.show { display: flex; align-items: center; gap: var(--space-200); }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 720px) {
+            .two-col { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -271,7 +893,7 @@
         </a>
         <a class="sidebar-item" onclick="showScreen('admin-requests')">
             <span class="sidebar-item-icon">&#128230;</span> Return Requests
-            <span class="sidebar-item-badge attention">3</span>
+            <span class="sidebar-item-badge">3</span>
         </a>
         <a class="sidebar-item" onclick="showScreen('admin-detail')">
             <span class="sidebar-item-icon">&#128196;</span> Request Detail
@@ -306,71 +928,86 @@
 <div class="main-content">
 
 <!-- ================================================================ -->
-<!-- SCREEN 1: ADMIN DASHBOARD (Simple)                               -->
+<!-- SCREEN 1: ADMIN DASHBOARD                                         -->
+<!-- URL: /apps/avada-returns/dashboard                                -->
 <!-- ================================================================ -->
 <div id="admin-dashboard" class="screen">
-    <div class="page">
+    <div class="layout">
+        <!-- Page header -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">Welcome to Avada Returns!</h1>
-                <p class="page-subtitle">Manage your return requests easily.</p>
+                <h1 class="page-title">Welcome to Avada Returns</h1>
+                <p class="page-subtitle">Manage your store's return requests from one place.</p>
             </div>
-            <span class="badge badge-info" style="padding: 6px 12px; font-size: 13px;">Plan: Free</span>
+            <span class="badge badge-info">Plan: Free</span>
         </div>
 
-        <!-- Usage Bar -->
-        <div class="card">
-            <div class="usage-bar-container" style="margin-bottom: 0;">
-                <div class="usage-bar-label">
-                    <span><strong>2 / 5</strong> returns used this month</span>
-                    <button class="btn-plain" style="font-size: 12px;">Upgrade for More</button>
-                </div>
-                <div class="usage-bar">
-                    <div class="usage-bar-fill" style="width: 40%;"></div>
+        <div class="stack-400">
+            <!-- Usage Bar -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="stack-200">
+                        <div class="usage-bar-label">
+                            <span><strong>2 / 5</strong> returns used this month</span>
+                            <button class="btn-plain" style="font-size: 13px;">Upgrade for more</button>
+                        </div>
+                        <div class="usage-bar">
+                            <div class="usage-bar-fill" style="width: 40%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Onboarding Checklist -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Getting Started</h3>
-                <span class="badge badge-default">1 of 2 complete</span>
-            </div>
-            <div class="checklist-item">
-                <div class="checklist-dot done">&#10003;</div>
-                <div class="checklist-info">
-                    <div class="checklist-title">Configure your return settings</div>
-                    <div class="checklist-desc">Set your return window and add return reasons.</div>
+            <!-- Onboarding Checklist -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Getting started</h2>
+                        <span class="badge badge-default">1 of 2 complete</span>
+                    </div>
+                    <div>
+                        <div class="checklist-item">
+                            <div class="checklist-dot done">&#10003;</div>
+                            <div class="checklist-info">
+                                <div class="checklist-title">Configure your return settings</div>
+                                <div class="checklist-desc">Set your return window and add return reasons.</div>
+                            </div>
+                            <button class="btn btn-sm" onclick="showScreen('admin-settings')">Settings</button>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-dot"></div>
+                            <div class="checklist-info">
+                                <div class="checklist-title">Test the return portal</div>
+                                <div class="checklist-desc">Preview the customer-facing return portal and submit a test return.</div>
+                            </div>
+                            <button class="btn btn-sm" onclick="showScreen('sf-portal')">Preview portal</button>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn btn-sm" onclick="showScreen('admin-settings')">Settings</button>
             </div>
-            <div class="checklist-item">
-                <div class="checklist-dot"></div>
-                <div class="checklist-info">
-                    <div class="checklist-title">Test the return portal</div>
-                    <div class="checklist-desc">Preview the customer-facing return portal and submit a test return.</div>
-                </div>
-                <button class="btn btn-sm btn-primary" onclick="showScreen('sf-portal')">Preview Portal</button>
-            </div>
-        </div>
 
-        <!-- View Return Requests -->
-        <div class="card" style="text-align: center; padding: 32px;">
-            <p style="font-size: 15px; color: var(--gray-600); margin-bottom: 16px;">Ready to manage returns?</p>
-            <button class="btn btn-primary btn-lg" onclick="showScreen('admin-requests')">View Return Requests</button>
+            <!-- Primary CTA (ONLY one primary on page) -->
+            <div class="layout-section">
+                <div class="card" style="text-align: center; padding: var(--space-800);">
+                    <div class="stack-400">
+                        <p style="font-size: 15px; color: var(--gray-700);">Ready to manage returns?</p>
+                        <button class="btn btn-primary btn-lg" onclick="showScreen('admin-requests')">View return requests</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN 2: RETURN REQUESTS LIST                                   -->
+<!-- SCREEN 2: RETURN REQUESTS LIST                                    -->
+<!-- URL: /apps/avada-returns/requests                                 -->
 <!-- ================================================================ -->
 <div id="admin-requests" class="screen hidden">
-    <div class="page page-wide">
+    <div class="layout layout-wide">
         <div class="page-header">
             <div>
-                <h1 class="page-title">Return Requests</h1>
+                <h1 class="page-title">Return requests</h1>
                 <p class="page-subtitle">View and manage all return requests</p>
             </div>
         </div>
@@ -381,15 +1018,15 @@
                 <button class="admin-tab active">All (12)</button>
                 <button class="admin-tab">Pending (3)</button>
                 <button class="admin-tab">Approved (4)</button>
-                <button class="admin-tab">In Transit (2)</button>
+                <button class="admin-tab">In transit (2)</button>
                 <button class="admin-tab">Completed (2)</button>
                 <button class="admin-tab">Rejected (1)</button>
             </div>
 
-            <!-- Search Only -->
+            <!-- Filters -->
             <div class="filters">
                 <div class="filter-search">
-                    <input type="text" class="form-input" placeholder="Search by order #, customer, email..." />
+                    <input type="text" class="form-input" placeholder="Search by order #, customer, email" />
                 </div>
             </div>
 
@@ -406,59 +1043,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="cursor:pointer;" onclick="showScreen('admin-detail')">
+                        <tr class="row-clickable" onclick="showScreen('admin-detail')">
                             <td><strong>#RET-0042</strong></td>
                             <td>#1234</td>
-                            <td>Jane Doe<br><span style="font-size:12px;color:var(--gray-500);">jane@example.com</span></td>
+                            <td>Jane Doe<br><span class="t-body-sm t-subdued">jane@example.com</span></td>
                             <td><span class="badge badge-warning">Pending</span></td>
                             <td>Apr 9, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0041</strong></td>
                             <td>#1230</td>
-                            <td>Mike Smith<br><span style="font-size:12px;color:var(--gray-500);">mike@shop.com</span></td>
+                            <td>Mike Smith<br><span class="t-body-sm t-subdued">mike@shop.com</span></td>
                             <td><span class="badge badge-warning">Pending</span></td>
                             <td>Apr 8, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0040</strong></td>
                             <td>#1228</td>
-                            <td>Lisa Thompson<br><span style="font-size:12px;color:var(--gray-500);">lisa@email.com</span></td>
+                            <td>Lisa Thompson<br><span class="t-body-sm t-subdued">lisa@email.com</span></td>
                             <td><span class="badge badge-warning">Pending</span></td>
                             <td>Apr 8, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0039</strong></td>
                             <td>#1225</td>
-                            <td>Tom Wilson<br><span style="font-size:12px;color:var(--gray-500);">tom@buyer.com</span></td>
+                            <td>Tom Wilson<br><span class="t-body-sm t-subdued">tom@buyer.com</span></td>
                             <td><span class="badge badge-success">Completed</span></td>
                             <td>Apr 7, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0038</strong></td>
                             <td>#1220</td>
-                            <td>Sarah Chen<br><span style="font-size:12px;color:var(--gray-500);">sarah@test.com</span></td>
-                            <td><span class="badge badge-info">In Transit</span></td>
+                            <td>Sarah Chen<br><span class="t-body-sm t-subdued">sarah@test.com</span></td>
+                            <td><span class="badge badge-info">In transit</span></td>
                             <td>Apr 6, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0037</strong></td>
                             <td>#1218</td>
-                            <td>Alex Johnson<br><span style="font-size:12px;color:var(--gray-500);">alex@mail.com</span></td>
-                            <td><span class="badge badge-info">In Transit</span></td>
+                            <td>Alex Johnson<br><span class="t-body-sm t-subdued">alex@mail.com</span></td>
+                            <td><span class="badge badge-info">In transit</span></td>
                             <td>Apr 5, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0036</strong></td>
                             <td>#1215</td>
-                            <td>Emma Davis<br><span style="font-size:12px;color:var(--gray-500);">emma@shop.com</span></td>
+                            <td>Emma Davis<br><span class="t-body-sm t-subdued">emma@shop.com</span></td>
                             <td><span class="badge badge-success">Completed</span></td>
                             <td>Apr 4, 2026</td>
                         </tr>
                         <tr>
                             <td><strong>#RET-0035</strong></td>
                             <td>#1210</td>
-                            <td>Ryan Park<br><span style="font-size:12px;color:var(--gray-500);">ryan@email.com</span></td>
+                            <td>Ryan Park<br><span class="t-body-sm t-subdued">ryan@email.com</span></td>
                             <td><span class="badge badge-critical">Rejected</span></td>
                             <td>Apr 3, 2026</td>
                         </tr>
@@ -478,99 +1115,129 @@
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN 3: RETURN REQUEST DETAIL                                  -->
+<!-- SCREEN 3: RETURN REQUEST DETAIL                                   -->
+<!-- URL: /apps/avada-returns/requests/:id                             -->
 <!-- ================================================================ -->
 <div id="admin-detail" class="screen hidden">
-    <div class="page page-wide">
-        <div class="page-header">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <span class="sf-back" onclick="showScreen('admin-requests')">&larr; Returns</span>
-                <h1 class="page-title">Return #RET-0042</h1>
-                <span class="badge badge-warning" style="font-size: 13px; padding: 4px 12px;">Pending</span>
-            </div>
-        </div>
-
-        <!-- Top Info Row -->
-        <div class="two-col" style="margin-bottom: 16px;">
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 12px;">Order Details</h3>
-                <div style="font-size: 13px; line-height: 2;">
-                    <div><strong>Order:</strong> #1234</div>
-                    <div><strong>Date:</strong> March 15, 2026</div>
-                    <div><strong>Total:</strong> $148.00</div>
-                    <div><strong>Fulfillment:</strong> Fulfilled</div>
-                </div>
-                <button class="btn-plain" style="margin-top: 8px;">View in Shopify &rarr;</button>
-            </div>
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom: 12px;">Customer Details</h3>
-                <div style="font-size: 13px; line-height: 2;">
-                    <div><strong>Name:</strong> Jane Doe</div>
-                    <div><strong>Email:</strong> jane@example.com</div>
-                    <div><strong>Orders:</strong> 3 previous orders</div>
-                    <div><strong>Returns:</strong> 0 previous returns</div>
+    <div class="layout layout-wide">
+        <!-- Page header with back action -->
+        <div>
+            <a class="page-back" onclick="showScreen('admin-requests')">&larr; Return requests</a>
+            <div class="page-header">
+                <div class="inline-stack inline-stack-300">
+                    <h1 class="page-title">Return #RET-0042</h1>
+                    <span class="badge badge-warning">Pending</span>
                 </div>
             </div>
         </div>
 
-        <!-- Return Items -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Return Items</h3>
-            <div class="sf-item" style="align-items: flex-start; padding: 16px;">
-                <div class="sf-item-img" style="width: 72px; height: 72px; font-size: 24px;">&#128085;</div>
-                <div class="sf-item-info" style="flex: 1;">
-                    <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
-                    <div class="sf-item-variant">Qty: 1 &bull; Item Value: $29.00</div>
-                    <div style="margin-top: 8px; font-size: 13px;">
-                        <strong>Reason:</strong> Too Small<br>
-                        <strong>Detail:</strong> "Fits like an XS, runs very small compared to the size chart."
+        <div class="stack-400">
+            <!-- Order + Customer info -->
+            <div class="layout-section">
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Order details</h2>
+                        </div>
+                        <div class="kv-list">
+                            <div class="kv-row"><span class="kv-key">Order</span><span class="kv-value">#1234</span></div>
+                            <div class="kv-row"><span class="kv-key">Date</span><span class="kv-value">March 15, 2026</span></div>
+                            <div class="kv-row"><span class="kv-key">Total</span><span class="kv-value">$148.00</span></div>
+                            <div class="kv-row"><span class="kv-key">Fulfillment</span><span class="kv-value">Fulfilled</span></div>
+                        </div>
+                        <div style="margin-top: var(--space-300);">
+                            <button class="btn-plain">View in Shopify &rarr;</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Customer</h2>
+                        </div>
+                        <div class="kv-list">
+                            <div class="kv-row"><span class="kv-key">Name</span><span class="kv-value">Jane Doe</span></div>
+                            <div class="kv-row"><span class="kv-key">Email</span><span class="kv-value">jane@example.com</span></div>
+                            <div class="kv-row"><span class="kv-key">Orders</span><span class="kv-value">3 previous orders</span></div>
+                            <div class="kv-row"><span class="kv-key">Returns</span><span class="kv-value">0 previous returns</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Actions -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Actions</h3>
-            <div style="margin-bottom: 16px;">
-                <div style="font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Review Decision</div>
-                <div class="btn-group">
-                    <button class="btn btn-primary" onclick="showToast('Return approved. Notification sent to customer.')">&#9989; Approve Return</button>
-                    <button class="btn btn-destructive" onclick="openModal('reject-modal')">&#10060; Reject Return</button>
+            <!-- Return items -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Return items</h2>
+                    </div>
+                    <div class="sf-item" style="align-items: flex-start;">
+                        <div class="sf-item-img" style="width: 72px; height: 72px;">&#128085;</div>
+                        <div class="sf-item-info stack-200">
+                            <div>
+                                <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
+                                <div class="sf-item-variant">Qty: 1 &bull; Item value: $29.00</div>
+                            </div>
+                            <div style="font-size: 13px; color: var(--gray-900); line-height: 1.5;">
+                                <div><strong>Reason:</strong> Too small</div>
+                                <div><strong>Detail:</strong> "Fits like an XS, runs very small compared to the size chart."</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div style="margin-bottom: 16px;">
-                <div style="font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Resolution</div>
-                <div class="btn-group">
-                    <button class="btn" onclick="showToast('Refund processed successfully.')">&#128176; Process Refund</button>
-                </div>
-            </div>
-            <div>
-                <div style="font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Shipping</div>
-                <div class="btn-group">
-                    <button class="btn" onclick="showToast('Marked as received.')">&#128229; Mark as Received</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Activity Timeline -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Activity Timeline</h3>
-            <div class="timeline">
-                <div class="timeline-item active">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">April 9, 2026 &bull; 10:32 AM</div>
-                    <div class="timeline-text"><strong>Return requested</strong> by customer. Reason: Too Small.</div>
+            <!-- Actions (ONLY one primary: Approve) -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Actions</h2>
+                    </div>
+                    <div class="stack-400">
+                        <div>
+                            <div class="t-label t-secondary" style="margin-bottom: var(--space-200);">Review decision</div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="showToast('Return approved. Notification sent to customer.')">Approve return</button>
+                                <button class="btn btn-critical" onclick="openModal('reject-modal')">Reject return</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="t-label t-secondary" style="margin-bottom: var(--space-200);">Resolution</div>
+                            <div class="btn-group">
+                                <button class="btn" onclick="showToast('Refund processed successfully.')">Process refund</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="t-label t-secondary" style="margin-bottom: var(--space-200);">Shipping</div>
+                            <div class="btn-group">
+                                <button class="btn" onclick="showToast('Marked as received.')">Mark as received</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">April 9, 2026 &bull; 10:32 AM</div>
-                    <div class="timeline-text">Confirmation email sent to jane@example.com</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">April 9, 2026 &bull; 10:33 AM</div>
-                    <div class="timeline-text">Merchant notification sent to owner@store.com</div>
+            </div>
+
+            <!-- Activity timeline -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Activity timeline</h2>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item active">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">April 9, 2026 &bull; 10:32 AM</div>
+                            <div class="timeline-text"><strong>Return requested</strong> by customer. Reason: Too small.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">April 9, 2026 &bull; 10:32 AM</div>
+                            <div class="timeline-text">Confirmation email sent to jane@example.com</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">April 9, 2026 &bull; 10:33 AM</div>
+                            <div class="timeline-text">Merchant notification sent to owner@store.com</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -578,10 +1245,12 @@
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN 4: SETTINGS (Minimal)                                     -->
+<!-- SCREEN 4: SETTINGS                                                -->
+<!-- URL: /apps/avada-returns/settings                                 -->
 <!-- ================================================================ -->
 <div id="admin-settings" class="screen hidden">
-    <div class="page">
+    <div class="layout">
+        <!-- Page header with Save/Discard (ONLY one primary: Save) -->
         <div class="page-header">
             <h1 class="page-title">Settings</h1>
             <div class="btn-group">
@@ -590,83 +1259,106 @@
             </div>
         </div>
 
-        <!-- Return Window -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Return Window</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Return window (days)</label>
-                    <input type="number" class="form-input" value="30" min="1" max="365" style="width: 120px;" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Window starts from</label>
-                    <select class="form-input form-select" style="width: 240px;">
-                        <option selected>Order fulfillment date</option>
-                        <option>Order creation date</option>
-                        <option>Delivery date</option>
-                    </select>
+        <div class="stack-400">
+            <!-- Return Window -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Return window</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Return window (days)</label>
+                            <input type="number" class="form-input" value="30" min="1" max="365" />
+                            <div class="form-help">Between 1 and 365 days.</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Window starts from</label>
+                            <select class="form-select">
+                                <option selected>Order fulfillment date</option>
+                                <option>Order creation date</option>
+                                <option>Delivery date</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Return Reasons -->
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom: 16px;">Return Reasons</h3>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Reason</th>
-                            <th style="width: 100px;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Too Small</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Too Large</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Damaged / Defective</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Not As Described</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Changed Mind</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Other</td>
-                            <td>
-                                <button class="btn-plain" style="font-size: 12px;">Edit</button>
-                                <button class="btn-plain" style="font-size: 12px; color: var(--red);">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Return Reasons -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Return reasons</h2>
+                        <button class="btn btn-sm">+ Add reason</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Reason</th>
+                                    <th style="width: 140px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Too small</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Too large</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Damaged / defective</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Not as described</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Changed mind</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Other</td>
+                                    <td>
+                                        <div class="inline-stack inline-stack-300">
+                                            <button class="btn-plain">Edit</button>
+                                            <button class="btn-plain btn-plain-critical">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-sm" style="margin-top: 12px;">+ Add Custom Reason</button>
         </div>
     </div>
 </div>
@@ -677,51 +1369,56 @@
 <!-- ================================================================ -->
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-1: RETURN PORTAL (Order Lookup)                        -->
+<!-- SCREEN SF-1: RETURN PORTAL (Order Lookup)                         -->
+<!-- URL: /a/returns                                                   -->
 <!-- ================================================================ -->
 <div id="sf-portal" class="screen hidden">
     <div class="sf-container">
-        <div class="banner banner-info" style="margin-bottom: 20px;">
+        <div class="banner banner-info" style="margin-bottom: var(--space-500);">
             <span class="banner-icon">&#128270;</span>
             <div class="banner-content">
-                <div class="banner-title">Storefront Preview</div>
+                <div class="banner-title">Storefront preview</div>
                 This is how the return portal appears to your customers.
             </div>
         </div>
 
-        <div class="card" style="padding: 32px;">
+        <div class="card" style="padding: var(--space-800);">
             <div class="sf-header">
                 <div class="sf-header-logo">&#128717;</div>
                 <div class="sf-header-title">RETURNS CENTER</div>
             </div>
 
-            <div style="text-align: center; margin-bottom: 24px;">
-                <h2 style="font-size: 22px; font-weight: 600; margin-bottom: 4px;">Start Your Return</h2>
-                <p style="color: var(--gray-500); font-size: 14px;">Enter your order details to get started.</p>
-            </div>
-
-            <div class="form-row" style="margin-bottom: 16px;">
-                <div class="form-group">
-                    <label class="form-label">Order Number</label>
-                    <input type="text" class="form-input" placeholder="# e.g., 1234" />
+            <div class="stack-400">
+                <div style="text-align: center;">
+                    <h2 class="t-heading-lg">Start your return</h2>
+                    <p class="t-subdued" style="margin-top: var(--space-100);">Enter your order details to get started.</p>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="you@example.com" />
-                </div>
-            </div>
 
-            <button class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;" onclick="showScreen('sf-products')">Look Up Order</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Order number</label>
+                        <input type="text" class="form-input" placeholder="e.g. #1234" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email address</label>
+                        <input type="email" class="form-input" placeholder="you@example.com" />
+                    </div>
+                </div>
+
+                <!-- ONLY primary on page -->
+                <button class="btn btn-primary btn-lg btn-block" onclick="showScreen('sf-products')">Look up order</button>
+            </div>
 
             <div class="sf-footer">
-                Powered by Avada &nbsp;|&nbsp; <button class="btn-plain" style="font-size: 12px;">Return Policy</button>
+                Powered by Avada &nbsp;|&nbsp; <button class="btn-plain" style="font-size: 12px;">Return policy</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-2: PRODUCT SELECTION                                   -->
+<!-- SCREEN SF-2: PRODUCT SELECTION                                    -->
+<!-- URL: /a/returns/:orderId/items                                    -->
 <!-- ================================================================ -->
 <div id="sf-products" class="screen hidden">
     <div class="sf-container">
@@ -729,92 +1426,97 @@
             <div class="sf-header-logo">&#128717;</div>
             <div class="sf-header-title">RETURNS CENTER</div>
         </div>
-        <span class="sf-back" onclick="showScreen('sf-portal')">&larr; Back to Order Lookup</span>
+        <a class="sf-back" onclick="showScreen('sf-portal')">&larr; Back to order lookup</a>
 
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div class="card-header">
                 <div>
-                    <h3 style="font-size: 18px;">Order #1234</h3>
-                    <p style="font-size: 13px; color: var(--gray-500);">Placed: March 15, 2026</p>
+                    <h2 class="card-title">Order #1234</h2>
+                    <p class="t-body-sm t-subdued" style="margin-top: var(--space-100);">Placed: March 15, 2026</p>
                 </div>
             </div>
 
-            <h4 style="font-size: 14px; margin-bottom: 12px;">Select items to return:</h4>
+            <div class="stack-400">
+                <div>
+                    <h3 class="t-heading-sm" style="margin-bottom: var(--space-300);">Select items to return</h3>
 
-            <!-- Item 1: Selectable -->
-            <div class="sf-item" style="cursor: pointer;">
-                <input type="checkbox" class="sf-item-check" />
-                <div class="sf-item-img">&#128085;</div>
-                <div class="sf-item-info">
-                    <div class="sf-item-name">Blue Denim Jacket - Size M</div>
-                    <div class="sf-item-variant">Qty ordered: 1</div>
-                    <div style="margin-top: 4px;">
-                        <label class="form-label" style="display: inline; margin-right: 6px;">Qty to return:</label>
-                        <select class="form-input form-select" style="width: 60px; height: 28px; display: inline-block; font-size: 12px;">
-                            <option>1</option>
-                        </select>
+                    <!-- Item 1: Selectable -->
+                    <div class="sf-item">
+                        <input type="checkbox" class="sf-item-check" />
+                        <div class="sf-item-img">&#128085;</div>
+                        <div class="sf-item-info">
+                            <div class="sf-item-name">Blue Denim Jacket - Size M</div>
+                            <div class="sf-item-variant">Qty ordered: 1</div>
+                            <div class="inline-stack inline-stack-200" style="margin-top: var(--space-200);">
+                                <label class="t-body-sm t-subdued">Qty to return:</label>
+                                <select class="sf-qty-select">
+                                    <option>1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sf-item-price">$89.00</div>
+                    </div>
+
+                    <!-- Item 2: Selected -->
+                    <div class="sf-item selected">
+                        <input type="checkbox" class="sf-item-check" checked />
+                        <div class="sf-item-img">&#128085;</div>
+                        <div class="sf-item-info">
+                            <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
+                            <div class="sf-item-variant">Qty ordered: 2</div>
+                            <div class="inline-stack inline-stack-200" style="margin-top: var(--space-200);">
+                                <label class="t-body-sm t-subdued">Qty to return:</label>
+                                <select class="sf-qty-select">
+                                    <option selected>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sf-item-price">$29.00</div>
+                    </div>
+
+                    <!-- Item 3: Non-returnable -->
+                    <div class="sf-item disabled">
+                        <div class="sf-item-img">&#128095;</div>
+                        <div class="sf-item-info">
+                            <div class="sf-item-name">Running Shoes - Size 10</div>
+                            <div class="sf-item-variant">Qty ordered: 1</div>
+                        </div>
+                        <div style="text-align: right;" class="stack-100">
+                            <div class="sf-item-price">$120.00</div>
+                            <span class="badge badge-critical">Non-returnable</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Window expired -->
+                    <div class="sf-item disabled">
+                        <div class="sf-item-img">&#128090;</div>
+                        <div class="sf-item-info">
+                            <div class="sf-item-name">Leather Belt - Size 32</div>
+                            <div class="sf-item-variant">Qty ordered: 1</div>
+                        </div>
+                        <div style="text-align: right;" class="stack-100">
+                            <div class="sf-item-price">$45.00</div>
+                            <span class="badge badge-default">Window expired</span>
+                        </div>
                     </div>
                 </div>
-                <div class="sf-item-price">$89.00</div>
-            </div>
 
-            <!-- Item 2: Selected -->
-            <div class="sf-item" style="cursor: pointer; border-color: var(--primary); background: var(--primary-bg);">
-                <input type="checkbox" class="sf-item-check" checked />
-                <div class="sf-item-img">&#128085;</div>
-                <div class="sf-item-info">
-                    <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
-                    <div class="sf-item-variant">Qty ordered: 2</div>
-                    <div style="margin-top: 4px;">
-                        <label class="form-label" style="display: inline; margin-right: 6px;">Qty to return:</label>
-                        <select class="form-input form-select" style="width: 60px; height: 28px; display: inline-block; font-size: 12px;">
-                            <option selected>1</option>
-                            <option>2</option>
-                        </select>
+                <!-- Summary bar with Continue (ONLY primary on page) -->
+                <div class="inline-stack inline-stack-between" style="padding-top: var(--space-400); border-top: 1px solid var(--gray-300); gap: var(--space-300);">
+                    <div class="t-body-sm">
+                        <strong>Selected:</strong> 1 item &nbsp;&bull;&nbsp; <strong>Return value:</strong> $29.00
                     </div>
+                    <button class="btn btn-primary btn-lg" onclick="showScreen('sf-reason')">Continue</button>
                 </div>
-                <div class="sf-item-price">$29.00</div>
-            </div>
-
-            <!-- Item 3: Non-returnable -->
-            <div class="sf-item disabled">
-                <div class="sf-item-img">&#128095;</div>
-                <div class="sf-item-info">
-                    <div class="sf-item-name">Running Shoes - Size 10</div>
-                    <div class="sf-item-variant">Qty ordered: 1</div>
-                </div>
-                <div style="text-align: right;">
-                    <div class="sf-item-price" style="margin-bottom: 4px;">$120.00</div>
-                    <span class="badge badge-critical">Non-Returnable</span>
-                </div>
-            </div>
-
-            <!-- Item 4: Window expired -->
-            <div class="sf-item disabled">
-                <div class="sf-item-img">&#128090;</div>
-                <div class="sf-item-info">
-                    <div class="sf-item-name">Leather Belt - Size 32</div>
-                    <div class="sf-item-variant">Qty ordered: 1</div>
-                </div>
-                <div style="text-align: right;">
-                    <div class="sf-item-price" style="margin-bottom: 4px;">$45.00</div>
-                    <span class="badge badge-default">Window Expired</span>
-                </div>
-            </div>
-
-            <!-- Summary Bar -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--gray-200);">
-                <div>
-                    <strong>Selected:</strong> 1 item &nbsp;&bull;&nbsp; <strong>Return Value:</strong> $29.00
-                </div>
-                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-reason')">Continue &rarr;</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-3: RETURN REASON                                       -->
+<!-- SCREEN SF-3: RETURN REASON                                        -->
+<!-- URL: /a/returns/:orderId/reason                                   -->
 <!-- ================================================================ -->
 <div id="sf-reason" class="screen hidden">
     <div class="sf-container">
@@ -822,49 +1524,56 @@
             <div class="sf-header-logo">&#128717;</div>
             <div class="sf-header-title">RETURNS CENTER</div>
         </div>
-        <span class="sf-back" onclick="showScreen('sf-products')">&larr; Back to Item Selection</span>
+        <a class="sf-back" onclick="showScreen('sf-products')">&larr; Back to item selection</a>
 
         <div class="card">
-            <h3 style="font-size: 18px; margin-bottom: 16px;">Why are you returning?</h3>
+            <div class="card-header">
+                <h2 class="card-title">Why are you returning?</h2>
+            </div>
 
-            <!-- Item Card -->
-            <div class="sf-item" style="margin-bottom: 20px; background: var(--gray-50);">
-                <div class="sf-item-img">&#128085;</div>
-                <div class="sf-item-info">
-                    <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
-                    <div class="sf-item-variant">Qty: 1 &bull; $29.00</div>
+            <div class="stack-400">
+                <!-- Item card -->
+                <div class="sf-item" style="background: var(--gray-50);">
+                    <div class="sf-item-img">&#128085;</div>
+                    <div class="sf-item-info">
+                        <div class="sf-item-name">White Cotton T-Shirt - Size L</div>
+                        <div class="sf-item-variant">Qty: 1 &bull; $29.00</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Reason Dropdown -->
-            <div class="form-group">
-                <label class="form-label">Return Reason</label>
-                <select class="form-input form-select">
-                    <option value="">Select a reason...</option>
-                    <option selected>Too Small</option>
-                    <option>Too Large</option>
-                    <option>Damaged / Defective</option>
-                    <option>Not As Described</option>
-                    <option>Changed Mind</option>
-                    <option>Other</option>
-                </select>
-            </div>
+                <!-- Reason dropdown -->
+                <div class="form-group">
+                    <label class="form-label">Return reason</label>
+                    <select class="form-select">
+                        <option value="">Select a reason</option>
+                        <option selected>Too small</option>
+                        <option>Too large</option>
+                        <option>Damaged / defective</option>
+                        <option>Not as described</option>
+                        <option>Changed mind</option>
+                        <option>Other</option>
+                    </select>
+                </div>
 
-            <!-- Additional Details -->
-            <div class="form-group">
-                <label class="form-label">Additional Details (optional)</label>
-                <textarea class="form-textarea" placeholder="Tell us more about why you're returning this item...">Fits like an XS, runs very small compared to the size chart.</textarea>
-            </div>
+                <!-- Additional details -->
+                <div class="form-group">
+                    <label class="form-label">Additional details (optional)</label>
+                    <textarea class="form-textarea" placeholder="Tell us more about why you're returning this item">Fits like an XS, runs very small compared to the size chart.</textarea>
+                    <div class="form-help">Max 500 characters.</div>
+                </div>
 
-            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-summary')">Continue to Summary &rarr;</button>
+                <!-- ONLY primary on page -->
+                <div class="inline-stack inline-stack-end">
+                    <button class="btn btn-primary btn-lg" onclick="showScreen('sf-summary')">Continue to summary</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-4: SUMMARY & CONFIRM                                   -->
+<!-- SCREEN SF-4: SUMMARY & CONFIRM                                    -->
+<!-- URL: /a/returns/:orderId/summary                                  -->
 <!-- ================================================================ -->
 <div id="sf-summary" class="screen hidden">
     <div class="sf-container">
@@ -872,49 +1581,61 @@
             <div class="sf-header-logo">&#128717;</div>
             <div class="sf-header-title">RETURNS CENTER</div>
         </div>
-        <span class="sf-back" onclick="showScreen('sf-reason')">&larr; Back to Return Reason</span>
+        <a class="sf-back" onclick="showScreen('sf-reason')">&larr; Back to return reason</a>
 
-        <!-- Shipping Info -->
-        <div class="card">
-            <h3 style="font-size: 18px; margin-bottom: 20px;">Ship Your Item Back</h3>
-
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px;">
-                <div style="display: flex; align-items: flex-start; gap: 12px;">
-                    <span style="font-size: 20px;">&#128230;</span>
-                    <div>
-                        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Ship your item to:</div>
-                        <div style="font-size: 13px; font-weight: 500; line-height: 1.6;">
-                            Greg's Fashion Returns<br>
-                            123 Warehouse St<br>
-                            Brooklyn, NY 11201
+        <div class="stack-400">
+            <!-- Shipping info -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Ship your item back</h2>
+                    </div>
+                    <div class="sf-address-card">
+                        <div class="inline-stack inline-stack-300" style="align-items: flex-start;">
+                            <span style="font-size: 20px; line-height: 1;">&#128230;</span>
+                            <div class="stack-100">
+                                <div style="font-weight: 600; font-size: 14px;">Ship your item to:</div>
+                                <div style="font-size: 13px; line-height: 1.6;">
+                                    Greg's Fashion Returns<br>
+                                    123 Warehouse St<br>
+                                    Brooklyn, NY 11201
+                                </div>
+                                <div class="t-body-sm t-subdued" style="margin-top: var(--space-200);">Please ship within 14 days of submitting your return.</div>
+                            </div>
                         </div>
-                        <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">Please ship within 14 days of submitting your return.</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Review Summary -->
-        <div class="card">
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Review Your Return</h3>
+            <!-- Review summary -->
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Review your return</h2>
+                    </div>
+                    <div class="stack-400">
+                        <div class="sf-summary">
+                            <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
+                            <div class="sf-summary-row"><span>Reason</span><span>Too small</span></div>
+                            <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment</span></div>
+                            <div class="sf-summary-row"><span>Est. processing</span><span>5-7 business days after receipt</span></div>
+                            <div class="sf-summary-row total"><span>Refund amount</span><span>$29.00</span></div>
+                        </div>
 
-            <div class="sf-summary" style="margin-top: 0;">
-                <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
-                <div class="sf-summary-row"><span>Reason</span><span>Too Small</span></div>
-                <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment</span></div>
-                <div class="sf-summary-row"><span>Est. Processing</span><span>5-7 business days after receipt</span></div>
-                <div class="sf-summary-row total"><span>Refund Amount</span><span>$29.00</span></div>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-confirmation')">Submit Return Request</button>
+                        <!-- ONLY primary on page -->
+                        <div class="inline-stack inline-stack-end">
+                            <button class="btn btn-primary btn-lg" onclick="showScreen('sf-confirmation')">Submit return request</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-5: SUCCESS / CONFIRMATION                              -->
+<!-- SCREEN SF-5: SUCCESS / CONFIRMATION                               -->
+<!-- URL: /a/returns/:returnId/confirmation                            -->
 <!-- ================================================================ -->
 <div id="sf-confirmation" class="screen hidden">
     <div class="sf-container">
@@ -923,41 +1644,55 @@
             <div class="sf-header-title">RETURNS CENTER</div>
         </div>
 
-        <div class="card">
-            <div class="sf-success" style="padding: 24px;">
-                <div class="sf-success-icon">&#9989;</div>
-                <h2>Return Request Submitted!</h2>
-                <p>Return <strong>#RET-2026-0042</strong> has been created.<br>A confirmation email has been sent to jane@example.com.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Ship Your Item To:</h3>
-
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
-                <div style="font-size: 14px; font-weight: 500; line-height: 1.8;">
-                    Greg's Fashion Returns<br>
-                    123 Warehouse St<br>
-                    Brooklyn, NY 11201
+        <div class="stack-400">
+            <div class="layout-section">
+                <div class="card">
+                    <div class="sf-success">
+                        <div class="sf-success-icon">&#10003;</div>
+                        <h2>Return request submitted</h2>
+                        <p style="margin-top: var(--space-200);">
+                            Return <strong>#RET-2026-0042</strong> has been created.<br>
+                            A confirmation email has been sent to jane@example.com.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="banner banner-warning">
-                <span class="banner-icon">&#9200;</span>
-                <div class="banner-content">
-                    Please ship your return within <strong>14 days</strong>. Your return request expires on April 23, 2026.
+            <div class="layout-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Ship your item to</h2>
+                    </div>
+                    <div class="stack-400">
+                        <div class="sf-address-card">
+                            <div style="font-size: 14px; font-weight: 500; line-height: 1.8;">
+                                Greg's Fashion Returns<br>
+                                123 Warehouse St<br>
+                                Brooklyn, NY 11201
+                            </div>
+                        </div>
+
+                        <div class="banner banner-warning">
+                            <span class="banner-icon">&#9200;</span>
+                            <div class="banner-content">
+                                Please ship your return within <strong>14 days</strong>. Your return request expires on April 23, 2026.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div style="text-align: center; margin-top: 16px;">
-            <button class="btn btn-primary btn-lg" onclick="showScreen('sf-tracking')">Track Your Return</button>
+            <!-- ONLY primary on page -->
+            <div class="layout-section" style="text-align: center;">
+                <button class="btn btn-primary btn-lg" onclick="showScreen('sf-tracking')">Track your return</button>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ================================================================ -->
-<!-- SCREEN SF-6: RETURN TRACKING (Basic)                             -->
+<!-- SCREEN SF-6: RETURN TRACKING (Basic)                              -->
+<!-- URL: /a/returns/:returnId/tracking                                -->
 <!-- ================================================================ -->
 <div id="sf-tracking" class="screen hidden">
     <div class="sf-container">
@@ -967,56 +1702,56 @@
         </div>
 
         <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <h3 style="font-size: 18px; font-weight: 600;">Return #RET-2026-0042</h3>
-                <span class="badge badge-success" style="font-size: 13px; padding: 4px 12px;">Approved</span>
-            </div>
-            <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 20px;">Order #1234 &bull; Submitted: April 9, 2026</p>
-
-            <!-- Simple Status Text -->
-            <div style="background: var(--primary-bg); border: 1px solid #A3D9C5; border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
-                <div style="font-size: 15px; font-weight: 600; color: #1a6b4f;">
-                    Status: Approved &mdash; April 10, 2026
+            <div class="card-header">
+                <div>
+                    <h2 class="card-title">Return #RET-2026-0042</h2>
+                    <p class="t-body-sm t-subdued" style="margin-top: var(--space-100);">Order #1234 &bull; Submitted: April 9, 2026</p>
                 </div>
-                <div style="font-size: 13px; color: #247F62; margin-top: 4px;">
-                    Your return has been approved. Please ship your item to the warehouse address.
+                <span class="badge badge-success">Approved</span>
+            </div>
+
+            <div class="stack-400">
+                <!-- Simple status text (no stepper) -->
+                <div class="status-block">
+                    <div class="status-block-title">Status: Approved &mdash; April 10, 2026</div>
+                    <div class="status-block-desc">Your return has been approved. Please ship your item to the warehouse address.</div>
                 </div>
-            </div>
 
-            <!-- Return Details -->
-            <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
-                <strong style="font-size: 14px; display: block; margin-bottom: 8px;">Return Details</strong>
-                <div class="sf-summary" style="margin-top: 0; background: transparent; padding: 0;">
-                    <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
-                    <div class="sf-summary-row"><span>Reason</span><span>Too Small</span></div>
-                    <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment</span></div>
+                <!-- Return details -->
+                <div>
+                    <h3 class="t-heading-sm" style="margin-bottom: var(--space-200);">Return details</h3>
+                    <div class="sf-summary">
+                        <div class="sf-summary-row"><span>Item</span><span>White Cotton T-Shirt - Size L (x1)</span></div>
+                        <div class="sf-summary-row"><span>Reason</span><span>Too small</span></div>
+                        <div class="sf-summary-row"><span>Resolution</span><span>Refund to original payment</span></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Simple Activity List -->
-            <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px;">
-                <strong style="font-size: 14px; display: block; margin-bottom: 12px;">Activity</strong>
-                <ul class="activity-list">
-                    <li class="activity-item">
-                        <div class="activity-icon approve">&#9989;</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Approved &mdash; Return approved.</div>
-                            <div class="activity-time">April 10, 2026 &bull; 10:45 AM</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon return">&#128230;</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Submitted &mdash; Return request received. Confirmation email sent.</div>
-                            <div class="activity-time">April 9, 2026 &bull; 10:32 AM</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                <!-- Simple activity list -->
+                <div>
+                    <h3 class="t-heading-sm" style="margin-bottom: var(--space-200);">Activity</h3>
+                    <ul class="activity-list" style="border: 1px solid var(--gray-300); border-radius: var(--radius-200); padding: var(--space-400);">
+                        <li class="activity-item">
+                            <div class="activity-icon approve">&#10003;</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Approved &mdash; Return approved.</div>
+                                <div class="activity-time">April 10, 2026 &bull; 10:45 AM</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon return">&#128230;</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Submitted &mdash; Return request received. Confirmation email sent.</div>
+                                <div class="activity-time">April 9, 2026 &bull; 10:32 AM</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <span style="font-size: 13px; color: var(--gray-500);">Need help?</span>
-                <button class="btn-plain">Contact Support</button>
+                <div style="text-align: center;">
+                    <span class="t-body-sm t-subdued">Need help?</span>
+                    <button class="btn-plain" style="margin-left: var(--space-100);">Contact support</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1028,48 +1763,52 @@
 <div id="reject-modal" class="modal-overlay" onclick="if(event.target===this) closeModal('reject-modal')">
     <div class="modal">
         <div class="modal-header">
-            <h3>Reject Return #RET-0042</h3>
+            <h3>Reject return #RET-0042</h3>
             <button class="modal-close" onclick="closeModal('reject-modal')">&#215;</button>
         </div>
         <div class="modal-body">
-            <div class="form-group">
-                <label class="form-label">Rejection Reason (required)</label>
-                <select class="form-input form-select">
-                    <option value="">Select a reason...</option>
-                    <option>Outside return window</option>
-                    <option>Item is non-returnable</option>
-                    <option>Item not in original condition</option>
-                    <option>Insufficient evidence of defect</option>
-                    <option>Suspected abuse / fraud</option>
-                    <option>Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Message to Customer (optional)</label>
-                <textarea class="form-textarea" placeholder="Explain the reason for rejection..."></textarea>
+            <div class="stack-400">
+                <div class="form-group">
+                    <label class="form-label">Rejection reason (required)</label>
+                    <select class="form-select">
+                        <option value="">Select a reason</option>
+                        <option>Outside return window</option>
+                        <option>Item is non-returnable</option>
+                        <option>Item not in original condition</option>
+                        <option>Insufficient evidence of defect</option>
+                        <option>Suspected abuse / fraud</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message to customer (optional)</label>
+                    <textarea class="form-textarea" placeholder="Explain the reason for rejection"></textarea>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
             <button class="btn" onclick="closeModal('reject-modal')">Cancel</button>
-            <button class="btn btn-destructive" onclick="closeModal('reject-modal'); showToast('Return rejected. Customer notified.')">Reject Return</button>
+            <button class="btn btn-critical" onclick="closeModal('reject-modal'); showToast('Return rejected. Customer notified.')">Reject return</button>
         </div>
     </div>
 </div>
 
 <!-- ============ TOAST ============ -->
-<div id="toast" class="toast">&#9989; <span id="toast-msg"></span></div>
+<div id="toast" class="toast">&#10003; <span id="toast-msg"></span></div>
 
 <!-- ============ JAVASCRIPT ============ -->
 <script>
     // Screen switching
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
+        const target = document.getElementById(id);
+        if (target) target.classList.remove('hidden');
 
         // Update sidebar active state
         document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.sidebar-item').forEach(b => {
-            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+            const onclickAttr = b.getAttribute('onclick');
+            if (onclickAttr && onclickAttr.includes("'" + id + "'")) {
                 b.classList.add('active');
             }
         });
@@ -1078,12 +1817,8 @@
     }
 
     // Modal
-    function openModal(id) {
-        document.getElementById(id).classList.add('open');
-    }
-    function closeModal(id) {
-        document.getElementById(id).classList.remove('open');
-    }
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
     // Toast
     function showToast(msg) {
@@ -1093,7 +1828,7 @@
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // Init: show dashboard
+    // Init
     showScreen('admin-dashboard');
 </script>
 
