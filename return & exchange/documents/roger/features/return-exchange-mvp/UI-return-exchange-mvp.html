@@ -7,6 +7,10 @@
     <style>
         /* === BASE STYLES === */
         :root {
+            /* Polaris admin action color (dark) — for primary buttons in admin */
+            --action: #1A1A1A;
+            --action-hover: #303030;
+            /* Brand color (green) — for sidebar icon, success states, badges, storefront CTA */
             --primary: #2D9D78;
             --primary-hover: #247F62;
             --primary-bg: #E3F5EF;
@@ -49,53 +53,122 @@
         .shopify-topbar-avatar { width: 28px; height: 28px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600; }
         .shopify-topbar-store { color: #ccc; font-size: 13px; font-weight: 500; }
 
-        /* === SIDEBAR === */
-        .sidebar { width: 240px; position: fixed; top: 56px; left: 0; bottom: 0; background: var(--white); border-right: 1px solid var(--gray-200); overflow-y: auto; z-index: 100; }
-        .sidebar-header { padding: 16px 16px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--gray-200); }
-        .sidebar-app-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700; flex-shrink: 0; }
-        .sidebar-app-name { font-size: 14px; font-weight: 600; }
-        .sidebar-app-sub { font-size: 11px; color: var(--gray-500); }
-        .sidebar-nav { padding: 8px 0; }
-        .sidebar-section { padding: 8px 16px 4px; font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 13.5px; color: var(--gray-600); cursor: pointer; border-left: 3px solid transparent; transition: all 0.1s; text-decoration: none; }
-        .sidebar-item:hover { background: var(--gray-50); color: var(--gray-900); }
-        .sidebar-item.active { background: #F4F5FA; color: #2C6ECB; font-weight: 600; border-left-color: #2C6ECB; }
-        .sidebar-item-icon { font-size: 16px; width: 20px; text-align: center; }
-        .sidebar-item-badge { margin-left: auto; background: var(--gray-200); color: var(--gray-600); font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
-        .sidebar-item-badge.attention { background: var(--yellow-bg); color: var(--yellow); }
-        .sidebar-divider { height: 1px; background: var(--gray-200); margin: 8px 16px; }
+        /* === SIDEBAR (Shopify-native pattern: main nav + nested app) === */
+        .sidebar { width: 240px; position: fixed; top: 56px; left: 0; bottom: 0; background: #F1F1F1; overflow-y: auto; z-index: 100; padding: 8px 12px; }
+        .sidebar-nav { padding: 0; }
+        .sidebar-section { padding: 12px 12px 4px; font-size: 12px; font-weight: 600; color: var(--gray-500); }
+        .sidebar-section.with-arrow { display: flex; align-items: center; gap: 4px; }
+        .sidebar-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 8px; height: 28px;
+            font-size: 13px; color: var(--gray-900);
+            cursor: pointer; transition: all 0.1s;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 450;
+        }
+        .sidebar-item:hover { background: rgba(0,0,0,0.05); }
+        .sidebar-item.active { background: #FFFFFF; font-weight: 600; box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+        .sidebar-item-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; }
+        .sidebar-item-badge {
+            margin-left: auto;
+            background: var(--gray-200); color: var(--gray-700);
+            font-size: 11px; font-weight: 500;
+            padding: 0 6px; height: 16px;
+            line-height: 16px;
+            border-radius: 8px;
+        }
+        .sidebar-item-badge.attention { background: var(--yellow-bg); color: #7d5e00; }
+
+        /* Active app in sidebar (highlighted with dark bg + white text) */
+        .sidebar-app {
+            background: var(--gray-900);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; font-weight: 600;
+            margin-top: 2px;
+        }
+        .sidebar-app-icon-sm {
+            width: 18px; height: 18px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #2D9D78, #3DB88E);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 11px; font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Sub-nav items under active app (indented, smaller) */
+        .sidebar-subnav {
+            padding: 2px 0 8px 24px;
+            position: relative;
+        }
+        .sidebar-subnav::before {
+            content: '';
+            position: absolute;
+            left: 16px; top: 6px; bottom: 12px;
+            width: 1px;
+            background: var(--gray-300);
+        }
+        .sidebar-subitem {
+            display: flex; align-items: center; gap: 8px;
+            padding: 5px 8px;
+            font-size: 13px; color: var(--gray-700);
+            cursor: pointer; transition: all 0.1s;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 450;
+        }
+        .sidebar-subitem:hover { background: rgba(0,0,0,0.04); color: var(--gray-900); }
+        .sidebar-subitem.active { background: rgba(0,0,0,0.08); color: var(--gray-900); font-weight: 600; }
+        .sidebar-subitem .badge-mini { margin-left: auto; background: var(--yellow-bg); color: #7d5e00; font-size: 11px; font-weight: 600; padding: 0 6px; height: 16px; line-height: 16px; border-radius: 8px; }
+
+        .sidebar-divider { height: 1px; background: var(--gray-300); margin: 8px 4px; }
 
         /* === MAIN CONTENT === */
         .main-content { margin-left: 240px; margin-top: 56px; min-height: calc(100vh - 56px); }
 
-        /* === LAYOUT === */
-        .page { max-width: 960px; margin: 0 auto; padding: 24px; }
-        .page-wide { max-width: 1200px; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .page-title { font-size: 24px; font-weight: 600; }
-        .page-subtitle { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
+        /* === APP HEADER (Polaris embedded app pattern: app icon + name above page) === */
+        .app-header { display: flex; align-items: center; gap: 8px; padding: 16px 24px 0; max-width: 1080px; margin: 0 auto; }
+        .app-header-icon { width: 20px; height: 20px; border-radius: 4px; background: linear-gradient(135deg, #2D9D78, #3DB88E); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+        .app-header-name { font-size: 14px; font-weight: 600; color: var(--gray-900); }
 
-        /* === CARD === */
-        .card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; margin-bottom: 16px; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .card-title { font-size: 16px; font-weight: 600; }
+        /* === LAYOUT === */
+        .page { max-width: 1080px; margin: 0 auto; padding: 16px 24px 80px; }
+        .page-wide { max-width: 1200px; }
+        .page-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+        .page-title { font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; color: var(--gray-900); }
+        .page-subtitle { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+        /* === CARD (Polaris-style: title top-left, content below, no divider) === */
+        .card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; margin-bottom: 16px; border: 1px solid var(--gray-200); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .card-title { font-size: 14px; font-weight: 600; color: var(--gray-900); }
         .card-section { padding: 16px 0; border-top: 1px solid var(--gray-200); }
         .card-section:first-child { border-top: none; padding-top: 0; }
 
-        /* === METRICS === */
-        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .metric-card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 16px; text-align: center; }
-        .metric-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
-        .metric-value { font-size: 28px; font-weight: 700; color: var(--gray-900); }
-        .metric-change { font-size: 12px; margin-top: 4px; }
+        /* === METRICS (Polaris-style: title top-left, value below, helper text below) === */
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+        .metric-card { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 20px; border: 1px solid var(--gray-200); }
+        .metric-card.attention { background: #FFF8E5; border-color: #F1DC8B; }
+        .metric-label { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; }
+        .metric-value { font-size: 32px; font-weight: 700; color: var(--gray-900); line-height: 1.1; }
+        .metric-helper { font-size: 13px; color: var(--gray-500); margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+        .metric-helper-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); display: inline-block; }
+        .metric-change { font-size: 13px; margin-top: 8px; color: var(--gray-500); }
         .metric-change.up { color: var(--primary); }
         .metric-change.down { color: var(--red); }
 
         /* === BUTTONS === */
-        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-900); font-family: var(--font); transition: all 0.15s; height: 36px; }
-        .btn:hover { background: var(--gray-50); }
-        .btn-primary { background: var(--primary); color: var(--white); border-color: var(--primary); }
-        .btn-primary:hover { background: var(--primary-hover); }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 16px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--gray-400); background: var(--white); color: var(--gray-900); font-family: var(--font); transition: all 0.15s; height: 40px; line-height: 1; white-space: nowrap; }
+        .btn:hover { background: var(--gray-50); border-color: var(--gray-500); }
+        .btn:focus { outline: none; box-shadow: 0 0 0 2px var(--blue-bg); border-color: var(--blue); }
+        .btn-primary { background: var(--action); color: var(--white); border-color: var(--action); }
+        .btn-primary:hover { background: var(--action-hover); border-color: var(--action-hover); }
+        /* Storefront CTAs use brand color */
+        .sf-container .btn-primary { background: var(--primary); border-color: var(--primary); }
+        .sf-container .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
         .btn-destructive { background: var(--red); color: var(--white); border-color: var(--red); }
         .btn-destructive:hover { background: var(--red-hover); }
         .btn-plain { border: none; background: none; color: var(--blue); padding: 4px 8px; height: auto; }
@@ -108,11 +181,11 @@
         /* === FORM === */
         .form-group { margin-bottom: 16px; }
         .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--gray-800); }
-        .form-input { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); height: 36px; }
+        .form-input { width: 100%; padding: 0 12px; border: 1px solid var(--gray-400); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font); height: 40px; }
         .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .form-select { appearance: none; background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%238C9196' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") right 12px center no-repeat; padding-right: 32px; }
-        .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); resize: vertical; min-height: 80px; }
+        .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--gray-400); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font); resize: vertical; min-height: 80px; }
         .form-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
 
         /* === CHECKBOX / RADIO === */
@@ -136,6 +209,30 @@
         td { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); }
         tr:hover td { background: var(--gray-50); }
         tr:last-child td { border-bottom: none; }
+
+        /* === QUICK SETUP === */
+        .setup-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .setup-header-left { flex: 1; }
+        .setup-title { font-size: 18px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+        .setup-desc { font-size: 13px; color: var(--gray-700); }
+        .setup-progress-wrap { min-width: 180px; }
+        .setup-progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-700); margin-bottom: 4px; }
+        .setup-progress-bar { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+        .setup-progress-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.3s ease; }
+        .setup-step { display: flex; gap: 16px; padding: 16px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); background: var(--white); transition: all 0.2s; }
+        .setup-step + .setup-step { margin-top: 12px; }
+        .setup-step.current { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); background: var(--primary-bg); }
+        .setup-step.done { background: var(--gray-50); }
+        .setup-step-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--gray-400); background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--gray-700); flex-shrink: 0; }
+        .setup-step.done .setup-step-dot { background: var(--primary); border-color: var(--primary); color: var(--white); }
+        .setup-step.current .setup-step-dot { border-color: var(--primary); color: var(--primary); }
+        .setup-step-body { flex: 1; min-width: 0; }
+        .setup-step-title { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+        .setup-step.done .setup-step-title { color: var(--gray-700); }
+        .setup-step-desc { font-size: 13px; color: var(--gray-700); margin-bottom: 12px; }
+        .setup-step-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .setup-step-time { font-size: 12px; color: var(--gray-500); margin-left: auto; }
+        .setup-step.done .setup-step-desc, .setup-step.done .setup-step-actions { display: none; }
 
         /* === BADGE === */
         .badge { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 500; }
@@ -319,32 +416,61 @@
 
 <!-- ============ SIDEBAR ============ -->
 <div class="sidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-app-icon">A</div>
-        <div>
-            <div class="sidebar-app-name">Avada Returns</div>
-            <div class="sidebar-app-sub">Returns & Exchanges</div>
-        </div>
-    </div>
     <nav class="sidebar-nav">
-        <div class="sidebar-section">Admin</div>
-        <a class="sidebar-item active" onclick="showScreen('admin-dashboard')">
-            <span class="sidebar-item-icon">&#127968;</span> Dashboard
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#127968;</span> Home
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-requests')">
-            <span class="sidebar-item-icon">&#128230;</span> Return Requests
-            <span class="sidebar-item-badge attention">3</span>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128722;</span> Orders
+            <span class="sidebar-item-badge">7</span>
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-detail')">
-            <span class="sidebar-item-icon">&#128196;</span> Request Detail
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#127873;</span> Products
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-policy')">
-            <span class="sidebar-item-icon">&#128220;</span> Policy Settings
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128100;</span> Customers
         </a>
-        <a class="sidebar-item" onclick="showScreen('admin-notifications')">
-            <span class="sidebar-item-icon">&#128276;</span> Notifications
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128241;</span> Marketing
         </a>
-        <div class="sidebar-divider"></div>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#127991;</span> Discounts
+        </a>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128221;</span> Content
+        </a>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#127760;</span> Markets
+        </a>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128176;</span> Finance
+        </a>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128202;</span> Analytics
+        </a>
+
+        <div class="sidebar-section with-arrow">&#10148; Sales channels</div>
+        <a class="sidebar-item">
+            <span class="sidebar-item-icon">&#128722;</span> Online Store
+        </a>
+
+        <div class="sidebar-section with-arrow">&#10148; Apps</div>
+        <div class="sidebar-app">
+            <div class="sidebar-app-icon-sm">A</div>
+            Avada Returns
+        </div>
+
+        <div class="sidebar-subnav">
+            <a class="sidebar-subitem active" onclick="showScreen('admin-dashboard')">Dashboard</a>
+            <a class="sidebar-subitem" onclick="showScreen('admin-requests')">
+                Return Requests
+                <span class="badge-mini">3</span>
+            </a>
+            <a class="sidebar-subitem" onclick="showScreen('admin-detail')">Request Detail</a>
+            <a class="sidebar-subitem" onclick="showScreen('admin-policy')">Policy Settings</a>
+            <a class="sidebar-subitem" onclick="showScreen('admin-notifications')">Notifications</a>
+        </div>
+
         <div class="sidebar-section">Storefront Preview</div>
         <a class="sidebar-item" onclick="showScreen('sf-portal')">
             <span class="sidebar-item-icon">&#128270;</span> Return Portal
@@ -374,15 +500,18 @@
 <!-- SCREEN 1: ADMIN DASHBOARD                                        -->
 <!-- ================================================================ -->
 <div id="admin-dashboard" class="screen">
+    <div class="app-header">
+        <div class="app-header-icon">A</div>
+        <div class="app-header-name">Avada Returns &amp; Exchanges</div>
+    </div>
     <div class="page page-wide">
         <div class="page-header">
             <div>
-                <h1 class="page-title">Returns & Exchanges</h1>
-                <p class="page-subtitle">Welcome back, Greg! &mdash; April 9, 2026</p>
+                <h1 class="page-title">Hi Greg</h1>
+                <p class="page-subtitle">Welcome to Avada Returns &amp; Exchanges</p>
             </div>
             <div class="btn-group">
-                <button class="btn">Export</button>
-                <span class="badge badge-info" style="padding: 6px 12px; font-size: 13px;">Plan: Free</span>
+                <button class="btn btn-sm">&#128197; Last 30 days</button>
             </div>
         </div>
 
@@ -391,29 +520,91 @@
             <div class="metric-card">
                 <div class="metric-label">Open Returns</div>
                 <div class="metric-value">12</div>
-                <div class="metric-change up">+8% WoW</div>
+                <div class="metric-helper">+8% from last week</div>
             </div>
-            <div class="metric-card">
+            <div class="metric-card attention">
                 <div class="metric-label">Pending Review</div>
-                <div class="metric-value" style="color: var(--yellow);">3</div>
-                <div class="metric-change" style="color: var(--yellow);">Action needed</div>
+                <div class="metric-value">3</div>
+                <div class="metric-helper"><span class="metric-helper-dot"></span> Needs review</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Refunds Processed</div>
                 <div class="metric-value">$890</div>
-                <div class="metric-change down">This month</div>
+                <div class="metric-helper">This month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Revenue Retained</div>
+                <div class="metric-value">$1,240</div>
+                <div class="metric-helper">Store credit + exchanges</div>
             </div>
         </div>
 
-        <!-- Usage Bar -->
+        <!-- Quick Setup -->
         <div class="card">
-            <div class="usage-bar-container" style="margin-bottom: 0;">
-                <div class="usage-bar-label">
-                    <span><strong>32 / 50</strong> returns used this month</span>
-                    <button class="btn-plain" style="font-size: 12px;">Upgrade for More</button>
+            <div class="setup-header">
+                <div class="setup-header-left">
+                    <div class="setup-title">Quick setup</div>
+                    <div class="setup-desc">Get your return portal live in about 5 minutes.</div>
                 </div>
-                <div class="usage-bar">
-                    <div class="usage-bar-fill" style="width: 64%;"></div>
+                <div class="setup-progress-wrap">
+                    <div class="setup-progress-label">
+                        <span>1 of 4 complete</span>
+                        <span>25%</span>
+                    </div>
+                    <div class="setup-progress-bar">
+                        <div class="setup-progress-fill" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 1: Return policy (DONE) -->
+            <div class="setup-step done">
+                <div class="setup-step-dot">&#10003;</div>
+                <div class="setup-step-body">
+                    <div class="setup-step-title">Set your return policy</div>
+                    <div class="setup-step-desc">Define your return window and the reasons customers can choose from.</div>
+                    <div class="setup-step-actions">
+                        <button class="btn btn-sm" onclick="showScreen('admin-policy')">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Return address (CURRENT) -->
+            <div class="setup-step current">
+                <div class="setup-step-dot">2</div>
+                <div class="setup-step-body">
+                    <div class="setup-step-title">Add your return address</div>
+                    <div class="setup-step-desc">Tell customers where to ship returned items. This will appear on the confirmation page and in customer emails.</div>
+                    <div class="setup-step-actions">
+                        <button class="btn btn-primary btn-sm" onclick="showScreen('admin-policy')">Add address</button>
+                        <span class="setup-step-time">~1 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Activate portal (UPCOMING) -->
+            <div class="setup-step">
+                <div class="setup-step-dot">3</div>
+                <div class="setup-step-body">
+                    <div class="setup-step-title">Activate the return portal on your storefront</div>
+                    <div class="setup-step-desc">Enable the Avada Returns block in your theme so customers can start returns from their account page.</div>
+                    <div class="setup-step-actions">
+                        <button class="btn btn-sm" onclick="showToast('Opening Theme editor...')">Open theme editor</button>
+                        <span class="setup-step-time">~2 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Test portal (UPCOMING) -->
+            <div class="setup-step">
+                <div class="setup-step-dot">4</div>
+                <div class="setup-step-body">
+                    <div class="setup-step-title">Test the return portal</div>
+                    <div class="setup-step-desc">Preview the customer-facing portal and submit a test return to see how it works end-to-end.</div>
+                    <div class="setup-step-actions">
+                        <button class="btn btn-sm" onclick="showScreen('sf-portal')">Preview portal</button>
+                        <span class="setup-step-time">~2 min</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1580,9 +1771,9 @@
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
 
-        // Update sidebar active state
-        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.sidebar-item').forEach(b => {
+        // Update sidebar active state (both .sidebar-item and .sidebar-subitem)
+        document.querySelectorAll('.sidebar-item, .sidebar-subitem').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.sidebar-item, .sidebar-subitem').forEach(b => {
             if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
                 b.classList.add('active');
             }

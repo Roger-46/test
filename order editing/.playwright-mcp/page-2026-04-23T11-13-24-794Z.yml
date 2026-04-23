@@ -1,0 +1,149 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - img [ref=e4]
+    - generic [ref=e6]: 🔍 Search
+    - generic [ref=e7]:
+      - generic [ref=e8]: 🔔
+      - generic [ref=e9]: My Dev Store
+      - generic [ref=e10]: G
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: A
+      - generic [ref=e14]:
+        - generic [ref=e15]: Avada Returns
+        - generic [ref=e16]: Returns & Exchanges
+    - navigation [ref=e17]:
+      - generic [ref=e18]: Admin
+      - generic [ref=e19] [cursor=pointer]:
+        - generic [ref=e20]: 🏠
+        - text: Dashboard
+      - generic [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 📦
+        - text: Return Requests
+        - generic [ref=e23]: "3"
+      - generic [ref=e24] [cursor=pointer]:
+        - generic [ref=e25]: 📄
+        - text: Request Detail
+      - generic [ref=e26] [cursor=pointer]:
+        - generic [ref=e27]: 📜
+        - text: Policy Settings
+      - generic [ref=e28] [cursor=pointer]:
+        - generic [ref=e29]: 🔔
+        - text: Notifications
+      - generic [ref=e31]: Storefront Preview
+      - generic [ref=e32] [cursor=pointer]:
+        - generic [ref=e33]: 🔎
+        - text: Return Portal
+      - generic [ref=e34] [cursor=pointer]:
+        - generic [ref=e35]: 🛒
+        - text: Product Selection
+      - generic [ref=e36] [cursor=pointer]:
+        - generic [ref=e37]: 💬
+        - text: Return Reason
+      - generic [ref=e38] [cursor=pointer]:
+        - generic [ref=e39]: ✅
+        - text: Summary & Confirm
+      - generic [ref=e40] [cursor=pointer]:
+        - generic [ref=e41]: 📦
+        - text: Confirmation
+      - generic [ref=e42] [cursor=pointer]:
+        - generic [ref=e43]: 🚚
+        - text: Return Tracking
+  - generic [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - heading "Returns & Exchanges" [level=1] [ref=e49]
+        - paragraph [ref=e50]: Welcome back, Greg! — April 9, 2026
+      - generic [ref=e51]:
+        - button "Export" [ref=e52] [cursor=pointer]
+        - generic [ref=e53]: "Plan: Free"
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - generic [ref=e56]: Open Returns
+        - generic [ref=e57]: "12"
+        - generic [ref=e58]: +8% WoW
+      - generic [ref=e59]:
+        - generic [ref=e60]: Pending Review
+        - generic [ref=e61]: "3"
+        - generic [ref=e62]: Action needed
+      - generic [ref=e63]:
+        - generic [ref=e64]: Refunds Processed
+        - generic [ref=e65]: $890
+        - generic [ref=e66]: This month
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - strong [ref=e71]: 32 / 50
+        - text: returns used this month
+      - button "Upgrade for More" [ref=e72]
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - heading "Needs Your Attention" [level=3] [ref=e77]
+        - button "See All" [ref=e78]
+      - table [ref=e80]:
+        - rowgroup [ref=e81]:
+          - row "Return ID Customer Status Reason" [ref=e82]:
+            - columnheader [ref=e83]
+            - columnheader "Return ID" [ref=e84]
+            - columnheader "Customer" [ref=e85]
+            - columnheader "Status" [ref=e86]
+            - columnheader "Reason" [ref=e87]
+        - rowgroup [ref=e88]:
+          - 'row "⚠ #RET-0042 Jane Doe Under Review Damaged Item" [ref=e89] [cursor=pointer]':
+            - cell "⚠" [ref=e90]
+            - cell "#RET-0042" [ref=e91]:
+              - strong [ref=e92]: "#RET-0042"
+            - cell "Jane Doe" [ref=e93]
+            - cell "Under Review" [ref=e94]:
+              - generic [ref=e95]: Under Review
+            - cell "Damaged Item" [ref=e96]
+          - 'row "⚠ #RET-0041 Mike Smith Under Review Not As Described" [ref=e97]':
+            - cell "⚠" [ref=e98]
+            - cell "#RET-0041" [ref=e99]:
+              - strong [ref=e100]: "#RET-0041"
+            - cell "Mike Smith" [ref=e101]
+            - cell "Under Review" [ref=e102]:
+              - generic [ref=e103]: Under Review
+            - cell "Not As Described" [ref=e104]
+          - 'row "⚠ #RET-0040 Lisa Thompson Under Review Changed Mind" [ref=e105]':
+            - cell "⚠" [ref=e106]
+            - cell "#RET-0040" [ref=e107]:
+              - strong [ref=e108]: "#RET-0040"
+            - cell "Lisa Thompson" [ref=e109]
+            - cell "Under Review" [ref=e110]:
+              - generic [ref=e111]: Under Review
+            - cell "Changed Mind" [ref=e112]
+    - generic [ref=e113]:
+      - heading "Recent Activity" [level=3] [ref=e115]
+      - list [ref=e116]:
+        - listitem [ref=e117]:
+          - generic [ref=e118]: 📦
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - strong [ref=e121]: "#RET-0042"
+              - text: — Return submitted by Jane Doe
+            - generic [ref=e122]: 10:32 AM today
+          - generic [ref=e123]: Pending
+        - listitem [ref=e124]:
+          - generic [ref=e125]: 💰
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - strong [ref=e128]: "#RET-0039"
+              - text: — Refund processed ($45.00)
+            - generic [ref=e129]: 10:15 AM today
+          - generic [ref=e130]: Completed
+        - listitem [ref=e131]:
+          - generic [ref=e132]: ✅
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - strong [ref=e135]: "#RET-0037"
+              - text: — Return approved
+            - generic [ref=e136]: 9:30 AM today
+          - generic [ref=e137]: Approved
+        - listitem [ref=e138]:
+          - generic [ref=e139]: 📦
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - strong [ref=e142]: "#RET-0036"
+              - text: — Return received at warehouse
+            - generic [ref=e143]: Yesterday 4:12 PM
+          - generic [ref=e144]: Received

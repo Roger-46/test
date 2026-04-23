@@ -1,0 +1,750 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Shopify App Store logo" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]:
+          - img [ref=e7]
+        - generic [ref=e9]: Shopify App Store
+      - generic [ref=e10]:
+        - generic [ref=e13]:
+          - searchbox "Search apps, guides, and more" [ref=e17]
+          - region [ref=e18]
+        - button "Browse apps" [ref=e22] [cursor=pointer]:
+          - text: Browse apps
+          - img [ref=e24]:
+            - img [ref=e25]
+      - button "Your store" [ref=e35] [cursor=pointer]:
+        - img "haidx46" [ref=e38]:
+          - img [ref=e40]:
+            - generic [ref=e41]: hai
+  - main [ref=e42]:
+    - generic [ref=e44]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e50]:
+            - figure [ref=e51]:
+              - img "AfterShip Returns & Exchanges" [ref=e52]
+            - generic [ref=e53]:
+              - heading "AfterShip Returns & Exchanges" [level=1] [ref=e54]
+              - button [ref=e59]:
+                - generic [ref=e60]:
+                  - img [ref=e61]
+                  - generic [ref=e69]: Built for Shopify
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - term [ref=e72]: Pricing
+              - definition [ref=e73]:
+                - generic [ref=e74]: Free plan available. Free trial available.
+            - generic [ref=e75]:
+              - term [ref=e76]: Popular with stores like yours
+              - generic [ref=e77]:
+                - definition [ref=e78]:
+                  - img [ref=e80]:
+                    - img [ref=e81]
+                  - generic [ref=e83]: Based in United States
+                - definition [ref=e84]:
+                  - img [ref=e86]:
+                    - img [ref=e87]
+                  - generic [ref=e89]: Shopify Plus
+            - generic [ref=e90]:
+              - term [ref=e91]: Rating
+              - definition [ref=e92]:
+                - generic [ref=e93]: "4.7"
+                - img [ref=e95]
+                - link "1251 Reviews" [ref=e98] [cursor=pointer]:
+                  - /url: "#adp-reviews"
+                  - text: (1,251)
+            - generic [ref=e99]:
+              - term [ref=e100]: Developer
+              - definition [ref=e101]:
+                - link "AfterShip" [ref=e102] [cursor=pointer]:
+                  - /url: https://apps.shopify.com/partners/aftership
+        - generic [ref=e104]:
+          - button "Install" [ref=e106] [cursor=pointer]
+          - link "View demo store" [ref=e108] [cursor=pointer]:
+            - /url: https://returnsdemo.returnscenter.com/?utm_source=shopify-app-listing-xp&utm_medium=referral&utm_campaign=20221025-demo-store&qs=eyJvcmRlcl9udW1iZXIiOiIxMDQ0IiwiZW1haWwiOiJkLnpoYW5nQGFmdGVyc2hpcC5jb20iLCJ0eXBlIjoib25Cb2FyZGluZyJ9&_bt=BAh7BkkiC19yYWlscwY6BkVUewhJIglkYXRhBjsAVEkiInJldHVybnNkZW1vLnJldHVybnNjZW50ZXIuY29tBjsARkkiCGV4cAY7AFRJIh0yMDI2LTA0LTIzVDExOjE2OjA2Ljc4MloGOwBUSSIIcHVyBjsAVEkiHnBlcm1hbmVudF9wYXNzd29yZF9ieXBhc3MGOwBG--728333bb6ba84e49c3065faee8a87ba1764def2f
+      - generic [ref=e110]:
+        - generic [ref=e113]:
+          - heading "Featured images gallery" [level=2] [ref=e114]
+          - iframe [ref=e117] [cursor=pointer]:
+            - generic [active] [ref=f1e1]:
+              - generic "YouTube Video Player" [ref=f1e3]
+              - generic [ref=f1e5]:
+                - generic:
+                  - generic:
+                    - button "Play video" [ref=f1e10] [cursor=pointer]:
+                      - generic [ref=f1e13]:
+                        - img
+                    - button "Hide player controls" [ref=f1e14] [cursor=pointer]
+                    - generic [ref=f1e16]:
+                      - generic [ref=f1e21]:
+                        - generic [ref=f1e22]:
+                          - link "Retain Revenue and Customers with AfterShip Returns" [ref=f1e23] [cursor=pointer]:
+                            - /url: https://www.youtube.com/watch?v=wALa4543n5o
+                          - link "AfterShip" [ref=f1e24] [cursor=pointer]:
+                            - /url: /channel/UCOVLEaOPRT7Y9nC8_NfWD8w
+                            - generic [ref=f1e25]: AfterShip
+                        - generic [ref=f1e26]:
+                          - button "thumbnail-image" [ref=f1e27] [cursor=pointer]:
+                            - img "thumbnail-image" [ref=f1e28]
+                          - generic [ref=f1e30]:
+                            - generic: AfterShip
+                            - generic: 2.13K subscribers
+                      - generic [ref=f1e31]:
+                        - button "Copy link" [ref=f1e34] [cursor=pointer]:
+                          - generic [ref=f1e38]:
+                            - img
+                        - link "Watch on YouTube" [ref=f1e45] [cursor=pointer]:
+                          - /url: https://www.youtube.com/watch?v=wALa4543n5o
+                          - generic [ref=f1e48]:
+                            - text: Watch on
+                            - img [ref=f1e50]:
+                              - generic [ref=f1e52]:
+                                - img
+          - list [ref=e118]:
+            - listitem [ref=e119] [cursor=pointer]:
+              - img "Self-Service Customizable Branded Returns Page" [ref=e120]
+            - listitem [ref=e121] [cursor=pointer]:
+              - img "Self-Service Returns Submission Portal" [ref=e122]
+            - listitem [ref=e123] [cursor=pointer]:
+              - img "Send automated returns notifications to customers" [ref=e124]
+              - button "+ 9 more" [ref=e126]
+        - generic [ref=e128]:
+          - heading "Reduce return costs and recapture more revenue with automated returns and exchanges" [level=2] [ref=e129]
+          - paragraph [ref=e130]: AfterShip Returns helps brands cut return costs, retain revenue, and automate the entire return process. Recapture lost revenue by converting refunds into exchanges or store credit. Spend less time managing returns with rules and automation handle approvals, refunds, and updates in the backend. Give customers a simple branded return experience that keeps them coming back. Identify hidden product and listing issues with built-in analytics to improve product and reduce future returns.
+          - list [ref=e131]:
+            - listitem [ref=e132]: Retain revenue with incentivized & personalized exchange offers and fraud checks
+            - listitem [ref=e133]: Cut operational costs with discounted labels, smart return rules, and automation
+            - listitem [ref=e134]: Deliver a seamless experience with branded return portal and native POS solution
+            - listitem [ref=e135]: Identify hidden patterns and refine business strategy with built-in analytics
+            - listitem [ref=e136]: Offer free returns and offset the cost with Return Care
+        - generic [ref=e137]:
+          - generic [ref=e138]:
+            - paragraph [ref=e139]: Languages
+            - paragraph [ref=e141]: English, German, French, Spanish, and Italian
+          - generic [ref=e142]:
+            - paragraph [ref=e143]: Works with
+            - list [ref=e144]:
+              - listitem [ref=e145]:
+                - link "Shopify POS" [ref=e146] [cursor=pointer]:
+                  - /url: https://apps.shopify.com/extensions/point-of-sale?surface_detail=returns-center-by-aftership&surface_type=app_details
+                - text: ","
+              - listitem [ref=e147]: Shopify Flow ,
+              - listitem [ref=e148]: Shopify Admin ,
+              - listitem [ref=e149]: Canada Post ,
+              - listitem [ref=e150]: FedEx ,
+              - listitem [ref=e151]: Gorgias ,
+              - listitem [ref=e152]: UPS ,
+              - listitem [ref=e153]: USPS
+        - generic [ref=e155]:
+          - paragraph [ref=e156]: Categories
+          - generic [ref=e157]:
+            - generic [ref=e158]:
+              - generic [ref=e159]:
+                - link "Returns and exchanges" [ref=e161] [cursor=pointer]:
+                  - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges?surface_detail=returns-center-by-aftership&surface_type=app_details
+                - button "Show features" [ref=e162] [cursor=pointer]
+              - generic:
+                - generic [ref=e163]:
+                  - paragraph [ref=e164]: Return options
+                  - list [ref=e165]:
+                    - listitem [ref=e166]:
+                      - link "Automated refunds" [ref=e167] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_options.automated_refunds&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e168]:
+                      - link "Exchanges" [ref=e169] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_options.exchanges&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e170]:
+                      - link "Replacements" [ref=e171] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_options.replacements&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e172]:
+                      - link "In-store returns" [ref=e173] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_options.in_store_returns&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e174]:
+                      - link "Gift returns" [ref=e175] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_options.gift_returns&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                - generic [ref=e176]:
+                  - paragraph [ref=e177]: Return management
+                  - list [ref=e178]:
+                    - listitem [ref=e179]:
+                      - link "Automated approvals" [ref=e180] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.automated_approvals&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e181]:
+                      - link "Return portal" [ref=e182] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.return_portal&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e183]:
+                      - link "Custom policies" [ref=e184] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.custom_policies&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e185]:
+                      - link "Non-returnable items" [ref=e186] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.non_returnable_items&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e187]:
+                      - link "Return windows" [ref=e188] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.return_windows&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e189]:
+                      - link "Return reasons" [ref=e190] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.return_reasons&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e191]:
+                      - link "Multi-language" [ref=e192] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.multi_language&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e193]:
+                      - link "Shipping labels" [ref=e194] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.shipping_labels&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e195]:
+                      - link "Return tracking" [ref=e196] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.return_tracking&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e197]:
+                      - link "SMS notifications" [ref=e198] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.sms_notifications&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e199]:
+                      - link "Email notifications" [ref=e200] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.email_notifications&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e201]:
+                      - link "Refund management" [ref=e202] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.refund_management&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e203]:
+                      - link "Stock updates" [ref=e204] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.stock_updates&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+                      - text: ","
+                    - listitem [ref=e205]:
+                      - link "Analytics" [ref=e206] [cursor=pointer]:
+                        - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-exchanges/all?feature_handles%5B%5D=cf.returns_and_exchanges.return_management.analytics&locale=en&surface_detail=returns-center-by-aftership&surface_type=app_details
+            - link "Returns and warranty - Other" [ref=e210] [cursor=pointer]:
+              - /url: https://apps.shopify.com/categories/orders-and-shipping-returns-and-warranty-returns-and-warranty-other?surface_detail=returns-center-by-aftership&surface_type=app_details
+    - generic [ref=e211]:
+      - generic [ref=e213]:
+        - generic [ref=e215]:
+          - heading "Pricing" [level=2] [ref=e218]
+          - generic [ref=e220]:
+            - generic [ref=e222]:
+              - generic [ref=e223]:
+                - paragraph [ref=e224]: Return Care
+                - heading "Free" [level=3] [ref=e226]:
+                  - generic [ref=e227]: Free
+              - generic [ref=e228]:
+                - paragraph [ref=e229]: Features
+                - list [ref=e230]:
+                  - listitem [ref=e231]:
+                    - generic [ref=e232]:
+                      - img [ref=e233]:
+                        - img [ref=e234]
+                      - text: All Premium features
+                  - listitem
+                  - listitem [ref=e236]:
+                    - generic [ref=e237]:
+                      - img [ref=e238]:
+                        - img [ref=e239]
+                      - text: Shopper-funded returns
+                  - listitem
+                  - listitem [ref=e241]:
+                    - generic [ref=e242]:
+                      - img [ref=e243]:
+                        - img [ref=e244]
+                      - text: Revenue share
+                  - listitem
+            - generic [ref=e246]:
+              - generic [ref=e247]:
+                - generic [ref=e248]:
+                  - paragraph [ref=e249]: Essentials
+                  - generic [ref=e250]:
+                    - heading "$11/month" [level=3] [ref=e251]:
+                      - generic [ref=e252]: $11
+                      - generic [ref=e253]: / month
+                    - paragraph [ref=e254]: or $108/year and save 18%
+                  - paragraph [ref=e255]: $1 for the first month. Includes 20 returns/month; $0.50 per extra return.
+                - generic [ref=e256]:
+                  - paragraph [ref=e257]: Features
+                  - list [ref=e258]:
+                    - listitem [ref=e259]:
+                      - generic [ref=e260]:
+                        - img [ref=e261]:
+                          - img [ref=e262]
+                        - text: All Free features
+                    - listitem
+                    - listitem [ref=e264]:
+                      - generic [ref=e265]:
+                        - img [ref=e266]:
+                          - img [ref=e267]
+                        - text: In-app automatic labels
+                    - listitem
+                    - listitem [ref=e269]:
+                      - generic [ref=e270]:
+                        - img [ref=e271]:
+                          - img [ref=e272]
+                        - text: Branded returns page
+                    - listitem
+                    - listitem [ref=e274]:
+                      - generic [ref=e275]:
+                        - img [ref=e276]:
+                          - img [ref=e277]
+                        - text: Email notifications
+                    - listitem
+                    - listitem [ref=e279]:
+                      - generic [ref=e280]:
+                        - img [ref=e281]:
+                          - img [ref=e282]
+                        - text: Basic refunds and exchanges
+                    - listitem
+                    - listitem [ref=e284]:
+                      - generic [ref=e285]:
+                        - img [ref=e286]:
+                          - img [ref=e287]
+                        - text: Basic routing rules
+                    - listitem
+              - paragraph [ref=e289]: 7-day free trial
+            - generic [ref=e290]:
+              - generic [ref=e291]:
+                - generic [ref=e292]:
+                  - paragraph [ref=e293]: Pro
+                  - generic [ref=e294]:
+                    - heading "$59/month" [level=3] [ref=e295]:
+                      - generic [ref=e296]: $59
+                      - generic [ref=e297]: / month
+                    - paragraph [ref=e298]: or $588/year and save 17%
+                  - paragraph [ref=e299]: $1 for the first month. Includes 100 returns per month, $0.50 per extra return
+                - generic [ref=e300]:
+                  - paragraph [ref=e301]: Features
+                  - list [ref=e302]:
+                    - listitem [ref=e303]:
+                      - generic [ref=e304]:
+                        - img [ref=e305]:
+                          - img [ref=e306]
+                        - text: All Essentials features
+                    - listitem
+                    - listitem [ref=e308]:
+                      - generic [ref=e309]:
+                        - img [ref=e310]:
+                          - img [ref=e311]
+                        - text: Automatic returns approval
+                    - listitem
+                    - listitem [ref=e313]:
+                      - generic [ref=e314]:
+                        - img [ref=e315]:
+                          - img [ref=e316]
+                        - text: In-app returns tracking
+                    - listitem
+                    - listitem [ref=e318]:
+                      - generic [ref=e319]:
+                        - img [ref=e320]:
+                          - img [ref=e321]
+                        - text: Refund to store credit
+                    - listitem
+                    - listitem [ref=e323]:
+                      - generic [ref=e324]:
+                        - img [ref=e325]:
+                          - img [ref=e326]
+                        - text: Return methods
+                    - listitem
+                    - listitem [ref=e328]:
+                      - generic [ref=e329]:
+                        - img [ref=e330]:
+                          - img [ref=e331]
+                        - text: Eligibility rules
+                    - listitem
+              - paragraph [ref=e333]: 7-day free trial
+            - generic [ref=e334]:
+              - generic [ref=e335]:
+                - generic [ref=e336]:
+                  - paragraph [ref=e337]: Premium
+                  - generic [ref=e338]:
+                    - heading "$239/month" [level=3] [ref=e339]:
+                      - generic [ref=e340]: $239
+                      - generic [ref=e341]: / month
+                    - paragraph [ref=e342]: or $2,388/year and save 17%
+                  - paragraph [ref=e343]: $1 for the first month. Includes 200 returns per month, $1 per extra return
+                - generic [ref=e344]:
+                  - paragraph [ref=e345]: Features
+                  - list [ref=e346]:
+                    - listitem [ref=e347]:
+                      - generic [ref=e348]:
+                        - img [ref=e349]:
+                          - img [ref=e350]
+                        - text: All Pro features
+                    - listitem
+                    - listitem [ref=e352]:
+                      - generic [ref=e353]:
+                        - img [ref=e354]:
+                          - img [ref=e355]
+                        - text: Shipment status-based automation
+                    - listitem
+                    - listitem [ref=e357]:
+                      - generic [ref=e358]:
+                        - img [ref=e359]:
+                          - img [ref=e360]
+                        - text: Embedded returns page
+                    - listitem
+                    - listitem [ref=e362]:
+                      - generic [ref=e363]:
+                        - img [ref=e364]:
+                          - img [ref=e365]
+                        - text: Exchange for other items
+                    - listitem
+                    - listitem [ref=e367]:
+                      - generic [ref=e368]:
+                        - img [ref=e369]:
+                          - img [ref=e370]
+                        - text: Exchange on store
+                    - listitem
+                    - listitem [ref=e372]:
+                      - generic [ref=e373]:
+                        - img [ref=e374]:
+                          - img [ref=e375]
+                        - text: Pre-built integrations
+                    - listitem
+              - paragraph [ref=e377]: 7-day free trial
+        - paragraph [ref=e379]:
+          - text: All charges are billed in USD. Recurring and usage-based charges are billed every 30 days.
+          - link "See all pricing options" [ref=e380] [cursor=pointer]:
+            - /url: https://www.returnscenter.com/pricing?utm_source=sp-app-store-returns
+      - generic [ref=e384]:
+        - generic [ref=e385]:
+          - heading "Reviews (1,251)" [level=2] [ref=e386]
+          - generic [ref=e387]:
+            - generic [ref=e388]: Overall rating
+            - generic [ref=e389]:
+              - generic "4.7 out of 5 stars" [ref=e390]: "4.7"
+              - img [ref=e392]:
+                - img [ref=e393]
+                - img [ref=e395]
+                - img [ref=e397]
+                - img [ref=e399]
+                - img [ref=e401]
+            - list [ref=e404]:
+              - listitem [ref=e405]:
+                - generic [ref=e406]:
+                  - generic [ref=e407]: "5"
+                  - img [ref=e409]
+                - img [ref=e412]
+                - img [ref=e415]
+                - link "1007 total reviews" [ref=e418] [cursor=pointer]:
+                  - /url: /returns-center-by-aftership/reviews?ratings%5B%5D=5
+                  - text: 1.0K
+              - listitem [ref=e419]:
+                - generic [ref=e420]:
+                  - generic [ref=e421]: "4"
+                  - img [ref=e423]
+                - img [ref=e426]
+                - img [ref=e429]
+                - link "115 total reviews" [ref=e432] [cursor=pointer]:
+                  - /url: /returns-center-by-aftership/reviews?ratings%5B%5D=4
+                  - text: "115"
+              - listitem [ref=e433]:
+                - generic [ref=e434]:
+                  - generic [ref=e435]: "3"
+                  - img [ref=e437]
+                - img [ref=e440]
+                - img [ref=e443]
+                - link "32 total reviews" [ref=e446] [cursor=pointer]:
+                  - /url: /returns-center-by-aftership/reviews?ratings%5B%5D=3
+                  - text: "32"
+              - listitem [ref=e447]:
+                - generic [ref=e448]:
+                  - generic [ref=e449]: "2"
+                  - img [ref=e451]
+                - img [ref=e454]
+                - img [ref=e457]
+                - link "20 total reviews" [ref=e460] [cursor=pointer]:
+                  - /url: /returns-center-by-aftership/reviews?ratings%5B%5D=2
+                  - text: "20"
+              - listitem [ref=e461]:
+                - generic [ref=e462]:
+                  - generic [ref=e463]: "1"
+                  - img [ref=e465]
+                - img [ref=e468]
+                - img [ref=e471]
+                - link "77 total reviews" [ref=e474] [cursor=pointer]:
+                  - /url: /returns-center-by-aftership/reviews?ratings%5B%5D=1
+                  - text: "77"
+          - generic [ref=e475]:
+            - button "Write a review" [ref=e476] [cursor=pointer]
+            - link "All reviews" [ref=e479] [cursor=pointer]:
+              - /url: /returns-center-by-aftership/reviews
+        - generic [ref=e480]:
+          - generic [ref=e482]:
+            - generic [ref=e483]:
+              - heading "What merchants think" [level=5] [ref=e484]:
+                - text: What merchants think
+                - button [ref=e486] [cursor=pointer]:
+                  - img [ref=e487]:
+                    - img [ref=e488]
+              - button "Feedback" [ref=e494] [cursor=pointer]:
+                - img [ref=e495]:
+                  - img [ref=e496]
+            - paragraph [ref=e499]: Merchants value this app for streamlining returns, saving time for businesses and customers. It's praised for strong customization, automation, and seamless Shopify integration, handling simple to complex returns. Performance is noted as reliable over years. Customer support is frequently highlighted as exceptional, with a helpful, responsive, and knowledgeable team offering assistance through chat and video calls.
+          - generic [ref=e500]:
+            - generic [ref=e502]:
+              - generic [ref=e503]:
+                - generic [ref=e504]:
+                  - img "3 out of 5 stars" [ref=e505]:
+                    - img [ref=e506]
+                    - img [ref=e508]
+                    - img [ref=e510]
+                    - img [ref=e512]
+                    - img [ref=e514]
+                  - generic [ref=e516]: Edited February 26, 2026
+                - generic [ref=e518]:
+                  - paragraph [ref=e519]: We have been using Aftership for years howvere, features needed for reports that used to be offered have been put behind upgraded paywalls. Additionally, the app will sometimes not load at all and will need to be restarted multiple times.
+                  - paragraph [ref=e520]: Customer service does respond fairly quickly.
+              - generic [ref=e521]:
+                - generic [ref=e522]:
+                  - generic "JJ Malibu" [ref=e523]
+                  - button "Copy link to review" [ref=e524] [cursor=pointer]:
+                    - img [ref=e525]:
+                      - img [ref=e526]
+                - generic [ref=e528]: Canada
+                - generic [ref=e529]: Over 5 years using the app
+              - generic [ref=e533]:
+                - generic [ref=e535]: AfterShip replied February 26, 2026
+                - generic [ref=e536]:
+                  - generic [ref=e537]:
+                    - paragraph [ref=e538]: Hello JJ Malibu's Team,
+                    - paragraph [ref=e539]: Thank you for taking the time to share your feedback with us.
+                    - paragraph [ref=e540]: We are sorry to hear that your recent experience did not meet your expectations. ...
+                  - button "Show more" [ref=e541] [cursor=pointer]
+            - generic [ref=e543]:
+              - generic [ref=e544]:
+                - generic [ref=e545]:
+                  - img "5 out of 5 stars" [ref=e546]:
+                    - img [ref=e547]
+                    - img [ref=e549]
+                    - img [ref=e551]
+                    - img [ref=e553]
+                    - img [ref=e555]
+                  - generic [ref=e557]: February 5, 2026
+                - generic [ref=e559]:
+                  - paragraph [ref=e560]: Had a question about the returns policy workflows and if it could be arranged. Purima sorted and resolved it within 10 minutes.
+                  - paragraph [ref=e561]: The app works perfectly, and I have not had any issues with it in 3 years.
+                  - paragraph [ref=e562]: Thanks team!
+              - generic [ref=e563]:
+                - generic [ref=e564]:
+                  - generic "Back to the Office" [ref=e565]
+                  - button "Copy link to review" [ref=e566] [cursor=pointer]:
+                    - img [ref=e567]:
+                      - img [ref=e568]
+                - generic [ref=e570]: United Kingdom
+                - generic [ref=e571]: Almost 4 years using the app
+            - generic [ref=e573]:
+              - generic [ref=e574]:
+                - generic [ref=e575]:
+                  - img "5 out of 5 stars" [ref=e576]:
+                    - img [ref=e577]
+                    - img [ref=e579]
+                    - img [ref=e581]
+                    - img [ref=e583]
+                    - img [ref=e585]
+                  - generic [ref=e587]: March 12, 2026
+                - generic [ref=e588]:
+                  - paragraph [ref=e590]: We LOVE AfterShip! Dhanush was fantastic to work with. He helped us quickly resolve some issues between AfterShip Returns and Shopify, and the turnaround was much faster than I expected. He was very helpful, knowledgeable, and easy to work with throughout the process. His guidance made a big difference, and I really appreciated how smoothly he helped get everything sorted out. Highly recommend ...
+                  - button "Show more" [ref=e591] [cursor=pointer]
+              - generic [ref=e592]:
+                - generic [ref=e593]:
+                  - generic "ARCHIE & DENNIS" [ref=e594]
+                  - button "Copy link to review" [ref=e595] [cursor=pointer]:
+                    - img [ref=e596]:
+                      - img [ref=e597]
+                - generic [ref=e599]: United States
+                - generic [ref=e600]: 4 months using the app
+      - generic [ref=e601]:
+        - generic [ref=e602]:
+          - heading "Support" [level=2] [ref=e603]
+          - paragraph [ref=e605]: App support provided by AfterShip.
+        - generic [ref=e608]:
+          - generic [ref=e609]:
+            - heading "Resources" [level=3] [ref=e610]
+            - generic [ref=e611]:
+              - link "Privacy policy" [ref=e613] [cursor=pointer]:
+                - /url: https://www.aftership.com/legal/privacy?utm_source=sp-app-store-returns
+              - link "FAQ" [ref=e615] [cursor=pointer]:
+                - /url: https://support.returnscenter.com/?utm_source=sp-app-store-returns
+          - generic [ref=e616]:
+            - heading "Developer" [level=3] [ref=e617]
+            - generic [ref=e618]:
+              - link "AfterShip" [ref=e619] [cursor=pointer]:
+                - /url: https://apps.shopify.com/partners/aftership
+              - link "Website" [ref=e621] [cursor=pointer]:
+                - /url: https://www.returnscenter.com?utm_source=sp-app-store-returns
+              - paragraph [ref=e622]: "120 Robinson Road #13-01 Singapore 068913, Singapore, Singapore, 068913, SG"
+          - generic [ref=e623]:
+            - paragraph [ref=e624]: Launched
+            - paragraph [ref=e625]: February 28, 2017
+      - generic [ref=e627]:
+        - heading "Featured in" [level=2] [ref=e628]
+        - link "Guide All the apps you need to avoid growing pains as you scale." [ref=e631] [cursor=pointer]:
+          - /url: https://apps.shopify.com/stories/guide-manage-your-back-office?surface_detail=story_card&surface_type=app_details_page
+          - generic [ref=e633]:
+            - heading "Guide" [level=5] [ref=e634]
+            - heading "All the apps you need to avoid growing pains as you scale." [level=3] [ref=e635]
+      - generic [ref=e638]:
+        - heading "More apps like this" [level=2] [ref=e641]
+        - generic [ref=e643]:
+          - button "ParcelWILL Returns & Exchange 4.9 out of 5 stars 423 total reviews • Free plan available Returns and exchanges that bring in profits by ParcelPanel" [ref=e645] [cursor=pointer]:
+            - figure [ref=e646]
+            - generic [ref=e648]:
+              - link "ParcelWILL Returns & Exchange" [ref=e650]:
+                - /url: https://apps.shopify.com/parcel-panel-returns-exchanges?surface_detail=returns-center-by-aftership&surface_inter_position=1&surface_intra_position=1&surface_type=app_details
+              - generic [ref=e651]:
+                - generic [ref=e652]:
+                  - text: "4.9"
+                  - generic [ref=e653]: out of 5 stars
+                - img [ref=e655]
+                - generic [ref=e656]: (423)
+                - generic [ref=e657]: 423 total reviews
+                - generic [ref=e658]: •
+                - generic [ref=e659]: Free plan available
+              - generic [ref=e660]: Returns and exchanges that bring in profits by ParcelPanel
+              - button [ref=e665]:
+                - generic [ref=e666]:
+                  - img [ref=e667]
+                  - generic [ref=e675]: Built for Shopify
+          - 'button "EcoReturns: AI powered Returns 4.9 out of 5 stars 126 total reviews • Free plan available Full Returns, Exchange, Refund & Labels system with AI Agents" [ref=e677] [cursor=pointer]':
+            - figure [ref=e678]
+            - generic [ref=e680]:
+              - 'link "EcoReturns: AI powered Returns" [ref=e682]':
+                - /url: https://apps.shopify.com/ecoreturns-by-saarainc?surface_detail=returns-center-by-aftership&surface_inter_position=1&surface_intra_position=2&surface_type=app_details
+              - generic [ref=e683]:
+                - generic [ref=e684]:
+                  - text: "4.9"
+                  - generic [ref=e685]: out of 5 stars
+                - img [ref=e687]
+                - generic [ref=e688]: (126)
+                - generic [ref=e689]: 126 total reviews
+                - generic [ref=e690]: •
+                - generic [ref=e691]: Free plan available
+              - generic [ref=e692]: Full Returns, Exchange, Refund & Labels system with AI Agents
+          - 'button "ReturnX: Returns & Exchanges 4.9 out of 5 stars 41 total reviews • Free plan available Manage Return Shipping Labels and Refunds with Return Portal" [ref=e694] [cursor=pointer]':
+            - figure [ref=e695]
+            - generic [ref=e697]:
+              - 'link "ReturnX: Returns & Exchanges" [ref=e699]':
+                - /url: https://apps.shopify.com/returnx?surface_detail=returns-center-by-aftership&surface_inter_position=1&surface_intra_position=3&surface_type=app_details
+              - generic [ref=e700]:
+                - generic [ref=e701]:
+                  - text: "4.9"
+                  - generic [ref=e702]: out of 5 stars
+                - img [ref=e704]
+                - generic [ref=e705]: (41)
+                - generic [ref=e706]: 41 total reviews
+                - generic [ref=e707]: •
+                - generic [ref=e708]: Free plan available
+              - generic [ref=e709]: Manage Return Shipping Labels and Refunds with Return Portal
+  - contentinfo [ref=e710]:
+    - generic [ref=e711]:
+      - generic [ref=e712]:
+        - generic [ref=e715]:
+          - heading "App categories" [level=6] [ref=e716]
+          - link "Sales channels" [ref=e717] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/sales-channels
+          - link "Finding products" [ref=e718] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/finding-products
+          - link "Selling products" [ref=e719] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/selling-products
+          - link "Orders and shipping" [ref=e720] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/orders-and-shipping
+          - link "Store design" [ref=e721] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/store-design
+          - link "Marketing and conversion" [ref=e722] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/marketing-and-conversion
+          - link "Store management" [ref=e723] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/store-management
+        - generic [ref=e724]:
+          - heading "Top categories" [level=6] [ref=e725]
+          - link "Dropshipping" [ref=e726] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/finding-products-sourcing-options-dropshipping
+          - link "Marketplaces" [ref=e727] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/sales-channels-selling-online-marketplaces
+          - link "Product reviews" [ref=e728] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/marketing-and-conversion-social-trust-product-reviews
+          - link "Upsell and bundles" [ref=e729] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/marketing-and-conversion-upsell-and-bundles
+          - link "Email marketing" [ref=e730] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/marketing-and-conversion-marketing-email-marketing
+          - link "SEO" [ref=e731] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/store-design-site-optimization-seo
+          - link "Shipping" [ref=e732] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/orders-and-shipping-shipping-solutions-shipping
+          - link "Currency and translation" [ref=e733] [cursor=pointer]:
+            - /url: https://apps.shopify.com/categories/store-design-internationalization-currency-and-translation
+        - generic [ref=e734]:
+          - heading "Resources" [level=6] [ref=e735]
+          - link "Shopify Help Center" [ref=e736] [cursor=pointer]:
+            - /url: https://help.shopify.com/en/
+          - link "API documentation" [ref=e737] [cursor=pointer]:
+            - /url: https://shopify.dev/api
+          - link "Shopify Community" [ref=e738] [cursor=pointer]:
+            - /url: https://community.shopify.com/c/shopify-community-en/ct-p/en
+          - link "Community Events" [ref=e739] [cursor=pointer]:
+            - /url: https://community.shopify.com/c/events/eb-p/events_en
+          - link "Shopify Blog" [ref=e740] [cursor=pointer]:
+            - /url: https://www.shopify.com/blog
+          - link "Research" [ref=e741] [cursor=pointer]:
+            - /url: https://www.shopify.com/research/future-of-commerce
+        - generic [ref=e742]:
+          - heading "Shopify" [level=6] [ref=e743]
+          - link "About" [ref=e744] [cursor=pointer]:
+            - /url: https://www.shopify.com/about
+          - link "Careers" [ref=e745] [cursor=pointer]:
+            - /url: https://www.shopify.com/careers
+          - link "Investors" [ref=e746] [cursor=pointer]:
+            - /url: https://investors.shopify.com/home/default.aspx
+          - link "Press and media" [ref=e747] [cursor=pointer]:
+            - /url: https://news.shopify.com/
+          - link "Partners" [ref=e748] [cursor=pointer]:
+            - /url: https://www.shopify.com/partners
+          - link "Affiliates" [ref=e749] [cursor=pointer]:
+            - /url: https://www.shopify.com/affiliates
+          - link "Legal" [ref=e750] [cursor=pointer]:
+            - /url: https://www.shopify.com/legal
+          - link "Service status" [ref=e751] [cursor=pointer]:
+            - /url: https://shopifystatus.com
+      - separator [ref=e752]
+      - generic [ref=e753]:
+        - generic [ref=e754]:
+          - link "Developer login" [ref=e756] [cursor=pointer]:
+            - /url: https://apps.shopify.com/?auth=1
+          - link "Terms of service" [ref=e758] [cursor=pointer]:
+            - /url: https://www.shopify.com/legal/terms
+          - link "Privacy policy" [ref=e760] [cursor=pointer]:
+            - /url: https://www.shopify.com/legal/privacy
+          - link "Sitemap" [ref=e762] [cursor=pointer]:
+            - /url: https://apps.shopify.com/sitemap
+          - generic [ref=e764]:
+            - link "Your privacy choices" [ref=e765] [cursor=pointer]:
+              - /url: https://privacy.shopify.com/en/
+            - img "California Consumer Privacy Act (CCPA) Opt-Out Icon" [ref=e766]
+        - combobox "Change your language" [ref=e771]:
+          - option "Čeština"
+          - option "Dansk"
+          - option "Deutsch"
+          - option "English" [selected]
+          - option "Español"
+          - option "Français"
+          - option "Italiano"
+          - option "Nederlands"
+          - option "Norsk (bokmål)"
+          - option "Polski"
+          - option "Português (Brasil)"
+          - option "Português (Portugal)"
+          - option "Suomi"
+          - option "Svenska"
+          - option "Türkçe"
+          - option "ภาษาไทย"
+          - option "日本語"
+          - option "简体中文"
+          - option "繁體中文"
+          - option "한국어"

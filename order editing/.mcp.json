@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "shopify-dev-mcp": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@shopify/dev-mcp@latest"]
+    },
+    "playwright": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@playwright/mcp@latest", "--browser", "chrome", "--isolated", "--user-data-dir", "C:\\Users\\A\\.claude-playwright\\order-editing"]
+    },
+    "chrome-devtools": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "chrome-devtools-mcp@latest", "--cdp-endpoint", "http://127.0.0.1:9222"]
+    }
+  }
+}
