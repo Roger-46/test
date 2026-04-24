@@ -471,7 +471,7 @@
                             <th>Order</th>
                             <th>Customer</th>
                             <th>Changes</th>
-                            <th>Date</th>
+                            <th>Last updated</th>
                             <th>Details</th>
                         </tr>
                     </thead>
@@ -480,8 +480,8 @@
                         <tr>
                             <td><a href="https://admin.shopify.com/store/mystore/orders/" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:600;">#1234</a></td>
                             <td>John Doe<br><span style="font-size:12px; color:var(--gray-500);">john@example.com</span></td>
-                            <td><span class="badge badge-info">Address</span></td>
-                            <td style="font-size:12px; color:var(--gray-500);">2 min ago</td>
+                            <td><span class="badge badge-info">Address</span> <span style="font-size:10px; color:#D72C0D; font-weight:600; background:#FFF4F4; border:1px solid #f0b8b8; padding:1px 6px; border-radius:8px; margin-left:4px; animation:pulse 1.5s ease-in-out infinite;">● Editing 2m</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">just now</td>
                             <td><a href="#" style="color:var(--blue); font-size:13px; text-decoration:none;" onclick="event.preventDefault(); openModal('edit-detail-modal-address')">View →</a></td>
                         </tr>
                         <tr>
@@ -572,34 +572,41 @@
             </div>
         </div>
 
-        <!-- Time Window -->
+        <!-- Allowed Edit Types (moved to top) -->
         <div class="card">
-            <h3 class="card-title" style="margin-bottom:16px">Edit Time Window</h3>
-            <div class="form-group">
-                <label class="form-label">Allow edits for</label>
-                <select class="form-input form-select" style="width: 240px;">
-                    <option>30 minutes</option>
-                    <option>1 hour</option>
-                    <option selected>2 hours</option>
-                    <option>4 hours</option>
-                    <option>12 hours</option>
-                    <option>24 hours</option>
-                    <option>Until fulfillment</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Maximum edits per order</label>
-                <input type="number" class="form-input" value="5" min="1" max="20" style="width: 100px;" />
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 class="card-title" style="margin-bottom:16px">Allowed Edit Types</h3>
+            <h3 class="card-title" style="margin-bottom:4px">Allowed Edit Types</h3>
             <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">Choose what customers can modify on their orders.</p>
             <div class="checkbox-group">
                 <label class="checkbox-item"><input type="checkbox" checked /> Edit shipping address</label>
                 <label class="checkbox-item"><input type="checkbox" checked /> Cancel order</label>
                 <label class="checkbox-item"><input type="checkbox" checked /> Edit order note</label>
+            </div>
+        </div>
+
+        <!-- Edit Limits (time window + max edits per order) -->
+        <div class="card">
+            <h3 class="card-title" style="margin-bottom:4px">Edit Limits</h3>
+            <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">Control when and how often customers can edit their orders.</p>
+            <div class="checkbox-group">
+                <div>
+                    <label class="checkbox-item"><input type="checkbox" onchange="document.getElementById('time-window-inputs').style.display = this.checked ? 'flex' : 'none'" /> Allow edits for</label>
+                    <div id="time-window-inputs" style="margin-left: 26px; margin-top: 8px; display: none; gap: 12px; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" class="form-input" value="2" min="0" max="720" style="width: 80px;" />
+                            <span style="font-size: 13px; color: var(--gray-600);">hours</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" class="form-input" value="0" min="0" max="59" style="width: 80px;" />
+                            <span style="font-size: 13px; color: var(--gray-600);">minutes</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="checkbox-item"><input type="checkbox" onchange="document.getElementById('max-edits-input').style.display = this.checked ? 'block' : 'none'" /> Maximum edits per order</label>
+                    <div id="max-edits-input" style="margin-left: 26px; margin-top: 8px; display: none;">
+                        <input type="number" class="form-input" value="5" min="1" max="20" style="width: 100px;" />
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1362,7 +1369,7 @@
                 <strong style="color: #0B5FD4;">Update interval:</strong> Timer cập nhật mỗi <code style="background:#e8f0fe;padding:2px 4px;border-radius:3px;">60 giây</code>. Sync lại từ server khi tab được focus trở lại (visibilitychange event).
             </div>
             <div style="background: var(--yellow-bg); border: 1px solid #e3c87a; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #664400; margin-top: 12px;">
-                <strong>Settings:</strong> Time window options: <code style="background:#fff3d0;padding:2px 4px;border-radius:3px;">30m / 1h / 2h / 4h / 12h / 24h / 2d / 3d / 7d / 14d / 30d / Until fulfillment</code>
+                <strong>Settings:</strong> Merchant set <code style="background:#fff3d0;padding:2px 4px;border-radius:3px;">hours + minutes</code> trong Settings → Edit Limits. Nếu uncheck "Allow edits for" → widget hiện cho tới khi order fulfilled (không có countdown).
             </div>
         </div>
 
@@ -1696,8 +1703,18 @@
                 • Khi có cancel event → gửi email trong <em>cả hai</em> option (cancel luôn được notify).<br/>
                 • Edit activity vẫn được log vào Activity page dù có email hay không.
             </div>
+            <div style="background: var(--yellow-bg); border: 1px solid #e3c87a; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #664400; margin-top: 12px;">
+                <strong style="color: #B98900;">Delivery timing (hybrid):</strong><br/>
+                • <strong>Cancel event</strong> → gửi email <strong>ngay lập tức</strong> (urgent — liên quan refund, fulfillment stop).<br/>
+                • <strong>Edit events</strong> (address / note / variant) → gửi email sau <strong>5 phút cố định tính từ save đầu tiên</strong> của session. Window KHÔNG reset khi customer save thêm trong 5 phút.<br/>
+                • <strong>Payment-required event</strong> → flush ngay (money urgency).<br/>
+                • Edit activity vẫn được log vào Activity page <em>realtime</em> — bất kể email đã gửi hay chưa.
+            </div>
             <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--gray-700); margin-top: 12px;">
-                <strong>Batch rule:</strong> Nếu customer edit &gt; 1 lần trong 60s (đổi address xong đổi note), gộp thành 1 email duy nhất với <code style="background:var(--white);padding:2px 4px;border-radius:3px;">edit_type = "Multiple changes"</code>. Chỉ áp dụng ở option <code style="background:var(--white);padding:2px 4px;border-radius:3px;">"all"</code>.
+                <strong>Batch behavior:</strong> Multiple saves trong 5 phút từ save đầu = <strong>1 session</strong> = 1 email duy nhất với <code style="background:var(--white);padding:2px 4px;border-radius:3px;">edit_type = "Multiple changes"</code>. Email body list tất cả diffs trong "What changed" section. Chỉ áp dụng ở option <code style="background:var(--white);padding:2px 4px;border-radius:3px;">"all"</code>.
+            </div>
+            <div style="background: #F0F7FF; border: 1px solid #B4D5FE; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #1A3A5C; margin-top: 12px;">
+                <strong style="color: #0B5FD4;">Session counting:</strong> 1 session = 1 đơn vị đếm cho <code style="background:#e8f0fe;padding:2px 4px;border-radius:3px;">Maximum edits per order</code>. Multiple saves trong 5 phút → chỉ +1 vào count. Sau 5 phút customer save thêm → session mới = +1 count nữa + 1 email mới.
             </div>
         </div>
 
@@ -1907,7 +1924,8 @@
                 <tbody>
                     <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Toggle OFF</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Không gửi email. Edit/Cancel vẫn được log vào Activity.</td></tr>
                     <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Customer không có email</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Reply-To fallback về <code>no-reply@avada.io</code>. Ghi chú trong email: "Customer email not available".</td></tr>
-                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Nhiều edit trong 60s</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Debounce → 1 email duy nhất, <code>edit_type = "Multiple changes"</code>. Liệt kê tất cả diffs trong "What changed" section.</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Nhiều edit trong 5 phút (session)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Window cố định 5 phút từ save đầu (không reset) → 1 email duy nhất khi session đóng, <code>edit_type = "Multiple changes"</code>. Activity entry update realtime trong session. Save thêm sau 5 phút → session mới + email mới.</td></tr>
+                    <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Hit max edits limit</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Khi reach limit → widget hiện message "You've reached the maximum edits for this order. Please contact the store for further changes." Tất cả Save buttons disabled. Cancel order vẫn allowed (separate bucket).</td></tr>
                     <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500;">Email delivery fails</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--gray-100);">Retry 3 lần (exponential backoff). Log vào <code>emailDeliveryLogs</code> collection. Không block edit/cancel flow.</td></tr>
                     <tr><td style="padding: 8px 12px; font-weight: 500;">Test mode (dev store)</td><td style="padding: 8px 12px;">Prefix subject với <code>[TEST]</code> để merchant biết đây là dev env.</td></tr>
                 </tbody>

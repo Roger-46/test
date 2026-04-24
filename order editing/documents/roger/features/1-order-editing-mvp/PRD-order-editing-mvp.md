@@ -7,6 +7,8 @@
 | Ticket | Link | Status |
 |--------|------|--------|
 | SB-10644 | [Link](http://space.avada.net/browse/SB-10644) | In Progress |
+| SB-10797 | [Link](http://space.avada.net/browse/SB-10797) | Doing |
+| SB-11174 | [Link](http://space.avada.net/browse/SB-11174) | To Do (DEV task — Cương) |
 
 ### History
 
@@ -17,6 +19,10 @@
 | 3.0 | 08/04/2026 | Roger | M | Restore full MVP scope — MVP là bản gốc, Submit rút gọn từ đây |
 | 4.0 | 13/04/2026 | Roger | M | Dashboard: thêm Quickstart (3-step), Helpdesk, 4 metric cards, portal link, date range filter |
 | 5.0 | 17/04/2026 | Roger | M | Sync PRD theo UI: inline edit trên OSP (bỏ Edit Portal riêng), Dashboard 2 metrics, Quickstart 3 steps, Orders→Activity, Settings thêm max edits/notifications, bỏ tags storefront, bỏ widget/color settings |
+| 6.0 | 24/04/2026 | Roger | M | **Settings revamp**: (1) swap layout — Allowed Edit Types ↑ / Edit Limits / Notifications; (2) Edit Limits: bỏ dropdown, đổi sang checkbox "Allow edits for" + 2 input hours/minutes, default OFF; (3) giữ `Maximum edits per order` (checkbox + number input, default OFF = unlimited) — **count theo session-based** (1 session = multiple saves trong 5 phút); (4) Notifications: 2 checkbox → radio group `notificationLevel` (`"all"` default / `"cancel_only"`). **Email delivery hybrid**: cancel event gửi ngay, edit events debounce 5 phút (reset mỗi save), max-wait cap 10 phút. 1 session = 1 email = +1 vào maxEdits count. **Email template đơn giản hóa**: giữ header + summary + before/after diff + 1 CTA "View order in Shopify"; bỏ secondary CTA, footer, "No action required", refund box. **Thêm UI spec page**: Email Notifications (triggers, placeholders, design rules, edge cases). **Data model**: thêm `timeWindowEnabled/Hours/Minutes`, `maxEditsEnabled/PerOrder`, `notificationLevel`; `orderEdits` thêm session fields (`sessionId`, `sessionStartAt`, `sessionLastActionAt`, `sessionStatus`, `actions[]`, `emailSentAt`). **Branding**: đồng bộ "Avada Order Editing" toàn bộ. |
+| 6.1 | 24/04/2026 | Roger | A | Thêm section **3.8. Business Logic — Edit Session, Email Delivery, Max Edits Counting** — document chi tiết 5 sub-sections: (1) Session state machine + rules; (2) Email hybrid delivery table + flow diagram; (3) Max edits session-based counting + hit-limit behavior; (4) Activity page session display (active vs completed); (5) Technical implementation notes (cron, concurrency, webhook). |
+| 6.2 | 24/04/2026 | Roger | M | **Đổi session logic từ debounce → fixed window**: 5 phút cố định tính từ save đầu, KHÔNG reset khi có save thêm. Bỏ "max-wait cap 10 phút" (không cần). Bỏ field `sessionLastActionAt` khỏi `orderEdits` schema. Update section 3.8 (state machine, email flow, cron query), email spec page, edge cases. Save thêm sau 5 phút → session mới = +1 count + 1 email mới. |
+| 6.3 | 24/04/2026 | Roger | M | **Activity page**: đổi column "Date" → **"Last updated"** (rõ ràng hơn, match industry standard GitHub/Jira). Clarify behavior: column update realtime trong session active = timestamp `lastActionAt` của action cuối; frozen khi session đóng. **Thêm lại field `lastActionAt` vào `orderEdits` schema** (chỉ dùng cho display, KHÔNG ảnh hưởng session timing — session vẫn đóng đúng 5 phút từ `sessionStartAt`). Update 2 ASCII mockups + fields table + section 3.8.4 + UI HTML + acceptance criteria. |
 
 > A = Added, M = Modified, D = Deleted
 
@@ -365,14 +371,16 @@ BƯỚC 4: Settings page
 ┌────────────────────────────────────────────────────────────┐
 │  Settings                         [Discard] [Save]         │
 │                                                            │
-│  ── Edit Time Window ──                                    │
-│  Allow edits for: [2 hours ▼] ◄── CHỌN thời gian          │
-│  Max edits per order: [5]                                  │
-│                                                            │
 │  ── Allowed Edit Types ──                                  │
 │  ☑ Edit shipping address  ◄── BẬT/TẮT                     │
 │  ☑ Cancel order           ◄── BẬT/TẮT                     │
 │  ☑ Edit order note        ◄── BẬT/TẮT                     │
+│                                                            │
+│  ── Edit Limits ──                                         │
+│  ☐ Allow edits for ◄── DEFAULT OFF (edits until fulfilled) │
+│     (khi check mới hiện 2 input hours + minutes)           │
+│  ☐ Maximum edits per order ◄── DEFAULT OFF (unlimited)    │
+│     (khi check mới hiện number input, default 5)           │
 │                                                            │
 │  ── Notifications ──                                       │
 │  Choose when to receive email:                             │
@@ -455,15 +463,15 @@ BƯỚC 3: Activity page
 │  Activity                                                  │
 │  All order changes made by customers                       │
 │                                                            │
-│  ┌─────────┬──────────────┬────────┬─────────┬──────────┐ │
-│  │ Order   │ Customer     │Changes │  Date   │ Details  │ │
-│  ├─────────┼──────────────┼────────┼─────────┼──────────┤ │
-│  │ #1234   │ John Doe     │Address │ 2m ago  │ View →   │ │
-│  │ #1230   │ Sarah Chen   │Address │ 15m ago │ View →   │ │
-│  │ #1228   │ Mike R.      │Cancel  │ 1h ago  │ View →   │ │
-│  │ #1225   │ Alex T.      │Note    │ 2h ago  │ View →   │ │
-│  │ #1215   │ Ryan Lee     │Addr+Note│6h ago  │ View →   │ │
-│  └─────────┴──────────────┴────────┴─────────┴──────────┘ │
+│  ┌─────────┬──────────────┬────────┬────────────┬────────┐│
+│  │ Order   │ Customer     │Changes │Last updated│Details ││
+│  ├─────────┼──────────────┼────────┼────────────┼────────┤│
+│  │ #1234   │ John Doe     │Address │ just now   │View →  ││
+│  │ #1230   │ Sarah Chen   │Address │ 15m ago    │View →  ││
+│  │ #1228   │ Mike R.      │Cancel  │ 1h ago     │View →  ││
+│  │ #1225   │ Alex T.      │Note    │ 2h ago     │View →  ││
+│  │ #1215   │ Ryan Lee     │Addr+Note│6h ago     │View →  ││
+│  └─────────┴──────────────┴────────┴────────────┴────────┘│
 │                        [1] [2]                             │
 └────────────────────────────────────────────────────────────┘
                          │
@@ -666,15 +674,15 @@ Mở app → Dashboard (2 metric cards + Quickstart + Helpdesk)
 │  Activity                                                  │
 │  All order changes made by customers                       │
 │                                                            │
-│  ┌─────────┬──────────────┬────────┬─────────┬──────────┐ │
-│  │ Order   │ Customer     │Changes │  Date   │ Details  │ │
-│  ├─────────┼──────────────┼────────┼─────────┼──────────┤ │
-│  │ #1234   │ John Doe     │Address │ 2m ago  │ View →   │ │
-│  │ #1230   │ Sarah Chen   │Address │ 15m ago │ View →   │ │
-│  │ #1228   │ Mike R.      │Cancel  │ 1h ago  │ View →   │ │
-│  │ #1225   │ Alex T.      │Note    │ 2h ago  │ View →   │ │
-│  │ #1215   │ Ryan Lee     │Addr+Note│6h ago  │ View →   │ │
-│  └─────────┴──────────────┴────────┴─────────┴──────────┘ │
+│  ┌─────────┬──────────────┬────────┬────────────┬────────┐│
+│  │ Order   │ Customer     │Changes │Last updated│Details ││
+│  ├─────────┼──────────────┼────────┼────────────┼────────┤│
+│  │ #1234   │ John Doe     │Address │ just now   │View →  ││
+│  │ #1230   │ Sarah Chen   │Address │ 15m ago    │View →  ││
+│  │ #1228   │ Mike R.      │Cancel  │ 1h ago     │View →  ││
+│  │ #1225   │ Alex T.      │Note    │ 2h ago     │View →  ││
+│  │ #1215   │ Ryan Lee     │Addr+Note│6h ago     │View →  ││
+│  └─────────┴──────────────┴────────┴────────────┴────────┘│
 │                        [1] [2]                             │
 └────────────────────────────────────────────────────────────┘
 ```
@@ -694,19 +702,20 @@ Modal types:
 ┌─────────────────────────────────────────┐
 │  Settings            [Discard] [Save]    │
 │                                          │
-│  ── Edit Time Window ──                  │
-│  Allow edits for: [2 hours ▼]            │
-│  30m / 1h / 2h / 4h / 12h / 24h /        │
-│  Until fulfillment                       │
-│                                          │
-│  Max edits per order: [5]                │
-│                                          │
 │  ── Allowed Edit Types ──                │
 │  Choose what customers can modify on     │
 │  their orders.                           │
 │  ☑ Edit shipping address                 │
 │  ☑ Cancel order                          │
 │  ☑ Edit order note                       │
+│                                          │
+│  ── Edit Limits ──                       │
+│  Control when and how often customers    │
+│  can edit their orders.                  │
+│  ☐ Allow edits for (default OFF)         │
+│     (khi check: [2] hours [0] minutes)   │
+│  ☐ Maximum edits per order (default OFF) │
+│     (khi check: number input [5])        │
 │                                          │
 │  ── Notifications ──                     │
 │  Choose when to receive email:           │
@@ -833,6 +842,152 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 | Order cancelled | Success screen: "Order Updated Successfully! Order #XXXX has been updated. A confirmation email has been sent." |
 | Settings saved | "Settings saved successfully" (toast) |
 
+### 3.8. Business Logic — Edit Session, Email Delivery, Max Edits Counting
+
+> ⚠️ **Quan trọng cho dev**: 3 feature sau dùng chung 1 concept "edit session" với 5-min window. Đọc kỹ trước khi implement.
+
+#### 3.8.1. Edit Session concept
+
+**Định nghĩa**: 1 edit session = chuỗi save actions của customer trong cùng 1 order, trong khoảng thời gian **5 phút cố định tính từ save đầu tiên**. Window KHÔNG reset khi có save tiếp theo.
+
+**Session state machine:**
+```
+[No session] 
+     │ Customer click Save lần đầu
+     ▼
+[active] ← session_start = now, session_end = now + 5 phút (fixed)
+     │
+     ├─ Save tiếp trong 5 phút từ session_start
+     │  → append action vào actions[]
+     │  → KHÔNG reset timer, KHÔNG extend session_end
+     │
+     └─ Đạt session_end (5 phút từ save đầu)
+        → session_status = "completed"
+        → trigger gửi email merchant (nếu "all" mode)
+        → increment edit count (nếu maxEditsEnabled)
+```
+
+**Rule quan trọng:**
+- Window **cố định 5 phút** từ save đầu — không reset, không extend
+- Sau 5 phút, nếu customer tiếp tục save → **session mới** bắt đầu (+1 count, +1 email)
+- **Cancel order KHÔNG thuộc session** — luôn là 1 document riêng trong `orderEdits`
+- **Merchant edit từ admin KHÔNG tính session** — mỗi merchant action = 1 document riêng
+- Session **scope theo order** — customer edit 2 orders khác nhau = 2 sessions riêng
+
+#### 3.8.2. Email delivery — Hybrid logic
+
+| Event type | Delivery timing | Batch? |
+|---|---|---|
+| **Cancel order** | **Immediate** (gửi ngay) | Không |
+| **Additional payment required** | **Immediate** | Không |
+| **Edit events** (address / note / variant) | **5 phút cố định từ save đầu** (gửi khi session đóng) | Có — gom mọi saves trong session thành 1 email |
+
+**Flow gửi email edit:**
+```
+t=0:00  Customer save address → session mở, email scheduled tại t=5:00 (FIXED)
+t=1:30  Customer save note    → append action, KHÔNG reschedule (vẫn t=5:00)
+t=3:00  Customer save variant → append action, KHÔNG reschedule (vẫn t=5:00)
+t=5:00  Session đóng → send 1 email duy nhất với 3 changes
+
+Nếu t=5:30 customer save thêm → session MỚI, email mới scheduled tại t=10:30
+```
+
+**Flow gửi email cancel:**
+```
+t=0:00  Customer click Cancel (với hoặc không có edit session đang mở)
+        → gửi email cancel NGAY (không đợi session close)
+        → session edit (nếu có) vẫn tiếp tục cho các edit khác
+```
+
+**Email content khi có multiple changes:**
+- Subject: `[Shop] Order #1234 was edited by the customer`
+- Body section "What changed" — list tất cả actions với before/after riêng
+- Nếu session có >1 action: `edit_type = "Multiple changes"` (badge màu xanh)
+- Nếu session chỉ 1 action: `edit_type` là tên action cụ thể (Shipping address / Note / ...)
+
+#### 3.8.3. Max edits per order — Session-based counting
+
+**Setting** (ở Admin Settings):
+- Checkbox `Maximum edits per order` — default **OFF** (unlimited)
+- Khi ON → input number (1-20, default 5)
+
+**Đếm logic:**
+- **1 session = 1 unit** vào count (không phải 1 save = 1 unit)
+- Count tăng khi session **đóng** (đúng 5 phút từ save đầu)
+- Cancel **không** tính vào count (separate bucket)
+
+**Behavior khi hit limit:**
+```
+Customer đã dùng 5/5 edits
+     ↓
+Customer mở Order Status Page
+     ↓
+Widget "Edit your order" vẫn hiển thị
+     ↓
+Customer click expand "Edit shipping address"
+     ↓
+Form hiện nhưng Save button DISABLED
+Message: "You've reached the maximum edits for this order. 
+         Please contact the store for further changes."
+     ↓
+Customer vẫn có thể click "Cancel this order" (separate bucket)
+```
+
+**Edge case — Hit limit trong session đang mở:**
+- Session hiện tại đã mở → count đã +1
+- Customer tiếp tục save trong session → KHÔNG +1 count
+- Session đóng → bắt đầu block
+
+#### 3.8.4. Activity page — Session display
+
+**Entry active session** (trong 5 phút window):
+- Badge `● Editing in progress (Xm)` — pulse animation, count-up timer
+- Column **Changes** update realtime (append badge mỗi action mới)
+- Column **Last updated** update realtime (= timestamp của action cuối cùng, refresh mỗi save mới)
+- Click "View →" → modal hiện data hiện tại (có thể chưa final)
+
+```
+┌─────────┬──────────┬──────────────────┬────────────┬────────┐
+│ #1234   │ Jane Doe │🔵 Address 🟤 Note│ just now   │View →  │
+│         │          │● Editing (2m)    │            │        │
+└─────────┴──────────┴──────────────────┴────────────┴────────┘
+```
+
+**Entry completed session** (sau khi session đóng):
+- Không có badge progress
+- Changes + Last updated frozen
+- Modal hiện full before/after final
+
+```
+┌─────────┬──────────┬──────────────────┬────────────┬────────┐
+│ #1234   │ Jane Doe │🔵 Address 🟤 Note│ 5m ago     │View →  │
+│         │          │🟢 Variant        │            │        │
+└─────────┴──────────┴──────────────────┴────────────┴────────┘
+```
+
+**Update rule cho "Last updated"**:
+- Khi session active: hiển thị relative time của `lastActionAt` (action cuối trong `actions[]`)
+- Khi customer save thêm: `lastActionAt = now` → Last updated hiển thị "just now"
+- Khi session đóng: `lastActionAt` KHÔNG đổi nữa, Last updated tiếp tục tick ("1m ago", "5m ago", ...)
+- **Lưu ý**: `lastActionAt` chỉ dùng cho display, KHÔNG ảnh hưởng tới session timing (session vẫn đóng đúng 5 phút từ `sessionStartAt`)
+
+#### 3.8.5. Technical implementation notes
+
+**Cron job** (Cloud Scheduler chạy mỗi 1 phút):
+- Query: `sessions WHERE status = "active" AND (now - session_start >= 5min)`
+- Action mỗi match:
+  1. Set `status = "completed"`
+  2. Increment order's edit count (nếu maxEditsEnabled)
+  3. Trigger send email (nếu notificationLevel = "all")
+
+**Concurrency**:
+- Dùng Firestore transaction khi customer save: READ session → CHECK is active → APPEND action → WRITE
+- Tránh race condition: nếu 2 tabs save đồng thời
+
+**Webhook `orders/updated` từ Shopify**:
+- Vẫn listen để sync order data (financial_status, fulfillment_status)
+- Không dùng để trigger email (email trigger bởi session state machine của app)
+
 ---
 
 ## 4. Design Description
@@ -927,13 +1082,16 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 
 | Item | Data Type | Required | Default | Mô tả | Validate |
 |------|-----------|----------|---------|-------|----------|
-| **Edit Time Window** | Section | — | — | Section header | — |
-| Time window | Select | Y | 2 hours | 30m / 1h / 2h / 4h / 12h / 24h / Until fulfillment | — |
-| Max edits per order | Number | Y | 5 | Số lần edit tối đa trên mỗi order | 1-20 |
 | **Allowed Edit Types** | Section | — | — | Section header + subtitle "Choose what customers can modify on their orders." | — |
 | Allow address edit | Checkbox | Y | true | "Edit shipping address" | — |
 | Allow cancel order | Checkbox | Y | true | "Cancel order" | — |
 | Allow edit order note | Checkbox | Y | true | "Edit order note" | — |
+| **Edit Limits** | Section | — | — | Section header + subtitle "Control when and how often customers can edit their orders." | — |
+| Enable time window | Checkbox | Y | false | "Allow edits for" — default OFF (edit cho tới khi fulfilled). Khi check → hiện 2 input hours + minutes. | — |
+| Time window hours | Number | Conditional | 2 | Input "hours" — chỉ hiện khi "Enable time window" checked | 0-720 |
+| Time window minutes | Number | Conditional | 0 | Input "minutes" — chỉ hiện khi "Enable time window" checked | 0-59 |
+| Enable max edits | Checkbox | Y | false | "Maximum edits per order" — default OFF (unlimited). Khi check → hiện number input. | — |
+| Max edits per order | Number | Conditional | 5 | Số sessions tối đa per order (1 session = multiple saves trong 5 phút). Chỉ dùng khi "Enable max edits" checked. | 1-20 |
 | **Notifications** | Section | — | — | Section header + subtitle "Choose when you want to be notified by email." | — |
 | Notification level | Radio group | Y | `"all"` | 2 options (radio, mutually exclusive):<br/>◉ `"all"` — "Email me for all changes"<br/>○ `"cancel_only"` — "Email me only when an order is canceled" | — |
 | Save button | Button | Y | "Save" | → Toast "Settings saved successfully" | — |
@@ -946,11 +1104,11 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 | Item | Data Type | Required | Default | Mô tả | Validate |
 |------|-----------|----------|---------|-------|----------|
 | Page title | Text | Y | "Activity" | Subtitle: "All order changes made by customers" | — |
-| Activity table | Table | Y | — | 5 cột: Order / Customer / Changes / Date / Details | — |
+| Activity table | Table | Y | — | 5 cột: Order / Customer / Changes / Last updated / Details | — |
 | Order link | Link | Y | — | #XXXX → link sang Shopify admin order page | Open new tab |
 | Customer | Text | Y | — | Name + email (2 dòng) | — |
 | Changes badges | Badges | Y | — | Address (info) / Cancel (critical) / Note (default) / Tags (default). Multi = nhiều badge cùng hàng | — |
-| Date | Text | Y | — | Relative time ("2m ago", "1 day ago") | — |
+| Last updated | Text | Y | — | Relative time của action cuối ("just now", "2m ago", "1 day ago"). **Update realtime** mỗi khi customer save thêm trong session active. Sau khi session đóng → frozen. | — |
 | View link | Link | Y | — | "View →" → mở detail modal | — |
 | Pagination | Buttons | Y | — | Page 1, 2, ... (5 items/page) | — |
 
@@ -1002,17 +1160,22 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 ☐ Quickstart: khi 3/3 → card ẩn tự động
 ☐ Helpdesk card luôn hiện ở cuối dashboard (không dismiss được)
 ☐ Helpdesk "💬 Chat with us" → mở live chat widget
-☐ **Activity page**: table với 5 cột (Order, Customer, Changes, Date, Details)
+☐ **Activity page**: table với 5 cột (Order, Customer, Changes, **Last updated**, Details)
 ☐ Activity: Order link → mở Shopify admin order page (new tab)
 ☐ Activity: Changes badges đúng màu (Address=info, Cancel=critical, Note=default, Tags=default)
+☐ Activity: **"Last updated" column update realtime** trong session active (= timestamp `lastActionAt` của action cuối). Khi customer save thêm → column update ngay. Session đóng → frozen
+☐ Activity: Entry active session hiện badge `● Editing in progress (Xm)` với count-up timer + pulse animation
 ☐ Activity: click "View →" → mở detail modal theo loại (Address/Cancel/Note/Tags/Multi)
 ☐ Activity: modal Before/After 2-column với strikethrough đỏ / xanh
 ☐ Activity: pagination (5 items/page)
-☐ Settings sections: Edit Time Window, Allowed Edit Types, Notifications
-☐ Settings: Time window dropdown (30m/1h/2h/4h/12h/24h/Until fulfillment)
-☐ Settings: Max edits per order (number input, 1-20)
+☐ Settings sections (theo thứ tự): **Allowed Edit Types → Edit Limits → Notifications**
 ☐ Settings: 3 allowed edit types (address, cancel, note) — toggle bật/tắt
-☐ Settings: Notification level radio group — 2 options (`"all"` default / `"cancel_only"`) lưu vào field `notificationLevel`. Logic: edit event chỉ gửi email khi `"all"`; cancel event luôn gửi.
+☐ Settings: "Allow edits for" checkbox — default **OFF** (edit cho tới khi fulfilled). Khi check → hiện 2 input (hours 0-720, minutes 0-59)
+☐ Settings: "Maximum edits per order" checkbox — default **OFF** (unlimited). Khi check → hiện number input (1-20, default 5). Count theo **session-based** (1 session = multiple saves trong 5 phút)
+☐ Settings: Notification level radio group — 2 options (`"all"` default / `"cancel_only"`) lưu vào field `notificationLevel`
+☐ **Email delivery hybrid**: Cancel event → gửi email ngay; Edit events → gửi khi session đóng (**5 phút cố định từ save đầu**, không reset khi có save thêm)
+☐ **Session batching**: Multiple saves trong 5 phút từ save đầu = 1 session = 1 email = +1 vào maxEdits count. Session đóng **đúng 5 phút** từ save đầu
+☐ **Hit max edits UI**: Khi reach limit → disable all Save buttons + show message "You've reached the maximum edits for this order. Please contact the store for further changes." Cancel vẫn allowed
 ☐ Settings save → Toast "Settings saved successfully" + [Discard] reset
 ☐ App load < 3 giây
 
@@ -1066,27 +1229,39 @@ Helpdesk là card cố định ở cuối Dashboard, luôn hiện.
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | shopId | string | — | Shop identifier (doc ID) |
-| timeWindow | string | `"2h"` | `30m` / `1h` / `2h` / `4h` / `12h` / `24h` / `until_fulfillment` |
-| maxEditsPerOrder | number | `5` | Max số lần edit 1 order (1-20) |
 | allowAddressEdit | boolean | `true` | Cho phép customer edit shipping address |
 | allowCancelOrder | boolean | `true` | Cho phép customer hủy đơn |
 | allowEditNote | boolean | `true` | Cho phép customer edit order note |
+| timeWindowEnabled | boolean | `false` | Có giới hạn thời gian edit không. Default `false` = customer có thể edit cho tới khi order fulfilled |
+| timeWindowHours | number | `2` | Hours — chỉ dùng khi `timeWindowEnabled = true` (0-720) |
+| timeWindowMinutes | number | `0` | Minutes — chỉ dùng khi `timeWindowEnabled = true` (0-59) |
+| maxEditsEnabled | boolean | `false` | Có giới hạn số edit sessions per order không. Default `false` = unlimited |
+| maxEditsPerOrder | number | `5` | Max sessions per order (1-20). Chỉ dùng khi `maxEditsEnabled = true`. 1 session = multiple saves trong 5 phút cùng 1 order |
 | notificationLevel | string | `"all"` | `"all"` = email mọi thay đổi (edit + cancel) / `"cancel_only"` = chỉ email khi cancel |
 | updatedAt | timestamp | — | Last update |
 
 **`orderEdits` schema:**
+
+> 1 document = 1 edit session (có thể chứa nhiều actions nếu customer làm nhiều saves trong 5 phút).
 
 | Field | Type | Description |
 |-------|------|-------------|
 | shopId | string | Shop identifier |
 | orderId | string | Shopify order GID |
 | orderNumber | string | Order # |
-| editType | string | `address` / `note` / `tags` / `cancel` — note: `tags` chỉ xuất hiện khi `editedBy = "merchant"` |
+| sessionId | string | Unique session ID (ex: `sess_abc123`) |
+| sessionStartAt | timestamp | Timestamp save đầu tiên của session — window cố định 5 phút từ đây. **KHÔNG đổi khi có save thêm** |
+| lastActionAt | timestamp | Timestamp action cuối cùng trong session. Update mỗi save mới. **Chỉ dùng cho display** (column "Last updated" ở Activity page), KHÔNG ảnh hưởng session timing |
+| sessionStatus | string | `active` (đang trong window 5 phút từ start) / `completed` (đã đóng) |
+| actions | array | List các saves trong session: `[{ type, at, before, after }, ...]`. Mỗi action có `type: "address" \| "note" \| "tags" \| "variant"` |
+| editType | string | Summary type: tên action nếu chỉ có 1; `"multi"` nếu nhiều actions |
 | editedBy | string | `customer` / `merchant` |
-| changes | object | Before/after snapshot |
-| priceDiff | number | + = charge, - = refund |
+| priceDiff | number | Tổng price diff của session (+ = charge, - = refund) |
+| emailSentAt | timestamp | Thời điểm merchant email gửi (null nếu chưa gửi) |
 | status | string | `success` / `failed` |
 | createdAt | timestamp | — |
+
+> **Cancel** là separate document (không gom vào session). `editType = "cancel"`, always 1 action, email gửi ngay.
 
 ---
 
